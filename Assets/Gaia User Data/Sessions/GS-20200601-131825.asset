@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e251860fcd970734c9f14ebd98a146c3, type: 3}
+  m_Name: GS-20200601-131825
+  m_EditorClassIdentifier: 
+  m_name: Session 20200601-131825
+  m_description: 'Rocking out at Creativity Central!
+
+
+    If you like Gaia please
+    consider rating it :)'
+  m_previewImage: {fileID: 0}
+  m_dateCreated: 6/1/2020 1:18:25 PM
+  m_terrainWidth: 2048
+  m_terrainDepth: 2048
+  m_terrainHeight: 2048
+  m_seaLevel: 50
+  m_isLocked: 0
+  m_previewImageBytes: 
+  m_previewImageWidth: 0
+  m_previewImageHeight: 0
+  m_operations:
+  - m_description: Spawning - Stylized Texture Spawner(Clone)
+    m_operationType: 7
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20200531 - 155308
+    m_operationDateTime: 6/1/2020 1:18:51 PM
+    scriptableObjectAssetGUID: e48c1dd289f18104495c69fc5cd3bef5
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+  - m_description: Spawning - Stylized Texture Spawner(Clone)
+    m_operationType: 7
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20200531 - 155308
+    m_operationDateTime: 6/1/2020 1:20:48 PM
+    scriptableObjectAssetGUID: 79ac4f1956197714e882d9660274047f
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+  - m_description: Spawning - Stylized Texture Spawner(Clone)
+    m_operationType: 7
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20200531 - 155308
+    m_operationDateTime: 6/1/2020 1:22:58 PM
+    scriptableObjectAssetGUID: 09487d6fad7dc0a4ea269b9eafa02e5a
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+  m_terrainMinMaxCache:
+  - guid: def6589d90605bd48846b1e6671ba7ae
+    isWorldmap: 0
+    recalculate: 0
+    min: 0
+    max: 14.813404
+  m_bakedMaskCacheEntries: []
+  m_worldBiomeMaskSettings: {fileID: 0}
