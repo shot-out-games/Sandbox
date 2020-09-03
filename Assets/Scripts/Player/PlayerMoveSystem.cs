@@ -101,7 +101,7 @@ namespace SandBox.Player
                             {
                                 audioSource.clip = playerMove.clip;
                                 audioSource.Play();
-                                Debug.Log("clip " + audioSource.clip);
+                                //Debug.Log("clip " + audioSource.clip);
 
                             }
 

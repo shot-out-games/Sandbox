@@ -208,7 +208,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         //Debug.Log("path pending " + agent.pathPending + " dist " + agent.remainingDistance);
 
-        Debug.Log("path");
+        //Debug.Log("path");
 
 
         float distance = isCurrentWayPointJump ? .0003f : .5f;
@@ -280,11 +280,11 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
             //Debug.Log("next0 " + agent.nextPosition);
             float yOffset = curve.Evaluate(normalizedTime);
-            Debug.Log("y " + math.round(yOffset));
+            //Debug.Log("y " + math.round(yOffset));
             agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
             normalizedTime += Time.deltaTime / duration;
                 //Debug.Log("n " + normalizedTime);
-            Debug.Log("pos " + agent.transform.position);
+            //Debug.Log("pos " + agent.transform.position);
 
             // yield return null;
 
@@ -292,6 +292,8 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         else
         {
             isCurrentWayPointJump = false;
+            anim.SetInteger("JumpState", 0);
+
         }
 
     }

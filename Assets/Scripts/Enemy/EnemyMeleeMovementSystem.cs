@@ -17,7 +17,6 @@ public class EnemyMeleeMovementSystem : JobComponentSystem
             ref EnemyMeleeMovementComponent enemyMovementComponent,
             ref EnemyStateComponent enemyState,
             in Entity entity,
-            in RewindComponent rewindComponent,
             in Animator animator,
             in EnemyMove enemyMove
 
@@ -28,14 +27,6 @@ public class EnemyMeleeMovementSystem : JobComponentSystem
             if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
             if (enemyMovementComponent.enabled == false) return;
 
-
-            if (rewindComponent.@on == true || rewindComponent.pressed == true)
-            {
-                enemyMove.SetDestination();
-                Debug.Log("rew pressed");
-            }
-            else
-            {
                 if (enemyMove.target != null)
                 {
                     enemyMove.speedMultiple = 1;
@@ -151,7 +142,7 @@ public class EnemyMeleeMovementSystem : JobComponentSystem
 
 
                 }
-            }
+            
         }
         ).Run();
 
