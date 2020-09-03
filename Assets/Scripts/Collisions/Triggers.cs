@@ -93,10 +93,12 @@ public class CollisionSystem : JobComponentSystem
             CommandBuffer.AddComponent(ch_a, collisionComponent);
             CommandBuffer.AddComponent(ch_b, collisionComponent);
 
-            if (triggerComponent_a.Type == (int)TriggerType.Lever || triggerComponent_b.Type == (int)TriggerType.Lever)
-            {
-                //Debug.Log("type a " + collisionComponent.Part_entity + " type b " + collisionComponent.Part_other_entity + " cha " + ch_a + " chb " + ch_b);
-            }
+            
+
+                if (triggerComponent_a.Type == (int)TriggerType.Lever || triggerComponent_b.Type == (int)TriggerType.Lever)
+                {
+                    //Debug.Log("type a " + collisionComponent.Part_entity + " type b " + collisionComponent.Part_other_entity + " cha " + ch_a + " chb " + ch_b);
+                }
 
 
             if (collisionComponent.Part_entity == (int)TriggerType.Ammo && collisionComponent.Part_other_entity == (int)TriggerType.Blocks)

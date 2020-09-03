@@ -34,10 +34,51 @@ public class AttackerSystem : JobComponentSystem
                 Entity collision_entity_a = collisionComponent.Character_entity;
                 Entity collision_entity_b = collisionComponent.Character_other_entity;
 
+                bool isPlayer_a = EntityManager.HasComponent<PlayerComponent>(collision_entity_a);
+                bool isPlayer_b = EntityManager.HasComponent<PlayerComponent>(collision_entity_b);
+                bool isEnemy_a = EntityManager.HasComponent<PlayerComponent>(collision_entity_a);
+                bool isEnemy_b = EntityManager.HasComponent<PlayerComponent>(collision_entity_b);
 
-                //float hw = animator.GetFloat("HitWeight");
 
-                if (type_b == (int)TriggerType.Ammo)//b is ammo so causes damage to entity
+                Debug.Log("player a " + isPlayer_a);
+                Debug.Log("player b " + isPlayer_b);
+                Debug.Log("enemy a " + isEnemy_a);
+                Debug.Log("enemy b " + isEnemy_b);
+
+                //if (attackStarted && enemyAttackComponent.AttackStage == AttackStages.No)
+
+
+
+                float hw = animator.GetFloat("HitWeight");
+                //Debug.Log("hw " + h);
+
+                if (isPlayer_b && isEnemy_a) //b is ammo so causes damage to entity
+                {
+                    if (type_b == (int)TriggerType.Chest &&
+                        (type_a == (int)TriggerType.LeftHand || type_a == (int)TriggerType.RightHand))
+                    {
+                        ecb.AddComponent<DamageComponent>(collision_entity_b,
+                            new DamageComponent { DamageLanded = 0, DamageReceived = hw * 10 });
+
+                        ecb.AddComponent<DamageComponent>(collision_entity_a,
+                            new DamageComponent { DamageLanded = hw * 10, DamageReceived = 0 });
+
+                    }
+                }
+                else if (isPlayer_a && isEnemy_b) //b is ammo so causes damage to entity
+                {
+                    if (type_a == (int)TriggerType.Chest &&
+                        (type_b == (int)TriggerType.LeftHand || type_b == (int)TriggerType.RightHand))
+                    {
+                        ecb.AddComponent<DamageComponent>(collision_entity_a,
+                            new DamageComponent { DamageLanded = 0, DamageReceived = hw * 10 });
+
+                        ecb.AddComponent<DamageComponent>(collision_entity_b,
+                            new DamageComponent { DamageLanded = hw * 10, DamageReceived = 0 });
+
+                    }
+                }
+                else if (type_b == (int)TriggerType.Ammo)//b is ammo so causes damage to entity
                 {
                     //damage landed not being credited to shooter currently
                     int shooterTag = -1;
@@ -48,13 +89,13 @@ public class AttackerSystem : JobComponentSystem
                     }
                     if (shooter != Entity.Null)
                     {
-                        bool isEnemy = (EntityManager.HasComponent(shooter, typeof(EnemyComponent))) ;
+                        bool isEnemy = (EntityManager.HasComponent(shooter, typeof(EnemyComponent)));
 
                         float damage = EntityManager.GetComponentData<GunComponent>(shooter).Damage;
                         //bool shootSelf = false;
                         //if (EntityManager.HasComponent<RewindComponent>(shooter))
                         //{
-                           // shootSelf = EntityManager.GetComponentData<AmmoComponent>(collision_entity_b).rewinding;
+                        // shootSelf = EntityManager.GetComponentData<AmmoComponent>(collision_entity_b).rewinding;
                         //}
 
                         //if(shootSelf == true && shooter == collision_entity_a)
@@ -77,10 +118,6 @@ public class AttackerSystem : JobComponentSystem
                             ecb.AddComponent<DamageComponent>(collision_entity_a,
                                 new DamageComponent { DamageLanded = 0, DamageReceived = damage });
                         }
-
-
-
-
 
                     }
                 }

@@ -264,7 +264,7 @@ public class EnemyMeleeSystem : JobComponentSystem
                         {
                             enemyCombat.currentStrikeDistanceAdjustment *= .98f;
                         }
-                        Debug.Log("strike " + adjStrikeDistance);
+                        //Debug.Log("strike " + adjStrikeDistance);
                         enemyCombat.hitLanded = false;
                         enemyCombat.hitReceived = false;
                         enemyAttackComponent = new EnemyAttackComponent() { AttackStage = AttackStages.No };
