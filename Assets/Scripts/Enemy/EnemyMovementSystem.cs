@@ -55,13 +55,14 @@ public class EnemyMovementSystem : JobComponentSystem
                     if (dist < backupZoneClose)
                     {
                         MoveState = MoveStates.Default;
-                        enemyMove.backup = true; //only time to turn on 
+                        enemyMovementComponent.backup = true; //only time to turn on 
                         enemyMovementComponent.speedMultiple = 1;
+                        Debug.Log("backup");
                     }
                     else if (enemyMove.backup && dist > backupZoneFar)
                     {
                         MoveState = MoveStates.Default;
-                        enemyMove.backup = false; //only time to turn off
+                        enemyMovementComponent.backup = false; //only time to turn off
                     }
                     else if (dist >= backupZoneClose && dist <= backupZoneFar)
                     {
@@ -89,6 +90,7 @@ public class EnemyMovementSystem : JobComponentSystem
                     {
                         MoveState = MoveStates.Default;
                         animator.SetInteger("Zone", 2);
+                        Debug.Log("zone");
                         enemyMove.SetDestination();
                         enemyMove.FacePlayer();
                     }

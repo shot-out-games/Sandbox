@@ -19,13 +19,17 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     [HideInInspector]
     public AimIK aim;
     public Moves moveUsing = new Moves();
+    public float  currentStrikeDistanceZoneBegin;
+    public float currentStrikeDistanceAdjustment;
+
+
     [SerializeField]
     private List<Moves> moveList = new List<Moves>();
     public CombatStats combatStats = new CombatStats();
     public bool hitLanded { get; set; }
     public bool hitReceived { get; set; }
     public AttackStages AttackStage { get; set; }
-    public float strikeDistanceAdjustment { get; set; } = 1.0f;
+    //public float strikeDistanceAdjustment { get; set; } = 1.0f;
     public MovesManager movesInspector;
     public bool attackStarted { get; internal set; }
     private EntityManager entityManager;
@@ -59,6 +63,8 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
                     }
 
                 }
+
+                currentStrikeDistanceZoneBegin = move.CalculateStrikeDistanceFromPinPosition(transform);
                 move.target = moveUsing.target;//default target assigned in system
                 moveList.Add(move);
             }
@@ -179,7 +185,7 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     private void LateUpdate()
     {
         //if (entityManager.HasComponent<EnemyMeleeMovementComponent>(meleeEntity) == false) return;
-        if (entityManager == null) return;
+        if (entityManager == default) return;
         Aim();
     }
 
@@ -205,7 +211,6 @@ public class EnemyMeleeSystem : JobComponentSystem
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
 
-        var entityManager = World.EntityManager;
 
 
         Entities.WithStructuralChanges().WithoutBurst().ForEach
@@ -220,12 +225,12 @@ public class EnemyMeleeSystem : JobComponentSystem
 
             ) =>
             {
-                bool hasMeleeComponent = entityManager.HasComponent<MeleeComponent>(entity);
+                bool hasMeleeComponent = EntityManager.HasComponent<MeleeComponent>(entity);
                 if (hasMeleeComponent && enemyMove.target != null)
                 {
                     bool attackStarted = enemyCombat.attackStarted;
-                    float strikeDistanceAdjustment = enemyCombat.moveUsing.strikeDistanceAdjustment;
-                    float strikeDistance = enemyCombat.moveUsing.calculatedStrikeDistanceZoneBegin;
+                    float strikeDistanceAdjustment = enemyCombat.currentStrikeDistanceAdjustment;
+                    float strikeDistance = enemyCombat.currentStrikeDistanceZoneBegin;
                     float adjStrikeDistance = strikeDistance * strikeDistanceAdjustment;
 
                     bool hitLanded = enemyCombat.hitLanded;
@@ -253,13 +258,13 @@ public class EnemyMeleeSystem : JobComponentSystem
 
                         if (hitLanded && dist < adjStrikeDistance && dist > adjStrikeDistance / 1.02f)
                         {
-                            enemyCombat.moveUsing.strikeDistanceAdjustment *= 1.02f;
+                            enemyCombat.currentStrikeDistanceAdjustment  =   1.02f;//reset to 1.02f
                         }
                         else if (!hitLanded && strikeDistanceAdjustment > strikeDistance * .8f) // strike distance is the calculated strike distance in Moves class table
                         {
-                            enemyCombat.moveUsing.strikeDistanceAdjustment *= .98f;
+                            enemyCombat.currentStrikeDistanceAdjustment *= .98f;
                         }
-
+                        Debug.Log("strike " + adjStrikeDistance);
                         enemyCombat.hitLanded = false;
                         enemyCombat.hitReceived = false;
                         enemyAttackComponent = new EnemyAttackComponent() { AttackStage = AttackStages.No };

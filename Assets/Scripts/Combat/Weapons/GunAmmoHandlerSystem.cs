@@ -46,9 +46,16 @@ public class GunAmmoHandlerSystem : JobComponentSystem
                 if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
                 if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
 
+                if (EntityManager.HasComponent<EnemyComponent>(entity))
+                {
+                    if(EntityManager.HasComponent<EnemyWeaponMovementComponent>(entity) == false)
+                    {
+                        return;
+                    }
+                }
+
 
                 gun.Duration += dt;
-                //if ((gun.Duration > gun.Rate) || (gun.WasFiring == 0))
                 if ((gun.Duration > gun.Rate) && (gun.IsFiring == 1))
                 {
                     if (gun.Bullet != null)
@@ -68,65 +75,16 @@ public class GunAmmoHandlerSystem : JobComponentSystem
 
                         var velocity = EntityManager.GetComponentData<PhysicsVelocity>(e);
                         var mass = EntityManager.GetComponentData<PhysicsMass>(e);
-
-                        //ComponentExtensions.ApplyImpulse(ref velocity, new PhysicsMass(), position , rotation,  gunScript.Strength, position.Value);
-
-
-
-
-                        //float3 direction = math.normalizesafe(gunScript.AmmoStartLocation.forward * velocity.Linear);
-                        //float3  translate = math.mul(rotation.Value, gunScript.AmmoStartLocation.forward)  ;
-
-
-
-                        //float3 forward = rot * pos;
                         float3 forward = gunScript.AmmoStartLocation.forward;
-
-
-                        //Debug.Log("fwd " + forward);
-
-                        //forward = gunScript.AmmoStartLocation.transform.TransformPoint(forward);
-
-                        //Debug.Log("fwd1 " + forward);
-
-
-                        //                        ComponentExtensions.ApplyLinearImpulse
-                        //                     (ref velocity,
-                        //                      mass,
-                        //                   gunScript.AmmoStartLocation.forward * (gun.Strength + math.abs(playerVelocity.Linear.x)));
-
-                        //ComponentExtensions.ApplyLinearImpulse
-                        //(ref velocity,
-                        //    mass,
-                        //    translate * (gun.Strength + math.abs(playerVelocity.Linear.x)));
-
-                        // Direction Functions
-                        //Matrix4x4 version of Transform.InverseTransformDirection
-
-                        //Matrix4x4 matrix4x4 = Matrix4x4.identity;
-                        //matrix4x4.SetTRS(translate, rotation, Vector3.one);
-
-                        //Vector3 localDirection = Matrix4x4.Inverse(MultiplyVector(worldDirection);
-
                         velocity.Linear = forward * (gun.Strength + math.abs(playerVelocity.Linear.x));
-                        //velocity.Linear = forward * gun.Strength;
-
-
-
                         EntityManager.SetComponentData(e, translation);
                         EntityManager.SetComponentData(e, rotation);
                         EntityManager.SetComponentData(e, velocity);
-
                         gunScript.CreateBulletInstance(e);
-
 
                     }
                     gun.Duration = 0;
                 }
-
-
-
-
                 gun.WasFiring = 1;
             }
         ).Run();

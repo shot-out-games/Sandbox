@@ -1437,7 +1437,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 68808299}
-  m_LocalRotation: {x: 0.098537624, y: 0.0000000042806607, z: -4.238689e-10, w: 0.99513334}
+  m_LocalRotation: {x: 0.09853762, y: -0.000000004280661, z: 4.238689e-10, w: 0.99513334}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -10990,7 +10990,6 @@ MonoBehaviour:
     pin: {fileID: 2146206279}
     weight: 1
     effector: 5
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 1
     usingAim: 1
     aimIk: {fileID: 1117909963}
@@ -11002,7 +11001,6 @@ MonoBehaviour:
     pin: {fileID: 1884636949}
     weight: 1
     effector: 8
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 1
     usingAim: 1
     aimIk: {fileID: 1459850059}
@@ -11357,7 +11355,6 @@ MonoBehaviour:
     pin: {fileID: 1172690267}
     weight: 1
     effector: 5
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 1
     usingAim: 1
     aimIk: {fileID: 793903903}
@@ -11369,7 +11366,6 @@ MonoBehaviour:
     pin: {fileID: 1779644654}
     weight: 1
     effector: 8
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 1
     usingAim: 1
     aimIk: {fileID: 276399862}
@@ -14438,7 +14434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2c41250841bd5249973a457031eeeac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navigationStates: 2
+  navigationStates: 1
   useDistanceFromStation: 0
   switchUp: 0
   switchUpTime: 3
@@ -14595,7 +14591,7 @@ NavMeshAgent:
   m_Acceleration: 300
   avoidancePriority: 50
   m_AngularSpeed: 0
-  m_StoppingDistance: 0.5
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -14671,12 +14667,13 @@ MonoBehaviour:
     pin: {fileID: 0}
     weight: 0
     effector: 0
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 1
     usingAim: 1
     aimIk: {fileID: 0}
     active: 1
     aimTransform: {fileID: 0}
+  currentStrikeDistanceZoneBegin: 0
+  currentStrikeDistanceAdjustment: 0
   moveList: []
   movesInspector: {fileID: 831183085}
   active: 1
@@ -14777,7 +14774,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 25.65
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -18277,10 +18274,9 @@ MonoBehaviour:
   - playerMove: 0
     enemyMove: 1
     target: {fileID: 0}
-    pin: {fileID: 0}
+    pin: {fileID: 880219570}
     weight: 1
     effector: 0
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 0
     usingAim: 0
     aimIk: {fileID: 0}
@@ -18289,10 +18285,9 @@ MonoBehaviour:
   - playerMove: 0
     enemyMove: 1
     target: {fileID: 0}
-    pin: {fileID: 0}
+    pin: {fileID: 880219570}
     weight: 1
     effector: 0
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 0
     usingAim: 0
     aimIk: {fileID: 0}
@@ -18473,8 +18468,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880219569}
   m_LocalRotation: {x: 0.000000089406946, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0.75}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 650348307}
   m_RootOrder: 6
@@ -19220,7 +19215,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54.85
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -21337,7 +21332,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 998044422}
-  m_LocalRotation: {x: 0.062324416, y: -0.000000017306572, z: 0.000000001080723, w: 0.998056}
+  m_LocalRotation: {x: 0.062324416, y: 0.000000017306572, z: -0.000000001080723, w: 0.998056}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -29289,7 +29284,6 @@ MonoBehaviour:
     pin: {fileID: 811951915}
     weight: 1
     effector: 5
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 1
     usingAim: 1
     aimIk: {fileID: 1774875672}
@@ -29301,7 +29295,6 @@ MonoBehaviour:
     pin: {fileID: 801716344}
     weight: 1
     effector: 8
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 1
     usingAim: 1
     aimIk: {fileID: 1809318954}
@@ -52672,7 +52665,6 @@ MonoBehaviour:
     pin: {fileID: 1788702726}
     weight: 1
     effector: 5
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 1
     usingAim: 1
     aimIk: {fileID: 1538945987}
@@ -52684,7 +52676,6 @@ MonoBehaviour:
     pin: {fileID: 295519426}
     weight: 1
     effector: 8
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 1
     usingAim: 1
     aimIk: {fileID: 7247934}
@@ -53672,7 +53663,6 @@ MonoBehaviour:
     pin: {fileID: 473620637}
     weight: 1
     effector: 5
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 1
     usingAim: 1
     aimIk: {fileID: 583042147}
@@ -53684,7 +53674,6 @@ MonoBehaviour:
     pin: {fileID: 24264091}
     weight: 1
     effector: 8
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 1
     usingAim: 1
     aimIk: {fileID: 142111923}
@@ -66801,7 +66790,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6741819119736474326}
-  m_LocalRotation: {x: 0.008836766, y: -0.7070516, z: 0.008836767, w: 0.70705163}
+  m_LocalRotation: {x: 0.008836758, y: -0.7070515, z: 0.008836758, w: 0.7070517}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -67402,7 +67391,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6741819120926002638}
-  m_LocalRotation: {x: -0.016852682, y: -0.7069059, z: -0.01685268, w: 0.706906}
+  m_LocalRotation: {x: -0.016852682, y: -0.7069059, z: -0.016852682, w: 0.706906}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -77895,7 +77884,6 @@ MonoBehaviour:
     pin: {fileID: 8829560765798511556}
     weight: 1
     effector: 8
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 0
     usingAim: 1
     aimIk: {fileID: 8829560765102659188}
@@ -77907,7 +77895,6 @@ MonoBehaviour:
     pin: {fileID: 8829560765377080965}
     weight: 1
     effector: 5
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 0
     usingAim: 1
     aimIk: {fileID: 8829560765589368748}
@@ -100254,7 +100241,6 @@ MonoBehaviour:
     pin: {fileID: 8829560764978680963}
     weight: 1
     effector: 8
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 0
     usingAim: 1
     aimIk: {fileID: 8829560765675314886}
@@ -100266,7 +100252,6 @@ MonoBehaviour:
     pin: {fileID: 8829560765335430603}
     weight: 1
     effector: 5
-    calculatedStrikeDistanceZoneBegin: 0
     usingFbb: 0
     usingAim: 1
     aimIk: {fileID: 8829560765605015731}

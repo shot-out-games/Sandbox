@@ -39,7 +39,7 @@ public class EnemyMeleeMovementSystem : JobComponentSystem
                     float dist = Vector3.Distance(enemyMove.target.position, enemyPosition);
                     bool hasMelee = EntityManager.HasComponent(entity, typeof(EnemyMelee));
                     float backupZoneClose = hasMelee
-                        ? animator.GetComponent<EnemyMelee>().strikeDistanceAdjustment
+                        ? animator.GetComponent<EnemyMelee>().currentStrikeDistanceZoneBegin
                         : enemyMovementComponent.combatStrikeDistanceZoneEnd;
                     float backupZoneFar = enemyMovementComponent.combatStrikeDistanceZoneEnd;
                     bool strike = false;
@@ -112,7 +112,7 @@ public class EnemyMeleeMovementSystem : JobComponentSystem
                     }
                     else if (dist < chaseRange)
                     {
-                        if (hasMelee) animator.GetComponent<EnemyMelee>().moveUsing.strikeDistanceAdjustment = 1;//reset when out of strike range
+                        if (hasMelee) animator.GetComponent<EnemyMelee>().currentStrikeDistanceAdjustment = 1;//reset when out of strike range
                         MoveState = MoveStates.Chase;
                         animator.SetInteger("Zone", 1);
                         enemyMove.SetDestination();

@@ -12,8 +12,7 @@ public class Moves
     public Transform pin = null;
     public float weight;
     public FullBodyBipedEffector effector;
-    [HideInInspector]
-    public float calculatedStrikeDistanceZoneBegin;
+    //public float calculatedStrikeDistanceZoneBegin;
     public bool usingFbb = true;
     public bool usingAim = true;
     public AimIK aimIk;
@@ -21,13 +20,17 @@ public class Moves
     public Transform aimTransform = null;
 
 
-    public float strikeDistanceAdjustment
-    { get; set; } = 1.0f;
+    //   { get; set; } = 1.0f;
 
-    public void CalculateStrikeDistanceFromPinPosition(Transform _transform)
+    public float CalculateStrikeDistanceFromPinPosition(Transform _transform)
     {
+        if (pin == null) return -1;
+        
         float offset = .23f;
-        calculatedStrikeDistanceZoneBegin = Vector3.Distance(_transform.position, pin.position) -  offset;//.25 
+        float calculatedStrikeDistanceZoneBegin = Vector3.Distance(_transform.position, pin.position) - offset;//.25 
+        Debug.Log("strike start " + calculatedStrikeDistanceZoneBegin);
+        return calculatedStrikeDistanceZoneBegin;
+
     }
 
 }
