@@ -15,7 +15,9 @@ public class Moves
     //public float calculatedStrikeDistanceZoneBegin;
     public bool usingFbb = true;
     public bool usingAim = true;
+    public bool usingLimb = true;
     public AimIK aimIk;
+    public FABRIK limbIk;
     public bool active = true;
     public Transform aimTransform = null;
 

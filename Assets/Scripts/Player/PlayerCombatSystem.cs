@@ -16,9 +16,6 @@ namespace SandBox.Player
             Entities.WithoutBurst().ForEach(
                 (
                     InputController inputController,
-                    Animator animator,
-                    Rigidbody rb,
-                    PlayerMove playerMove,
                     PlayerCombat playerCombat) =>
                 {
 

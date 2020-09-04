@@ -15,9 +15,12 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     private Rigidbody rb;
     [HideInInspector]
     public Transform AimTransform;
+    [HideInInspector]
     public FullBodyBipedIK ik;
     [HideInInspector]
     public AimIK aim;
+    [HideInInspector]
+    public FABRIK limb;
     public Moves moveUsing = new Moves();
     public float  currentStrikeDistanceZoneBegin;
     public float currentStrikeDistanceAdjustment;
@@ -65,6 +68,11 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
                 }
 
+                if (move.limbIk)
+                {
+                    limb = move.limbIk;
+                }
+
                 currentStrikeDistanceZoneBegin = move.CalculateStrikeDistanceFromPinPosition(transform);
                 move.target = moveUsing.target;//default target assigned in system
                 moveList.Add(move);
@@ -81,6 +89,7 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
         combatAction = Random.Range(1, moveList.Count + 1);
         moveUsing = moveList[combatAction - 1];
         aim = moveUsing.aimIk;
+        limb = moveUsing.limbIk;
         AimTransform = moveUsing.aimTransform;
         if (aim != null)
         {
@@ -90,6 +99,10 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
                 AimTransform = aim.solver.bones[boneCount - 1].transform;
             }
             moveUsing.aimTransform = AimTransform;
+        }
+        if (limb != null)
+        {
+            //
         }
 
 
@@ -120,6 +133,10 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
         {
             aim.enabled = true;
         }
+        if (moveUsing.usingLimb)
+        {
+            limb.enabled = true;
+        }
     }
 
     public void StopAimIK()
@@ -127,6 +144,10 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
         if (moveUsing.usingAim)
         {
             aim.enabled = false;
+        }
+        if (moveUsing.usingLimb)
+        {
+            limb.enabled = false;
         }
     }
 
@@ -152,7 +173,24 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
     public void Aim()
     {
+
         float hitWeight = animator.GetFloat("HitWeight");
+
+        if (limb != null)
+        {
+            if (moveUsing.usingLimb && limb.enabled)
+            {
+
+                limb.solver.IKPosition = moveUsing.target.position;
+                limb.solver.IKPositionWeight = hitWeight;
+                limb.solver.target = moveUsing.target;
+                //Debug.Log("mv " + moveUsing.target.position);
+                limb.solver.Update();
+                //Debug.Log("hw " + hitWeight);
+            }
+        }
+
+
 
         if (ik == null || aim == null || moveUsing.target == null) return;
         //if (aim == null || !ik.enabled || !aim.enabled) return;
@@ -172,6 +210,8 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
             aim.solver.IKPositionWeight = hitWeight * moveUsing.weight;
             aim.solver.Update();
         }
+
+
 
 
         if (moveUsing.usingFbb && ik.enabled)

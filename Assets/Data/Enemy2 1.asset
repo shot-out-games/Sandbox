@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Enemy2 1
   m_EditorClassIdentifier: 
   speed: 1
-  combatStrikeDistanceZoneBegin: 1
-  combatStrikeDistanceZoneEnd: 2
-  combatRangeDistance: 4
+  combatStrikeDistanceZoneBegin: 0.5
+  combatStrikeDistanceZoneEnd: 1
+  combatRangeDistance: 3
   shootRangeDistance: 6
   chaseRange: 8
   aggression: 50
