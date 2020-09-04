@@ -121,6 +121,9 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
             }
         );
 
+        dstManager.AddComponentData(entity, new CheckedComponent());
+
+
 
     }
 

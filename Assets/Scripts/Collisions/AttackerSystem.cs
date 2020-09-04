@@ -45,16 +45,10 @@ public class AttackerSystem : JobComponentSystem
                 bool isEnemy_a = EntityManager.HasComponent<EnemyComponent>(collision_entity_a);
                 bool isEnemy_b = EntityManager.HasComponent<EnemyComponent>(collision_entity_b);
 
-                bool hasTrigger_a = EntityManager.HasComponent<TriggerComponent>(collision_entity_a);
-                bool hasTrigger_b = EntityManager.HasComponent<TriggerComponent>(collision_entity_b);
-                if (hasTrigger_a == false || hasTrigger_b == false) return;
+                //bool hasTrigger_a = EntityManager.HasComponent<CheckedComponent>(collision_entity_a);
+                //bool hasTrigger_b = EntityManager.HasComponent<CheckedComponent>(collision_entity_b);
 
 
-                var trigger_a = EntityManager.GetComponentData<TriggerComponent>(collision_entity_a);
-                var trigger_b = EntityManager.GetComponentData<TriggerComponent>(collision_entity_b);
-
-                bool triggerChecked_a = trigger_a.triggerChecked;
-                bool triggerChecked_b = trigger_b.triggerChecked;
 
 
                 //Debug.Log("player a " + isPlayer_a + " enemy b " + isEnemy_b);
@@ -64,31 +58,49 @@ public class AttackerSystem : JobComponentSystem
 
 
                 float hw = animator.GetFloat("HitWeight");
-                Debug.Log("hw " + hw);
+                //Debug.Log("hw " + hw);
 
                 if (isPlayer_b && isEnemy_a) //b is ammo so causes damage to entity
                 {
                     if (type_b == (int)TriggerType.Chest &&
                         (type_a == (int)TriggerType.LeftHand || type_a == (int)TriggerType.RightHand)
                         && hw > .05
-                        && triggerChecked_a == false
-                        && triggerChecked_b == false
                         )
                     {
-                        float damage = 1 * hw;
 
-                        ecb.AddComponent<DamageComponent>(collision_entity_b,
-                            new DamageComponent { DamageLanded = 0, DamageReceived = damage });
 
-                        trigger_a.triggerChecked = true;
-                        trigger_b.triggerChecked = true;
-                        ecb.SetComponent<TriggerComponent>(collision_entity_a, trigger_a);
-                        ecb.SetComponent<TriggerComponent>(collision_entity_a, trigger_b);
+                        var trigger_a = EntityManager.GetComponentData<CheckedComponent>(collision_entity_a);
+                        var trigger_b = EntityManager.GetComponentData<CheckedComponent>(collision_entity_b);
 
-                        //ecb.AddComponent<DamageComponent>(collision_entity_a,
-                        // new DamageComponent { DamageLanded = hw * 10, DamageReceived = 0 });
+                        bool triggerChecked_a = trigger_a.collisionChecked;
+                        bool triggerChecked_b = trigger_b.collisionChecked;
 
-                        Debug.Log("player b " + damage);
+                        if (triggerChecked_a == false && triggerChecked_b == false)
+                        {
+
+                            float hitPower = 10;
+                            bool hasMelee = EntityManager.HasComponent<MeleeComponent>(collision_entity_a);
+                            if (hasMelee)
+                            {
+                                hitPower = EntityManager.GetComponentData<MeleeComponent>(collision_entity_a).hitPower;
+                            }
+
+                            float damage = hitPower * hw;
+
+                            ecb.AddComponent<DamageComponent>(collision_entity_b,
+                                new DamageComponent { DamageLanded = 0, DamageReceived = damage });
+
+                            trigger_a.collisionChecked = true;
+                            trigger_b.collisionChecked = true;
+                            ecb.SetComponent<CheckedComponent>(collision_entity_a, trigger_a);
+                            ecb.SetComponent<CheckedComponent>(collision_entity_a, trigger_b);
+
+                            //ecb.AddComponent<DamageComponent>(collision_entity_a,
+                            // new DamageComponent { DamageLanded = hw * 10, DamageReceived = 0 });
+
+                            Debug.Log("player b " + damage);
+
+                        }
 
                     }
                 }
@@ -97,26 +109,39 @@ public class AttackerSystem : JobComponentSystem
                     if (type_a == (int)TriggerType.Chest &&
                         (type_b == (int)TriggerType.LeftHand || type_b == (int)TriggerType.RightHand)
                         && hw > .05
-                        && triggerChecked_a == false
-                        && triggerChecked_b == false
                         )
                     {
 
-                        float damage = 1 * hw;
 
-                        ecb.AddComponent<DamageComponent>(collision_entity_a,
-                            new DamageComponent { DamageLanded = 0, DamageReceived = damage });
+                        var trigger_a = EntityManager.GetComponentData<CheckedComponent>(collision_entity_a);
+                        var trigger_b = EntityManager.GetComponentData<CheckedComponent>(collision_entity_b);
 
-                        trigger_a.triggerChecked = true;
-                        trigger_b.triggerChecked = true;
-                        ecb.SetComponent<TriggerComponent>(collision_entity_a, trigger_a);
-                        ecb.SetComponent<TriggerComponent>(collision_entity_a, trigger_b);
+                        bool triggerChecked_a = trigger_a.collisionChecked;
+                        bool triggerChecked_b = trigger_b.collisionChecked;
 
 
-                        //ecb.AddComponent<DamageComponent>(collision_entity_b,
-                        // new DamageComponent { DamageLanded = hw * 10, DamageReceived = 0 });
+                        if (triggerChecked_a == false && triggerChecked_b == false)
+                        {
 
-                        Debug.Log("player a " + hw);
+                            float hitPower = 10;
+                            bool hasMelee = EntityManager.HasComponent<MeleeComponent>(collision_entity_b);
+                            if (hasMelee)
+                            {
+                                hitPower = EntityManager.GetComponentData<MeleeComponent>(collision_entity_b).hitPower;
+                            }
+
+                            float damage = hitPower * hw;
+
+                            ecb.AddComponent<DamageComponent>(collision_entity_a,
+                                new DamageComponent { DamageLanded = 0, DamageReceived = damage });
+
+                            trigger_a.collisionChecked = true;
+                            trigger_b.collisionChecked = true;
+                            ecb.SetComponent<CheckedComponent>(collision_entity_a, trigger_a);
+                            ecb.SetComponent<CheckedComponent>(collision_entity_a, trigger_b);
+
+                            Debug.Log("player a " + hw);
+                        }
                     }
                 }
                 else if (type_b == (int)TriggerType.Ammo)//b is ammo so causes damage to entity

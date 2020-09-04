@@ -20,6 +20,13 @@ public struct TriggerComponent : IComponentData
     public Entity ParentEntity;
 }
 
+
+public struct CheckedComponent : IComponentData
+{
+    public bool collisionChecked;
+
+}
+
 //[InternalBufferCapacity(8)]
 public struct CollisionComponent : IComponentData
 {

@@ -129,6 +129,9 @@ public class EnemyComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 
         dstManager.AddComponentData(entity, new CharacterSaveComponent { saveIndex = index });
 
+        dstManager.AddComponentData(entity, new CheckedComponent());
+
+
 
 
 

@@ -80,6 +80,7 @@ public enum AttackStages
 public struct MeleeComponent : IComponentData
 {
     public bool Available;
+    public float hitPower;
 }
 public struct EnemyAttackComponent : IComponentData
 {

@@ -35,6 +35,7 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     private EntityManager entityManager;
     private Entity meleeEntity;
     public bool active = true;
+    public float hitPower = 10f;
 
 
     void Start()
@@ -195,7 +196,7 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     {
         entityManager = dstManager;
         meleeEntity = entity;
-        entityManager.AddComponentData(meleeEntity, new MeleeComponent { Available = active });
+        entityManager.AddComponentData(meleeEntity, new MeleeComponent { Available = active, hitPower = hitPower });
         entityManager.AddComponentData(entity, new EnemyAttackComponent());
 
     }
@@ -217,7 +218,7 @@ public class EnemyMeleeSystem : JobComponentSystem
         (
             (
                 ref EnemyAttackComponent enemyAttackComponent,
-                ref TriggerComponent trigger,
+                ref CheckedComponent checkedComponent,
                 in Entity entity,
                 in EnemyMove enemyMove,
                 in EnemyMelee enemyCombat,
@@ -269,7 +270,7 @@ public class EnemyMeleeSystem : JobComponentSystem
                         //Debug.Log("strike " + adjStrikeDistance);
                         enemyCombat.hitLanded = false;
                         enemyCombat.hitReceived = false;
-                        trigger.triggerChecked = false;
+                        checkedComponent.collisionChecked = false;
                         enemyAttackComponent = new EnemyAttackComponent() { AttackStage = AttackStages.No };
                     }
 
