@@ -28,7 +28,8 @@ public class HealthSystem : JobComponentSystem
             {
                 //healthComponent.TotalDamageReceived += damageComponent.DamageReceived + damageComponent.DamageLanded; //kenney
                 healthComponent.TotalDamageReceived += damageComponent.DamageReceived;
-                healthComponent.TotalDamageLanded += damageComponent.DamageLanded;
+                //healthComponent.TotalDamageLanded += damageComponent.DamageLanded;
+                Debug.Log("dam  " + damageComponent.DamageReceived);
                 ecb.RemoveComponent<DamageComponent>(entity);
 
                 var dead = EntityManager.GetComponentData<DeadComponent>(entity);

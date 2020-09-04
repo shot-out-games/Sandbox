@@ -8,16 +8,6 @@ public class Trigger : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField]
     private int index;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("tr");
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("co");
-
-    }
 
 
 

@@ -217,6 +217,7 @@ public class EnemyMeleeSystem : JobComponentSystem
         (
             (
                 ref EnemyAttackComponent enemyAttackComponent,
+                ref TriggerComponent trigger,
                 in Entity entity,
                 in EnemyMove enemyMove,
                 in EnemyMelee enemyCombat,
@@ -243,6 +244,7 @@ public class EnemyMeleeSystem : JobComponentSystem
                     if (attackStarted && enemyAttackComponent.AttackStage == AttackStages.No)
                     {
                         enemyAttackComponent = new EnemyAttackComponent() { AttackStage = AttackStages.Start };
+                        //trigger.triggerChecked = false;
                         enemyCombat.SelectMove();
                     }
                     else if (attackStarted && enemyAttackComponent.AttackStage == AttackStages.Start)
@@ -267,6 +269,7 @@ public class EnemyMeleeSystem : JobComponentSystem
                         //Debug.Log("strike " + adjStrikeDistance);
                         enemyCombat.hitLanded = false;
                         enemyCombat.hitReceived = false;
+                        trigger.triggerChecked = false;
                         enemyAttackComponent = new EnemyAttackComponent() { AttackStage = AttackStages.No };
                     }
 

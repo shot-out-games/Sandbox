@@ -28,7 +28,7 @@ public class Moves
         
         float offset = .23f;
         float calculatedStrikeDistanceZoneBegin = Vector3.Distance(_transform.position, pin.position) - offset;//.25 
-        Debug.Log("strike start " + calculatedStrikeDistanceZoneBegin);
+        //Debug.Log("strike start " + calculatedStrikeDistanceZoneBegin);
         return calculatedStrikeDistanceZoneBegin;
 
     }

@@ -135,7 +135,7 @@ public class RaycastSystem : SystemBase
 
 
                     Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hitDown.RigidBodyIndex].Entity; //grounded
-                    Debug.Log("hd " + hitDown.Entity);
+                    //Debug.Log("hd " + hitDown.Entity);
 
                     //Filter replaces tag
                     //if (EntityManager.HasComponent(e, typeof(TriggerComponent)))

@@ -13,6 +13,7 @@ public struct TriggerComponent : IComponentData
     public int Type;
     public int index;
     public int CurrentFrame;
+    public bool triggerChecked;
     //parent of trigger ie bone 
     //if trigger is bullet then just returns bullet not shooter
     //use ammo component for shooter (owner)
@@ -78,9 +79,6 @@ public class CollisionSystem : JobComponentSystem
 
             if (triggerComponent_a.Type == triggerComponent_b.Type) return;
 
-
-
-
             CollisionComponent collisionComponent =
                  new CollisionComponent()
                  {
@@ -122,7 +120,7 @@ public class CollisionSystem : JobComponentSystem
                 CommandBuffer.AddComponent(ch_b, new PowerTriggerComponent { TriggerType = collisionComponent.Part_other_entity });
             }
 
-
+            
         }
     }
 

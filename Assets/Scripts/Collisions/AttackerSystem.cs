@@ -16,8 +16,14 @@ public class AttackerSystem : JobComponentSystem
 
         Entities.WithoutBurst().ForEach(
                 //(HealthBar healthBar, DynamicBuffer<CollisionComponent> collisionComponent,
-                (HealthBar healthBar, CollisionComponent collisionComponent,
-                RatingsComponent ratingsComponent, Animator animator, in Entity entity, in Transform transform) =>
+                (
+                    Animator animator,
+                    HealthBar healthBar,
+                    in CollisionComponent collisionComponent,
+                    in Entity entity
+
+
+                    ) =>
             {
                 bool dead = false;
                 if (EntityManager.HasComponent<DeadComponent>(entity))
@@ -36,46 +42,81 @@ public class AttackerSystem : JobComponentSystem
 
                 bool isPlayer_a = EntityManager.HasComponent<PlayerComponent>(collision_entity_a);
                 bool isPlayer_b = EntityManager.HasComponent<PlayerComponent>(collision_entity_b);
-                bool isEnemy_a = EntityManager.HasComponent<PlayerComponent>(collision_entity_a);
-                bool isEnemy_b = EntityManager.HasComponent<PlayerComponent>(collision_entity_b);
+                bool isEnemy_a = EntityManager.HasComponent<EnemyComponent>(collision_entity_a);
+                bool isEnemy_b = EntityManager.HasComponent<EnemyComponent>(collision_entity_b);
+
+                bool hasTrigger_a = EntityManager.HasComponent<TriggerComponent>(collision_entity_a);
+                bool hasTrigger_b = EntityManager.HasComponent<TriggerComponent>(collision_entity_b);
+                if (hasTrigger_a == false || hasTrigger_b == false) return;
 
 
-                Debug.Log("player a " + isPlayer_a);
-                Debug.Log("player b " + isPlayer_b);
-                Debug.Log("enemy a " + isEnemy_a);
-                Debug.Log("enemy b " + isEnemy_b);
+                var trigger_a = EntityManager.GetComponentData<TriggerComponent>(collision_entity_a);
+                var trigger_b = EntityManager.GetComponentData<TriggerComponent>(collision_entity_b);
 
+                bool triggerChecked_a = trigger_a.triggerChecked;
+                bool triggerChecked_b = trigger_b.triggerChecked;
+
+
+                //Debug.Log("player a " + isPlayer_a + " enemy b " + isEnemy_b);
+                //Debug.Log("player b " + isPlayer_b + " enemy a " + isEnemy_a);
                 //if (attackStarted && enemyAttackComponent.AttackStage == AttackStages.No)
 
 
 
                 float hw = animator.GetFloat("HitWeight");
-                //Debug.Log("hw " + h);
+                Debug.Log("hw " + hw);
 
                 if (isPlayer_b && isEnemy_a) //b is ammo so causes damage to entity
                 {
                     if (type_b == (int)TriggerType.Chest &&
-                        (type_a == (int)TriggerType.LeftHand || type_a == (int)TriggerType.RightHand))
+                        (type_a == (int)TriggerType.LeftHand || type_a == (int)TriggerType.RightHand)
+                        && hw > .05
+                        && triggerChecked_a == false
+                        && triggerChecked_b == false
+                        )
                     {
-                        ecb.AddComponent<DamageComponent>(collision_entity_b,
-                            new DamageComponent { DamageLanded = 0, DamageReceived = hw * 10 });
+                        float damage = 1 * hw;
 
-                        ecb.AddComponent<DamageComponent>(collision_entity_a,
-                            new DamageComponent { DamageLanded = hw * 10, DamageReceived = 0 });
+                        ecb.AddComponent<DamageComponent>(collision_entity_b,
+                            new DamageComponent { DamageLanded = 0, DamageReceived = damage });
+
+                        trigger_a.triggerChecked = true;
+                        trigger_b.triggerChecked = true;
+                        ecb.SetComponent<TriggerComponent>(collision_entity_a, trigger_a);
+                        ecb.SetComponent<TriggerComponent>(collision_entity_a, trigger_b);
+
+                        //ecb.AddComponent<DamageComponent>(collision_entity_a,
+                        // new DamageComponent { DamageLanded = hw * 10, DamageReceived = 0 });
+
+                        Debug.Log("player b " + damage);
 
                     }
                 }
                 else if (isPlayer_a && isEnemy_b) //b is ammo so causes damage to entity
                 {
                     if (type_a == (int)TriggerType.Chest &&
-                        (type_b == (int)TriggerType.LeftHand || type_b == (int)TriggerType.RightHand))
+                        (type_b == (int)TriggerType.LeftHand || type_b == (int)TriggerType.RightHand)
+                        && hw > .05
+                        && triggerChecked_a == false
+                        && triggerChecked_b == false
+                        )
                     {
+
+                        float damage = 1 * hw;
+
                         ecb.AddComponent<DamageComponent>(collision_entity_a,
-                            new DamageComponent { DamageLanded = 0, DamageReceived = hw * 10 });
+                            new DamageComponent { DamageLanded = 0, DamageReceived = damage });
 
-                        ecb.AddComponent<DamageComponent>(collision_entity_b,
-                            new DamageComponent { DamageLanded = hw * 10, DamageReceived = 0 });
+                        trigger_a.triggerChecked = true;
+                        trigger_b.triggerChecked = true;
+                        ecb.SetComponent<TriggerComponent>(collision_entity_a, trigger_a);
+                        ecb.SetComponent<TriggerComponent>(collision_entity_a, trigger_b);
 
+
+                        //ecb.AddComponent<DamageComponent>(collision_entity_b,
+                        // new DamageComponent { DamageLanded = hw * 10, DamageReceived = 0 });
+
+                        Debug.Log("player a " + hw);
                     }
                 }
                 else if (type_b == (int)TriggerType.Ammo)//b is ammo so causes damage to entity
@@ -92,29 +133,11 @@ public class AttackerSystem : JobComponentSystem
                         bool isEnemy = (EntityManager.HasComponent(shooter, typeof(EnemyComponent)));
 
                         float damage = EntityManager.GetComponentData<GunComponent>(shooter).Damage;
-                        //bool shootSelf = false;
-                        //if (EntityManager.HasComponent<RewindComponent>(shooter))
-                        //{
-                        // shootSelf = EntityManager.GetComponentData<AmmoComponent>(collision_entity_b).rewinding;
-                        //}
-
-                        //if(shootSelf == true && shooter == collision_entity_a)
-                        //{
-                        //    AmmoComponent ammo = EntityManager.GetComponentData<AmmoComponent>(collision_entity_b); ;
-                        //    ammo.AmmoDead = true;
-                        //    ecb.SetComponent<AmmoComponent>(collision_entity_b, ammo);
-                        //    ecb.AddComponent<DamageComponent>(collision_entity_a,
-                        //        new DamageComponent { DamageLanded = 0, DamageReceived = damage });
-                        //}
                         if (shooter != collision_entity_a)
                         {
-                            //float f = 10;
-                            //if (isEnemy) f = 1;
                             AmmoComponent ammo = EntityManager.GetComponentData<AmmoComponent>(collision_entity_b); ;
                             ammo.AmmoDead = true;
                             ecb.SetComponent<AmmoComponent>(collision_entity_b, ammo);
-                            //                            ecb.AddComponent<DamageComponent>(collision_entity_a,
-                            //                             new DamageComponent { DamageLanded = 0, DamageReceived = damage / f });
                             ecb.AddComponent<DamageComponent>(collision_entity_a,
                                 new DamageComponent { DamageLanded = 0, DamageReceived = damage });
                         }
