@@ -134,6 +134,7 @@ public class GameInterfaceSystem : JobComponentSystem
         Entities.WithoutBurst().ForEach((EnemyMove enemyMove, Entity entity, NavMeshAgent agent, RatingsComponent enemyRatings, DeadComponent dead) =>
         {
             enemyMove.moveSpeed = paused || dead.isDead ? 0 : enemyRatings.speed;
+            //agent.speed = paused || dead.isDead ? 0 : enemyRatings.speed;
             //agent.speed = enemyMove.moveSpeed;
             EntityManager.SetComponentData<Pause>(entity, new Pause { value = pause });
         }

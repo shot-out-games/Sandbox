@@ -26,24 +26,25 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
 {
     [SerializeField] AimIK aim;
     [SerializeField] FullBodyBipedIK ik;
+    [HideInInspector]
     public Transform target;
     public Transform aimTransform;
     public bool weaponRaised = false;
     [Range(0.0f, 1.0f)] [SerializeField] private float aimWeight = 1.0f;
     private EntityManager manager;
     private Entity e;
-    [SerializeField]
+    //[SerializeField]
     private bool dualMode;
     //[SerializeField]
     public Player player;
     public int playerId; // The Rewired player id of this character
     [SerializeField] private bool cursorTargeting = true;
     [SerializeField] private GameObject crossHair;
-    [SerializeField] private float crossHairRange = 18.0f;
+    //[SerializeField] private float crossHairRange = 18.0f;
     [Range(0.0f, 100.0f)]
     [SerializeField] private float cameraZ = 50f;
 
-    [Range(0.0f, 1f)] [SerializeField] private float aimAngle;
+    private float aimAngle;
 
     //[SerializeField] private TouchJoystick touchJoystick;
 

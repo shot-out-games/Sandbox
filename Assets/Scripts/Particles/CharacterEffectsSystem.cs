@@ -17,10 +17,11 @@ public class CharacterEffectsSystem : JobComponentSystem
 
         Entities.WithoutBurst().ForEach(
             (
+                in Pause pause,
                 in DamageComponent damageComponent,
                 in Impulse impulse) =>
             {
-                if (damageComponent.DamageReceived == 0) return;
+                if (damageComponent.DamageReceived == 0 || pause.value == 1) return;
                 impulse.impulseSource.GenerateImpulse();
 
             }
@@ -30,10 +31,12 @@ public class CharacterEffectsSystem : JobComponentSystem
 
         Entities.WithoutBurst().ForEach(
             (
-                InputController input, ControlBarComponent controlBar,
+                InputController input, ControlBarComponent controlBar, in Pause pause,
                 in Impulse impulse) =>
             {
                 //if (input.rightTriggerDown == true && controlBar.value < 25f) 
+                if (pause.value == 1) return;
+
                 if (input.leftTriggerDown == true)
                 {
                         impulse.impulseSource.GenerateImpulse();
@@ -50,21 +53,28 @@ public class CharacterEffectsSystem : JobComponentSystem
         Entities.WithoutBurst().ForEach(
             (
                 Entity e,
+                in Pause pause,
                 in EffectsComponent effectsComponent,
                 in DamageComponent damageComponent,
-                in Transform transform, in EffectsManager effects) =>
+                in Transform transform,
+                in Animator animator,
+                in EffectsManager effects) =>
             {
-                if (damageComponent.DamageReceived == 0) return;
+            if (damageComponent.DamageReceived == 0 || pause.value == 1) return;
 
-                bool skip = false;
-                if (EntityManager.HasComponent(e, typeof(EnemyComponent)))
-                {
-                    skip = EntityManager.GetComponentData<EnemyComponent>(e).invincible;
-                }
+            bool skip = false;
+                //if (EntityManager.HasComponent(e, typeof(EnemyComponent)))
+                //{
+                //    skip = EntityManager.GetComponentData<EnemyComponent>(e).invincible;
+                //}
 
                 if (skip == false)
-                {
+            {
+
+                animator.SetInteger("HitReact", 1);
+
                     AudioSource audioSource = effects.audioSource;
+
 
                     if (effects.playerHurtEffect)
                     {

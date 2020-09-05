@@ -121,6 +121,7 @@ public class GunScript : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameO
 
     public void CreateBulletInstance(Entity e)
     {
+        UpdateSystem();
         GameObject go = Instantiate(BulletPrefab, AmmoStartLocation.position, AmmoStartLocation.rotation);
         //GameObject go = Instantiate(BulletPrefab, AmmoStartLocation.position, Quaternion.identity);
         BulletInstances.Add(go);

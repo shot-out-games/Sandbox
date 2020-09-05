@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Unity.Entities;
 using Unity.Jobs;
+using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -128,6 +130,69 @@ public class EnemyMovementSystem : JobComponentSystem
 
             }
         ).Run();
+
+
+
+
+        Entities.WithoutBurst().ForEach(
+              (
+                  Entity e,
+                  EnemyMove enemyMove,
+                  in PhysicsVelocity physicsVelocity
+              ) =>
+              {
+                  AudioSource audioSource = enemyMove.audioSource;
+
+                  Vector3 velocity = enemyMove.agent.velocity;
+                  float speed = velocity.magnitude;
+
+                  if (speed >= .01f && math.abs(velocity.y) <= .000001f)
+                  {
+                      if (enemyMove.clip && audioSource)
+                      {
+                          audioSource.pitch = speed / 2f;
+                          //Debug.Log("pitch n " + velocity.normalized);
+                          //Debug.Log("pitch  mag " + velocity.normalized.magnitude);
+                          if (audioSource.isPlaying == false)
+                          {
+                              audioSource.clip = enemyMove.clip;
+                              audioSource.Play();
+                                //Debug.Log("clip " + audioSource.clip);
+
+                            }
+
+                      }
+
+                      if (enemyMove.ps)
+                      {
+                          if (enemyMove.ps.isPlaying == false)
+                          {
+                              enemyMove.ps.transform.SetParent(enemyMove.transform);
+                              enemyMove.ps.Play(true);
+                          }
+                      }
+                  }
+                  else
+                  {
+                      if (audioSource != null) audioSource.Stop();
+                      if (enemyMove.ps != null) enemyMove.ps.Stop();
+
+                  }
+
+
+
+
+              }
+          ).Run();
+
+
+
+
+
+
+
+
+
 
 
         return default;

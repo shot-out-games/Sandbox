@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
 
+
+
 public struct EnemyWeaponMovementComponent : IComponentData, IMovement
 {
     public float speedMultiple;
@@ -20,8 +22,6 @@ public struct EnemyWeaponMovementComponent : IComponentData, IMovement
 
     public float originalSwitchUpTime;
     public float currentSwitchUpTime;
-
-
 
 }
 
@@ -151,6 +151,9 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
                 enabled = weaponMovement
             }
         );
+
+
+        dstManager.AddComponentData(entity, new FreezeComponent());
 
     }
 }

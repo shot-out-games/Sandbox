@@ -29,16 +29,13 @@ namespace SandBox.Player
     {
 
         public AudioSource audioSource;
-
-
-
         public AudioClip clip;
         public ParticleSystem ps;
 
 
 
-        [SerializeField]
-        float rotateSlerpDampTime = 9f;
+        //[SerializeField]
+        float rotateSlerpDampTime = 9f;//na
 
         [HideInInspector]
         public Camera mainCam;

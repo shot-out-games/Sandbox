@@ -24,12 +24,24 @@ public class HealthSystem : JobComponentSystem
         EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
         Entities.WithoutBurst().ForEach((ref DeadComponent deadComponent,
             ref HealthComponent healthComponent, ref DamageComponent damageComponent,
-            ref RatingsComponent ratingsComponent, in Entity entity) =>
+            ref RatingsComponent ratingsComponent,
+            in Entity entity) =>
             {
+                if (EntityManager.HasComponent(entity, typeof(EnemyComponent)))
+                {
+                    if(EntityManager.GetComponentData<EnemyComponent>(entity).invincible == true)
+                    {
+                        damageComponent.DamageReceived = 0;
+                        damageComponent.DamageLanded = 0;
+                    }
+                }
+
+
+
                 //healthComponent.TotalDamageReceived += damageComponent.DamageReceived + damageComponent.DamageLanded; //kenney
                 healthComponent.TotalDamageReceived += damageComponent.DamageReceived;
                 //healthComponent.TotalDamageLanded += damageComponent.DamageLanded;
-                Debug.Log("dam  " + damageComponent.DamageReceived);
+                //Debug.Log("dam  " + damageComponent.DamageReceived);
                 ecb.RemoveComponent<DamageComponent>(entity);
 
                 var dead = EntityManager.GetComponentData<DeadComponent>(entity);

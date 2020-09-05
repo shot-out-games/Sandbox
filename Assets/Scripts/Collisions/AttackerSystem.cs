@@ -98,7 +98,7 @@ public class AttackerSystem : JobComponentSystem
                             //ecb.AddComponent<DamageComponent>(collision_entity_a,
                             // new DamageComponent { DamageLanded = hw * 10, DamageReceived = 0 });
 
-                            Debug.Log("player b " + damage);
+                            //Debug.Log("player b " + damage);
 
                         }
 
@@ -140,7 +140,7 @@ public class AttackerSystem : JobComponentSystem
                             ecb.SetComponent<CheckedComponent>(collision_entity_a, trigger_a);
                             ecb.SetComponent<CheckedComponent>(collision_entity_a, trigger_b);
 
-                            Debug.Log("player a " + hw);
+                            //Debug.Log("player a " + hw);
                         }
                     }
                 }

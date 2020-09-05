@@ -128,6 +128,15 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     private bool currentRewind;
 
 
+    public AudioSource audioSource;
+    public AudioClip clip;
+    public ParticleSystem ps;
+
+    public ParticleSystem stunEffect;
+
+
+
+
     //[SerializeField]
     //Vector3[] offsets;
     [SerializeField]
@@ -347,7 +356,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         //Debug.Log("rem 1 " + agent.remainingDistance);
 
 
-        bool onLink = agent.isOnOffMeshLink;
+        //bool onLink = agent.isOnOffMeshLink;
 
 
 
@@ -374,7 +383,8 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         }
         else if (state == MoveStates.Patrol)
         {
-            agent.speed = agent.speed * .5f;
+            //agent.speed = agent.speed * .5f;
+            agent.speed = moveSpeed * .5f;
             velz = .5f;
         }
 
@@ -382,7 +392,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         velz = velz * speedMultiple;
 
-        //Debug.Log("z");
+        Debug.Log("z " + velz);
 
         anim.SetFloat("velx", velx);
         anim.SetFloat("velz", velz);
@@ -409,7 +419,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
             if (backup)
             {
-                agent.velocity = -velocity;
+                agent.velocity = -velocity * .5f;
             }
             else
             {
