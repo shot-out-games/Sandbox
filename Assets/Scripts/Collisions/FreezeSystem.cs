@@ -23,14 +23,13 @@ public struct FreezeComponent : IComponentData
 
 public class FreezeSystem : SystemBase
 {
-    public float timeToAdd = 1.9f;
 
     protected override void OnUpdate()
     {
 
 
-        Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity e,  EnemyMove move, 
-            ref FreezeComponent freezeComponent, 
+        Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity e, EnemyMove move,
+            ref FreezeComponent freezeComponent,
             ref EnemyStateComponent enemyStateComponent,
             in RatingsComponent ratingsComponent
             ) =>
@@ -38,6 +37,9 @@ public class FreezeSystem : SystemBase
             bool hasDamage = EntityManager.HasComponent(e, typeof(DamageComponent));
             if (hasDamage)
             {
+
+                float timeToAdd = EntityManager.GetComponentData<DamageComponent>(e).StunLanded;
+                Debug.Log("time " + timeToAdd);
 
                 //if (move.stunEffect)
                 //{
@@ -48,15 +50,13 @@ public class FreezeSystem : SystemBase
                 //    }
                 //}
 
-
-
                 freezeComponent.freezeTime += timeToAdd;
                 freezeComponent.isFrozen = true;
             }
             else
             {
                 freezeComponent.freezeTime -= Time.DeltaTime;
-                if(freezeComponent.freezeTime <= 0)
+                if (freezeComponent.freezeTime <= 0)
                 {
                     freezeComponent.freezeTime = 0;
                     freezeComponent.isFrozen = false;
@@ -72,7 +72,7 @@ public class FreezeSystem : SystemBase
                 }
             }
 
-            if(freezeComponent.isFrozen == true)
+            if (freezeComponent.isFrozen == true)
             {
                 //    move.moveSpeed = 0;
                 move.agent.speed = 0;

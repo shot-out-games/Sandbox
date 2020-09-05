@@ -13,6 +13,11 @@ public struct GunComponent : IComponentData
     public Entity Bullet;
     public Entity Weapon;
     //public float AmmoTime;
+    public float gameStrength;
+    public float gameDamage;
+    public float gameRate;
+
+
     public float Strength;
     public float Damage;
     public float Rate;
@@ -89,11 +94,13 @@ public class GunScript : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameO
                 Bullet = conversionSystem.GetPrimaryEntity(BulletPrefab),
                 Weapon = conversionSystem.GetPrimaryEntity(WeaponPrefab),
                 Strength = Strength,
+                gameStrength = Strength,
                 Damage = Damage,
                 Rate = Rate,
+                gameDamage = Damage,
+                gameRate = Rate,
                 WasFiring = 0,
                 IsFiring = 0
-                //Disable = Disable
 
             });
         manager = dstManager;

@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Enemy Data
   m_EditorClassIdentifier: 
   speed: 1
-  combatStrikeDistanceZoneBegin: 1
-  combatStrikeDistanceZoneEnd: 4
-  combatRangeDistance: 1.5
-  shootRangeDistance: 6
-  chaseRange: 8
+  combatStrikeDistanceZoneBegin: 0.38
+  combatStrikeDistanceZoneEnd: 1.17
+  combatRangeDistance: 1.98
+  shootRangeDistance: 4
+  chaseRange: 6
   aggression: 50
   maxHealth: 50

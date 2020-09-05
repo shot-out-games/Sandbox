@@ -79,7 +79,8 @@ namespace SandBox.Player
 
 
             if (!_entityManager.HasComponent(_entity, typeof(ApplyImpulseComponent))) return;
-            if (!_entityManager.HasComponent(_entity, typeof(PlayerMoveComponent))) return;
+            //if (!_entityManager.HasComponent(_entity, typeof(PlayerMoveComponent))) return;
+            if (!_entityManager.HasComponent(_entity, typeof(RatingsComponent))) return;
             if (!ReInput.isReady) return;
 
 
@@ -96,7 +97,7 @@ namespace SandBox.Player
 
 
 
-            currentSpeed = _entityManager.GetComponentData<PlayerMoveComponent>(_entity).currentSpeed;
+            currentSpeed = _entityManager.GetComponentData<RatingsComponent>(_entity).gameSpeed;
             Vector3 velocity = animator.deltaPosition / Time.deltaTime * currentSpeed;
 
 

@@ -157,14 +157,14 @@ public class AttackerSystem : JobComponentSystem
                     {
                         bool isEnemy = (EntityManager.HasComponent(shooter, typeof(EnemyComponent)));
 
-                        float damage = EntityManager.GetComponentData<GunComponent>(shooter).Damage;
+                        float damage = EntityManager.GetComponentData<GunComponent>(shooter).gameDamage;
                         if (shooter != collision_entity_a)
                         {
                             AmmoComponent ammo = EntityManager.GetComponentData<AmmoComponent>(collision_entity_b); ;
                             ammo.AmmoDead = true;
                             ecb.SetComponent<AmmoComponent>(collision_entity_b, ammo);
                             ecb.AddComponent<DamageComponent>(collision_entity_a,
-                                new DamageComponent { DamageLanded = 0, DamageReceived = damage });
+                                new DamageComponent { DamageLanded = 0, DamageReceived = damage, StunLanded = damage  });
                         }
 
                     }

@@ -18,6 +18,8 @@ public struct DamageComponent : IComponentData
 {
     public float DamageLanded;
     public float DamageReceived;
+    public float StunLanded;
+
 }
 
 
