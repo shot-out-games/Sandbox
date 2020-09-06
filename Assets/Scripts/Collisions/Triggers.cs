@@ -79,55 +79,76 @@ public class CollisionSystem : JobComponentSystem
 
             Entity ch_a = triggerComponent_a.ParentEntity;
             Entity ch_b = triggerComponent_b.ParentEntity;
-
-            //if (ch_a == ch_b) return;
-
-            //Debug.Log("cha " + triggerComponent_a.Type + " chb " + triggerComponent_b.Type);
-
-            if (triggerComponent_a.Type == triggerComponent_b.Type) return;
-
-            CollisionComponent collisionComponent =
-                 new CollisionComponent()
-                 {
-                     Part_entity = triggerComponent_a.Type,
-                     Part_other_entity = triggerComponent_b.Type,
-                     Character_entity = ch_a,
-                     Character_other_entity = ch_b
-                 };
-
-            CommandBuffer.AddComponent(ch_a, collisionComponent);
-            CommandBuffer.AddComponent(ch_b, collisionComponent);
-
-            
-
-                if (triggerComponent_a.Type == (int)TriggerType.Lever || triggerComponent_b.Type == (int)TriggerType.Lever)
-                {
-                    //Debug.Log("type a " + collisionComponent.Part_entity + " type b " + collisionComponent.Part_other_entity + " cha " + ch_a + " chb " + ch_b);
-                }
+            int type_a = triggerComponent_a.Type;
+            int type_b = triggerComponent_b.Type;
 
 
-            if (collisionComponent.Part_entity == (int)TriggerType.Ammo && collisionComponent.Part_other_entity == (int)TriggerType.Blocks)
+            if (ch_a == ch_b) return;////?????
+
+
+            if (type_a == type_b) return;
+
+
+            if (triggerComponent_a.Type == (int)TriggerType.Ground || triggerComponent_b.Type == (int)TriggerType.Ground) return;
+
+
+
+            bool punchingA = (type_b == (int)TriggerType.Chest || type_b == (int)TriggerType.Head) &&
+                             (type_a == (int)TriggerType.LeftHand || type_a == (int)TriggerType.RightHand
+                                                                  || type_a == (int)TriggerType.LeftFoot ||
+                                                                  type_a == (int)TriggerType.RightFoot);
+
+            bool punchingB = (type_a == (int)TriggerType.Chest || type_a== (int)TriggerType.Head) &&
+                            (type_b == (int)TriggerType.LeftHand || type_b == (int)TriggerType.RightHand
+                                                                 || type_b == (int)TriggerType.LeftFoot ||
+                                                                 type_b == (int)TriggerType.RightFoot);
+
+            bool ammoA = (type_b == (int)TriggerType.Chest || type_b == (int)TriggerType.Head) &&
+                         (type_a == (int)TriggerType.Ammo);
+
+            bool ammoB = (type_a == (int)TriggerType.Chest || type_a == (int)TriggerType.Head) &&
+                         (type_b == (int)TriggerType.Ammo);
+
+
+
+            if (punchingA || ammoA)
             {
-                CommandBuffer.AddComponent(ch_a, new BlockComponent() { blocked = true });
+
+
+                CollisionComponent collisionComponent =
+                    new CollisionComponent()
+                    {
+                        Part_entity = triggerComponent_a.Type,
+                        Part_other_entity = triggerComponent_b.Type,
+                        Character_entity = ch_a,
+                        Character_other_entity = ch_b
+                    };
+                CommandBuffer.AddComponent(ch_a, collisionComponent);
+            }
+            else if (punchingB || ammoB)
+            {
+
+                //Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
+                //Debug.Log("c b " + ch_b + " c a " + ch_a);
+
+
+                Debug.Log("a " + ammoA + " b " + ammoB);
+
+
+                CollisionComponent collisionComponent =
+                    new CollisionComponent()
+                    {
+                        Part_entity = triggerComponent_b.Type,
+                        Part_other_entity = triggerComponent_a.Type,
+                        Character_entity = ch_b,
+                        Character_other_entity = ch_a
+                    };
+                CommandBuffer.AddComponent(ch_b, collisionComponent);
             }
 
-            if (collisionComponent.Part_entity == (int)TriggerType.Blocks && collisionComponent.Part_other_entity == (int)TriggerType.Ammo)
-            {
-                CommandBuffer.AddComponent(ch_b, new BlockComponent() { blocked = true });
-            }
 
-            if (collisionComponent.Part_entity == (int)TriggerType.Chest && collisionComponent.Part_other_entity == (int)TriggerType.PowerupControl)
-            {
-                CommandBuffer.AddComponent(ch_a,
-                    new PowerTriggerComponent { TriggerType = collisionComponent.Part_entity });
-            }
+        
 
-            if (collisionComponent.Part_entity == (int)TriggerType.PowerupControl && collisionComponent.Part_other_entity == (int)TriggerType.Chest)
-            {
-                CommandBuffer.AddComponent(ch_b, new PowerTriggerComponent { TriggerType = collisionComponent.Part_other_entity });
-            }
-
-            
         }
     }
 

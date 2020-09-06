@@ -122,10 +122,15 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
     public void EndAttack()
     {
-        //Debug.Log("attack stage end");
+        Debug.Log("attack stage end");
         AttackStage = AttackStages.End;//
         animator.SetInteger("CombatAction", 0);
-
+        if (_manager.HasComponent<CheckedComponent>(_entity))
+        {
+            var checkedComponent  = _manager.GetComponentData<CheckedComponent>(_entity);
+            checkedComponent.collisionChecked = false;
+            _manager.SetComponentData(_entity, checkedComponent);
+        }
     }
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
