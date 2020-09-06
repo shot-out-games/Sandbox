@@ -236,7 +236,11 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     {
         entityManager = dstManager;
         meleeEntity = entity;
-        entityManager.AddComponentData(meleeEntity, new MeleeComponent { Available = active, hitPower = hitPower });
+        entityManager.AddComponentData(meleeEntity, new MeleeComponent
+        {
+            Available = active, hitPower = hitPower, gameHitPower = hitPower
+
+        });
         entityManager.AddComponentData(entity, new EnemyAttackComponent());
 
     }

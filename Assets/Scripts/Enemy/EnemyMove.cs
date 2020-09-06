@@ -81,6 +81,7 @@ public struct MeleeComponent : IComponentData
 {
     public bool Available;
     public float hitPower;
+    public float gameHitPower;
 }
 public struct EnemyAttackComponent : IComponentData
 {

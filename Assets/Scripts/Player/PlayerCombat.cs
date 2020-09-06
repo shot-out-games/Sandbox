@@ -22,6 +22,10 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     private EntityManager _manager;
     public AttackStages AttackStage { get; set; }
 
+    [SerializeField]
+    private bool active = true;
+    [SerializeField]
+    private float hitPower = 100;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -128,6 +132,14 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     {
         _entity = entity;
         _manager = dstManager;
+
+        _manager.AddComponentData(_entity, new MeleeComponent
+        {
+            Available = active, hitPower = hitPower,
+            gameHitPower = hitPower
+        });
+
+
     }
 }
 
