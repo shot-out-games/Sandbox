@@ -43,11 +43,9 @@ public class AttackerSystem : JobComponentSystem
 
                     Entity entityA = collision_entity_a;
                     Entity entityB = collision_entity_b;
-                    int typeA = type_a;
-                    int typeB = type_b;
+                    //int typeA = type_a;
+                    //int typeB = type_b;
 
-                    //Debug.Log("ta " + type_a + " tb " + type_b);
-                    //Debug.Log("ea " + collision_entity_a + " eb " + collision_entity_b);
 
                     bool playerA = EntityManager.HasComponent(collision_entity_a, typeof(PlayerComponent));
                     bool playerB = EntityManager.HasComponent(collision_entity_b, typeof(PlayerComponent));
@@ -97,37 +95,41 @@ public class AttackerSystem : JobComponentSystem
 
 
 
+                    //Debug.Log("ta " + type_a + " tb " + type_b);
+                    //Debug.Log("ea " + collision_entity_a + " eb " + collision_entity_b);
+
 
                     if (type_b == (int)TriggerType.Ammo) //b is ammo so causes damage to entity
                     {
                         //damage landed not being credited to shooter currently
                         int shooterTag = -1;
                         Entity shooter = Entity.Null;
-                        if (EntityManager.HasComponent<AmmoComponent>(collision_entity_a)
+                        if (EntityManager.HasComponent<AmmoComponent>(collision_entity_b)
                         ) //ammo entity not character if true
                         {
-                            shooter = EntityManager.GetComponentData<AmmoComponent>(collision_entity_a)
+                            shooter = EntityManager.GetComponentData<AmmoComponent>(collision_entity_b)
                                 .OwnerAmmoEntity;
                         }
 
-                        Debug.Log("shooter");
 
                         if (shooter != Entity.Null)
                         {
+                            Debug.Log("shooter");
                             bool isEnemy = (EntityManager.HasComponent(shooter, typeof(EnemyComponent)));
 
                             float damage = EntityManager.GetComponentData<GunComponent>(shooter).gameDamage;
-                            if (shooter != collision_entity_b)
-                            {
-                                AmmoComponent ammo =
-                                    EntityManager.GetComponentData<AmmoComponent>(collision_entity_a);
-                                ;
-                                ammo.AmmoDead = true;
-                                ecb.SetComponent<AmmoComponent>(collision_entity_a, ammo);
-                                ecb.AddComponent<DamageComponent>(collision_entity_b,
-                                    new DamageComponent
-                                    { DamageLanded = 0, DamageReceived = damage, StunLanded = damage });
-                            }
+                            //   if (shooter != collision_entity_b)
+                            //{
+                            Debug.Log("shooter0");
+                            AmmoComponent ammo =
+                                EntityManager.GetComponentData<AmmoComponent>(collision_entity_b);
+
+                            ammo.AmmoDead = true;
+                            ecb.SetComponent<AmmoComponent>(collision_entity_b, ammo);
+                            ecb.AddComponent<DamageComponent>(collision_entity_a,
+                                new DamageComponent
+                                { DamageLanded = 0, DamageReceived = damage, StunLanded = damage });
+                            //}
 
                         }
                     }

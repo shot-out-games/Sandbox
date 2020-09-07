@@ -111,7 +111,7 @@ public class CollisionSystem : JobComponentSystem
 
 
 
-            if (punchingA || ammoA)
+            if (punchingA || ammoB)
             {
 
 
@@ -125,14 +125,13 @@ public class CollisionSystem : JobComponentSystem
                     };
                 CommandBuffer.AddComponent(ch_a, collisionComponent);
             }
-            else if (punchingB || ammoB)
+            else if (punchingB || ammoA)
             {
 
                 //Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
                 //Debug.Log("c b " + ch_b + " c a " + ch_a);
 
 
-                Debug.Log("a " + ammoA + " b " + ammoB);
 
 
                 CollisionComponent collisionComponent =

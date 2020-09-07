@@ -12690,7 +12690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2c41250841bd5249973a457031eeeac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navigationStates: 3
+  navigationStates: 2
   useDistanceFromStation: 0
   switchUp: 0
   switchUpTime: 3
