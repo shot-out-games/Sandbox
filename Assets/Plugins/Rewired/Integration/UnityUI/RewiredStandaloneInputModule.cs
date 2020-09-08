@@ -58,7 +58,7 @@ namespace Rewired.Integration.UnityUI {
     using System.Collections.Generic;
     using Rewired.UI;
 
-    [AddComponentMenu("Event/Rewired Standalone Input Module")]
+    [AddComponentMenu("Rewired/Rewired Standalone Input Module")]
     public sealed class RewiredStandaloneInputModule : RewiredPointerInputModule {
 
         #region Rewired Constants
@@ -851,18 +851,26 @@ namespace Rewired.Integration.UnityUI {
                 Rewired.Player player = ReInput.players.GetPlayer(playerIds[i]);
                 if (player == null) continue;
                 if (usePlayingPlayersOnly && !player.isPlaying) continue;
+                
+                // Must double check against axis value because "Activate Action Buttons on Negative Value" may be enabled 
+                // and will prevent negative axis values from working because they're cancelled out by positive values.
+                float horizontal = GetAxis(player, horizontalActionId);
+                float vertical = GetAxis(player, verticalActionId);
+                
+                if(Mathf.Approximately(horizontal, 0f)) horizontal = 0f;
+                if(Mathf.Approximately(vertical, 0f)) vertical = 0f;
 
                 if (moveOneElementPerAxisPress) { // axis press moves only to the next UI element with each press
-                    if (GetButtonDown(player, horizontalActionId)) move.x += 1.0f;
-                    if (GetNegativeButtonDown(player, horizontalActionId)) move.x -= 1.0f;
-                    if (GetButtonDown(player, verticalActionId)) move.y += 1.0f;
-                    if (GetNegativeButtonDown(player, verticalActionId)) move.y -= 1.0f;
+                    if (GetButtonDown(player, horizontalActionId) && horizontal > 0f) move.x += 1.0f;
+                    if (GetNegativeButtonDown(player, horizontalActionId) && horizontal < 0f) move.x -= 1.0f;
+                    if (GetButtonDown(player, verticalActionId) && vertical > 0f) move.y += 1.0f;
+                    if (GetNegativeButtonDown(player, verticalActionId) && vertical < 0f) move.y -= 1.0f;
                 } else { // default behavior - axis press scrolls quickly through UI elements
                     // Use GetButton instead of GetAxis so the Input Behavior's Button Dead Zone is used for each Player
-                    if(GetButton(player, horizontalActionId)) move.x += 1.0f;
-                    if(GetNegativeButton(player, horizontalActionId)) move.x -= 1.0f;
-                    if(GetButton(player, verticalActionId)) move.y += 1.0f;
-                    if(GetNegativeButton(player, verticalActionId)) move.y -= 1.0f;
+                    if(GetButton(player, horizontalActionId) && horizontal > 0f) move.x += 1.0f;
+                    if(GetNegativeButton(player, horizontalActionId) && horizontal < 0f) move.x -= 1.0f;
+                    if(GetButton(player, verticalActionId) && vertical > 0f) move.y += 1.0f;
+                    if(GetNegativeButton(player, verticalActionId) && vertical < 0f) move.y -= 1.0f;
                 }
             }
             return move;

@@ -324,6 +324,12 @@ namespace Rewired.UI.ControlMapper {
             return category.descriptiveName;
         }
 
+        public override string GetActionCategoryName(int id) {
+            InputCategory category = ReInput.mapping.GetActionCategory(id);
+            if(category == null) throw new ArgumentException("Invalid action category id: " + id);
+            return category.descriptiveName;
+        }
+
         public override string GetLayoutName(ControllerType controllerType, int id) {
             InputLayout layout = ReInput.mapping.GetLayout(controllerType, id);
             if(layout == null) throw new ArgumentException("Invalid " + controllerType + " layout id: " + id);

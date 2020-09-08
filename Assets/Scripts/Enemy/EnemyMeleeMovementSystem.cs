@@ -62,7 +62,7 @@ public class EnemyMeleeMovementSystem : JobComponentSystem
                     int n = Random.Range(0, 10);
                     if (enemyMovementComponent.backup == true && n <= 2)
                     {
-                        enemyMovementComponent.backup = false;
+                        //enemyMovementComponent.backup = false;
                         strike = true;
                     }
                     else if (enemyMovementComponent.backup == false && n <= 5)
@@ -82,7 +82,7 @@ public class EnemyMeleeMovementSystem : JobComponentSystem
                 enemyMove.speedMultiple = speedMultiple;
 
 
-                Debug.Log("back up melee " + backup);
+                //Debug.Log("back up melee " + backup);
 
 
                 if (backup)

@@ -42,7 +42,7 @@ public class FreezeSystem : SystemBase
             {
 
                 float timeToAdd = EntityManager.GetComponentData<DamageComponent>(e).StunLanded;
-                Debug.Log("time " + timeToAdd);
+                //Debug.Log("time " + timeToAdd);
 
                 //if (move.stunEffect)
                 //{

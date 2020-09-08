@@ -179,8 +179,9 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         agent.autoBraking = false;
         anim = GetComponent<Animator>();
-        //SetWaypoints(randomWayPoints);
         agent.updateRotation = false;
+        agent.updatePosition = false;
+
         originalPosition = transform.position;
 
 
@@ -195,8 +196,6 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     public void SetWaypoints(bool _randomWayPoints)
     {
-
-
         for (int i = 0; i < wayPoints.Count; i++)
         {
             WayPoint wayPoint = wayPoints[i];
@@ -209,29 +208,17 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     public void Patrol()
     {
-        //        if (wayPoints.Count == 0)
-        //     {
-        //      SetWaypoints(randomWayPoints);
-        //}
-
 
         if (wayPoints.Count == 0 | agent.enabled == false)
             return;
-
-        //Debug.Log("path pending " + agent.pathPending + " dist " + agent.remainingDistance);
-
-        //Debug.Log("path");
-
 
         float distance = isCurrentWayPointJump ? .0003f : .5f;
 
         if (agent.pathPending == false && agent.remainingDistance < distance)
         {
-            //wayPoints[currentWayPoint] = transform.position + offsets[currentWayPoint];
             anim.SetInteger("JumpState", 0);
             agent.destination = wayPoints[currentWayPointIndex].targetPosition;
             isCurrentWayPointJump = wayPoints[currentWayPointIndex].action == WayPointAction.Jump;
-            //leapTarget = wayPoints[currentWayPointIndex].targetPosition;
 
             if (isCurrentWayPointJump)
             {
@@ -249,17 +236,10 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         }
 
 
-
-
-        //        else
-        //     {
-
         if (isCurrentWayPointJump == false)
         {
             AnimationMovement();
         }
-        //  }
-
 
     }
 
@@ -290,16 +270,9 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         if (normalizedTime < 1.0f)
         {
 
-            //Debug.Log("next0 " + agent.nextPosition);
             float yOffset = curve.Evaluate(normalizedTime);
-            //Debug.Log("y " + math.round(yOffset));
             agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
             normalizedTime += Time.deltaTime / duration;
-            //Debug.Log("n " + normalizedTime);
-            //Debug.Log("pos " + agent.transform.position);
-
-            // yield return null;
-
         }
         else
         {
@@ -353,16 +326,6 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         if (target == null || anim == null) return;
 
-
-        //Debug.Log("next 1 " + agent.nextPosition);
-        //Debug.Log("rem 1 " + agent.remainingDistance);
-
-
-        //bool onLink = agent.isOnOffMeshLink;
-
-
-
-
         MoveStates state = manager.GetComponentData<EnemyStateComponent>(entity).MoveState;
         int pursuitMode = anim.GetInteger("Zone");
         agent.speed = pursuitMode >= 2 ? moveSpeed : moveSpeed * 2;
@@ -385,42 +348,20 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         }
         else if (state == MoveStates.Patrol)
         {
-            //agent.speed = agent.speed * .5f;
             agent.speed = moveSpeed * .5f;
             velz = .5f;
         }
 
-
-
         velz = velz * speedMultiple;
+        //Debug.Log("z " + agent.speed);
 
 
-
-
-        //if (backup)
-        //{
-        //    Debug.Log("v " + agent.velocity);
-        //    velz = 0;
-        //}
-
-
-        Debug.Log("z " + agent.speed);
-
-        //agent.speed = -agent.speed;
-        if (manualRootMotion && backup == true)
+        if (backup == false)
         {
-            agent.updatePosition = false;
-            Vector3 newPosition = transform.position;
-            newPosition.z += -velz * Time.deltaTime;
-            transform.position = newPosition;
-        }
-        else
-        {
-            agent.updatePosition = true;
-            //anim.SetFloat("velx", velx);
-            //anim.SetFloat("velz", velz);
-        }
 
+            anim.SetFloat("velx", velx);
+            anim.SetFloat("velz", velz);
+        }
 
 
     }
@@ -438,19 +379,50 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             float speed = speedMultiple * 1.0f;
             Vector3 velocity = anim.deltaPosition / Time.deltaTime * speed;
 
-            //Debug.Log("v " + velocity + " " + speed);
+
+
+
+            Vector3 forward =
+                transform.InverseTransformDirection(Vector3.forward); //world to local so always local forward (0,0,1)
 
             if (backup)
             {
-                agent.velocity = -velocity * .5f;
+                //Debug.Log("av   " + agent.velocity);
+                float velx = -forward.x * Time.deltaTime;
+
+
+                Debug.Log("fw " + forward);
+
+                //transform.position += new Vector3(-forward.x, 0, 0) * Time.deltaTime;
+                //transform.position += new Vector3(-forward.x, 0, 0) * Time.deltaTime;
+
+
+
+
+
+
+                agent.velocity= -forward * .5f;
+                //transform.position = agent.nextPosition;
+                //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+
+
+
             }
             else
             {
+                float velx = forward.x * Time.deltaTime;
+
                 transform.position = agent.nextPosition;
+                transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+
             }
 
 
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+
+
+
+
+
         }
         else if (isCurrentWayPointJump)
         {

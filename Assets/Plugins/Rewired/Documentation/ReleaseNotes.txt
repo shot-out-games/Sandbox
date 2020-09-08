@@ -1,3 +1,54 @@
+1.1.36.0:
+
+    Changes:
+      - Added support Unity 2020 support.
+      - Added UWP ARM64 native library (Unity 2019+, untested).
+      - Removed GUILayer on cameras in examples to stop errors reported in Unity 2019+
+      - Rewired Editor: Copying an Action Category that contains Actions and copying those Actions now copies the sort order of the Actions.
+      - Changed Player input event system to allow modifying the event listeners inside an event callback without causing issues.
+
+1.1.35.3:
+
+    Bug Fixes:
+      - Fixed issue in RewiredStandaloneInputModule causing joystick axes to not be able to navigate the UI left or down when "Activate Action Buttons on Negative Value" is enabled in the Rewired Input Manager settings.
+
+1.1.35.2:
+
+    New Controller Definitions:
+      - Steel Series Nimbus+
+      
+    Modified Controller Definitions:
+      - Updated Xbox One Controller definition for breaking changes caused by Windows 10 2004 update on Windows Standalone and Windows UWP platforms with Raw Input and Direct Input with Use XInput disabled.
+      - Updated Stadia Controller definition for breaking changes caused by firmware update on all desktop platforms.
+
+1.1.35.1:
+    
+    Bug Fixes:
+      - Control Mapper changes that were supposed to be inlcuded in 1.1.35.0 are now included.
+
+1.1.35.0:
+
+    Changes:
+      - Control Mapper: Added LanguageDataBase.GetActionCategoryName method.
+
+    Changed Controller Definitions:
+      - Ipega Bluetooth Classic GamePad, Android Fallback: Added new variant for changes made to device / firmware.
+      - 8Bitdo SN30 Pro: Added support for changes made to firmware 1.33 and mappings for SN30 Pro+.
+    
+    Bug Fixes:
+      - Control Mapper: Fixed bug introduced in 1.1.33.0 causing Action Category names to be read from Map Category instead.
+
+1.1.34.1:
+
+    Changes:
+      - Added Rewired category to component menu.
+      - UnityInputOverride: Made additional functions re-route to Rewired instead of passing through to UnityEngine.Input (anyKey, anyKeyDown, mousePosition, GetKey, GetKeyDown, GetKeyUp).
+      - Windows Standalone, Raw Input: Added workarounds to try to prevent calling the Windows HidD_GetProductString function on HID devices until the device has been determined to be a supportable HID device in an attempt to avoid a 5-10 second stall when this function is called on certain problem HID devices. This issue is being reported with increasing frequency, I can only assume due to a new bug/change in a recent Windows update that affects a variety of different HID device types. This is not an issue with Rewired, it is an issue with the device, its driver, and/or Windows. This is merely an attempt to plaster over the problem so I don't keep getting this reported to me as an issue with Rewired.
+      
+    Bug Fixes:
+      - Fixed bug when replacing an Action Element Map keyboard key binding with the same keyboard key causing ActionElementMap.elementIdentifierName to return a blank string. Bug was introduced in 1.1.33.0.
+      - Fixed bug when changing Action Element Map modifier key values manually causing ActionElementMap.elementIdentifierName to not be updated. Bug was introduced in 1.1.33.0.
+
 1.1.34.0:
     
     Changes:
