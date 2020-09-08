@@ -85,6 +85,7 @@ public class EnemyMovementSystem : JobComponentSystem
                     float chaseRange = enemyMove.chaseRange;
                     if (useStartPosition == true && dist_from_station > chaseRange) chaseRange = -1;
 
+                    Debug.Log("back up move " + backup);
 
 
 

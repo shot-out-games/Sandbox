@@ -182,7 +182,7 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
             {
 
                 limb.solver.IKPosition = moveUsing.target.position;
-                limb.solver.IKPositionWeight = hitWeight;
+                limb.solver.IKPositionWeight = hitWeight * moveUsing.weight;
                 limb.solver.target = moveUsing.target;
                 //Debug.Log("mv " + moveUsing.target.position);
                 limb.solver.Update();

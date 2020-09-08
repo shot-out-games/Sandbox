@@ -128,6 +128,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     private Vector3 destinationBeforeRewind;
     private bool currentRewind;
 
+    [SerializeField] private bool manualRootMotion = true;
 
     public AudioSource audioSource;
     public AudioClip clip;
@@ -294,7 +295,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             //Debug.Log("y " + math.round(yOffset));
             agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
             normalizedTime += Time.deltaTime / duration;
-                //Debug.Log("n " + normalizedTime);
+            //Debug.Log("n " + normalizedTime);
             //Debug.Log("pos " + agent.transform.position);
 
             // yield return null;
@@ -393,10 +394,32 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         velz = velz * speedMultiple;
 
-        //Debug.Log("z " + velz);
 
-        anim.SetFloat("velx", velx);
-        anim.SetFloat("velz", velz);
+
+
+        //if (backup)
+        //{
+        //    Debug.Log("v " + agent.velocity);
+        //    velz = 0;
+        //}
+
+
+        Debug.Log("z " + agent.speed);
+
+        //agent.speed = -agent.speed;
+        if (manualRootMotion && backup == true)
+        {
+            agent.updatePosition = false;
+            Vector3 newPosition = transform.position;
+            newPosition.z += -velz * Time.deltaTime;
+            transform.position = newPosition;
+        }
+        else
+        {
+            agent.updatePosition = true;
+            //anim.SetFloat("velx", velx);
+            //anim.SetFloat("velz", velz);
+        }
 
 
 
@@ -416,7 +439,6 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             Vector3 velocity = anim.deltaPosition / Time.deltaTime * speed;
 
             //Debug.Log("v " + velocity + " " + speed);
-            //Debug.Log("v " + agent.velocity);
 
             if (backup)
             {
