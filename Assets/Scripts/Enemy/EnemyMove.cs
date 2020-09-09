@@ -180,7 +180,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         agent.autoBraking = false;
         anim = GetComponent<Animator>();
         agent.updateRotation = false;
-        agent.updatePosition = false;
+        //agent.updatePosition = false;
 
         originalPosition = transform.position;
 
@@ -364,6 +364,17 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         //agent.velocity = new Vector3(velz, 0, 0);
         //transform.position += forward;
 
+
+        if (backup == true)
+        {
+            //velz = -velz;
+        }
+        else
+        {
+
+        }
+
+        //Debug.Log("vz " + velz);
         //if (backup == false)
         //{
 
@@ -389,7 +400,8 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             float speed = speedMultiple * 1.0f;
             Vector3 velocity = anim.deltaPosition / Time.deltaTime * speed;
 
-            Debug.Log("anim velocity " + velocity);
+            Debug.Log("anim velocity x " + velocity.x);
+            Debug.Log("anim velocity z" + velocity.z);
 
 
             Vector3 forward =
@@ -414,7 +426,11 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
 
                 //agent.velocity = -agent.velocity * .5f;
-                agent.velocity = -velocity * .5f;
+                //agent.updatePosition = false;
+
+                //agent.velocity = -velocity * .5f;
+                Debug.Log("ag v" + agent.velocity);
+
                 //agent.velocity = -forward * .5f;
                 transform.position = agent.nextPosition;
                 transform.position = new Vector3(transform.position.x, transform.position.y, 0);
@@ -426,6 +442,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             {
                 //float velx = forward.x * Time.deltaTime;
                 //agent.velocity = agent.nextPosition;
+                agent.updatePosition = true;
 
                 transform.position = agent.nextPosition;
                 transform.position = new Vector3(transform.position.x, transform.position.y, 0);

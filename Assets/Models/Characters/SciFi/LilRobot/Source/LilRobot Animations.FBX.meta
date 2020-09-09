@@ -192,7 +192,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    motionNodeName: 
+    motionNodeName: Armature/Center
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 

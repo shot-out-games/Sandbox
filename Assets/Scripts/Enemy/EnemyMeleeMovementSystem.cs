@@ -57,7 +57,8 @@ public class EnemyMeleeMovementSystem : JobComponentSystem
                 }
                 else if (dist >= backupZoneClose && dist <= backupZoneFar)
                 {
-                    enemyMovementComponent.speedMultiple = enemyMovementComponent.backup ? 1 : (dist - backupZoneClose) / (backupZoneFar - backupZoneClose);
+                    //enemyMovementComponent.speedMultiple = enemyMovementComponent.backup ? 1 : (dist - backupZoneClose) / (backupZoneFar - backupZoneClose);
+                    enemyMovementComponent.speedMultiple = (dist - backupZoneClose) / (backupZoneFar - backupZoneClose);
                     MoveState = MoveStates.Default;
                     int n = Random.Range(0, 10);
                     if (enemyMovementComponent.backup == true && n <= 2)
