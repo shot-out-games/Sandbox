@@ -235,6 +235,8 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         }
 
+        //Debug.Log("ad patrol " + agent.destination);
+
 
         if (isCurrentWayPointJump == false)
         {
@@ -242,25 +244,6 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         }
 
     }
-
-
-    public void SetDestination()
-    {
-        if (agent == null || manager == null || entity == Entity.Null) return;
-
-        bool noX = false;
-        bool noZ = true;
-
-        if (agent.enabled)
-        {
-
-            Vector3 nextPosition = target.position;
-            if (noZ) nextPosition.z = 0;
-            agent.destination = nextPosition;
-            AnimationMovement();
-        }
-    }
-
 
 
 
@@ -321,6 +304,30 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     }
 
+
+    public void SetDestination()
+    {
+        if (agent == null || manager == null || entity == Entity.Null) return;
+
+        bool noX = false;
+        bool noZ = true;
+
+        if (agent.enabled)
+        {
+
+            Vector3 nextPosition = target.position;
+            if (noZ) nextPosition.z = 0;
+            agent.destination = nextPosition;
+            //Debug.Log("ad sd " + agent.destination);
+            AnimationMovement();
+        }
+    }
+
+
+
+
+
+
     public void AnimationMovement()
     {
 
@@ -354,32 +361,35 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         velz = velz * speedMultiple;
         //Debug.Log("z " + agent.speed);
+        //agent.velocity = new Vector3(velz, 0, 0);
+        //transform.position += forward;
 
+        //if (backup == false)
+        //{
 
-        if (backup == false)
-        {
-
-            anim.SetFloat("velx", velx);
-            anim.SetFloat("velz", velz);
-        }
+        anim.SetFloat("velx", velx);
+        anim.SetFloat("velz", velz);
+        //}
 
 
     }
 
 
     void OnAnimatorMove()
+    //void LateUpdate()
     {
 
         //return;
-
+        //Debug.Log("ag " + agent);
         if (agent == null || manager == null || entity == Entity.Null) return;
+        //Debug.Log("ag " + agent);
         if (isCurrentWayPointJump == false)
         {
 
             float speed = speedMultiple * 1.0f;
             Vector3 velocity = anim.deltaPosition / Time.deltaTime * speed;
 
-
+            Debug.Log("anim velocity " + velocity);
 
 
             Vector3 forward =
@@ -388,29 +398,34 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             if (backup)
             {
                 //Debug.Log("av   " + agent.velocity);
-                float velx = -forward.x * Time.deltaTime;
+                //float velx = -forward.x * Time.deltaTime;
 
 
-                Debug.Log("fw " + forward);
+                //Debug.Log("fw " + forward);
 
                 //transform.position += new Vector3(-forward.x, 0, 0) * Time.deltaTime;
                 //transform.position += new Vector3(-forward.x, 0, 0) * Time.deltaTime;
 
 
+                //Vector3 newPosition = transform.position;
+                //newPosition.x -= forward.x * 2.0f * Time.deltaTime;
+                //transform.position = newPosition;
 
 
 
-
-                agent.velocity= -forward * .5f;
-                //transform.position = agent.nextPosition;
-                //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+                //agent.velocity = -agent.velocity * .5f;
+                agent.velocity = -velocity * .5f;
+                //agent.velocity = -forward * .5f;
+                transform.position = agent.nextPosition;
+                transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
 
 
             }
             else
             {
-                float velx = forward.x * Time.deltaTime;
+                //float velx = forward.x * Time.deltaTime;
+                //agent.velocity = agent.nextPosition;
 
                 transform.position = agent.nextPosition;
                 transform.position = new Vector3(transform.position.x, transform.position.y, 0);
