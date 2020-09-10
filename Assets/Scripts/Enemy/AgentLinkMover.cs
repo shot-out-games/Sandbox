@@ -28,7 +28,7 @@ public class AgentLinkMover : MonoBehaviour
         {
             if (agent.isOnOffMeshLink)
             {
-             //   Debug.Log("next " + agent.nextPosition);
+                //   Debug.Log("next " + agent.nextPosition);
                 //Debug.Log("rem " + agent.remainingDistance);
 
                 //Vector3 worldDeltaPosition = agent.nextPosition - transform.position;
@@ -42,9 +42,14 @@ public class AgentLinkMover : MonoBehaviour
                 else if (method == OffMeshLinkMoveMethod.Curve)
                     yield return StartCoroutine(Curve(agent, duration));
 
+
+                //if (agent.isOnOffMeshLink)
+                //{
+                agent.enabled = true;
                 agent.CompleteOffMeshLink();
                 anim.SetInteger("JumpState", 0);
                 Debug.Log("jump");
+                //}
 
             }
             yield return null;

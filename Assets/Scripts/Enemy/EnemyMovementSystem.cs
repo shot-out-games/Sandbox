@@ -58,8 +58,7 @@ public class EnemyMovementSystem : JobComponentSystem
                     {
                         MoveState = MoveStates.Default;
                         enemyMovementComponent.backup = true; //only time to turn on 
-                        enemyMovementComponent.speedMultiple = 1;
-                        Debug.Log("backup");
+                        enemyMovementComponent.speedMultiple = dist / backupZoneClose;
                     }
                     else if (enemyMove.backup && dist > backupZoneFar)
                     {
@@ -69,9 +68,11 @@ public class EnemyMovementSystem : JobComponentSystem
                     else if (dist >= backupZoneClose && dist <= backupZoneFar)
                     {
                         MoveState = MoveStates.Default;
-                        enemyMovementComponent.speedMultiple = enemyMove.backup
-                            ? 1
-                            : (dist - backupZoneClose) / (backupZoneFar - backupZoneClose);
+                        enemyMovementComponent.speedMultiple = (dist - backupZoneClose) / (backupZoneFar - backupZoneClose);
+
+                        //enemyMovementComponent.speedMultiple = enemyMove.backup
+                           // ? 1
+                            //: (dist - backupZoneClose) / (backupZoneFar - backupZoneClose);
                     }
 
                     bool backup = enemyMovementComponent.backup;
@@ -85,16 +86,13 @@ public class EnemyMovementSystem : JobComponentSystem
                     float chaseRange = enemyMove.chaseRange;
                     if (useStartPosition == true && dist_from_station > chaseRange) chaseRange = -1;
 
-                    Debug.Log("back up move " + backup);
-
-
 
                     if (backup)
                     {
                         MoveState = MoveStates.Default;
                         animator.SetInteger("Zone", 2);
                         Debug.Log("zone");
-                        enemyMove.SetDestination();
+                        enemyMove.SetBackup();
                         enemyMove.FacePlayer();
                     }
                     else if (dist < chaseRange)

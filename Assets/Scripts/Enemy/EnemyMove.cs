@@ -249,6 +249,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     void Curve()
     {
+        //agent.updatePosition = false;
 
         if (normalizedTime < 1.0f)
         {
@@ -305,6 +306,23 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
+    public void SetBackup()
+    {
+        if (agent == null || manager == null || entity == Entity.Null) return;
+
+        if (agent.enabled)
+        {
+            //agent.updatePosition = false;
+            agent.ResetPath();
+            Vector3 nextPosition = target.position;
+            Vector3 offset = transform.forward * Time.deltaTime * moveSpeed * 2;
+
+
+            agent.Move(-offset);
+            AnimationMovement();
+        }
+    }
+
     public void SetDestination()
     {
         if (agent == null || manager == null || entity == Entity.Null) return;
@@ -314,11 +332,9 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         if (agent.enabled)
         {
-
             Vector3 nextPosition = target.position;
             if (noZ) nextPosition.z = 0;
             agent.destination = nextPosition;
-            //Debug.Log("ad sd " + agent.destination);
             AnimationMovement();
         }
     }
@@ -332,6 +348,13 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     {
 
         if (target == null || anim == null) return;
+
+
+        if (backup == false)
+        {
+            agent.updatePosition = true;
+        }
+
 
         MoveStates state = manager.GetComponentData<EnemyStateComponent>(entity).MoveState;
         int pursuitMode = anim.GetInteger("Zone");
@@ -360,100 +383,29 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         }
 
         velz = velz * speedMultiple;
-        //Debug.Log("z " + agent.speed);
-        //agent.velocity = new Vector3(velz, 0, 0);
-        //transform.position += forward;
 
-
-        if (backup == true)
-        {
-            //velz = -velz;
-        }
-        else
-        {
-
-        }
-
-        //Debug.Log("vz " + velz);
-        //if (backup == false)
-        //{
-
+        Debug.Log("z " + velz);
         anim.SetFloat("velx", velx);
         anim.SetFloat("velz", velz);
-        //}
-
 
     }
 
 
     void OnAnimatorMove()
-    //void LateUpdate()
     {
 
-        //return;
-        //Debug.Log("ag " + agent);
         if (agent == null || manager == null || entity == Entity.Null) return;
-        //Debug.Log("ag " + agent);
         if (isCurrentWayPointJump == false)
         {
-
+            agent.updatePosition = true;
             float speed = speedMultiple * 1.0f;
             Vector3 velocity = anim.deltaPosition / Time.deltaTime * speed;
 
-            Debug.Log("anim velocity x " + velocity.x);
-            Debug.Log("anim velocity z" + velocity.z);
+            //Vector3 forward =
+               // transform.InverseTransformDirection(Vector3.forward); //world to local so always local forward (0,0,1)
 
-
-            Vector3 forward =
-                transform.InverseTransformDirection(Vector3.forward); //world to local so always local forward (0,0,1)
-
-            if (backup)
-            {
-                //Debug.Log("av   " + agent.velocity);
-                //float velx = -forward.x * Time.deltaTime;
-
-
-                //Debug.Log("fw " + forward);
-
-                //transform.position += new Vector3(-forward.x, 0, 0) * Time.deltaTime;
-                //transform.position += new Vector3(-forward.x, 0, 0) * Time.deltaTime;
-
-
-                //Vector3 newPosition = transform.position;
-                //newPosition.x -= forward.x * 2.0f * Time.deltaTime;
-                //transform.position = newPosition;
-
-
-
-                //agent.velocity = -agent.velocity * .5f;
-                //agent.updatePosition = false;
-
-                //agent.velocity = -velocity * .5f;
-                Debug.Log("ag v" + agent.velocity);
-
-                //agent.velocity = -forward * .5f;
-                transform.position = agent.nextPosition;
-                transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-
-
-
-            }
-            else
-            {
-                //float velx = forward.x * Time.deltaTime;
-                //agent.velocity = agent.nextPosition;
-                agent.updatePosition = true;
-
-                transform.position = agent.nextPosition;
-                transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-
-            }
-
-
-
-
-
-
+            transform.position = agent.nextPosition;
+            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
         }
         else if (isCurrentWayPointJump)

@@ -1,9 +1,7 @@
 ﻿using Unity.Entities;
 using UnityEngine;
 using Unity.Jobs;
-
-
-
+using Unity.Transforms;
 
 public class EnemyMeleeMovementSystem : JobComponentSystem
 {
@@ -16,6 +14,7 @@ public class EnemyMeleeMovementSystem : JobComponentSystem
         (
             ref EnemyMeleeMovementComponent enemyMovementComponent,
             ref EnemyStateComponent enemyState,
+            ref Translation translation,
             in Entity entity,
             in Animator animator,
             in EnemyMove enemyMove
@@ -33,14 +32,8 @@ public class EnemyMeleeMovementSystem : JobComponentSystem
                 enemyMovementComponent.speedMultiple = 1;//set both because we set component but currently still need in MB
                 MoveStates MoveState = enemyState.MoveState;
                 EnemyRoles role = enemyMove.enemyRole;
-                //bool useStartPosition = enemyMovementComponent.useDistanceFromStation;
-                //Vector3 enemyPosition = useStartPosition ? enemyMovementComponent.originalPosition : animator.transform.position;
                 Vector3 enemyPosition = animator.transform.position;
                 float dist = Vector3.Distance(enemyMove.target.position, enemyPosition);
-                //bool hasMelee = EntityManager.HasComponent(entity, typeof(EnemyMelee));
-                //                float backupZoneClose = hasMelee
-                //                 ? animator.GetComponent<EnemyMelee>().currentStrikeDistanceZoneBegin
-                //              : enemyMovementComponent.combatStrikeDistanceZoneEnd;
                 float backupZoneClose = animator.GetComponent<EnemyMelee>().currentStrikeDistanceZoneBegin;
                 float backupZoneFar = enemyMovementComponent.combatStrikeDistanceZoneEnd;
                 bool strike = false;
@@ -48,7 +41,7 @@ public class EnemyMeleeMovementSystem : JobComponentSystem
                 {
                     MoveState = MoveStates.Default;
                     enemyMovementComponent.backup = true;//only time to turn on 
-                    enemyMovementComponent.speedMultiple = 1;
+                    enemyMovementComponent.speedMultiple = dist / backupZoneClose;
                 }
                 if (enemyMovementComponent.backup && dist > backupZoneFar)
                 {
@@ -82,23 +75,19 @@ public class EnemyMeleeMovementSystem : JobComponentSystem
                 enemyMove.backup = backup;
                 enemyMove.speedMultiple = speedMultiple;
 
-
-                //Debug.Log("back up melee " + backup);
-
-
-                if (backup)
-                {
-                    MoveState = MoveStates.Default;
-                    animator.SetInteger("Zone", 2);
-                    enemyMove.SetDestination();
-                    enemyMove.FacePlayer();
-
-                }
-                else if (strike)
+                if (strike)
                 {
                     MoveState = MoveStates.Default;
                     animator.SetInteger("Zone", 3);
                     enemyMove.SetDestination();
+                    enemyMove.FacePlayer();
+
+                }
+                else if (backup)
+                {
+                    MoveState = MoveStates.Default;
+                    animator.SetInteger("Zone", 2);
+                    enemyMove.SetBackup();
                     enemyMove.FacePlayer();
 
                 }
@@ -142,6 +131,9 @@ public class EnemyMeleeMovementSystem : JobComponentSystem
 
 
             }
+
+            translation.Value.z = 0;
+
 
         }
         ).Run();
