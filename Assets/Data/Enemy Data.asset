@@ -15,7 +15,7 @@ MonoBehaviour:
   speed: 2
   combatStrikeDistanceZoneBegin: 1
   combatStrikeDistanceZoneEnd: 2
-  combatRangeDistance: 10
+  combatRangeDistance: 5
   shootRangeDistance: 15
   chaseRange: 20
   aggression: 50

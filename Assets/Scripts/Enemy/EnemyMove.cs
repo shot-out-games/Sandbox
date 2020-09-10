@@ -115,6 +115,9 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     public EnemyRoles enemyRole;
     public float moveSpeed;
     public float rotateSpeed = 1;
+    [SerializeField] private float speed;
+    [SerializeField] private Vector3 lastPosition;
+
     public Transform target;//default chase target but if combat used gets replaced by combatsystem move target
     public Entity entity;
     private EntityManager manager;
@@ -180,6 +183,8 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         agent.autoBraking = false;
         anim = GetComponent<Animator>();
         agent.updateRotation = false;
+        agent.autoTraverseOffMeshLink = false;
+
         //agent.updatePosition = false;
 
         originalPosition = transform.position;
@@ -190,6 +195,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     void Start()
     {
+
         SetWaypoints(randomWayPoints);
 
     }
@@ -223,6 +229,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             if (isCurrentWayPointJump)
             {
                 //StartCoroutine(Curve(agent, duration));
+                Debug.Log("wp jump");
                 anim.SetInteger("JumpState", 1);
                 normalizedTime = 0.0f;
                 startPos = agent.transform.position;
@@ -273,7 +280,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     {
         if (agent == null) return;
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(agent.destination, 1);
+        Gizmos.DrawSphere(agent.destination, .095f);
     }
 
 
@@ -313,7 +320,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         if (agent.enabled)
         {
             //agent.updatePosition = false;
-            agent.ResetPath();
+            //agent.ResetPath();
             Vector3 nextPosition = target.position;
             Vector3 offset = transform.forward * Time.deltaTime * moveSpeed * 2;
 
@@ -384,8 +391,16 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         velz = velz * speedMultiple;
 
-        Debug.Log("z " + velz);
-        anim.SetFloat("velx", velx);
+        //if (math.abs(agent.velocity.magnitude) < .000001f) velz = 0;
+
+        speed = Mathf.Lerp(speed, (transform.position - lastPosition).magnitude / Time.deltaTime, .19f);
+        //bool lastSpeed = speed > .000001f;
+        //speed = (transform.position - lastPosition).magnitude;
+        if (math.abs(speed) <= .000001f) velz = 0;
+        lastPosition = transform.position;
+
+        //Debug.Log("sp " + speed);
+        //anim.SetFloat("velx", velx);
         anim.SetFloat("velz", velz);
 
     }
@@ -410,9 +425,11 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         }
         else if (isCurrentWayPointJump)
         {
+            Debug.Log("curve");
             Curve();
         }
 
+        Debug.Log("auto " + agent.autoTraverseOffMeshLink);
 
 
 
