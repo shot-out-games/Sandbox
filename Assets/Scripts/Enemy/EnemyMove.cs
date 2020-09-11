@@ -429,8 +429,6 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             Curve();
         }
 
-        Debug.Log("auto " + agent.autoTraverseOffMeshLink);
-
 
 
     }

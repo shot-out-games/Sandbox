@@ -11,7 +11,7 @@ namespace SandBox.Player
 
 
     //[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-    [UpdateBefore(typeof(PlayerWeaponAimSystemLateUpdate))]
+    //[UpdateBefore(typeof(PlayerWeaponAimSystemLateUpdate))]
 
     public class PlayerWeaponAimSystemUpdate : SystemBase
     {

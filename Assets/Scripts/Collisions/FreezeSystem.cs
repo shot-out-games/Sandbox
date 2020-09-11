@@ -26,7 +26,7 @@ public class FreezeSystem : SystemBase
 
     protected override void OnUpdate()
     {
-
+       
 
         Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity e, EnemyMove move,
             ref FreezeComponent freezeComponent,
@@ -44,15 +44,6 @@ public class FreezeSystem : SystemBase
                 float timeToAdd = EntityManager.GetComponentData<DamageComponent>(e).StunLanded;
                 //Debug.Log("time " + timeToAdd);
 
-                //if (move.stunEffect)
-                //{
-                //    if (move.stunEffect.isPlaying == false)
-                //    {
-                //        move.stunEffect.transform.SetParent(move.transform);
-                //        move.stunEffect.Play(true);
-                //    }
-                //}
-
                 freezeComponent.freezeTime += timeToAdd;
                 freezeComponent.isFrozen = true;
             }
@@ -63,15 +54,11 @@ public class FreezeSystem : SystemBase
                 {
                     freezeComponent.freezeTime = 0;
                     freezeComponent.isFrozen = false;
-                    //move.agent.speed = ratingsComponent.speed;
-                    // move.moveSpeed = ratingsComponent.speed;
                     move.agent.speed = move.moveSpeed;
-
                     if (move.stunEffect)
                     {
                         move.stunEffect.Stop();
                     }
-
                 }
             }
 
@@ -89,12 +76,7 @@ public class FreezeSystem : SystemBase
                     }
                 }
 
-
-
             }
-
-            //Debug.Log("speed " + move.moveSpeed);
-            //Debug.Log("freeze time " + freezeComponent.freezeTime);
 
 
         }).Run();

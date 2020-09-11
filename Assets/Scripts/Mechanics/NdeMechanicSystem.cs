@@ -39,6 +39,7 @@ public class NdeMechanicSystem : SystemBase
 
             ) =>
             {
+
                 float pct = health.TotalDamageReceived / ratings.maxHealth;
                 ndeMechanic.multiplier = pct + .50f;
                 ratings.gameSpeed = ratings.speed * (pct + .50f);

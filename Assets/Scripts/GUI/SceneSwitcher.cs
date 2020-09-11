@@ -23,7 +23,7 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     {
         // gets the curent screen
         CurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        Debug.Log("index " + CurrentSceneIndex);
+        //Debug.Log("index " + CurrentSceneIndex);
 
         if (CurrentSceneIndex > 1) LevelManager.instance.PlayLevelMusic();//scene 0 is loader and scene 1  is menu - has own play
     }

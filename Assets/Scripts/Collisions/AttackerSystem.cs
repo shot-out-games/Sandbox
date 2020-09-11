@@ -31,7 +31,6 @@ public class AttackerSystem : JobComponentSystem
                     {
                         dead = EntityManager.GetComponentData<DeadComponent>(entity).isDead;
                     }
-
                     if (dead) return;
 
 
@@ -77,7 +76,7 @@ public class AttackerSystem : JobComponentSystem
                                 hitPower = EntityManager.GetComponentData<MeleeComponent>(entityA)
                                     .gameHitPower;
 
-                                Debug.Log(hitPower);
+                                //Debug.Log(hitPower);
 
                             }
 
