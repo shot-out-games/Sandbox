@@ -133,11 +133,16 @@ public class DeadSystem : JobComponentSystem //really game over system currently
                     if (winnerComponent.checkWinCondition == true)
                     {
                         winnerComponent.endGameReached = true;
+                        Debug.Log("winner");
                     }
 
 
 
                 }
+
+
+
+
             }
         ).Run();
 
@@ -146,12 +151,12 @@ public class DeadSystem : JobComponentSystem //really game over system currently
         if (enemyJustDead == true)
         {
 
-       
+
 
             Entities.WithoutBurst().WithStructuralChanges().ForEach(
                 (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
                 {
-                    messageMenu.messageString = "Opposition destroyed ... Reverse Boost";
+                    messageMenu.messageString = "Opposition destroyed ... ";
                     messageMenu.ShowMenu();
                 }
             ).Run();

@@ -7,6 +7,7 @@ using Unity.Jobs;
 public struct PlayerJumpComponent : IComponentData
 {
     public float startJumpGravityForce;
+    public float gameStartJumpGravityForce;
     public float jumpFramesToPeak;
     public float addedNegativeForce;
     public float jumpDownGravityMultiplier;
@@ -226,6 +227,7 @@ namespace SandBox.Player
                     new PlayerJumpComponent
                     {
                         startJumpGravityForce = startJumpGravityForce,
+                        gameStartJumpGravityForce = startJumpGravityForce,
                         addedNegativeForce = addedNegativeForce,
                         jumpDownGravityMultiplier = jumpDownGravityMultiplier,
                         jumpY = jumpY,

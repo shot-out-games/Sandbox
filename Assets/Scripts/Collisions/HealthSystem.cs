@@ -32,10 +32,9 @@ public class HealthSystem : JobComponentSystem
                     if(EntityManager.GetComponentData<EnemyComponent>(entity).invincible == true)
                     {
                         damageComponent.DamageReceived = 0;
-                        damageComponent.DamageLanded = 0;
+                        //damageComponent.DamageLanded = 0;
                     }
                 }
-
 
 
                 //healthComponent.TotalDamageReceived += damageComponent.DamageReceived + damageComponent.DamageLanded; //kenney

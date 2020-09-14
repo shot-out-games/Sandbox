@@ -18,6 +18,8 @@ public struct TriggerComponent : IComponentData
     //if trigger is bullet then just returns bullet not shooter
     //use ammo component for shooter (owner)
     public Entity ParentEntity;
+    public bool Hit;
+    public bool Active;
 }
 
 

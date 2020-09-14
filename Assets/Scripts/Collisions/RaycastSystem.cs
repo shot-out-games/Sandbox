@@ -57,7 +57,7 @@ public class RaycastSystem : SystemBase
             applyImpulse.BumpLeft = false;
             applyImpulse.BumpRight = false;
 
-            float3 start = translation.Value + new float3(0f,  .38f, 0);
+            float3 start = translation.Value + new float3(0f, .38f, 0);
             float3 direction = new float3(0, 0, 0);
             float distance = .38f;
             float3 end = start + direction * distance;
@@ -106,7 +106,7 @@ public class RaycastSystem : SystemBase
 
                 start = translation.Value + new float3(0, 0, 0);
                 direction = new float3(0, -1, 0);
-                distance = .25f;
+                distance = .38f;
                 end = start + direction * distance;
 
 
@@ -358,25 +358,71 @@ public class RaycastSystem : SystemBase
                         levelComplete.targetReached = true;
                     }
 
-                    if (EntityManager.GetComponentData<TriggerComponent>(e).Type == (int)TriggerType.Key
+                    if (EntityManager.GetComponentData<TriggerComponent>(e).Type == (int)TriggerType.Key &&
+                    EntityManager.GetComponentData<TriggerComponent>(e).Active == true
                     )
                     {
                         winnerComponent.keys += 1;
                         key = true;
-                        EntityManager.DestroyEntity(e);
+                        //                        EntityManager.DestroyEntity(e);
+                        TriggerComponent trigger = EntityManager.GetComponentData<TriggerComponent>(e);
+                        trigger.Hit = true;
+                        EntityManager.SetComponentData(e, trigger);
+                        LevelManager.instance.audioSource.Stop();
+
                     }
 
-
-
                 }
+
+
+
+
+
+
+
+
+
+            }
+
+
+        }).Run();
+
+
+
+
+
+        Entities.WithoutBurst().ForEach((
+            ref TriggerComponent triggerComponent,
+            in Trigger triggerMB
+
+        ) =>
+        {
+
+            if (triggerComponent.Hit && triggerComponent.Active == true)
+            {
+                triggerComponent.Active = false;
+                Debug.Log("active ");
+
+                if (triggerMB.triggerParticleSystem != null)
+                {
+                    triggerMB.triggerParticleSystem.Play(true);
+                }
+                if (triggerMB.triggerAudioSource != null)
+                {
+                    
+                    triggerMB.triggerAudioSource.Play();
+                }
+
+
+            }
+            else if (key == true && triggerMB.triggerAudioSource != null)
+            {
+                triggerMB.triggerAudioSource.Stop();
             }
 
 
 
-
-
-
-
+            triggerComponent.Hit = false;
 
         }).Run();
 
@@ -387,14 +433,11 @@ public class RaycastSystem : SystemBase
 
 
 
-
-
-
         Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity entity,
 
-                 HudGroup hudGroup
+            HudGroup hudGroup
 
-            ) =>
+        ) =>
         {
 
             if (key == true)
@@ -403,11 +446,6 @@ public class RaycastSystem : SystemBase
                 hudGroup.cubes -= 1;
                 hudGroup.ShowLabelLevelTargets();
             }
-
-
-
-
-
 
 
         }).Run();

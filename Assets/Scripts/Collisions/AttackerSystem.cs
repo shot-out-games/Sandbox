@@ -85,6 +85,15 @@ public class AttackerSystem : JobComponentSystem
                             ecb.AddComponent<DamageComponent>(entityB,
                                 new DamageComponent { DamageLanded = 0, DamageReceived = damage });
 
+
+                            //for NDE
+                            var health = EntityManager.GetComponentData<HealthComponent>(entityA);
+                            health.TotalDamageReceived = health.TotalDamageReceived - 5f;
+                            if (health.TotalDamageReceived < 5) health.TotalDamageReceived = 5;
+                            EntityManager.SetComponentData(entityA, health);
+
+
+
                             trigger_a.collisionChecked = true;
                             ecb.SetComponent<CheckedComponent>(entityA, trigger_a);
 
@@ -125,9 +134,21 @@ public class AttackerSystem : JobComponentSystem
 
                             ammo.AmmoDead = true;
                             ecb.SetComponent<AmmoComponent>(collision_entity_b, ammo);
+
+
                             ecb.AddComponent<DamageComponent>(collision_entity_a,
                                 new DamageComponent
                                 { DamageLanded = 0, DamageReceived = damage, StunLanded = damage });
+
+
+                            //for NDE
+                            var health = EntityManager.GetComponentData<HealthComponent>(shooter);
+                            health.TotalDamageReceived = health.TotalDamageReceived - 1.9f;
+                            if (health.TotalDamageReceived < 2) health.TotalDamageReceived = 2;
+                            EntityManager.SetComponentData(shooter, health);
+
+
+
                             //}
 
                         }

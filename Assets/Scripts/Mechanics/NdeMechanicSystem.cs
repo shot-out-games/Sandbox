@@ -33,6 +33,7 @@ public class NdeMechanicSystem : SystemBase
                 Entity e,
                 ref NdeMechanicComponent ndeMechanic,
                 ref RatingsComponent ratings,
+                ref PlayerJumpComponent playerJump,
                 in HealthComponent health
 
 
@@ -41,8 +42,14 @@ public class NdeMechanicSystem : SystemBase
             {
 
                 float pct = health.TotalDamageReceived / ratings.maxHealth;
-                ndeMechanic.multiplier = pct + .50f;
-                ratings.gameSpeed = ratings.speed * (pct + .50f);
+
+                ndeMechanic.multiplier = pct + .50f;//temp
+
+
+                float f1 = pct / 2;
+                float f2 = pct  * 2.2f;
+                ratings.gameSpeed = ratings.speed * (.80f + f1);
+                playerJump.gameStartJumpGravityForce = playerJump.startJumpGravityForce * (pct + .50f);
 
                 bool hasGun = gunGroup.HasComponent(e);
                 if (hasGun)

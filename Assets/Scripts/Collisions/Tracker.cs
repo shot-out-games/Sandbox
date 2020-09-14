@@ -23,7 +23,8 @@ public enum TriggerType
     Ground = 13,
     Trigger = 14,
     Lever = 15,
-    Key = 16
+    Key = 16,
+    Home = 17
 }
 
 [RequiresEntityConversion]

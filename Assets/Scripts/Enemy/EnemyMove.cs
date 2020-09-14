@@ -152,7 +152,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     Vector3 startPos;
     Vector3 endPos;
 
-
+    [SerializeField] private float remDistance;
 
     public AnimationCurve curve = new AnimationCurve();
 
@@ -219,6 +219,8 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             return;
 
         float distance = isCurrentWayPointJump ? .0003f : .5f;
+
+        remDistance = agent.remainingDistance;
 
         if (agent.pathPending == false && agent.remainingDistance < distance)
         {

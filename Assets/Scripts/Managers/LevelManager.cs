@@ -38,8 +38,7 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
 
     public int maxLevels = 4;
     public string worldName = "World";
-    [SerializeField]
-    private AudioSource audioSource;
+    public AudioSource audioSource;
     private AudioClip levelLoop;//N/A
     [SerializeField]
     private AudioClip menuMusic;

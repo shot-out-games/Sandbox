@@ -8,7 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 25
+  version: 29
   projectContext: 2
   mGraphInstanceData:
   - graphLabel: Stylized Muddy Soil
@@ -22,8 +22,12 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _BASEMAP _METALLICGLOSSMAP _NORMALMAP _SPECGLOSSMAP
+      shaderKeywords: _BASEMAP _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
+        _SPECGLOSSMAP
       lightmapFlags: 4
+      enableInstancingVariants: 0
+      doubleSidedGI: 0
+      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
         texture: {fileID: -5095834144616677427, guid: e66f00a55d41a784c8bfcb4c8a479481,

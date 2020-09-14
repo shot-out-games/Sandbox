@@ -27,20 +27,29 @@ public class WinnerSystem : JobComponentSystem
     {
 
 
-
-        bool endGameCompleteCounter = false;
-
+        //nde  and most games needs two - 1 for dead enemy final boss triggers player endgamereached
+        int goal = 2;
+        int endGameCompleteCounter = 0;
+        bool exit = false;
 
         Entities.WithoutBurst().ForEach
         (
-            (WinnerComponent winnerComponent, Entity e) =>
+            (ref WinnerComponent winnerComponent, in RatingsComponent RatingsComponent, in Entity e
+            ) =>
             {
-                if (winnerComponent.endGameReached && winnerComponent.active)
+                if (winnerComponent.active)
                 {
                     //kenney
-                    if (winnerComponent.keys == 5)
+                    if (winnerComponent.keys >= 8 && RatingsComponent.tag == 1)//player
                     {
-                        endGameCompleteCounter = true;
+                        exit = true;
+                        Debug.Log("keys ");
+                        winnerComponent.endGameReached = true;
+                        endGameCompleteCounter += 1;
+                    }
+                    if (RatingsComponent.tag == 2 && winnerComponent.endGameReached == true)//enemy
+                    {
+                        endGameCompleteCounter += 1;
                     }
                 }
 
@@ -48,20 +57,70 @@ public class WinnerSystem : JobComponentSystem
             }
         ).Run();
 
+
+        Entities.WithoutBurst().WithStructuralChanges().ForEach
+        (
+            (in TriggerComponent triggerComponent, in Entity e
+            ) =>
+            {
+                if (exit == true && triggerComponent.Type == (int) TriggerType.Home)
+                {
+                    EntityManager.DestroyEntity(e);
+
+                }
+
+            }
+        ).Run();
+
+
+        if (exit == true)
+        {
+
+            Entities.WithoutBurst().WithStructuralChanges().ForEach(
+                (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
+                {
+                    messageMenu.messageString = "Exit is Open ... Boss can be destroyed";
+                    messageMenu.ShowMenu();
+                }
+            ).Run();
+
+        }
+
+
+
+
+
+
+
+
+
+
         int currentLevel = LevelManager.instance.currentLevel;
 
 
 
-        if (endGameCompleteCounter)
+        if (endGameCompleteCounter >= goal)
         {
+
+            Entities.WithoutBurst().ForEach
+            (
+                (AudioSource audioSource, TriggerComponent trigger) =>
+                {
+                    audioSource.Stop();
+                }
+            ).Run();
+
+
 
             Entities.WithoutBurst().ForEach
             (
                 (ref WinnerMenuComponent winnerMenuComponent, in WinnerMenuGroup winnerMenuGroup) =>
                 {
                     LevelManager.instance.levelSettings[currentLevel].completed = true;
+                    Debug.Log("eg ");
                     if (winnerMenuComponent.hide == true)
                     {
+                        Debug.Log("win show ");
                         LevelManager.instance.endGame = true;
                         winnerMenuGroup.ShowMenu();
                         winnerMenuComponent.hide = false;

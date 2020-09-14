@@ -68,6 +68,7 @@ namespace SandBox.Player
                     new PlayerJumpComponent
                     {
                         startJumpGravityForce = startJumpGravityForce,
+                        gameStartJumpGravityForce = startJumpGravityForce,
                         jumpFramesToPeak = jumpFramesToPeak,
                         addedNegativeForce = addedNegativeForce,
                         jumpDownGravityMultiplier = jumpDownGravityMultiplier,
@@ -122,7 +123,7 @@ namespace SandBox.Player
                     pv.Linear = applyImpulseComponent.Velocity;
                     float airForceAdd = 0;
                     float jumpFrames = playerJumpComponent.jumpFramesToPeak;
-                    float jumpPower = playerJumpComponent.startJumpGravityForce / jumpFrames + playerJumpComponent.addedNegativeForce;//added to offset down player movement neg force . the two should be equal ideally
+                    float jumpPower = playerJumpComponent.gameStartJumpGravityForce / jumpFrames + playerJumpComponent.addedNegativeForce;//added to offset down player movement neg force . the two should be equal ideally
 
 
                     //Debug.Log("grounded " + applyImpulseComponent.Grounded);

@@ -8025,6 +8025,8 @@ MonoBehaviour:
   enemyRole: 1
   moveSpeed: 0
   rotateSpeed: 300
+  speed: 0
+  lastPosition: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   speedMultiple: 0
   backup: 0
@@ -12647,6 +12649,8 @@ MonoBehaviour:
   enemyRole: 1
   moveSpeed: 0
   rotateSpeed: 300
+  speed: 0
+  lastPosition: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   speedMultiple: 0
   backup: 0
@@ -16301,6 +16305,8 @@ MonoBehaviour:
   enemyRole: 1
   moveSpeed: 0
   rotateSpeed: 300
+  speed: 0
+  lastPosition: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   speedMultiple: 0
   backup: 0
@@ -19430,6 +19436,8 @@ MonoBehaviour:
   enemyRole: 1
   moveSpeed: 0
   rotateSpeed: 300
+  speed: 0
+  lastPosition: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   speedMultiple: 0
   backup: 0
@@ -103562,7 +103570,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6741819119736474326}
-  m_LocalRotation: {x: 0.008836766, y: -0.7070516, z: 0.008836767, w: 0.70705163}
+  m_LocalRotation: {x: 0.008836758, y: -0.7070515, z: 0.008836758, w: 0.7070517}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -151743,7 +151751,6 @@ GameObject:
   - component: {fileID: 8829560766490598606}
   - component: {fileID: 8829560766490598607}
   - component: {fileID: 8829560766490598594}
-  - component: {fileID: 8829560766490598592}
   - component: {fileID: 8829560766490598202}
   - component: {fileID: 8829560766490598203}
   - component: {fileID: 8829560766490598207}
@@ -152162,109 +152169,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   multiplier: 1
---- !u!114 &8829560766490598592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8829560766490598201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 776adaaacdc5c4e8ab0395120a6e972b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fixTransforms: 1
-  solver:
-    IKPosition: {x: 22.67, y: -0.19077638, z: 3.0000782}
-    IKPositionWeight: 0
-    root: {fileID: 8829560766490598609}
-    target: {fileID: 0}
-    spine:
-    - transform: {fileID: 0}
-      weight: 0
-      solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0, w: 1}
-      defaultLocalPosition: {x: -0.0000000056483196, y: 0.0648112, z: 0.0010090973}
-      defaultLocalRotation: {x: 0, y: -0, z: -0, w: 1}
-      length: 0
-      sqrMag: 0
-      axis: {x: 0, y: 0, z: 1}
-      baseForwardOffsetEuler: {x: 0, y: 0, z: 0}
-    - transform: {fileID: 0}
-      weight: 0
-      solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0, w: 1}
-      defaultLocalPosition: {x: 0.0000013886521, y: 0.11149993, z: -0.0043024127}
-      defaultLocalRotation: {x: 0, y: -0, z: -0, w: 1}
-      length: 0
-      sqrMag: 0
-      axis: {x: 0, y: 0, z: 1}
-      baseForwardOffsetEuler: {x: 0, y: 0, z: 0}
-    - transform: {fileID: 0}
-      weight: 0
-      solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0, w: 1}
-      defaultLocalPosition: {x: -0.00000091440717, y: 0.18242948, z: 0.0013490207}
-      defaultLocalRotation: {x: 0, y: -0, z: -0, w: 1}
-      length: 0
-      sqrMag: 0
-      axis: {x: 0, y: 0, z: 1}
-      baseForwardOffsetEuler: {x: 0, y: 0, z: 0}
-    - transform: {fileID: 0}
-      weight: 0
-      solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0, w: 1}
-      defaultLocalPosition: {x: -0.0000002520208, y: 0.12566596, z: 0.00034099253}
-      defaultLocalRotation: {x: 0, y: -0, z: -0, w: 1}
-      length: 0
-      sqrMag: 0
-      axis: {x: 0, y: 0, z: 1}
-      baseForwardOffsetEuler: {x: 0, y: 0, z: 0}
-    head:
-      transform: {fileID: 7371613002047177698}
-      weight: 1
-      solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0, w: 1}
-      defaultLocalPosition: {x: -1.3696619e-13, y: 0.0027800926, z: -1.3969514e-10}
-      defaultLocalRotation: {x: -0.07413527, y: 2.5269785e-14, z: 8.820015e-15, w: 0.99724823}
-      length: 0
-      sqrMag: 0
-      axis: {x: 0.0000000014477753, y: 0.004974649, z: 0.9999876}
-      baseForwardOffsetEuler: {x: 0, y: 0, z: 0}
-    eyes: []
-    bodyWeight: 0.1
-    headWeight: 0.75
-    eyesWeight: 1
-    clampWeight: 0.5
-    clampWeightHead: 0.5
-    clampWeightEyes: 0.5
-    clampSmoothing: 2
-    spineWeightCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0.70294416
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    spineTargetOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &8829560766490598594
 MonoBehaviour:
   m_ObjectHideFlags: 0

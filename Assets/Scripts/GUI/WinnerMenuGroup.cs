@@ -38,6 +38,7 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField]
     private TextMeshProUGUI message;
 
+    [SerializeField] private ParticleSystem winnerParticleSystem;
 
     void Start()
     {
@@ -92,6 +93,16 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
         Debug.Log("f " + f);
         Debug.Log("sc " + score);
 
+
+        if (winnerParticleSystem)
+        {
+            winnerParticleSystem.Play(true);
+        }
+
+        if (audioSource)
+        {
+            audioSource.Play();
+        }
 
         if (score < 3)
         {

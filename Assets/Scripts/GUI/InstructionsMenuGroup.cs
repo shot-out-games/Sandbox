@@ -33,7 +33,7 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     private bool startShowTimer;
 
 
-    private float hideTime = 1.0f;
+    private float hideTime = .76f;
     private float hideTimer;
     private bool startHideTimer;
 
@@ -85,7 +85,7 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
                 if (mobile == true) fontSize = 75;
                 if (instructionCount == 3)
                 {
-                    currentInstruction.text = "Escape the Doom.";
+                    currentInstruction.text = "The Robies can be shocked but not destroyed";
                     //currentInstruction.text = ".";
                     currentInstruction.fontSize = fontSize;
                 }
@@ -93,17 +93,17 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
                 {
                     currentInstruction.fontSize = fontSize;
                     //currentInstruction.text = "Please use Right Click to aim directly in front of you.";
-                    currentInstruction.text = "Find the 5 cubes.";
+                    currentInstruction.text = "The nearer you are to death the more powerful you become";
                 }
                 if (instructionCount == 2)
                 {
                     currentInstruction.fontSize = fontSize;
-                    currentInstruction.text = "Cursed to shoot and destroy";
+                    currentInstruction.text = "Find the eight Soul Cubes to escape this strange empire";
 
                 }
                 if (instructionCount == 5)
                 {
-                    currentInstruction.text = "Damage the soul ghosts and your spirit will be destroyed.";
+                    currentInstruction.text = "The damage has strange forces that are required to escape";
                 }
                 //if (instructionCount == 6)
                 //{

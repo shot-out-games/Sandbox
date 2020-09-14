@@ -48,7 +48,7 @@ public class LevelCompleteSystem : JobComponentSystem
                 if (LevelCompleteComponent.targetReached)
                 {
                     levelCompleteCounter = true;
-                    winner.endGameReached = true;
+                        //winner.endGameReached = true;
                     playerEntity = entity;
                     Debug.Log("LEVEL COMPLETE " + currentLevel);
                 }
@@ -81,7 +81,7 @@ public class LevelCompleteSystem : JobComponentSystem
 
 
 
-       
+
 
             if (totalGameLevels > currentLevel + 1 )
             {
