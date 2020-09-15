@@ -32,6 +32,8 @@ public class StartGameMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     bool startShowTimer;
     [SerializeField] private TextMeshProUGUI message;
     public string messageString;
+    [HideInInspector]
+    public bool showOnce;
 
 
 

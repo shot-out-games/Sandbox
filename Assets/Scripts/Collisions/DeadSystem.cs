@@ -75,6 +75,19 @@ public class DeadSystem : JobComponentSystem //really game over system currently
 
         if (dead == true)
         {
+            LevelManager.instance.audioSource.Stop();
+            Entities.WithoutBurst().ForEach
+            (
+                (AudioSource audioSource, TriggerComponent trigger) =>
+                {
+                    audioSource.Stop();
+                }
+            ).Run();
+
+
+
+
+
             Entities.WithoutBurst().ForEach
             (
                 (ref DeadMenuComponent deadMenuComponent, in DeadMenuGroup deadMenuGroup) =>

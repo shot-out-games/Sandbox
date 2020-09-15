@@ -198,7 +198,8 @@ public class OptionsMenuGroup : MonoBehaviour
         }
         else
         {
-            Screen.fullScreen =  false;
+            Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+            Screen.fullScreen =  true;
         }
 
     }
@@ -237,6 +238,8 @@ public class OptionsMenuGroup : MonoBehaviour
         audioMixer.SetFloat("musicVolume", musicSlider.value * .8f - 80);//0 to 100 slider -80 to 0 db
         audioMixer.SetFloat("soundVolume", soundSlider.value * .8f - 80);//0 to 100 slider -80 to 0 db
 
+
+        Debug.Log("fs " + Screen.fullScreen);
 
         var selected = eventSystem.currentSelectedGameObject.name;
         if (selected == resButton.name)
@@ -388,8 +391,10 @@ public class OptionsMenuGroup : MonoBehaviour
 
     public void OnFullscreenChanged(bool _isFullscreen)
     {
+        if (resInactive == true) return;
         isFullScreen = !isFullScreen;
         Screen.fullScreen = isFullScreen;
+        Debug.Log("fs checked");
     }
 
     public void OnScreenResChanged()
@@ -400,6 +405,8 @@ public class OptionsMenuGroup : MonoBehaviour
         resHeight = resolution.height;
         resWidth = resolution.width;
         Screen.SetResolution(resWidth, resHeight, Screen.fullScreen);
+        Debug.Log("res checked");
+
     }
 
     public void OnMusicSliderValueChanged(float musicVolume)

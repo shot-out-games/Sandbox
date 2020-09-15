@@ -58,13 +58,42 @@ public class WinnerSystem : JobComponentSystem
         ).Run();
 
 
+        //exit = true;
+        if (exit == true)
+        {
+            LevelManager.instance.audioSource.Stop();
+        }
+
+
+        Entities.WithoutBurst().WithStructuralChanges().ForEach
+        (
+            (in TriggerComponent triggerComponent, in AudioSource audioSource
+            ) =>
+            {
+                if (exit == true && triggerComponent.Type == (int)TriggerType.Home)
+                {
+
+                    Debug.Log("boss song");
+                    audioSource.Play();
+                }
+                else if(exit == true)
+                {
+                    audioSource.Stop();
+                }
+
+            }
+        ).Run();
+
+
+
         Entities.WithoutBurst().WithStructuralChanges().ForEach
         (
             (in TriggerComponent triggerComponent, in Entity e
             ) =>
             {
-                if (exit == true && triggerComponent.Type == (int) TriggerType.Home)
+                if (exit == true && triggerComponent.Type == (int)TriggerType.Home)
                 {
+
                     EntityManager.DestroyEntity(e);
 
                 }
@@ -73,14 +102,19 @@ public class WinnerSystem : JobComponentSystem
         ).Run();
 
 
+        //exit = true;
         if (exit == true)
         {
 
             Entities.WithoutBurst().WithStructuralChanges().ForEach(
                 (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
                 {
-                    messageMenu.messageString = "Exit is Open ... Boss can be destroyed";
-                    messageMenu.ShowMenu();
+                    if (messageMenu.showOnce == false)
+                    {
+                        messageMenu.showOnce = true;
+                        messageMenu.messageString = "Exit is Open ... Boss can be destroyed";
+                        messageMenu.ShowMenu();
+                    }
                 }
             ).Run();
 

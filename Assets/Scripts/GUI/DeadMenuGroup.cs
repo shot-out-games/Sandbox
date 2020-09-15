@@ -27,6 +27,8 @@ public class DeadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField]
     private Button defaultButton;
 
+    [SerializeField] private ParticleSystem deadParticleSystem;
+    
 
     void Start()
     {
@@ -54,6 +56,19 @@ public class DeadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
    
     public void ShowMenu()
     {
+
+        if (deadParticleSystem)
+        { 
+            deadParticleSystem.Play(true);
+        }
+
+        if (audioSource)
+        {
+            audioSource.Play();
+        }
+
+
+
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
