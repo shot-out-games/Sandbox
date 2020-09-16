@@ -19,4 +19,4 @@ MonoBehaviour:
   addedNegativeForce: 10
   jumpDownGravityMultiplier: -1
   jumpY: -1
-  airForce: 0
+  airForce: 8

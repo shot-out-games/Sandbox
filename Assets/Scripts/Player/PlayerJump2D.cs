@@ -196,10 +196,10 @@ namespace SandBox.Player
                              &&
                              //frames >= (jumpFrames + 1) && frames <= (jumpFrames + 1)
                              frames >= (jumpFrames + 1) && frames <= (jumpFrames + 4)
-                             && airFrames <= 4
+                             && airFrames <= 8
                              )
                     {
-                        float totalHeldForceMultiplier = 8;
+                        float totalHeldForceMultiplier = 4;
                         Debug.Log("jump frames " + jumpFrames);
                         Debug.Log("high jump");
                         frames++;
