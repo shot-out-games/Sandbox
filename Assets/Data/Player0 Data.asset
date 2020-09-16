@@ -15,8 +15,8 @@ MonoBehaviour:
   speed: 8
   power: -1
   maxHealth: 150
-  startJumpGravityForce: 480
-  addedNegativeForce: 20
+  startJumpGravityForce: 300
+  addedNegativeForce: 10
   jumpDownGravityMultiplier: -1
   jumpY: -1
-  airForce: 1
+  airForce: 0

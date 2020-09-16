@@ -30,7 +30,7 @@ public class AgentLinkMover : MonoBehaviour
 
             if (agent.isOnOffMeshLink && agent.enabled)
             {
-                //Debug.Log("rem " + agent.remainingDistance);
+                Debug.Log("rem " + agent.remainingDistance);
 
                 //Vector3 worldDeltaPosition = agent.nextPosition - transform.position;
                 anim.SetInteger("JumpState", 1);

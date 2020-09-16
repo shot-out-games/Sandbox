@@ -77,6 +77,7 @@ public struct EnemyMovementComponent : IComponentData
 
 
 
+
 }
 
 
@@ -87,6 +88,7 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
     public bool useDistanceFromStation; //if true distance from original station is used to decide chase or not
     public bool switchUp; //if true enemy will change states when tracking
     public float switchUpTime = 6.0f;
+    [SerializeField] bool canFreeze;
 
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
@@ -152,8 +154,10 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
             }
         );
 
-
-        dstManager.AddComponentData(entity, new FreezeComponent());
+        if (canFreeze)
+        {
+            dstManager.AddComponentData(entity, new FreezeComponent());
+        }
 
     }
 }

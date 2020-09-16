@@ -18,7 +18,12 @@ ScriptedImporter:
     generateMipMaps: 1
     preset: " <sbspreset pkgurl=\"pkg://stylized_amethyst_crystal\" label=\"\" >\n 
       <presetinput identifier=\"$outputsize\" uid=\"3753772052\" type=\"8\" value=\"9,9\"
-      />\n </sbspreset>\n"
+      />\n  <presetinput identifier=\"$randomseed\" uid=\"2295075398\" type=\"4\"
+      value=\"9872\" />\n  <presetinput identifier=\"crystal_color\" uid=\"3029374564\"
+      type=\"2\" value=\"0.745098,0.658824,0.745098\" />\n  <presetinput identifier=\"contrast\"
+      uid=\"2775020685\" type=\"0\" value=\"1\" />\n  <presetinput identifier=\"saturation\"
+      uid=\"3672292794\" type=\"0\" value=\"1\" />\n  <presetinput identifier=\"normal_intensity\"
+      uid=\"3672326862\" type=\"0\" value=\"1\" />\n </sbspreset>\n"
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}

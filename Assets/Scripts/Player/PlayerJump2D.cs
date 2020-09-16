@@ -62,6 +62,9 @@ namespace SandBox.Player
                 airForce = GetComponent<PlayerRatings>().Ratings.airForce;
             }
 
+
+            //float framesToPeakRatio = startJumpGravityForce / jumpFramesToPeak;
+            float framesToPeakRatio = jumpFramesToPeak;
             dstManager.AddComponentData
                 (
                     entity,
@@ -69,7 +72,7 @@ namespace SandBox.Player
                     {
                         startJumpGravityForce = startJumpGravityForce,
                         gameStartJumpGravityForce = startJumpGravityForce,
-                        jumpFramesToPeak = jumpFramesToPeak,
+                        jumpFramesToPeak = framesToPeakRatio,
                         addedNegativeForce = addedNegativeForce,
                         jumpDownGravityMultiplier = jumpDownGravityMultiplier,
                         jumpY = jumpY,
@@ -122,7 +125,7 @@ namespace SandBox.Player
 
                     pv.Linear = applyImpulseComponent.Velocity;
                     float airForceAdd = 0;
-                    float jumpFrames = playerJumpComponent.jumpFramesToPeak;
+                    float jumpFrames = playerJumpComponent.gameStartJumpGravityForce / playerJumpComponent.jumpFramesToPeak;
                     float jumpPower = playerJumpComponent.gameStartJumpGravityForce / jumpFrames + playerJumpComponent.addedNegativeForce;//added to offset down player movement neg force . the two should be equal ideally
 
 
@@ -188,16 +191,21 @@ namespace SandBox.Player
                         float3 vel = new float3(pv.Linear.x, jumpPower, 0);
                         pv.Linear = vel;
                     }
-                    else if (button_x == false && applyImpulseComponent.InJump == true && button_x_held == true
+                    //else if (button_x == false && applyImpulseComponent.InJump == true && button_x_held == true
+                    else if (applyImpulseComponent.InJump == true && button_x_held == true
                              &&
-                             frames >= (jumpFrames + 1) && frames <= (jumpFrames + 1)
-                             && airFrames == 0
+                             //frames >= (jumpFrames + 1) && frames <= (jumpFrames + 1)
+                             frames >= (jumpFrames + 1) && frames <= (jumpFrames + 4)
+                             && airFrames <= 4
                              )
                     {
+                        float totalHeldForceMultiplier = 8;
+                        Debug.Log("jump frames " + jumpFrames);
+                        Debug.Log("high jump");
                         frames++;
-                        //Debug.Log(" fr held " + frames);
+                        Debug.Log(" fr held " + frames);
                         airFrames++;
-                        float3 vel = new float3(pv.Linear.x, jumpPower * 2, 0);//60 pct to regular jump
+                        float3 vel = new float3(pv.Linear.x, jumpPower * (totalHeldForceMultiplier / 4), 0);//60 pct to regular jump
                         pv.Linear = vel;
                         //airForceAdd = leftStickX * playerJumpComponent.airForce;
                         //pv.Linear.x += airForceAdd;

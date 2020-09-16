@@ -18,7 +18,9 @@ ScriptedImporter:
     generateMipMaps: 1
     preset: " <sbspreset pkgurl=\"pkg://stylized_chinese_plaster\" label=\"\" >\n 
       <presetinput identifier=\"$outputsize\" uid=\"738748468\" type=\"8\" value=\"9,9\"
-      />\n </sbspreset>\n"
+      />\n  <presetinput identifier=\"$randomseed\" uid=\"2071625318\" type=\"4\"
+      value=\"2074\" />\n  <presetinput identifier=\"paint_color\" uid=\"1193993946\"
+      type=\"2\" value=\"0.792157,0.588235,0.454902\" />\n </sbspreset>\n"
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}

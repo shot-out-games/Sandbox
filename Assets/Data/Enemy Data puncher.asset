@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c63336138e98c764c920ab51a8d2074f, type: 3}
   m_Name: Enemy Data puncher
   m_EditorClassIdentifier: 
-  speed: 4
+  speed: 12
   combatStrikeDistanceZoneBegin: 1
-  combatStrikeDistanceZoneEnd: 2
+  combatStrikeDistanceZoneEnd: 3
   combatRangeDistance: 5
   shootRangeDistance: 6
   chaseRange: 7
