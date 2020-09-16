@@ -82,6 +82,7 @@ public struct MeleeComponent : IComponentData
     public bool Available;
     public float hitPower;
     public float gameHitPower;
+    public bool anyTouchDamage;
 }
 public struct EnemyAttackComponent : IComponentData
 {
@@ -231,7 +232,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             if (isCurrentWayPointJump)
             {
                 //StartCoroutine(Curve(agent, duration));
-                Debug.Log("wp jump");
+                //Debug.Log("wp jump");
                 anim.SetInteger("JumpState", 1);
                 normalizedTime = 0.0f;
                 startPos = agent.transform.position;
@@ -427,7 +428,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         }
         else if (isCurrentWayPointJump)
         {
-            Debug.Log("curve");
+            //Debug.Log("curve");
             Curve();
         }
 

@@ -239,7 +239,7 @@ public class OptionsMenuGroup : MonoBehaviour
         audioMixer.SetFloat("soundVolume", soundSlider.value * .8f - 80);//0 to 100 slider -80 to 0 db
 
 
-        Debug.Log("fs " + Screen.fullScreen);
+        //Debug.Log("fs " + Screen.fullScreen);
 
         var selected = eventSystem.currentSelectedGameObject.name;
         if (selected == resButton.name)

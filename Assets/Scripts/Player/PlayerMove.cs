@@ -105,6 +105,7 @@ namespace SandBox.Player
             //Debug.Log("size " + size);
             size = 1;
 
+
             float v = applyImpulseComponent.InJump? negativeForce : 0;
             if (applyImpulseComponent.Falling)
             {

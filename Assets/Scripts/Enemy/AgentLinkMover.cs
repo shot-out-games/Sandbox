@@ -26,11 +26,11 @@ public class AgentLinkMover : MonoBehaviour
         agent.autoTraverseOffMeshLink = false;
         while (true)
         {
-            Debug.Log("onLink " + agent.isOnOffMeshLink);
+            //Debug.Log("onLink " + agent.isOnOffMeshLink);
 
             if (agent.isOnOffMeshLink && agent.enabled)
             {
-                Debug.Log("rem " + agent.remainingDistance);
+                //Debug.Log("rem " + agent.remainingDistance);
 
                 //Vector3 worldDeltaPosition = agent.nextPosition - transform.position;
                 anim.SetInteger("JumpState", 1);
@@ -48,7 +48,7 @@ public class AgentLinkMover : MonoBehaviour
                 agent.enabled = true;
                 agent.CompleteOffMeshLink();
                 anim.SetInteger("JumpState", 0);
-                Debug.Log("jump");
+                //Debug.Log("jump");
                 //}
 
             }

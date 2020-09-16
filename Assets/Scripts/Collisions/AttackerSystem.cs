@@ -76,7 +76,16 @@ public class AttackerSystem : JobComponentSystem
                                 hitPower = EntityManager.GetComponentData<MeleeComponent>(entityA)
                                     .gameHitPower;
 
-                                //Debug.Log(hitPower);
+                                bool anyTouchDamage = EntityManager.GetComponentData<MeleeComponent>(entityA)
+                                    .anyTouchDamage;
+
+                                if (anyTouchDamage == true && hw < .19)
+                                {
+                                    hw = .19f;
+                                    Debug.Log(hitPower);
+                                }
+
+                                Debug.Log("hw " + hw);
 
                             }
 
@@ -122,13 +131,13 @@ public class AttackerSystem : JobComponentSystem
 
                         if (shooter != Entity.Null)
                         {
-                            Debug.Log("shooter");
+                            //Debug.Log("shooter");
                             bool isEnemy = (EntityManager.HasComponent(shooter, typeof(EnemyComponent)));
 
                             float damage = EntityManager.GetComponentData<GunComponent>(shooter).gameDamage;
                             //   if (shooter != collision_entity_b)
                             //{
-                            Debug.Log("shooter0");
+                            //Debug.Log("shooter0");
                             AmmoComponent ammo =
                                 EntityManager.GetComponentData<AmmoComponent>(collision_entity_b);
 

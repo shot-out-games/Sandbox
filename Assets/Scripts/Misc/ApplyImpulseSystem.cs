@@ -32,6 +32,8 @@ public struct ApplyImpulseComponent : IComponentData
     public Translation Translation;
     public Rotation Rotation;
     public float3 LastPositionLand;
+    public bool hiJump;
+
 }
 /// <summary> Our simple system. </summary>
 //[UpdateAfter(typeof(Unity.Transforms.CompositeRotationSystem,))]

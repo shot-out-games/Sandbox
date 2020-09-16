@@ -67,6 +67,7 @@ public class CollisionSystem : JobComponentSystem
     {
         [ReadOnly] public PhysicsWorld physicsWorld;
         [ReadOnly] public ComponentDataFromEntity<TriggerComponent> triggerGroup;
+        [ReadOnly] public ComponentDataFromEntity<MeleeComponent> meleeGroup;
         public EntityCommandBuffer CommandBuffer;
         public void Execute(CollisionEvent ev) // this is never called
         {
@@ -88,27 +89,75 @@ public class CollisionSystem : JobComponentSystem
             if (ch_a == ch_b) return;////?????
 
 
-            if (type_a == type_b) return;
+
+            bool anyPVEtouchA = false;
+            bool anyPVEtouchB = false;
+            if (meleeGroup.HasComponent(ch_a) == true)
+            {
+                var meleeComponent_a = meleeGroup[ch_a];
+                if (meleeComponent_a.anyTouchDamage == true)
+                {
+                    anyPVEtouchA = true;
+                }
+            }
+            if (meleeGroup.HasComponent(ch_b) == true)
+            {
+                var meleeComponent_b = meleeGroup[ch_b];
+                if (meleeComponent_b.anyTouchDamage == true)
+                {
+                    anyPVEtouchB = true;
+                }
+
+            }
+
+
+
 
 
             if (triggerComponent_a.Type == (int)TriggerType.Ground || triggerComponent_b.Type == (int)TriggerType.Ground) return;
 
 
+            bool punchingA = false;
+            bool punchingB = false;
+            if (anyPVEtouchA == true && type_a == (int)TriggerType.Body)
+            {
+                punchingA = true;
+                Debug.Log("cha " + ch_a);
+            }
+            else if (anyPVEtouchB == true && type_b == (int)TriggerType.Body)
+            {
+                punchingB = true;
+                Debug.Log("chb" + ch_b);
+            }
 
-            bool punchingA = (type_b == (int)TriggerType.Chest || type_b == (int)TriggerType.Head) &&
-                             (type_a == (int)TriggerType.LeftHand || type_a == (int)TriggerType.RightHand
-                                                                  || type_a == (int)TriggerType.LeftFoot ||
-                                                                  type_a == (int)TriggerType.RightFoot);
 
-            bool punchingB = (type_a == (int)TriggerType.Chest || type_a== (int)TriggerType.Head) &&
+
+            if (type_a == type_b && punchingA == false && punchingB == false) return;
+
+
+
+            punchingA = (type_b == (int)TriggerType.Chest || type_b == (int)TriggerType.Head) &&
+                (type_a == (int)TriggerType.LeftHand || type_a == (int)TriggerType.RightHand
+                                                     || type_a == (int)TriggerType.LeftFoot ||
+                                                     type_a == (int)TriggerType.RightFoot) || punchingA;
+
+
+            punchingB = (type_a == (int)TriggerType.Chest || type_a== (int)TriggerType.Head) &&
                             (type_b == (int)TriggerType.LeftHand || type_b == (int)TriggerType.RightHand
                                                                  || type_b == (int)TriggerType.LeftFoot ||
-                                                                 type_b == (int)TriggerType.RightFoot);
+                                                                 type_b == (int)TriggerType.RightFoot) || punchingB;
 
-            bool ammoA = (type_b == (int)TriggerType.Chest || type_b == (int)TriggerType.Head) &&
+
+
+
+
+
+
+
+            bool ammoA = (type_b == (int)TriggerType.Chest || type_b == (int)TriggerType.Head  || type_b == (int)TriggerType.Body) &&
                          (type_a == (int)TriggerType.Ammo);
 
-            bool ammoB = (type_a == (int)TriggerType.Chest || type_a == (int)TriggerType.Head) &&
+            bool ammoB = (type_a == (int)TriggerType.Chest || type_a == (int)TriggerType.Head  || type_a == (int)TriggerType.Body ) &&
                          (type_b == (int)TriggerType.Ammo);
 
 
@@ -162,11 +211,11 @@ public class CollisionSystem : JobComponentSystem
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
 
-        Entities.WithoutBurst().ForEach(
-            (ref TriggerComponent triggerComponent) =>
-            {
-                triggerComponent.CurrentFrame++;
-            }).Run();
+        //Entities.WithoutBurst().ForEach(
+        //    (ref TriggerComponent triggerComponent) =>
+        //    {
+        //        triggerComponent.CurrentFrame++;
+        //    }).Run();
 
 
         inputDeps = JobHandle.CombineDependencies(inputDeps, buildPhysicsWorldSystem.GetOutputDependency());
@@ -177,6 +226,7 @@ public class CollisionSystem : JobComponentSystem
             physicsWorld = physicsWorld,
             CommandBuffer = m_EntityCommandBufferSystem.CreateCommandBuffer(),
             triggerGroup = GetComponentDataFromEntity<TriggerComponent>(true),
+            meleeGroup = GetComponentDataFromEntity<MeleeComponent>(true),
         };
         JobHandle collisionHandle = collisionJob.Schedule(stepPhysicsWorld.Simulation, ref physicsWorld, inputDeps);
         collisionHandle.Complete();
