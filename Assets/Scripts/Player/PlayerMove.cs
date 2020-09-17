@@ -107,7 +107,7 @@ namespace SandBox.Player
 
 
             float v = applyImpulseComponent.InJump? negativeForce : 0;
-            if (applyImpulseComponent.Falling)
+            if (applyImpulseComponent.Falling || applyImpulseComponent.fallingFramesCounter > 1)
             {
                 v = negativeForce;
             }

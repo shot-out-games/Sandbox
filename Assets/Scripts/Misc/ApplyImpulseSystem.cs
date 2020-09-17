@@ -33,6 +33,9 @@ public struct ApplyImpulseComponent : IComponentData
     public Rotation Rotation;
     public float3 LastPositionLand;
     public bool hiJump;
+    public float fallingFramesCounter;
+    public float fallingFramesMaximuim;
+
 
 }
 /// <summary> Our simple system. </summary>

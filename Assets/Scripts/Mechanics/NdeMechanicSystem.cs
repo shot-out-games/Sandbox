@@ -46,18 +46,18 @@ public class NdeMechanicSystem : SystemBase
                 ndeMechanic.multiplier = pct + .50f;//temp
 
 
-                float f1 = pct / 2;
-                float f2 = pct  * 2.2f;
-                ratings.gameSpeed = ratings.speed * (.80f + f1);
-                playerJump.gameStartJumpGravityForce = playerJump.startJumpGravityForce * (pct + .50f);
+                float f1 = pct * .5f;
+                float f2 = pct  * .66f;
+                ratings.gameSpeed = ratings.speed * (.67f + f2);
+                playerJump.gameStartJumpGravityForce = playerJump.startJumpGravityForce * (f1 + .50f);
 
                 bool hasGun = gunGroup.HasComponent(e);
                 if (hasGun)
                 {
                     var gun = gunGroup[e];
-                    gun.gameStrength = gun.Strength * ndeMechanic.multiplier;
-                    gun.gameRate = gun.Rate * ndeMechanic.multiplier;
-                    gun.gameDamage = gun.Damage * ndeMechanic.multiplier;
+                    gun.gameStrength = gun.Strength * (.50f + f1);
+                    gun.gameRate = 1 - gun.Rate *  (.50f +f1);
+                    gun.gameDamage = gun.Damage * (.50f + f1);
                     //EntityManager.SetComponentData(e, gun);
                     ecb.SetComponent(e, gun);
                 }

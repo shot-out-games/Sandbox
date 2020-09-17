@@ -131,27 +131,14 @@ public class RaycastSystem : SystemBase
                 if (hasPointHitDown)
                 {
                     //Debug.Log("start " + start +  "end " + end + " fraction " + hitDown.Fraction);
-
-
-
                     Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hitDown.RigidBodyIndex].Entity; //grounded
-                    //Debug.Log("hd " + hitDown.Entity);
-
-                    //Filter replaces tag
-                    //if (EntityManager.HasComponent(e, typeof(TriggerComponent)))
-                    //{
-                    //Debug.Log("pt " + e);
-                    //    if (EntityManager.GetComponentData<TriggerComponent>(e).Type == (int)TriggerType.Ground)
-                    //    {
-                    //        applyImpulse.Grounded = true;
-                    //    }
-                    //}
                     if (applyImpulse.InJump == true)
                     {
                         applyImpulse.InJump = false;
                         applyImpulse.Grounded = true;
                     }
 
+                    applyImpulse.fallingFramesCounter = 0;
                     applyImpulse.Falling = false;
 
                 }
@@ -159,7 +146,15 @@ public class RaycastSystem : SystemBase
                 {
                     if (applyImpulse.InJump == false)
                     {
-                        applyImpulse.Falling = true;
+                        if (applyImpulse.fallingFramesCounter > applyImpulse.fallingFramesMaximuim)
+                        {
+                            applyImpulse.Falling = true;
+                        }
+                        else
+                        {
+                            applyImpulse.Falling = false;
+                            applyImpulse.fallingFramesCounter++;
+                        }
                     }
 
                     applyImpulse.Grounded = false;

@@ -18,7 +18,10 @@ ScriptedImporter:
     generateMipMaps: 1
     preset: " <sbspreset pkgurl=\"pkg://stylized_carved_crystal\" label=\"\" >\n 
       <presetinput identifier=\"$outputsize\" uid=\"2400771629\" type=\"8\" value=\"9,9\"
-      />\n </sbspreset>\n"
+      />\n  <presetinput identifier=\"crystal_color\" uid=\"3827980563\" type=\"2\"
+      value=\"0.258824,0.392157,0.537255\" />\n  <presetinput identifier=\"luminosity\"
+      uid=\"2319738774\" type=\"0\" value=\"0.6\" />\n  <presetinput identifier=\"contrast\"
+      uid=\"4123111092\" type=\"0\" value=\"0.2\" />\n </sbspreset>\n"
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
