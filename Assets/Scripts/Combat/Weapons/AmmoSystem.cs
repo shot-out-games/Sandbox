@@ -36,6 +36,7 @@ public class AmmoSystem : JobComponentSystem
                     bullet.AmmoDead = true;
                     bullet.AmmoTimeCounter = 0;
                     EntityManager.SetComponentData(entity, bullet);
+                    //EntityManager.DestroyEntity(entity);
                     //Debug.Log("amo dead");
                 }
             }

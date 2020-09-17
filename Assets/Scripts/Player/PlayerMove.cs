@@ -61,7 +61,7 @@ namespace SandBox.Player
         void Start()
         {
             animator = GetComponent<Animator>();
-            jumpEnabled = GetComponent<PlayerJump>() || GetComponent<PlayerJumpDots>();
+            jumpEnabled = GetComponent<PlayerJump>() || GetComponent<PlayerJump2D>();
             mainCam = Camera.main;
 
         }

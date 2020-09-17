@@ -113,7 +113,8 @@ public class GunScript : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameO
         if (manager == default || entity == Entity.Null) return;
 
 
-        if (BulletInstances.Count > 24)
+
+        if (BulletInstances.Count > 24 && BulletInstances[0].GetComponent<AmmoEntityTracker>())
         {
             Entity e = BulletInstances[0].GetComponent<AmmoEntityTracker>().ammoEntity;
             if (e != Entity.Null)

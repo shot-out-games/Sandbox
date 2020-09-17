@@ -98,6 +98,8 @@ namespace SandBox.Player
     {
         int frames = 0;
         private int airFrames = 0;
+        float buttonHeldFrames = 0;
+
 
         protected override void OnUpdate()
         {
@@ -118,27 +120,36 @@ namespace SandBox.Player
                     if (EntityManager.GetComponentData<Pause>(e).value == 1) return;
                     float leftStickX = inputController.leftStickX;
 
-
                     bool button_x = inputController.buttonX_Pressed;
                     bool button_x_held = inputController.buttonX_held;
+
+                    //startJumpGravityForce over jumpFramesToPeak so ie 50 and 10 50
+
 
                     //Debug.Log("x " + button_x);
                     //Debug.Log("x held " + button_x_held);
                     pv.Linear = applyImpulseComponent.Velocity;
                     float airForceAdd = 0;
-                    float jumpFrames = playerJumpComponent.gameStartJumpGravityForce / playerJumpComponent.jumpFramesToPeak;
-                    float jumpPower = playerJumpComponent.gameStartJumpGravityForce / jumpFrames + playerJumpComponent.addedNegativeForce;//added to offset down player movement neg force . the two should be equal ideally
 
-                    float expDownAdj = playerJumpComponent.gameStartJumpGravityForce /
-                                       playerJumpComponent.startJumpGravityForce;
-                    //Debug.Log("jump frames " + jumpFrames);
+                    float gameToDefaultJumpForce = playerJumpComponent.gameStartJumpGravityForce / playerJumpComponent.startJumpGravityForce;
+
+                    float jumpFrames = gameToDefaultJumpForce * playerJumpComponent.jumpFramesToPeak;//increases if now jumping higher
+                    float originalJumpFrames = playerJumpComponent.jumpFramesToPeak;
+                    //float jumpPower = playerJumpComponent.gameStartJumpGravityForce + playerJumpComponent.addedNegativeForce;//added to offset down player movement neg force . the two should be equal ideally
+                    //float originalJumpPower = playerJumpComponent.startJumpGravityForce + playerJumpComponent.addedNegativeForce;//added to offset down player movement neg force . the two should be equal ideally
+                    float jumpPower = playerJumpComponent.gameStartJumpGravityForce;
+                    float originalJumpPower = playerJumpComponent.startJumpGravityForce;
+
+                    float standardJumpHeight = originalJumpPower * originalJumpFrames;//total height of jump at peak - ref only
+                    float hiJumpMultiplier = 1.3f;//multiply jump power by this - frames 
+                    float hiJumpAirFramesMax = jumpFrames * hiJumpMultiplier;
+
+                    //float expDownAdj = playerJumpComponent.gameStartJumpGravityForce /
+                    //                playerJumpComponent.startJumpGravityForce;
+                    Debug.Log("jump frames " + jumpFrames);
+                    Debug.Log("jump power " + jumpPower);
 
 
-
-                    //Debug.Log("grounded " + applyImpulseComponent.Grounded);
-                    //Debug.Log("in jump " + applyImpulseComponent.InJump);
-                    //Debug.Log("ceiling " + applyImpulseComponent.Ceiling);
-                    //Debug.Log("falling " + applyImpulseComponent.Falling);
 
                     //Debug.Log("added neg " + playerJumpComponent.addedNegativeForce);
 
@@ -156,8 +167,6 @@ namespace SandBox.Player
                     if ((applyImpulseComponent.BumpLeft == true || applyImpulseComponent.BumpRight == true) &&
                         applyImpulseComponent.Grounded == false)
                     {
-                        //applyImpulseComponent.BumpLeft = false;
-                        //applyImpulseComponent.BumpRight = false;
                         applyImpulseComponent.Ceiling = false;
                         applyImpulseComponent.Falling = true;
                         applyImpulseComponent.Grounded = false;
@@ -166,12 +175,7 @@ namespace SandBox.Player
                     }
                     else if (applyImpulseComponent.Ceiling == true)
                     {
-                        //float3 vel = new float3(pv.Linear.x, -jumpPower*5 , 0);
-                        //pv.Linear = vel;
                         applyImpulseComponent.Ceiling = false;
-                        //applyImpulseComponent.Falling = true;
-                        //applyImpulseComponent.Grounded = false;
-                        //applyImpulseComponent.InJump = false;
 
                     }
                     else if (button_x == true && applyImpulseComponent.InJump == false)
@@ -186,38 +190,49 @@ namespace SandBox.Player
                         inputController.gameObject.GetComponent<Animator>().SetTrigger("JumpStage");
                         inputController.gameObject.GetComponent<Animator>().applyRootMotion = false;
                         playerJump.JumpStage = JumpStages.JumpStart;
-                        float3 vel = new float3(pv.Linear.x, jumpPower, 0);
+                        float3 vel = new float3(pv.Linear.x, originalJumpPower, 0);
                         pv.Linear = vel;
-                        //airForceAdd = leftStickX * playerJumpComponent.airForce;
-                        //pv.Linear.x += airForceAdd / 2;
                     }
-                    else if (frames >= 1 && frames <= jumpFrames && applyImpulseComponent.InJump == true && applyImpulseComponent.Grounded == false && applyImpulseComponent.Falling == false)
+                    else if (frames >= 1 && frames <= originalJumpFrames && applyImpulseComponent.InJump == true && applyImpulseComponent.Grounded == false && applyImpulseComponent.Falling == false)
                     {
                         frames = frames + 1;
-                        //Debug.Log(" jump up fr " + frames);
-
-                        if (frames == 8 && button_x_held == true)//make sure number here less than jump up frames at some point
+                        Debug.Log(" jump up fr " + frames);
+                        if (frames == originalJumpFrames - 2 && button_x_held == true)//make sure number here less than jump up frames at some point
                         {
-                           // Debug.Log("start high jump");
+                            // Debug.Log("start high jump");
+                            buttonHeldFrames = 1;
+                        }
+                        else if (frames == originalJumpFrames - 1 && button_x_held == true)//make sure number here less than jump up frames at some point
+                        {
+                            // Debug.Log("start high jump");
+                            buttonHeldFrames = 2;
+                        }
+                        else if (frames == originalJumpFrames && button_x_held == true && buttonHeldFrames == 2) //make sure number here less than jump up frames at some point
+                        {
+                            Debug.Log("bhf " + buttonHeldFrames);
                             applyImpulseComponent.hiJump = true;
+                            buttonHeldFrames = 0;
+                        }
+                        else
+                        {
+                            buttonHeldFrames = 0;
                         }
 
-                        float3 vel = new float3(pv.Linear.x, jumpPower, 0);
+
+                        float3 vel = new float3(pv.Linear.x, originalJumpPower, 0);
                         pv.Linear = vel;
                     }
-                    else if (applyImpulseComponent.hiJump == true && airFrames < 8)//6 on higher jump after 6th frame held - very static could problem like if game has quick jump with low jump frames it will go up after jumpframes peak
+                    else if (applyImpulseComponent.hiJump == true && airFrames < hiJumpAirFramesMax)//6 on higher jump after 6th frame held - very static could problem like if game has quick jump with low jump frames it will go up after jumpframes peak
                     {
 
-                        float framesToEndHiJump = 6;//
-                        float totalHeldForceMultiplier = 12;//so spread out 
-                        //Debug.Log("high jump");
                         frames++;
-                        //Debug.Log(" fr held " + frames);
                         airFrames++;
-                        float3 vel = new float3(pv.Linear.x, jumpPower * (totalHeldForceMultiplier / framesToEndHiJump), 0);//60 pct to regular jump
-                        pv.Linear = vel;
+                        Debug.Log(" air frames " + airFrames);
+                        float3 vel = new float3(pv.Linear.x, pv.Linear.y, 0);
+                        pv.Linear.y = jumpPower * hiJumpMultiplier;
+
                     }
-                    else if (applyImpulseComponent.hiJump == true && airFrames >= 8)//6 on higher jump after 6th frame held - very static could problem like if game has quick jump with low jump frames it will go up after jumpframes peak
+                    else if (applyImpulseComponent.hiJump == true && airFrames >= hiJumpAirFramesMax)//6 on higher jump after 6th frame held - very static could problem like if game has quick jump with low jump frames it will go up after jumpframes peak
                     {
                         applyImpulseComponent.hiJump = false;
                     }
@@ -235,13 +250,13 @@ namespace SandBox.Player
                     else if (playerJump.JumpStage == JumpStages.JumpUp)
                     {
                         frames++;
-                        Debug.Log(" fr up " + frames);
+                        //Debug.Log(" fr up " + frames);
 
                         airForceAdd = leftStickX * playerJumpComponent.airForce;
                         float3 vel = new float3(pv.Linear.x, pv.Linear.y, 0);
                         pv.Linear = vel;
                         //pv.Linear.y = vel.y * expDownAdj;
-                        //Debug.Log("adj " + expDownAdj);
+                        //Debug.Log("vy " + vel.y);
                         pv.Linear.x += airForceAdd;
                     }
 
@@ -260,12 +275,6 @@ namespace SandBox.Player
                             playerJump.ps.Play(true);
                         }
                     }
-
-
-
-                    //Debug.Log("v " + pv.Linear);
-
-
 
                 }
                 )
