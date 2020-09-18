@@ -28,12 +28,12 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     private CanvasGroup canvasGroup;
     [SerializeField]
     private Button defaultButton;
-    private float showTimeLength = 2.0f;
+    private float showTimeLength = 2.95f;
     private float showTimer = 0f;
     private bool startShowTimer;
 
 
-    private float hideTime = .76f;
+    private float hideTime = .88f;
     private float hideTimer;
     private bool startHideTimer;
 
@@ -85,7 +85,7 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
                 if (mobile == true) fontSize = 75;
                 if (instructionCount == 3)
                 {
-                    currentInstruction.text = "The Robies can be shocked but not destroyed";
+                    currentInstruction.text = "The Robies can be shocked but not destroyed.  Shocking them increases your health.";
                     //currentInstruction.text = ".";
                     currentInstruction.fontSize = fontSize;
                 }
@@ -93,17 +93,17 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
                 {
                     currentInstruction.fontSize = fontSize;
                     //currentInstruction.text = "Please use Right Click to aim directly in front of you.";
-                    currentInstruction.text = "The nearer you are to death the more powerful you become";
+                    currentInstruction.text = "The nearer you are to death the more powerful  you become. Jump Higher, Run faster, Shoot quicker.";
                 }
                 if (instructionCount == 2)
                 {
                     currentInstruction.fontSize = fontSize;
-                    currentInstruction.text = "Find the eight Soul Cubes to escape this strange empire";
+                    currentInstruction.text = "Find the eight Soul Cubes to unlock the gate to escape this strange empire.";
 
                 }
                 if (instructionCount == 5)
                 {
-                    currentInstruction.text = "The damage has strange forces that are required to escape";
+                    currentInstruction.text = "Go through this gate and destroy the leader. Do you have too much health and not enough power?";
                 }
                 //if (instructionCount == 6)
                 //{

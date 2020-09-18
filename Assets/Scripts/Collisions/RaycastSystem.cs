@@ -424,7 +424,7 @@ public class RaycastSystem : SystemBase
 
 
 
-
+        bool showMessage = false;
 
 
 
@@ -438,6 +438,7 @@ public class RaycastSystem : SystemBase
             if (key == true)
             {
                 key = false;
+                showMessage = true;
                 hudGroup.cubes -= 1;
                 hudGroup.ShowLabelLevelTargets();
             }
@@ -447,6 +448,17 @@ public class RaycastSystem : SystemBase
 
 
 
+    Entities.WithoutBurst().WithStructuralChanges().ForEach(
+    (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
+    {
+        if (showMessage == true)
+        {
+
+            messageMenu.messageString = "Soul Cube Triggered ... ";
+            messageMenu.ShowMenu();
+        }
+    }
+).Run();
 
 
 
