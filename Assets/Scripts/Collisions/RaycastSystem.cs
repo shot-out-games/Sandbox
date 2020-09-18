@@ -363,7 +363,7 @@ public class RaycastSystem : SystemBase
                         TriggerComponent trigger = EntityManager.GetComponentData<TriggerComponent>(e);
                         trigger.Hit = true;
                         EntityManager.SetComponentData(e, trigger);
-                        LevelManager.instance.audioSource.Stop();
+                        LevelManager.instance.audioSourceGame.Stop();
 
                     }
 

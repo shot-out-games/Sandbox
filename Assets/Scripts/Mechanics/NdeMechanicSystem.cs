@@ -31,6 +31,7 @@ public class NdeMechanicSystem : SystemBase
         Entities.ForEach(
             (
                 Entity e,
+                ref ControlBarComponent controlBar,
                 ref NdeMechanicComponent ndeMechanic,
                 ref RatingsComponent ratings,
                 ref PlayerJumpComponent playerJump,
@@ -43,7 +44,8 @@ public class NdeMechanicSystem : SystemBase
                 
                 float pct = health.TotalDamageReceived / ratings.maxHealth;
 
-                ndeMechanic.multiplier = pct + .50f;//temp
+                ndeMechanic.multiplier = .5f;
+                controlBar.value = pct;
 
 
                 float f1 = pct * .5f;

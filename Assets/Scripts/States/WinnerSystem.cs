@@ -61,7 +61,7 @@ public class WinnerSystem : JobComponentSystem
         //exit = true;
         if (exit == true)
         {
-            LevelManager.instance.audioSource.Stop();
+            LevelManager.instance.audioSourceGame.Stop();
         }
 
 

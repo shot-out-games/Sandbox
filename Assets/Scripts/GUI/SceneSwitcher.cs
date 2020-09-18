@@ -23,9 +23,18 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     {
         // gets the curent screen
         CurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        //Debug.Log("index " + CurrentSceneIndex);
+        Debug.Log("index " + CurrentSceneIndex);
 
-        if (CurrentSceneIndex > 1) LevelManager.instance.PlayLevelMusic();//scene 0 is loader and scene 1  is menu - has own play
+        if (CurrentSceneIndex > 1)
+        {
+            LevelManager.instance.audioSourceMenu.Stop();
+            LevelManager.instance.PlayLevelMusic();//scene 0 is loader and scene 1  is menu - has own play
+        }
+        else if (CurrentSceneIndex == 1)
+        {
+            LevelManager.instance.audioSourceGame.Stop();
+            LevelManager.instance.PlayMenuMusic();//scene 0 is loader and scene 1  is menu - has own play
+        }
     }
 
     void Update()
@@ -182,7 +191,7 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
         if (CurrentSceneIndex == 2)
         {
             sceneLoaded = true;
-            manager.AddComponentData(e, new LoadComponent {e = entity, part1 = false, part2 = false});
+            manager.AddComponentData(e, new LoadComponent { e = entity, part1 = false, part2 = false });
         }
 
 

@@ -20,11 +20,13 @@ public class MainMenuGroup : MonoBehaviour
     private void OnEnable()
     {
         OptionsMenuGroup.OptionsExitBackClickedEvent += ShowMenu;
+        HowMenuGroup.HowExitBackClickedEvent += ShowMenu;
     }
 
     private void OnDisable()
     {
         OptionsMenuGroup.OptionsExitBackClickedEvent -= ShowMenu;
+        HowMenuGroup.HowExitBackClickedEvent -= ShowMenu;
     }
 
 

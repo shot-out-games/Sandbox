@@ -38,7 +38,8 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
 
     public int maxLevels = 4;
     public string worldName = "World";
-    public AudioSource audioSource;
+    public AudioSource audioSourceMenu;
+    public AudioSource audioSourceGame;
     private AudioClip levelLoop;//N/A
     [SerializeField]
     private AudioClip menuMusic;
@@ -91,7 +92,7 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
     void Start()
     {
         PotentialCumulativeGameTargets();
-        //audioSource = GetComponent<AudioSource>();
+        //audioSourceGame = GetComponent<AudioSource>();
         if (SceneManager.GetActiveScene().buildIndex == 1) //Menu is 1
         {
             PlayMenuMusic();
@@ -119,22 +120,22 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
 
     public void PlayMenuMusic()
     {
-        if (audioSource.isPlaying) audioSource.Stop();
-        audioSource.clip = menuMusic;
-        audioSource.Play();
+        if (audioSourceMenu.isPlaying) audioSourceGame.Stop();
+        audioSourceMenu.clip = menuMusic;
+        audioSourceMenu.Play();
     }
 
     public void PlayLevelMusic()//called when switching levels either by scene or when switching levels even when same scene
     {
-        if (audioSource.isPlaying) audioSource.Stop();
+        if (audioSourceGame.isPlaying) audioSourceGame.Stop();
 
 
         AudioClip levelMusic = LevelManager.instance.levelMediaList[currentLevel].levelMusic;
 
         //Debug.Log("Play " + currentLevel);
 
-        audioSource.clip = levelMusic;
-        audioSource.Play();
+        audioSourceGame.clip = levelMusic;
+        audioSourceGame.Play();
     }
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)

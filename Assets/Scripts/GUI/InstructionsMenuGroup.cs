@@ -57,7 +57,7 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
         canvasGroup = GetComponent<CanvasGroup>();
         buttons = gameObject.GetComponentsInChildren<Button>().ToList();
         buttons.ForEach((btn) => btn.onClick.AddListener(() =>
-        PlayMenuClickSound(clickSound)));//shortcut instead of using inspector to add to each button
+            PlayMenuClickSound(clickSound)));//shortcut instead of using inspector to add to each button
         startShowTimer = true;
         //currentInstruction.text = "Please Find the Weapon";
         float fontSize = 25;
