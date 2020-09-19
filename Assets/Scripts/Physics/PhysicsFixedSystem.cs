@@ -90,15 +90,15 @@ public class PlayerSystem : ComponentSystem
 
     protected override void OnUpdate()
     {
-        if (false == once)
-        {
-            FixedRateUtils
-                .EnableFixedRateWithCatchUp(World.GetOrCreateSystem<SimulationSystemGroup>(),
-                    UnityEngine.Time.fixedDeltaTime);
-            FixedRateUtils
-             .EnableFixedRateWithCatchUp(World.GetOrCreateSystem<FixedStepSimulationSystemGroup>(),
-              UnityEngine.Time.fixedDeltaTime);
-            once = true;
-        }
+        //if (false == once)
+        //{
+        //    FixedRateUtils
+        //        .EnableFixedRateWithCatchUp(World.GetOrCreateSystem<SimulationSystemGroup>(),
+        //            UnityEngine.Time.fixedDeltaTime);
+        //    FixedRateUtils
+        //     .EnableFixedRateWithCatchUp(World.GetOrCreateSystem<FixedStepSimulationSystemGroup>(),
+        //      UnityEngine.Time.fixedDeltaTime);
+        //    once = true;
+        //}
     }
 }
