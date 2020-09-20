@@ -1,7 +1,16 @@
+1.1.36.1:
+    
+    Changes:
+      - Windows Standalone, Raw Input: Raw Input devices that do not appear as a HID device are no longer filtered out and are supported as controllers to support Steam virtual/remote devices when Use XInput is disabled.
+    
+    Bug Fixes:
+      - UserDataStore_PlayerPrefs: Deferred Joystick assignment loading when the first Joystick is connected no longer happens if a Joystick is detected on Awake.
+      - RewiredStandaloneInputModule: Unsubscribed to events in OnDestroy.
+
 1.1.36.0:
 
     Changes:
-      - Added support Unity 2020 support.
+      - Added Unity 2020 support.
       - Added UWP ARM64 native library (Unity 2019+, untested).
       - Removed GUILayer on cameras in examples to stop errors reported in Unity 2019+
       - Rewired Editor: Copying an Action Category that contains Actions and copying those Actions now copies the sort order of the Actions.

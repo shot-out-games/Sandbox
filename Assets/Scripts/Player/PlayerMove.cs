@@ -53,6 +53,7 @@ namespace SandBox.Player
 
         //public Quaternion rotation { get; set; }
         public float slerpDampTime { get; set; }
+        public int targetFrameRate = -1;
 
 
 
@@ -60,6 +61,11 @@ namespace SandBox.Player
         // Start is called before the first frame update
         void Start()
         {
+            if (targetFrameRate >= 10)
+            {
+                Application.targetFrameRate = targetFrameRate;
+            }
+
             animator = GetComponent<Animator>();
             jumpEnabled = GetComponent<PlayerJump>() || GetComponent<PlayerJump2D>();
             mainCam = Camera.main;

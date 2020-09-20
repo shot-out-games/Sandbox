@@ -152,7 +152,7 @@ public class InputController : MonoBehaviour, IConvertGameObjectToEntity
 
         if (!ReInput.isReady) return;
 
-        if (manager == null || playerEntity == Entity.Null) return;
+        if (manager == default || playerEntity == Entity.Null) return;
 
 
         bool hasComponent = manager.HasComponent<InputControllerComponent>(playerEntity);

@@ -15,6 +15,7 @@ namespace SandBox.Player
 {
 
 
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
 
 

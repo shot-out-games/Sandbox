@@ -88,7 +88,7 @@ namespace SandBox.Player
     //[UpdateBefore(typeof(InputControllerSystemUpdate))]
 
     //[UpdateAfter(typeof(BuildPhysicsWorld))]
-
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
     //[UpdateBefore()(typeof(MoveCollisionSystem))]
     //[UpdateBefore(typeof(PlayerMoveSystem))]
@@ -197,7 +197,7 @@ namespace SandBox.Player
                         applyImpulseComponent.Ceiling = false;
 
                     }
-                    else if (button_x == true && applyImpulseComponent.InJump == false)
+                    else if ((button_x == true || button_x_held == true) && applyImpulseComponent.InJump == false && frames == 0)
                     {
                         applyImpulseComponent.InJump = true;
                         applyImpulseComponent.Grounded = false;
@@ -215,7 +215,7 @@ namespace SandBox.Player
                     else if (frames >= 1 && frames <= originalJumpFrames && applyImpulseComponent.InJump == true && applyImpulseComponent.Grounded == false && applyImpulseComponent.Falling == false)
                     {
                         frames = frames + 1;
-                        Debug.Log(" jump up fr " + frames);
+                        //Debug.Log(" jump up fr " + frames);
                         if (frames == originalJumpFrames - 2 && button_x_held == true && variableJump == false)//make sure number here less than jump up frames at some point
                         {
                             // Debug.Log("start high jump");
@@ -228,7 +228,7 @@ namespace SandBox.Player
                         }
                         else if (frames == originalJumpFrames && button_x_held == true && (buttonHeldFrames == 2 || variableJump == true)) //make sure number here less than jump up frames at some point
                         {
-                            Debug.Log("bhf " + buttonHeldFrames);
+                            //Debug.Log("bhf " + buttonHeldFrames);
                             applyImpulseComponent.hiJump = true;
                             buttonHeldFrames = 0;
                         }
@@ -252,7 +252,7 @@ namespace SandBox.Player
 
                         frames++;
                         airFrames++;
-                        Debug.Log(" air frames " + airFrames);
+                        //Debug.Log(" air frames " + airFrames);
                         float3 vel = new float3(pv.Linear.x, pv.Linear.y, 0);
                         pv.Linear.y = jumpPower * hiJumpMultiplier;
 

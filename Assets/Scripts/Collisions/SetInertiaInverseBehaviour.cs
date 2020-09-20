@@ -37,7 +37,7 @@ public class SetInertiaInverseBehaviour : MonoBehaviour, IConvertGameObjectToEnt
             //mass.InverseMass = .01f;
             mass.InverseInertia[0] = LockX ? .0f: mass.InverseInertia[0];
             mass.InverseInertia[1] = LockY ? .0f: mass.InverseInertia[1];
-            mass.InverseInertia[2] = LockZ ? .0f : mass.InverseInertia[2];
+            mass.InverseInertia[2] = LockZ ? .0f : mass.InverseInertia[2]; 
             manager.SetComponentData<PhysicsMass>(e, mass);
         }
 

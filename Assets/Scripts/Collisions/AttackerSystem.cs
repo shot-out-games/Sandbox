@@ -55,6 +55,10 @@ public class AttackerSystem : JobComponentSystem
 
                     float hw = animator.GetFloat("HitWeight");
 
+                    if (type_b == (int) TriggerType.Ground || type_a == (int) TriggerType.Ground)
+                    {
+                        Debug.Log("t b " + type_b + " t a " + type_a);
+                    }
 
 
                     if (playerA && enemyB || playerB && enemyA) check = true;
@@ -97,8 +101,8 @@ public class AttackerSystem : JobComponentSystem
 
                             //for NDE
                             var health = EntityManager.GetComponentData<HealthComponent>(entityA);
-                            health.TotalDamageReceived = health.TotalDamageReceived - 5f;
-                            if (health.TotalDamageReceived < 5) health.TotalDamageReceived = 5;
+                            health.TotalDamageReceived = health.TotalDamageReceived - 9f;
+                            if (health.TotalDamageReceived < 5) health.TotalDamageReceived = 9f;
                             EntityManager.SetComponentData(entityA, health);
 
 
@@ -152,8 +156,8 @@ public class AttackerSystem : JobComponentSystem
 
                             //for NDE
                             var health = EntityManager.GetComponentData<HealthComponent>(shooter);
-                            health.TotalDamageReceived = health.TotalDamageReceived - 1.9f;
-                            if (health.TotalDamageReceived < 2) health.TotalDamageReceived = 2;
+                            health.TotalDamageReceived = health.TotalDamageReceived - 3f;
+                            if (health.TotalDamageReceived < 3) health.TotalDamageReceived = 3;
                             EntityManager.SetComponentData(shooter, health);
 
 

@@ -1,4 +1,5 @@
-﻿using Unity.Burst;
+﻿using SandBox.Player;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
@@ -12,30 +13,23 @@ using SphereCollider = Unity.Physics.SphereCollider;
 
 
 
-//[UpdateAfter(typeof(Unity.Physics.Systems.EndFramePhysicsSystem))]
-//[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+[UpdateAfter(typeof(Unity.Physics.Systems.EndFramePhysicsSystem))]
+[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
 //[UpdateAfter(typeof(BuildPhysicsWorld))]
-//[UpdateBefore(typeof(BeginFixedStepSimulationEntityCommandBufferSystem))]
 
 //[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+//[UpdateInGroup(typeof(SimulationSystemGroup))]
+//[UpdateAfter(typeof(EndFramePhysicsSystem))]
+//[UpdateAfter(typeof(CollisionSystem))]
+
+
+//[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+//[UpdateBefore(typeof(PlayerMoveSystem))]
+
 
 public class RaycastSystem : SystemBase
 {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -104,9 +98,9 @@ public class RaycastSystem : SystemBase
             else
             {
 
-                start = translation.Value + new float3(0, 0, 0);
+                start = translation.Value + new float3(0, .03f, 0);
                 direction = new float3(0, -1, 0);
-                distance = .38f;
+                distance =  .35f;
                 end = start + direction * distance;
 
 

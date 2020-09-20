@@ -71,7 +71,7 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 
     void Update()
     {
-        if (manager == null) return;
+        if (manager == default) return;
         if (instructionCount > totalInstructions) return;
 
         if (startShowTimer)

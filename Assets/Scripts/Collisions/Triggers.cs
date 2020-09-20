@@ -5,6 +5,7 @@ using Unity.Jobs;
 using UnityEngine;
 using Unity.Burst;
 using System;
+using SandBox.Player;
 using Unity.Collections;
 
 public struct TriggerComponent : IComponentData
@@ -48,7 +49,12 @@ public struct PowerTriggerComponent : IComponentData
 //[UpdateBefore(typeof(BeginFixedStepSimulationEntityCommandBufferSystem))]
 
 //[UpdateAfter(typeof(BuildPhysicsWorld))]
-//[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+//[UpdateAfter(typeof(EndFramePhysicsSystem))]
+[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+[UpdateBefore(typeof(PlayerMoveSystem))]
+//[UpdateBefore(typeof(FixedStepSimulationSystemGroup))]
+
+//[UpdateInGroup(typeof(SimulationSystemGroup))]
 
 
 public class CollisionSystem : JobComponentSystem
@@ -114,7 +120,11 @@ public class CollisionSystem : JobComponentSystem
 
 
 
-            if (triggerComponent_a.Type == (int)TriggerType.Ground || triggerComponent_b.Type == (int)TriggerType.Ground) return;
+            if (triggerComponent_a.Type == (int) TriggerType.Ground ||
+                triggerComponent_b.Type == (int) TriggerType.Ground)
+            {
+                return;
+            }
 
 
             bool punchingA = false;
