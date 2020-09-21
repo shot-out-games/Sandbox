@@ -179,7 +179,7 @@ public class PowerManager : MonoBehaviour, IConvertGameObjectToEntity
 }
 
 
-[UpdateAfter(typeof(PlayerMoveSystem))]
+//[UpdateAfter(typeof(PlayerMoveSystem))]
 
 public class PowersSystem : JobComponentSystem
 {

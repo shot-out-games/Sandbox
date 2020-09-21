@@ -101,7 +101,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     public void LateUpdateSystem()
     {
 
-        if (manager == null) return;
+        if (manager == default) return;
         if (manager.HasComponent<PlayerWeaponAimComponent>(e) == false) return;
         if (manager.HasComponent<ApplyImpulseComponent>(e) == false) return;
         if (aim == null || target == null) return;
@@ -115,7 +115,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     public void UpdateSystem()
     {
 
-        if (manager == null) return;
+        if (manager == default) return;
         if (manager.HasComponent<PlayerWeaponAimComponent>(e) == false) return;
         if (aim == null || target == null) return;
 

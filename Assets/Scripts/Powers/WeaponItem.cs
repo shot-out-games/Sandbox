@@ -32,7 +32,7 @@ public class WeaponItem : MonoBehaviour, IConvertGameObjectToEntity
 
     void Update()
     {
-        if (manager == null || e == Entity.Null) return;
+        if (manager == default || e == Entity.Null) return;
         if (manager.HasComponent<WeaponItemComponent>(e) == false) return;
 
 

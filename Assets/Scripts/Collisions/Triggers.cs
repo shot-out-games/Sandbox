@@ -7,6 +7,8 @@ using Unity.Burst;
 using System;
 using SandBox.Player;
 using Unity.Collections;
+using Unity.Mathematics;
+using Unity.Transforms;
 
 public struct TriggerComponent : IComponentData
 {
@@ -18,10 +20,16 @@ public struct TriggerComponent : IComponentData
     //parent of trigger ie bone 
     //if trigger is bullet then just returns bullet not shooter
     //use ammo component for shooter (owner)
+    public Entity Entity;
     public Entity ParentEntity;
     public bool Hit;
     public bool Active;
+    public float3 Position;
+    public Quaternion Rotation;
 }
+
+
+
 
 
 public struct CheckedComponent : IComponentData

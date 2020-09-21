@@ -15,7 +15,7 @@ public struct LockSystemComponent : IComponentData
 }
 
 
-[UpdateAfter(typeof(Unity.Physics.Systems.EndFramePhysicsSystem))]
+//[UpdateAfter(typeof(Unity.Physics.Systems.EndFramePhysicsSystem))]
 
 public class LockSystem : SystemBase
 {

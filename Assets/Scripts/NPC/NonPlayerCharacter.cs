@@ -201,7 +201,7 @@ public class NonPlayerCharacter : MonoBehaviour, IConvertGameObjectToEntity
 
     void OnAnimatorMove()
     {
-        if (target == null || anim == null ||  entity == Entity.Null || manager == null) return;
+        if (target == null || anim == null ||  entity == Entity.Null || manager == default) return;
         bool hasComponent = manager.HasComponent(entity, typeof(NpcMovementComponent));
         if (manager.HasComponent<NpcComponent>(entity) == false) return;
         if (hasComponent == false) return;

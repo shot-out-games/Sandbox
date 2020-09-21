@@ -40,7 +40,7 @@ public class PowerItem : MonoBehaviour, IConvertGameObjectToEntity
 
     void Update()
     {
-        if (manager == null || e == Entity.Null) return;
+        if (manager == default || e == Entity.Null) return;
         if (manager.HasComponent<PowerItemComponent>(e) == false) return;
 
         PowerItemComponent powerItem = manager.GetComponentData<PowerItemComponent>(e);

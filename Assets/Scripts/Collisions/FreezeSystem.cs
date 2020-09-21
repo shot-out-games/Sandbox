@@ -19,7 +19,7 @@ public struct FreezeComponent : IComponentData
 
 
 
-[UpdateAfter(typeof(Unity.Physics.Systems.EndFramePhysicsSystem))]
+//[UpdateAfter(typeof(Unity.Physics.Systems.EndFramePhysicsSystem))]
 
 public class FreezeSystem : SystemBase
 {

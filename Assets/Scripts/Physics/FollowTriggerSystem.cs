@@ -5,6 +5,12 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 
+
+
+[UpdateInGroup(typeof(TransformSystemGroup))]
+[UpdateAfter(typeof(EndFrameLocalToParentSystem))]
+
+
 public class FollowTriggerSystem : SystemBase
 {
     protected override void OnUpdate()
@@ -19,18 +25,14 @@ public class FollowTriggerSystem : SystemBase
         // meaning it will process all entities in the world that have both
         // Translation and Rotation components. Change it to process the component
         // types you want.
-        
-        
-        
-        Entities.ForEach((ref Translation translation, in Rotation rotation) => {
-            // Implement the work to perform for each entity here.
-            // You should only access data that is local or that is a
-            // field on this job. Note that the 'rotation' parameter is
-            // marked as 'in', which means it cannot be modified,
-            // but allows this job to run in parallel with other jobs
-            // that want to read Rotation component data.
-            // For example,
-            //     translation.Value += math.mul(rotation.Value, new float3(0, 0, 1)) * deltaTime;
+
+
+
+        Entities.ForEach((ref TriggerComponent triggerComponent, ref Translation translation, ref Rotation rotation) =>
+        {
+            //translation.Value = triggerComponent.Position;
+            //rotation.Value = triggerComponent.Rotation;
+
         }).Schedule();
     }
 }

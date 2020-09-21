@@ -34,52 +34,79 @@ public class Tracker : MonoBehaviour, IConvertGameObjectToEntity
 {
 
     public GameObject track;
-    public Entity _Entity;
+    public Entity e;
     public Entity parentEntity;
-    public EntityManager _EntityManager;
+    public EntityManager manager;
     public TriggerType Type;
     [SerializeField] private Transform offset;//since we can't make child need position relative to tracked transform
-    private Vector3 offsetPosition = Vector3.zero;
-    private Quaternion offsetRotation = Quaternion.identity;
+                                              //    private Vector3 offsetPosition = Vector3.zero;
+                                              // private Quaternion offsetRotation = Quaternion.identity;
 
 
     //[SerializeField] private Vector3 transformPoint;//since we can't make child need position relative to tracked transform
     //[SerializeField] private GameObject prefab;
     //private GameObject go;
 
-    void Start()
-    {
+    //void Start()
+    //{
 
-        if(offset != null)
-        {
-            offsetPosition = offset.localPosition;
-            offsetRotation = offset.localRotation;
-        }
+    //    if(offset != null)
+    //    {
+    //        offsetPosition = offset.localPosition;
+    //        offsetRotation = offset.localRotation;
+    //    }
 
-    }
+    //}
+
+    //void LateUpdate()
+    //{
+    //    if (manager == null) return;
+
+    //    if (!manager.HasComponent(e, typeof(Translation))) return;
+    //    if (track == null) return;
+
+    //    transform.position = track.transform.position + offsetPosition;
+    //    transform.rotation = track.transform.rotation * offsetRotation;
+
+    //    manager.SetComponentData(e, new Translation { Value = transform.position });
+    //    manager.SetComponentData(e, new Rotation { Value = transform.rotation });
+
+    //}
 
     void LateUpdate()
     {
-        if (_EntityManager == null) return;
+        if (manager == null) return;
 
-        if (!_EntityManager.HasComponent(_Entity, typeof(Translation))) return;
-        if(track == null) return;
+        if (!manager.HasComponent(e, typeof(TriggerComponent))) return;
+        if (track == null) return;
 
-        transform.position = track.transform.position + offsetPosition;
-        transform.rotation = track.transform.rotation * offsetRotation;
-
-        _EntityManager.SetComponentData(_Entity, new Translation { Value = transform.position });
-        _EntityManager.SetComponentData(_Entity, new Rotation  { Value = transform.rotation });
+        var trigger = manager.GetComponentData<TriggerComponent>(e);
+        ////track.transform.position = trigger.Position;
+        ////track.transform.rotation = trigger.Rotation;
+        trigger.Position = track.transform.position;
+        trigger.Rotation = track.transform.rotation;
+        ////Debug.Log("pos mb " + track.transform.position);
+        //Debug.Log("pos mb ");
+        manager.SetComponentData(e, trigger);
 
     }
+
+
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         parentEntity = conversionSystem.GetPrimaryEntity(track.transform.root.gameObject);
         //Debug.Log("parent " + parentEntity.Index);
-        _EntityManager = dstManager;
-        _Entity = entity;
-        _EntityManager.AddComponentData(entity, new TriggerComponent() { Type = (int)Type, ParentEntity = parentEntity, CurrentFrame = 0 });
+        manager = dstManager;
+        e = entity;
+        manager.AddComponentData(entity, new TriggerComponent()
+        {
+            Type = (int)Type, 
+            ParentEntity = parentEntity, CurrentFrame = 0,
+            Entity = e
+
+
+        });
 
     }
 

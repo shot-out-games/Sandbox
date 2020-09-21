@@ -4,7 +4,7 @@ using Unity.Jobs;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerComponent))]
-[UpdateAfter(typeof(PlayerMoveSystem))]
+//[UpdateAfter(typeof(PlayerMoveSystem))]
 //[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
 

@@ -123,7 +123,7 @@ public class GameInterfaceSystem : JobComponentSystem
             ).Run();
 
         int pause = paused ? 1 : 0;
-        Entities.WithoutBurst().ForEach((Animator animator, Entity entity) =>
+        Entities.WithoutBurst().ForEach((Animator animator, Entity entity, Pause pauseComponent) =>
         {
             animator.speed = paused ? 0 : 1; ;
             EntityManager.SetComponentData<Pause>(entity, new Pause { value = pause });
@@ -131,7 +131,7 @@ public class GameInterfaceSystem : JobComponentSystem
         ).Run();
 
 
-        Entities.WithoutBurst().ForEach((EnemyMove enemyMove, Entity entity, NavMeshAgent agent, RatingsComponent enemyRatings, DeadComponent dead) =>
+        Entities.WithoutBurst().ForEach((EnemyMove enemyMove, Entity entity, NavMeshAgent agent, Pause pauseComponent, RatingsComponent enemyRatings, DeadComponent dead) =>
         {
             enemyMove.moveSpeed = paused || dead.isDead ? 0 : enemyRatings.speed;
             //agent.speed = paused || dead.isDead ? 0 : enemyRatings.speed;
