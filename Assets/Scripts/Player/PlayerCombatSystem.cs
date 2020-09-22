@@ -6,11 +6,11 @@ using Unity.Jobs;
 namespace SandBox.Player
 {
 
-    public class PlayerCombatSystem : JobComponentSystem
+    public class PlayerCombatSystem : SystemBase
     {
 
 
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void OnUpdate()
         {
 
             Entities.WithoutBurst().ForEach(
@@ -40,7 +40,6 @@ namespace SandBox.Player
                 }
             ).Run();
 
-            return default;
 
         }
 

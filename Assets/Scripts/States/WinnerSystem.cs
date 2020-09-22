@@ -20,10 +20,10 @@ public struct WinnerComponent : IComponentData
 }
 
 
-public class WinnerSystem : JobComponentSystem
+public class WinnerSystem :  SystemBase
 {
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
 
 
@@ -164,8 +164,6 @@ public class WinnerSystem : JobComponentSystem
 
         }
 
-
-        return default;
     }
 
 }

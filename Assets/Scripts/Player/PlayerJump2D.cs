@@ -32,7 +32,7 @@ namespace SandBox.Player
         public float airForce = 500f;
         public float jumpFramesToPeak = 5;
 
-
+        
 
         Animator anim;
         public AudioClip audioClip;
@@ -176,28 +176,10 @@ namespace SandBox.Player
                     {
                         return;
                     }
-                    //else if(applyImpulseComponent.Falling)
-                    //{
-                    //    fallingFramesCounter++;
-                    //}
+             
 
-
-
-                    if ((applyImpulseComponent.BumpLeft == true || applyImpulseComponent.BumpRight == true) &&
-                        applyImpulseComponent.Grounded == false)
-                    {
-                        applyImpulseComponent.Ceiling = false;
-                        applyImpulseComponent.Falling = true;
-                        applyImpulseComponent.Grounded = false;
-                        applyImpulseComponent.InJump = false;
-
-                    }
-                    else if (applyImpulseComponent.Ceiling == true)
-                    {
-                        applyImpulseComponent.Ceiling = false;
-
-                    }
-                    else if ((button_x == true || button_x_held == true) && applyImpulseComponent.InJump == false && frames == 0)
+                 
+                    if ((button_x == true || button_x_held == true) && applyImpulseComponent.InJump == false && frames == 0)
                     {
                         applyImpulseComponent.InJump = true;
                         applyImpulseComponent.Grounded = false;

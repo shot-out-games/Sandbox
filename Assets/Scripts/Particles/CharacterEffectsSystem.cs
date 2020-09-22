@@ -4,13 +4,13 @@ using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
 
-public class CharacterEffectsSystem : JobComponentSystem
+public class CharacterEffectsSystem : SystemBase
 {
     private float timer;
 
 
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
         timer += Time.DeltaTime;
 
@@ -39,7 +39,7 @@ public class CharacterEffectsSystem : JobComponentSystem
 
                 if (input.leftTriggerDown == true)
                 {
-                        impulse.impulseSource.GenerateImpulse();
+                    impulse.impulseSource.GenerateImpulse();
                 }
 
             }
@@ -60,18 +60,18 @@ public class CharacterEffectsSystem : JobComponentSystem
                 in Animator animator,
                 in EffectsManager effects) =>
             {
-            if (damageComponent.DamageReceived == 0 || pause.value == 1) return;
+                if (damageComponent.DamageReceived == 0 || pause.value == 1) return;
 
-            bool skip = false;
+                bool skip = false;
                 //if (EntityManager.HasComponent(e, typeof(EnemyComponent)))
                 //{
                 //    skip = EntityManager.GetComponentData<EnemyComponent>(e).invincible;
                 //}
 
                 if (skip == false)
-            {
+                {
 
-                animator.SetInteger("HitReact", 1);
+                    animator.SetInteger("HitReact", 1);
 
                     AudioSource audioSource = effects.audioSource;
 
@@ -157,8 +157,6 @@ public class CharacterEffectsSystem : JobComponentSystem
         ).Run();
 
 
-
-        return default;
     }
 
 

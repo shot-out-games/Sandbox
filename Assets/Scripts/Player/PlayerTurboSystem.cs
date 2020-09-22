@@ -4,14 +4,12 @@ using Unity.Jobs;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerComponent))]
-//[UpdateAfter(typeof(PlayerMoveSystem))]
-//[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
 
-public class PlayerTurboSystem : JobComponentSystem
+public class PlayerTurboSystem : SystemBase
 {
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
         Entities.WithoutBurst().WithStructuralChanges().ForEach
         (
@@ -38,10 +36,9 @@ public class PlayerTurboSystem : JobComponentSystem
                 }
 
 
-                }
+            }
         ).Run();
 
-        return default;
     }
 }
 

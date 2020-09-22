@@ -11,68 +11,85 @@ using UnityEngine;
 public class NdeMechanicSystem : SystemBase
 {
 
-    EndSimulationEntityCommandBufferSystem ecbSystem;
+    //[NativeDisableParallelForRestriction] 
+    //EndSimulationEntityCommandBufferSystem ecbSystem;
 
     protected override void OnCreate()
     {
         base.OnCreate();
-        ecbSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        //ecbSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
     }
 
     protected override void OnUpdate()
     {
         //var ecb = ecbSystem.CreateCommandBuffer();
-        EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
+        //EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
 
 
-        var gunGroup = GetComponentDataFromEntity<GunComponent>(true);
+        //var gunGroup = GetComponentDataFromEntity<GunComponent>(true);
 
 
         Entities.ForEach(
             (
                 Entity e,
+                //int entityInQueryIndex,
                 ref ControlBarComponent controlBar,
                 ref NdeMechanicComponent ndeMechanic,
                 ref RatingsComponent ratings,
                 ref PlayerJumpComponent playerJump,
                 in HealthComponent health
 
-
-
             ) =>
             {
-                
-                float pct = health.TotalDamageReceived / ratings.maxHealth;
 
+                float pct = health.TotalDamageReceived / ratings.maxHealth;
                 ndeMechanic.multiplier = .5f;
                 controlBar.value = pct;
-
-
                 float f1 = pct * .5f;
-                float f2 = pct  * .66f;
+                float f2 = pct * .66f;
                 ratings.gameSpeed = ratings.speed * (.67f + f2);
                 playerJump.gameStartJumpGravityForce = playerJump.startJumpGravityForce * (f1 + .50f);
 
-                bool hasGun = gunGroup.HasComponent(e);
-                if (hasGun)
-                {
-                    var gun = gunGroup[e];
-                    gun.gameStrength = gun.Strength * (.50f + f1);
-                    gun.gameRate = 1 - gun.Rate *  (.50f +f1);
-                    gun.gameDamage = gun.Damage * (.50f + f1);
-                    //EntityManager.SetComponentData(e, gun);
-                    ecb.SetComponent(e, gun);
-                }
 
             }
 
 
-        ).Run();
+        ).Schedule();
 
-        
+        Entities.WithAll<ControlBarComponent, NdeMechanicComponent>().ForEach
+        (
+            (
+                ref GunComponent gun,
+                in HealthComponent health,
+                in RatingsComponent ratings
+                ) =>
+            {
+
+                float pct = health.TotalDamageReceived / ratings.maxHealth;
+                float f1 = pct * .5f;
+                //float f2 = pct * .66f;
 
 
-        ecb.Playback(EntityManager);
+                //bool hasGun = gunGroup.HasComponent(e);
+                //bool hasGun = HasComponent<GunComponent>(e);
+                //if (hasGun)
+                //{
+                // var gun = gunGroup[e];
+                gun.gameStrength = gun.Strength * (.50f + f1);
+                gun.gameRate =  gun.Rate + gun.Rate * (1 - pct);
+                gun.gameDamage = gun.Damage * (.50f + f1);
+                //ecb.SetComponent(entityInQueryIndex, e, gun);
+                //ecb.SetComponent(e, gun);
+                //}
+
+            }
+
+        ).Schedule();
+
+
+        //ecbSystem.AddJobHandleForProducer(Dependency);
+
+        //ecb.Playback(EntityManager);
         //ecb.Dispose();
 
 

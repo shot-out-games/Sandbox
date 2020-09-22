@@ -6,33 +6,28 @@ using Unity.Jobs;
 
 
 
-public class HoleSystem : JobComponentSystem
+public class HoleSystem : SystemBase
 {
 
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
-        EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
 
-        Entities.WithoutBurst().ForEach(
+        Entities.ForEach(
             (ref HoleComponent holeComponent, in Entity entity) =>
             {
                 int counter = holeComponent.holeHitCounter + 1;
-                if (holeComponent.hitTag == 1)//fireball - string not supported
+                if (holeComponent.hitTag == 1) //fireball - string not supported
                 {
                     holeComponent.hitTag = 0;
                     holeComponent.open = !holeComponent.open;
                     holeComponent.holeHitCounter = counter;
-                    ecb.SetComponent(entity, holeComponent);
                 }
             }
-        ).Run();
+        ).Schedule();
 
 
-        ecb.Playback(EntityManager);
-        ecb.Dispose();
 
-        return default;
     }
 
 

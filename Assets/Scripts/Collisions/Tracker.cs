@@ -85,16 +85,12 @@ public class Tracker : MonoBehaviour, IConvertGameObjectToEntity
     {
         if (manager == null) return;
 
-        if (!manager.HasComponent(e, typeof(TriggerComponent))) return;
+        if (!manager.HasComponent(e, typeof(TrackerComponent))) return;
         if (track == null) return;
 
         var tracker = manager.GetComponentData<TrackerComponent>(e);
-        ////track.transform.position = trigger.Position;
-        ////track.transform.rotation = trigger.Rotation;
-        tracker.Position = track.transform.position;
-        tracker.Rotation = track.transform.rotation;
-        ////Debug.Log("pos mb " + track.transform.position);
-        //Debug.Log("pos mb ");
+        //tracker.Position = track.transform.position;
+        //tracker.Rotation = track.transform.rotation;
         manager.SetComponentData(e, tracker);
 
     }

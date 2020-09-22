@@ -44,6 +44,15 @@ class SynchronizeGameObjectTransformsWithTriggerEntities : SystemBase
 
         //var entities = m_Query.ToEntityArray(Allocator.Temp);
 
+        Entities.WithoutBurst().ForEach(
+            (ref TrackerComponent trackComponent, in Tracker tracker) =>
+            {
+                trackComponent.Position = tracker.track.transform.position;
+                trackComponent.Rotation = tracker.track.transform.rotation;
+            }
+            ).Run();
+
+
         Dependency = new SyncTransforms
         {
             //CommandBuffer = m_EntityCommandBufferSystem.CreateCommandBuffer(),
@@ -53,10 +62,11 @@ class SynchronizeGameObjectTransformsWithTriggerEntities : SystemBase
 
 
 
-        Entities.ForEach((ref Translation translation, ref Rotation rotation, in TrackerComponent trackerComponent) =>
+        Entities.ForEach((ref Translation translation, ref Rotation rotation, in TrackerComponent trackerComponent, in Entity e) =>
         {
             translation.Value = trackerComponent.Position;
             rotation.Value = trackerComponent.Rotation;
+       
 
         }).Schedule();
 

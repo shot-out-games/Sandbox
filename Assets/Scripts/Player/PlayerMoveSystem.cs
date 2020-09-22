@@ -19,11 +19,11 @@ namespace SandBox.Player
 
 
 
-    public class PlayerMoveSystem : JobComponentSystem
+    public class PlayerMoveSystem : SystemBase
     {
 
 
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void OnUpdate()
         {
             bool rewindPressed = false;
             float damage = 25;
@@ -47,7 +47,6 @@ namespace SandBox.Player
                         if (inputController.buttonY_Pressed && damage < 25)
                         {
                             rewindPressed = true;
-                            //enemyMove.SetDestination();
                         }
 
 
@@ -61,18 +60,7 @@ namespace SandBox.Player
                         leftStickY = 0;//2d but need Y for shooting still so save to applyimpulse above
                         Vector3 stickInput = new Vector3(leftStickX, 0, leftStickY);
                         stickSpeed = stickInput.sqrMagnitude;
-
-                        //if (EntityManager.HasComponent<PlayerStopComponent>(entity))
-                        //{
-                        //    if (EntityManager.GetComponentData<PlayerStopComponent>(entity).enabled)
-                        //        stickSpeed = 0; //turn off animator
-                        //}
-
                         pv.Linear = applyImpulseComponent.Velocity;
-
-
-                        //Debug.Log("pm v " + pv.Linear);
-                        //Debug.Log("sx " + applyImpulseComponent.stickX);
                         inputController.gameObject.GetComponent<Animator>().SetFloat("Speed", stickSpeed);
                         translation.Value.z = 0;
 
@@ -164,12 +152,6 @@ namespace SandBox.Player
                 }
             ).Run();
 
-
-
-
-
-
-            return default;
         }
 
     }
