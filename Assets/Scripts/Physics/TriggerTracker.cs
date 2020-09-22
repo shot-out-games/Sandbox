@@ -14,19 +14,19 @@ using UnityEngine.Jobs;
 
 class SynchronizeGameObjectTransformsWithTriggerEntities : SystemBase
 {
-    [NativeDisableParallelForRestriction] private EndSimulationEntityCommandBufferSystem m_EntityCommandBufferSystem;
+    //[NativeDisableParallelForRestriction] private EndSimulationEntityCommandBufferSystem m_EntityCommandBufferSystem;
     EntityQuery m_Query;
 
     protected override void OnCreate()
     {
         base.OnCreate();
-        m_EntityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        //m_EntityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         m_Query = GetEntityQuery(new EntityQueryDesc
         {
             All = new ComponentType[]
             {
-                typeof(TriggerComponent),
-                typeof(Tracker),
+                typeof(TrackerComponent),
+                //typeof(Tracker),
                 typeof(Transform),
                 typeof(LocalToWorld)
             }
@@ -39,29 +39,33 @@ class SynchronizeGameObjectTransformsWithTriggerEntities : SystemBase
     protected override void OnUpdate()
     {
         //var localToWorlds = m_Query.ToComponentDataArrayAsync<LocalToWorld>(Allocator.TempJob, out var jobHandle);
-        var triggerComponents = m_Query.ToComponentDataArrayAsync<TriggerComponent>(Allocator.TempJob, out var jobHandle);
-        var localToWorlds = m_Query.ToComponentDataArray<LocalToWorld>(Allocator.TempJob);
+        var trackerComponents = m_Query.ToComponentDataArray<TrackerComponent>(Allocator.TempJob);
+        //var localToWorlds = m_Query.ToComponentDataArray<LocalToWorld>(Allocator.TempJob);
 
         //var entities = m_Query.ToEntityArray(Allocator.Temp);
 
         Dependency = new SyncTransforms
         {
             //CommandBuffer = m_EntityCommandBufferSystem.CreateCommandBuffer(),
-            TriggerComponents = triggerComponents
-        }.Schedule(m_Query.GetTransformAccessArray(), JobHandle.CombineDependencies(Dependency, jobHandle));
+            TrackerComponents = trackerComponents
+        }.Schedule(m_Query.GetTransformAccessArray());
 
 
 
 
-
-
-
-        Entities.ForEach((ref TriggerComponent triggerComponent, ref Translation translation, ref Rotation rotation) =>
+        Entities.ForEach((ref Translation translation, ref Rotation rotation, in TrackerComponent trackerComponent) =>
         {
-            translation.Value = triggerComponent.Position;
-            rotation.Value = triggerComponent.Rotation;
+            translation.Value = trackerComponent.Position;
+            rotation.Value = trackerComponent.Rotation;
 
-        }).ScheduleParallel();
+        }).Schedule();
+
+        //Dependency.Complete();
+
+        //m_Query.Dispose();
+        //trackerComponents.Dispose();
+        //localToWorlds.Dispose();
+        //jobHandle.Complete();
 
 
     }
@@ -70,36 +74,34 @@ class SynchronizeGameObjectTransformsWithTriggerEntities : SystemBase
     struct SyncTransforms : IJobParallelForTransform
     {
         [DeallocateOnJobCompletion]
-        [ReadOnly] public NativeArray<TriggerComponent> TriggerComponents;
+        [ReadOnly] public NativeArray<TrackerComponent> TrackerComponents;
 
-        [NativeDisableParallelForRestriction] public EntityCommandBuffer CommandBuffer;
+        //[NativeDisableParallelForRestriction] public EntityCommandBuffer CommandBuffer;
         public void Execute(int index, TransformAccess transform)
         {
-            transform.position = TriggerComponents[index].Position;
-            transform.rotation = TriggerComponents[index].Rotation;
-            TriggerComponent triggerComponent = TriggerComponents[index];
-            Entity e = triggerComponent.Entity;
-
+            transform.position = TrackerComponents[index].Position;
+            transform.rotation = TrackerComponents[index].Rotation;
         }
+
     }
 
 
-    [BurstCompile]
-    struct SyncTranslations : IJobParallelFor
-    {
-        [DeallocateOnJobCompletion]
-        [ReadOnly] public NativeArray<TriggerComponent> TriggerComponents;
+    //[BurstCompile]
+    //struct SyncTranslations : IJobParallelFor
+    //{
+    //    [DeallocateOnJobCompletion]
+    //    [ReadOnly] public NativeArray<TriggerComponent> TriggerComponents;
 
-        [NativeDisableParallelForRestriction] public EntityCommandBuffer CommandBuffer;
-        public void Execute(int index)
-        {
-            //transform.position = TriggerComponents[index].Position;
-            //transform.rotation = TriggerComponents[index].Rotation;
-            TriggerComponent triggerComponent = TriggerComponents[index];
-            Entity e = triggerComponent.Entity;
+    //    [NativeDisableParallelForRestriction] public EntityCommandBuffer CommandBuffer;
+    //    public void Execute(int index)
+    //    {
+    //        //transform.position = TriggerComponents[index].Position;
+    //        //transform.rotation = TriggerComponents[index].Rotation;
+    //        TriggerComponent triggerComponent = TriggerComponents[index];
+    //        Entity e = triggerComponent.Entity;
 
-        }
-    }
+    //    }
+    //}
 
 
 

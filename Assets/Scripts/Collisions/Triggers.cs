@@ -24,8 +24,6 @@ public struct TriggerComponent : IComponentData
     public Entity ParentEntity;
     public bool Hit;
     public bool Active;
-    public float3 Position;
-    public Quaternion Rotation;
 }
 
 

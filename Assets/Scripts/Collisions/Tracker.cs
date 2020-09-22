@@ -1,9 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
+
+public struct TrackerComponent : IComponentData
+{
+    public float3 Position;
+    public Quaternion Rotation;
+
+}
 
 public enum TriggerType
 {
@@ -80,14 +88,14 @@ public class Tracker : MonoBehaviour, IConvertGameObjectToEntity
         if (!manager.HasComponent(e, typeof(TriggerComponent))) return;
         if (track == null) return;
 
-        var trigger = manager.GetComponentData<TriggerComponent>(e);
+        var tracker = manager.GetComponentData<TrackerComponent>(e);
         ////track.transform.position = trigger.Position;
         ////track.transform.rotation = trigger.Rotation;
-        trigger.Position = track.transform.position;
-        trigger.Rotation = track.transform.rotation;
+        tracker.Position = track.transform.position;
+        tracker.Rotation = track.transform.rotation;
         ////Debug.Log("pos mb " + track.transform.position);
         //Debug.Log("pos mb ");
-        manager.SetComponentData(e, trigger);
+        manager.SetComponentData(e, tracker);
 
     }
 
@@ -107,6 +115,8 @@ public class Tracker : MonoBehaviour, IConvertGameObjectToEntity
 
 
         });
+
+        manager.AddComponent<TrackerComponent>(e);
 
     }
 
