@@ -9,10 +9,10 @@ using UnityEngine;
 
 
 
-public class EnemyMovementSystem : JobComponentSystem
+public class EnemyMovementSystem : SystemBase
 {
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
 
         var entityManager = World.EntityManager;
@@ -71,8 +71,8 @@ public class EnemyMovementSystem : JobComponentSystem
                         enemyMovementComponent.speedMultiple = (dist - backupZoneClose) / (backupZoneFar - backupZoneClose);
 
                         //enemyMovementComponent.speedMultiple = enemyMove.backup
-                           // ? 1
-                            //: (dist - backupZoneClose) / (backupZoneFar - backupZoneClose);
+                        // ? 1
+                        //: (dist - backupZoneClose) / (backupZoneFar - backupZoneClose);
                     }
 
                     bool backup = enemyMovementComponent.backup;
@@ -156,9 +156,9 @@ public class EnemyMovementSystem : JobComponentSystem
                           {
                               audioSource.clip = enemyMove.clip;
                               audioSource.Play();
-                                //Debug.Log("clip " + audioSource.clip);
+                              //Debug.Log("clip " + audioSource.clip);
 
-                            }
+                          }
 
                       }
 
@@ -184,17 +184,6 @@ public class EnemyMovementSystem : JobComponentSystem
               }
           ).Run();
 
-
-
-
-
-
-
-
-
-
-
-        return default;
     }
 
 }

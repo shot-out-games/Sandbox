@@ -47,14 +47,14 @@ public class NdeMechanicSystem : SystemBase
                 controlBar.value = pct;
                 float f1 = pct * .5f;
                 float f2 = pct * .66f;
-                ratings.gameSpeed = ratings.speed * (.67f + f2);
+                ratings.gameSpeed = ratings.speed * (.666f + f2);
                 playerJump.gameStartJumpGravityForce = playerJump.startJumpGravityForce * (f1 + .50f);
 
 
             }
 
 
-        ).Schedule();
+        ).ScheduleParallel();
 
         Entities.WithAll<ControlBarComponent, NdeMechanicComponent>().ForEach
         (
@@ -78,13 +78,15 @@ public class NdeMechanicSystem : SystemBase
                 gun.gameStrength = gun.Strength * (.50f + f1);
                 gun.gameRate =  gun.Rate + gun.Rate * (1 - pct);
                 gun.gameDamage = gun.Damage * (.50f + f1);
+
                 //ecb.SetComponent(entityInQueryIndex, e, gun);
                 //ecb.SetComponent(e, gun);
                 //}
 
             }
 
-        ).Schedule();
+        ).ScheduleParallel();
+
 
 
         //ecbSystem.AddJobHandleForProducer(Dependency);

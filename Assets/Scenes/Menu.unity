@@ -9443,7 +9443,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.22745098, g: 0.29411766, b: 0.41960785, a: 1}
+  m_Color: {r: 0.12941177, g: 0.2509804, b: 0.22352941, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9736,13 +9736,13 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'CONTROLS (Gamepad Combatible)
 
-    ZOOM IN / OUT: W Key / S Key (D-Pad
-    Up / D-Pad Down)
+    ZOOM IN / OUT: W Key / S Key or Mouse
+    Wheel (Right Stick)
 
     SHOOT: Space Bar (Left Trigger XBOX One)
 
-    PUNCH: Z
-    Key (B Button)
+    PUNCH:
+    Z Key (B Button)
 
     KICK: X Key (Y Button)'
   m_isRightToLeft: 0

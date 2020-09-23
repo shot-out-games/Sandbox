@@ -7,10 +7,10 @@ using Unity.Mathematics;
 using UnityEngine;
 
 
-public class PlayerInputAmmoSystem : JobComponentSystem
+public class PlayerInputAmmoSystem : SystemBase
 {
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
 
         EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
@@ -89,8 +89,8 @@ public class PlayerInputAmmoSystem : JobComponentSystem
 
         ecb.Playback(EntityManager);
         ecb.Dispose();
-
-        return default;
+        
+        //return default;
 
     }
 

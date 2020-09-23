@@ -37,22 +37,29 @@ public class CameraControls : MonoBehaviour
     {
         if (active == false) return;
 
-        if (player.GetAxisRaw("Move Vertical") >= .19)
+        Controller controller = player.controllers.GetLastActiveController();
+        if (controller == null) return;
+
+
+        bool gamePad = controller.type == ControllerType.Joystick;
+
+
+        if (player.GetAxisRaw("RightVertical") >= 1 && gamePad)
         {
             fov -= Time.deltaTime * multiplier;
             ChangeFov(fov);
         }
-        else if (player.GetAxisRaw("Move Vertical") < -.19)
+        else if (player.GetAxisRaw("RightVertical") <= -1 && gamePad)
         {
             fov += Time.deltaTime * multiplier;
             ChangeFov(fov);
         }
-        else if (player.GetAxisRaw("Dpad Vertical") >= .19)
+        else if (player.GetAxisRaw("Move Vertical") >= 1 && gamePad == false)
         {
             fov -= Time.deltaTime * multiplier;
             ChangeFov(fov);
         }
-        else if (player.GetAxisRaw("Dpad Vertical") < -.19)
+        else if (player.GetAxisRaw("Move Vertical") <= -1 && gamePad == false)
         {
             fov += Time.deltaTime * multiplier;
             ChangeFov(fov);

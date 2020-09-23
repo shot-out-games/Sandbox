@@ -30,10 +30,10 @@ namespace SandBox.Player
             float stickSpeed = 0;
 
             Entities.WithoutBurst().WithStructuralChanges().ForEach(
-                (ref PlayerMoveComponent playerMove, ref Translation translation, ref PhysicsVelocity pv,
+                (ref Translation translation, ref PhysicsVelocity pv,
                     ref ApplyImpulseComponent applyImpulseComponent,
                     in Pause pause, in DeadComponent dead,
-                    in Entity entity, in InputController inputController) =>
+                    in Entity entity, in InputControllerComponent inputController) =>
                 {
 
                     if (pause.value == 0 && !dead.isDead)
@@ -52,7 +52,7 @@ namespace SandBox.Player
 
                         float leftStickX = inputController.leftStickX;
                         float leftStickY = inputController.leftStickY;
-                        leftStickX =math.abs(leftStickX) < .5 ? 0 : leftStickX;
+                        leftStickX = math.abs(leftStickX) < .5 ? 0 : leftStickX;
                         leftStickY = math.abs(leftStickY) < .5 ? 0 : leftStickY;
                         applyImpulseComponent.stickX = leftStickX;
                         applyImpulseComponent.stickY = leftStickY;
@@ -61,7 +61,6 @@ namespace SandBox.Player
                         Vector3 stickInput = new Vector3(leftStickX, 0, leftStickY);
                         stickSpeed = stickInput.sqrMagnitude;
                         pv.Linear = applyImpulseComponent.Velocity;
-                        inputController.gameObject.GetComponent<Animator>().SetFloat("Speed", stickSpeed);
                         translation.Value.z = 0;
 
 
@@ -76,12 +75,16 @@ namespace SandBox.Player
                 (
                     Entity e,
                     PlayerMove playerMove,
+                    Animator animator,
                     in PhysicsVelocity physicsVelocity
                 ) =>
                 {
+                    animator.SetFloat("Speed", stickSpeed);
+
+
                     AudioSource audioSource = playerMove.audioSource;
 
-                    if (math.abs(stickSpeed) >= .01f  && math.abs(physicsVelocity.Linear.y) <= .000001f)
+                    if (math.abs(stickSpeed) >= .01f && math.abs(physicsVelocity.Linear.y) <= .000001f)
                     {
                         if (playerMove.clip && audioSource)
                         {
@@ -107,8 +110,8 @@ namespace SandBox.Player
                     }
                     else
                     {
-                        if(audioSource != null) audioSource.Stop();
-                        if(playerMove.ps != null) playerMove.ps.Stop();
+                        if (audioSource != null) audioSource.Stop();
+                        if (playerMove.ps != null) playerMove.ps.Stop();
 
                     }
 
@@ -151,6 +154,62 @@ namespace SandBox.Player
 
                 }
             ).Run();
+
+
+
+            Entities.WithoutBurst().ForEach
+         (
+             (
+                 PlayerMove playerMove,
+                 ref Rotation rotation,
+                 in Pause pause, in DeadComponent deadComponent,
+                 in PlayerMoveComponent playerMoveComponent,
+                 in InputController inputController
+
+             ) =>
+             {
+                 float leftStickX = inputController.leftStickX;
+                 float leftStickY = inputController.leftStickY;
+                 bool rotating = inputController.rotating;
+
+
+                 if (rotating && leftStickX != leftStickY && pause.value == 0 && !deadComponent.isDead)
+                 {
+                     Camera cam = playerMove.mainCam;
+                     float slerpDampTime = playerMoveComponent.rotateSlerpDampTime;
+                     Quaternion camRotation = cam.transform.rotation;
+                     camRotation.x = 0;
+                     camRotation.z = 0;
+                     // we need some axis derived from camera but aligned with floor plane
+                     Vector3 forward =
+                          cam.transform.TransformDirection(Vector3.forward); //forward of camera to forward of world
+                                                                             //local forward vector of camera will become world vector position that is passed to the forward vector of the player (target) rigidbody 
+                                                                             //(The cam and player(target) vector will now always point in the same direction)
+
+                     forward.y = 0f;
+
+                     forward = forward.normalized;
+                     Vector3 right = new Vector3(forward.z, 0.0f, -forward.x);
+                     Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
+                     if (targetDirection.sqrMagnitude > 1f)
+                     {
+                         targetDirection = targetDirection.normalized;
+                     }
+                     quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
+                     rotation.Value = targetRotation;
+
+                 }
+             }
+         ).Run();
+
+
+
+
+
+
+
+
+
 
         }
 

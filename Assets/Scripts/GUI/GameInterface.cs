@@ -84,10 +84,10 @@ public class GameInterface : MonoBehaviour, IConvertGameObjectToEntity
 
 
 
-public class GameInterfaceSystem : JobComponentSystem
+public class GameInterfaceSystem : SystemBase
 {
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
 
         bool paused = false;
@@ -96,7 +96,7 @@ public class GameInterfaceSystem : JobComponentSystem
         //if(EntityManager.HasComponent<DeadMenuComponent>())
 
         bool required = HasSingleton<DeadMenuComponent>() && HasSingleton<WinnerMenuComponent>();
-        if (required == false) return  default;
+        if (required == false) return;
 
         bool deadMenuDisplayed = !GetSingleton<DeadMenuComponent>().hide;
         bool winnerMenuDisplayed = !GetSingleton<WinnerMenuComponent>().hide;
@@ -139,8 +139,6 @@ public class GameInterfaceSystem : JobComponentSystem
             EntityManager.SetComponentData<Pause>(entity, new Pause { value = pause });
         }
         ).Run();
-
-        return default;
 
     }
 }

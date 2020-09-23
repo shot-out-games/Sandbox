@@ -72,43 +72,29 @@ namespace SandBox.Player
 
         }
 
-        void FixedUpdate()
-        {
-
-        }
 
 
         private void OnAnimatorMove()
-        //private void Update()
         {
             if (_entity == Entity.Null) return;
 
 
             if (!_entityManager.HasComponent(_entity, typeof(ApplyImpulseComponent))) return;
-            //if (!_entityManager.HasComponent(_entity, typeof(PlayerMoveComponent))) return;
             if (!_entityManager.HasComponent(_entity, typeof(RatingsComponent))) return;
             if (!ReInput.isReady) return;
-
-
-
 
 
             ApplyImpulseComponent applyImpulseComponent =
                 _entityManager.GetComponentData<ApplyImpulseComponent>(_entity);
 
 
-            //float h = ReInput.players.GetPlayer(0).GetAxis("Move Horizontal");
             float h = applyImpulseComponent.stickX;
-
-
-
 
             currentSpeed = _entityManager.GetComponentData<RatingsComponent>(_entity).gameSpeed;
             Vector3 velocity = animator.deltaPosition / Time.deltaTime * currentSpeed;
 
 
             float size =  math.length(applyImpulseComponent.Velocity);
-            //Debug.Log("size " + size);
             size = 1;
 
 
@@ -122,8 +108,6 @@ namespace SandBox.Player
             {
                 if (h < 0)
                 {
-                    //h = applyImpulseComponent.Velocity.x * -1;
-                    //v = applyImpulseComponent.Velocity.y * -1;
                     h = -negativeForce * size;
                     v = negativeForce * size;
                     applyImpulseComponent.InJump = false;
@@ -133,8 +117,6 @@ namespace SandBox.Player
             {
                 if (h > 0)
                 {
-                    //h = applyImpulseComponent.Velocity.x * -1;
-                    //v = applyImpulseComponent.Velocity.y * -1;
                     h = negativeForce * size;
                     v = negativeForce * size;
                     applyImpulseComponent.InJump = false;
