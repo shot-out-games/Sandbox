@@ -9734,14 +9734,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'CONTROLS
+  m_text: 'CONTROLS (Gamepad Combatible)
 
-    Gamepad Combatible
+    ZOOM IN / OUT: W Key / S Key (D-Pad
+    Up / D-Pad Down)
 
-    SHOOT: Space Bar (Left Trigger XBOX
-    One)
+    SHOOT: Space Bar (Left Trigger XBOX One)
 
-    PUNCH: Z Key (B Button)
+    PUNCH: Z
+    Key (B Button)
 
     KICK: X Key (Y Button)'
   m_isRightToLeft: 0
