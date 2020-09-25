@@ -11,6 +11,7 @@ using Unity.Physics.Extensions;
 using Unity.Physics.Systems;
 using Unity.Transforms;
 
+
 public struct PlayerMoveComponent : IComponentData
 {
     public float currentSpeed;
@@ -94,11 +95,11 @@ namespace SandBox.Player
             Vector3 velocity = animator.deltaPosition / Time.deltaTime * currentSpeed;
 
 
-            float size =  math.length(applyImpulseComponent.Velocity);
+            float size = math.length(applyImpulseComponent.Velocity);
             size = 1;
 
 
-            float v = applyImpulseComponent.InJump? negativeForce : 0;
+            float v = applyImpulseComponent.InJump ? negativeForce : 0;
             if (applyImpulseComponent.Falling || applyImpulseComponent.fallingFramesCounter > 1)
             {
                 v = negativeForce;
@@ -139,6 +140,7 @@ namespace SandBox.Player
 
 
             //if (!jumpEnabled && animator != null)
+
             if (animator != null)
             {
                 //Debug.Log("v " + velocity);
@@ -168,6 +170,7 @@ namespace SandBox.Player
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotateSpeed * Time.deltaTime);
 
         }
+
 
 
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)

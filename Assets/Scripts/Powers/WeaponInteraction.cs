@@ -137,7 +137,7 @@ public class PowerInteractionSystem : JobComponentSystem
 
             ) =>
             {
-                weaponInteraction.interactKeyPressed = inputController.buttonA_Pressed;
+                weaponInteraction.interactKeyPressed = inputController.buttonB_Pressed;
             }
 
         ).Run();
