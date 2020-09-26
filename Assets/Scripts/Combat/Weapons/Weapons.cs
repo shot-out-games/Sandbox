@@ -7,7 +7,9 @@ public enum WeaponType
 {
     None = 0,
     Gun = 1,
-    Fireball = 2
+    Fireball = 2,
+    Hammer = 3
+
 }
 
 [System.Serializable]

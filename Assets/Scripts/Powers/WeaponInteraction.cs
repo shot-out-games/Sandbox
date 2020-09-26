@@ -22,6 +22,7 @@ public class WeaponInteraction : MonoBehaviour, IConvertGameObjectToEntity
     private EntityManager manager;
 
     [SerializeField] private InteractionSystem interactionSystem;
+    [SerializeField] private InteractionObject interactionObject;
 
     public bool interactKeyPressed;
     [SerializeField]
@@ -60,8 +61,20 @@ public class WeaponInteraction : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
-
     private void Update()
+    {
+        if ((interactKeyPressed || inputRequired == false) && interactionSystem.inInteraction == false)
+        {
+            var io = interactionObject;
+            interactionSystem.StartInteraction(FullBodyBipedEffector.RightHand, io, true);
+            interactionSystem.ik.enabled = true;
+
+        }
+
+    }
+
+
+    private void UpdateWIP()
     {
 
         var closestTriggerIndex = interactionSystem.GetClosestTriggerIndex();
@@ -124,16 +137,16 @@ public class WeaponInteraction : MonoBehaviour, IConvertGameObjectToEntity
 }
 
 
-public class PowerInteractionSystem : JobComponentSystem
+public class PowerInteractionSystem : SystemBase
 {
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
         Entities.WithoutBurst().WithStructuralChanges().ForEach
         (
             (
                 WeaponInteraction weaponInteraction,
-                in InputController inputController
+                InputController inputController
 
             ) =>
             {
@@ -142,6 +155,19 @@ public class PowerInteractionSystem : JobComponentSystem
 
         ).Run();
 
-        return default;
+        //Entities.WithoutBurst().ForEach
+        //(
+        //    ( 
+        //        WeaponItemComponent weaponItem
+
+        //    ) =>
+        //    {
+
+
+        //    }
+
+        //).Run();
+
+
     }
 }
