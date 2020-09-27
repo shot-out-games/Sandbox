@@ -127,7 +127,7 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
         animator.SetInteger("CombatAction", 0);
         if (_manager.HasComponent<CheckedComponent>(_entity))
         {
-            var checkedComponent  = _manager.GetComponentData<CheckedComponent>(_entity);
+            var checkedComponent = _manager.GetComponentData<CheckedComponent>(_entity);
             checkedComponent.collisionChecked = false;
             _manager.SetComponentData(_entity, checkedComponent);
         }

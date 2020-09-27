@@ -55,7 +55,7 @@ public class AttackerSystem : JobComponentSystem
 
                     float hw = animator.GetFloat("HitWeight");
 
-                    if (type_b == (int) TriggerType.Ground || type_a == (int) TriggerType.Ground)
+                    if (type_b == (int)TriggerType.Ground || type_a == (int)TriggerType.Ground)
                     {
                         Debug.Log("t b " + type_b + " t a " + type_a);
                     }
@@ -71,6 +71,16 @@ public class AttackerSystem : JobComponentSystem
                         bool triggerChecked_a = trigger_a.collisionChecked;
                         float hitPower = 1;
 
+
+
+                        //bool enemy = EntityManager.HasComponent(entityA, typeof(EnemyComponent));
+
+                        //if (enemy == false)
+                        //{
+                        Debug.Log("t b " + type_b + " t a " + type_a);
+
+                        float damage = hitPower * hw;
+
                         if (triggerChecked_a == false)
                         {
 
@@ -83,6 +93,9 @@ public class AttackerSystem : JobComponentSystem
                                 bool anyTouchDamage = EntityManager.GetComponentData<MeleeComponent>(entityA)
                                     .anyTouchDamage;
 
+
+
+
                                 if (anyTouchDamage == true && hw < .19)
                                 {
                                     hw = .19f;
@@ -93,7 +106,7 @@ public class AttackerSystem : JobComponentSystem
 
                             }
 
-                            float damage = hitPower * hw;
+
 
                             ecb.AddComponent<DamageComponent>(entityB,
                                 new DamageComponent { DamageLanded = 0, DamageReceived = damage });
@@ -110,9 +123,9 @@ public class AttackerSystem : JobComponentSystem
                             trigger_a.collisionChecked = true;
                             ecb.SetComponent<CheckedComponent>(entityA, trigger_a);
 
-
                         }
                     }
+                    //}
 
 
 
@@ -154,11 +167,11 @@ public class AttackerSystem : JobComponentSystem
                                 { DamageLanded = 0, DamageReceived = damage, StunLanded = damage });
 
 
-                            //for NDE
-                            var health = EntityManager.GetComponentData<HealthComponent>(shooter);
-                            health.TotalDamageReceived = health.TotalDamageReceived - 3f;
-                            if (health.TotalDamageReceived < 3) health.TotalDamageReceived = 3;
-                            EntityManager.SetComponentData(shooter, health);
+                            ////for NDE
+                            //var health = EntityManager.GetComponentData<HealthComponent>(shooter);
+                            //health.TotalDamageReceived = health.TotalDamageReceived - 3f;
+                            //if (health.TotalDamageReceived < 3) health.TotalDamageReceived = 3;
+                            //EntityManager.SetComponentData(shooter, health);
 
 
 

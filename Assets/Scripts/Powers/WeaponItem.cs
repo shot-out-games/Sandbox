@@ -1,13 +1,15 @@
-﻿using UnityEngine;
+﻿using RootMotion.FinalIK;
+using UnityEngine;
 using Unity.Entities;
 
 
 [System.Serializable]
 public struct WeaponItemComponent : IComponentData
 {
+    public Entity e;
     public bool active;
     public int weaponType;
-
+    public bool pickedUp;
 }
 
 
@@ -17,9 +19,9 @@ public class WeaponItem : MonoBehaviour, IConvertGameObjectToEntity
 {
     public WeaponType weaponType;
     private AudioSource audioSource;
+    [HideInInspector] public InteractionObject interactionObject;//set from wea
 
-
-        [SerializeField]
+    [SerializeField]
     bool active = true;
     public Entity e;
     EntityManager manager;
@@ -27,6 +29,7 @@ public class WeaponItem : MonoBehaviour, IConvertGameObjectToEntity
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        interactionObject = GetComponent<InteractionObject>();
     }
 
 

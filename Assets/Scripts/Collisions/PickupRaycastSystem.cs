@@ -1,4 +1,5 @@
-﻿using SandBox.Player;
+﻿using RootMotion.FinalIK;
+using SandBox.Player;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -33,11 +34,12 @@ public class PickupRaycastSystem : SystemBase
 
     protected override void OnUpdate()
     {
+        bool pickedUp = false;
+        Entity pickedUpEntity = Entity.Null;
+        InteractionObject interactionObject = null;
 
-
-
-        Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity entity, 
-            ref Translation translation, ref PhysicsVelocity pv, ref PhysicsCollider collider, ref Rotation rotation, in PlayerComponent playerComponent) =>
+        Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity entity, WeaponItem WeaponItem, ref WeaponItemComponent weaponItemComponent,
+            ref Translation translation, ref PhysicsCollider collider, ref Rotation rotation) =>
         {
 
             var physicsWorldSystem = World.GetExistingSystem<Unity.Physics.Systems.BuildPhysicsWorld>();
@@ -46,7 +48,7 @@ public class PickupRaycastSystem : SystemBase
 
             float3 start = translation.Value + new float3(0f, .38f, 0);
             float3 direction = new float3(0, 0, 0);
-            float distance = .38f;
+            float distance = 2f;
             float3 end = start + direction * distance;
 
 
@@ -57,26 +59,38 @@ public class PickupRaycastSystem : SystemBase
                 //Filter = CollisionFilter.Default
                 Filter = new CollisionFilter()
                 {
-//                    BelongsTo = (uint)CollisionLayer.Player,
-   //                 CollidesWith = (uint)CollisionLayer.Item,
-                    BelongsTo = 1,
-                    CollidesWith = 4,
+                    //BelongsTo = (uint)CollisionLayer.Player,
+                    //CollidesWith = (uint)CollisionLayer.Item,
+                    BelongsTo = 4u,
+                    CollidesWith = 1u,
                     GroupIndex = 0
                 }
             };
 
-            
+            Debug.DrawRay(start, Vector3.right, Color.green, distance * 10f);
+
+
+
+
 
             bool hasPointHit = collisionWorld.CalculateDistance(pointDistanceInput, out DistanceHit pointHit);
+            Debug.Log(" pt e " + pointHit.ColliderKey);
 
 
 
-            if (hasPointHit)
+            if (hasPointHit && weaponItemComponent.pickedUp == false)
             {
                 Entity e = physicsWorldSystem.PhysicsWorld.Bodies[pointHit.RigidBodyIndex].Entity;
                 //Debug.Log("ve " + applyImpulse.Velocity.x);
                 //Debug.Log("left / right");
-                Debug.Log(" pt e " + e);
+                if (WeaponItem.e == entity)
+                {
+                    weaponItemComponent.pickedUp = true;
+                    pickedUp = true;
+                    pickedUpEntity = entity;
+                    interactionObject = WeaponItem.interactionObject;
+                    Debug.Log(" pt e " + e);
+                }
             }
 
 
@@ -84,69 +98,6 @@ public class PickupRaycastSystem : SystemBase
             direction = new float3(0, -1, 0);
             distance = .35f;
             end = start + direction * distance;
-
-
-
-            RaycastInput inputDown = new RaycastInput()
-            {
-                Start = start,
-                End = end,
-                Filter = new CollisionFilter()
-                {
-                    BelongsTo = 1,
-                    CollidesWith = 4,
-                    GroupIndex = 0
-                }
-            };
-            Unity.Physics.RaycastHit hitDown = new Unity.Physics.RaycastHit();
-            Debug.DrawRay(inputDown.Start, direction, Color.yellow, distance);
-
-            bool hasPointHitDown = collisionWorld.CastRay(inputDown, out hitDown);
-
-
-            if (hasPointHitDown)
-            {
-                Debug.Log("down");
-                //Debug.Log("start " + start +  "end " + end + " fraction " + hitDown.Fraction);
-                Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hitDown.RigidBodyIndex].Entity; //grounded
-            }
-
-            start = translation.Value + new float3(0, 1f, 0);
-            direction = new float3(0, 1f, 0);
-            distance = .19f;
-            end = start + direction * distance;
-            //end = start + pv.Linear * Time.DeltaTime;
-
-            RaycastInput inputUp = new RaycastInput()
-            {
-                Start = start,
-                End = end,
-                //Filter = CollisionFilter.Default
-                Filter = new CollisionFilter()
-                {
-                    BelongsTo = 1,
-                    CollidesWith = 4,
-                    GroupIndex = 0
-                }
-            };
-            Debug.DrawRay(inputUp.Start, direction, Color.green, distance);
-            //Debug.Log("st " + inputUp.Start);
-            //Debug.Log("en " + inputUp.End);
-
-            Unity.Physics.RaycastHit hitUp = new Unity.Physics.RaycastHit();
-
-            bool hasPointHitUp = collisionWorld.CastRay(inputUp, out hitUp);
-
-
-
-            if (hasPointHitUp)
-            {
-
-                Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hitUp.RigidBodyIndex].Entity; //grounded
-                Debug.Log("hu " + hitUp.Entity);
-                //applyImpulse.Ceiling = true;
-
-            }
 
 
 
@@ -158,9 +109,19 @@ public class PickupRaycastSystem : SystemBase
         }).Run();
 
 
+        if (pickedUp)
+        {
+            Entities.WithoutBurst().ForEach((WeaponInteraction weaponInteraction) =>
+            {
+                weaponInteraction.interactionObject = interactionObject;
+                weaponInteraction.UpdateSystem();
+                Debug.Log("MATCH FOUND");
 
+            }).Run();
 
-
+            //EntityManager.DestroyEntity(pickedUpEntity);
+            
+        }
 
 
 

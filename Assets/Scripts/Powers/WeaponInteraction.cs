@@ -18,11 +18,12 @@ public struct CharacterInteractionComponent : IComponentData
 
 public class WeaponInteraction : MonoBehaviour, IConvertGameObjectToEntity
 {
-    private Entity e;
+    public Entity e;
     private EntityManager manager;
 
     [SerializeField] private InteractionSystem interactionSystem;
-    [SerializeField] private InteractionObject interactionObject;
+//    [HideInInspector]
+    public InteractionObject interactionObject;//set from  picked up weaponitem
 
     public bool interactKeyPressed;
     [SerializeField]
@@ -47,11 +48,12 @@ public class WeaponInteraction : MonoBehaviour, IConvertGameObjectToEntity
     private void OnStop(FullBodyBipedEffector effectorType, InteractionObject interactionObject)
     {
 
+        //var weaponItem = manager.GetComponentData<WeaponItemComponent>(e);
+        //weaponItem.pickedUp = true;
+        //manager.SetComponentData(e, weaponItem);
 
         interactionSystem.ik.enabled = false;
-
         manager.RemoveComponent<CharacterInteractionComponent>(e);
-
 
     }
 
@@ -61,13 +63,17 @@ public class WeaponInteraction : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
-    private void Update()
+    public void UpdateSystem()
     {
-        if ((interactKeyPressed || inputRequired == false) && interactionSystem.inInteraction == false)
+        if ((interactKeyPressed || inputRequired == false) && interactionSystem.inInteraction == false && interactionObject != null)
         {
-            var io = interactionObject;
-            interactionSystem.StartInteraction(FullBodyBipedEffector.RightHand, io, true);
-            interactionSystem.ik.enabled = true;
+            Debug.Log("interaction ");
+            //var weaponItem = manager.GetComponentData<WeaponItemComponent>(e);
+            //if (weaponItem.pickedUp == false)
+            //{
+                interactionSystem.StartInteraction(FullBodyBipedEffector.RightHand, interactionObject, true);
+                interactionSystem.ik.enabled = true;
+            //}
 
         }
 

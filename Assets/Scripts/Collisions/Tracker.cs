@@ -32,7 +32,8 @@ public enum TriggerType
     Trigger = 14,
     Lever = 15,
     Key = 16,
-    Home = 17
+    Home = 17,
+    Melee = 18
 }
 
 [RequiresEntityConversion]
@@ -81,7 +82,7 @@ public class Tracker : MonoBehaviour, IConvertGameObjectToEntity
 
     //}
 
-    void LateUpdate()
+    void Update()
     {
         if (manager == null) return;
 
