@@ -24,9 +24,10 @@ public struct GunComponent : IComponentData
     public float Duration;//rate counter for job
     public int WasFiring;
     public int IsFiring;
-    public float3 AmmoStartLocation;
+    public Translation AmmoStartPosition;
+    public Rotation AmmoStartRotation;
     public bool Disable;
-    public Translation firingPosition;
+    //public Translation firingPosition;
 }
 
 
@@ -86,23 +87,24 @@ public class GunScript : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameO
             Generate();
         }
 
-        dstManager.AddComponentData<GunComponent>(
-            entity,
-            new GunComponent()
-            {
-                AmmoStartLocation = AmmoStartLocation.position,
-                Bullet = conversionSystem.GetPrimaryEntity(BulletPrefab),
-                Weapon = conversionSystem.GetPrimaryEntity(WeaponPrefab),
-                Strength = Strength,
-                gameStrength = Strength,
-                Damage = Damage,
-                Rate = Rate,
-                gameDamage = Damage,
-                gameRate = Rate,
-                WasFiring = 0,
-                IsFiring = 0
+        //dstManager.AddComponentData<GunComponent>(
+        //    entity,
+        //    new GunComponent()
+        //    {
+        //        AmmoStartPosition = new Translation(){Value = AmmoStartLocation.position},
+        //        AmmoStartRotation = new Rotation(){Value = transform.rotation},
+        //        Bullet = conversionSystem.GetPrimaryEntity(BulletPrefab),
+        //        Weapon = conversionSystem.GetPrimaryEntity(WeaponPrefab),
+        //        Strength = Strength,
+        //        gameStrength = Strength,
+        //        Damage = Damage,
+        //        Rate = Rate,
+        //        gameDamage = Damage,
+        //        gameRate = Rate,
+        //        WasFiring = 0,
+        //        IsFiring = 0
 
-            });
+        //    });
         manager = dstManager;
         this.entity = entity;
 
