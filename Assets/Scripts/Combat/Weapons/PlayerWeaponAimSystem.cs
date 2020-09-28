@@ -17,9 +17,7 @@ namespace SandBox.Player
     {
         protected override void OnUpdate()
         {
-
-
-            Entities.WithoutBurst().ForEach((PlayerWeaponAim mb) =>
+            Entities.WithoutBurst().WithStructuralChanges().ForEach((PlayerWeaponAim mb) =>
             {
                 mb.UpdateSystem();
             }).Run();
@@ -29,13 +27,12 @@ namespace SandBox.Player
 
     [UpdateInGroup(typeof(PresentationSystemGroup))]
 
+
     public class PlayerWeaponAimSystemLateUpdate : SystemBase
     {
         protected override void OnUpdate()
         {
-
-
-            Entities.WithoutBurst().ForEach((PlayerWeaponAim mb) =>
+            Entities.WithoutBurst().WithStructuralChanges().ForEach((PlayerWeaponAim mb) =>
             {
                 mb.LateUpdateSystem();
             }).Run();

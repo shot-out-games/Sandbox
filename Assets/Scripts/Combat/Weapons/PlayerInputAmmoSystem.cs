@@ -22,7 +22,7 @@ public class PlayerInputAmmoSystem : SystemBase
                 ref GunComponent gunComponent,
                 ref PlayerWeaponAimComponent playerWeaponAimComponent,
                 in Entity entity,
-                in InputController inputController,
+                in InputControllerComponent inputController,
                 in Animator animator,
                     in AttachWeaponComponent attachWeapon
             ) =>
@@ -30,23 +30,23 @@ public class PlayerInputAmmoSystem : SystemBase
 
 
                 gunComponent.IsFiring = 0;
-                float rt_value = inputController.rightTriggerValue;
+                //float rt_value = inputController.rightTriggerValue;
                 float dpadY = inputController.dpadY;
 
 
-                bool ltPressed = inputController.leftTriggerDown;
-                bool ltReleased = inputController.leftTriggerUp;
+                bool ltPressed = inputController.leftTriggerPressed;
+                //bool ltReleased = inputController.leftTriggerUp;
 
-                bool rtPressed = inputController.rightTriggerDown;
-                bool rtReleased = inputController.rightTriggerUp;
-
-
+                bool rtPressed = inputController.rightTriggerPressed;
+                //bool rtReleased = inputController.rightTriggerUp;
 
 
 
-                if (attachWeapon.attachedWeaponSlot >= 0 &&
-                    attachWeapon.attachWeaponType == (int)WeaponType.Gun
-                    && ltReleased == true
+
+
+                if (
+                    attachWeapon.attachWeaponType == (int)WeaponType.Gun && ltPressed == true ||
+                attachWeapon.attachSecondaryWeaponType == (int)WeaponType.Gun && ltPressed == true
                     )
                 {
                     gunComponent.IsFiring = 1;
@@ -55,13 +55,13 @@ public class PlayerInputAmmoSystem : SystemBase
                     SetAnimationLayerWeights(animator, true);
                 }
 
-                if (attachWeapon.attachSecondaryWeaponType == (int)WeaponType.Gun && rtPressed == true)
-                {
-                    gunComponent.IsFiring = 1;
-                    playerWeaponAimComponent.weaponUpTimer = 0;
-                    playerWeaponAimComponent.weaponRaised = true;
-                    SetAnimationLayerWeights(animator, true);
-                }
+                //if (attachWeapon.attachSecondaryWeaponType == (int)WeaponType.Gun && rtPressed == true)
+                //{
+                //    gunComponent.IsFiring = 1;
+                //    playerWeaponAimComponent.weaponUpTimer = 0;
+                //    playerWeaponAimComponent.weaponRaised = true;
+                //    SetAnimationLayerWeights(animator, true);
+                //}
 
 
                 ecb.SetComponent(entity, gunComponent);
@@ -89,7 +89,7 @@ public class PlayerInputAmmoSystem : SystemBase
 
         ecb.Playback(EntityManager);
         ecb.Dispose();
-        
+
         //return default;
 
     }

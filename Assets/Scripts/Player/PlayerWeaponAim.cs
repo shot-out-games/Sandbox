@@ -128,7 +128,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
 
     void Crosshair()
     {
-        Transform targetTransform = animator.GetBoneTransform(HumanBodyBones.Neck);
+        //Transform targetTransform = animator.GetBoneTransform(HumanBodyBones.Neck);
 
         if (cursorTargeting == false || crossHair == null) return;
 

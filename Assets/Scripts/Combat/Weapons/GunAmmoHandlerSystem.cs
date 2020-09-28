@@ -68,7 +68,7 @@ public class GunAmmoHandlerSystem : JobComponentSystem
                     }
                 }
 
-                Debug.Log("gun2 " + EntityManager.HasComponent<PlayerComponent>(entity));
+                Debug.Log("gun2 " + EntityManager.HasComponent<PlayerComponent>(entity) + " firing " + gun.IsFiring);
 
                 gun.Duration += dt;
                 if ((gun.Duration > gun.gameRate) && (gun.IsFiring == 1))
