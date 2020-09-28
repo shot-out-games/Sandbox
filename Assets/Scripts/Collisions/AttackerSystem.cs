@@ -79,7 +79,6 @@ public class AttackerSystem : JobComponentSystem
                         //{
                         Debug.Log("t b " + type_b + " t a " + type_a);
 
-                        float damage = hitPower * hw;
 
                         if (triggerChecked_a == false)
                         {
@@ -102,9 +101,12 @@ public class AttackerSystem : JobComponentSystem
                                     Debug.Log(hitPower);
                                 }
 
-                                Debug.Log("hw " + hw);
 
                             }
+
+
+                            float damage = hitPower * hw;
+                            Debug.Log("damage " + damage);
 
 
 

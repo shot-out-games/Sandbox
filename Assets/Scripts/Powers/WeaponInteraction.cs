@@ -80,49 +80,50 @@ public class WeaponInteraction : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
-    private void UpdateWIP()
-    {
+    //private void UpdateWIP()
+    //{
 
-        var closestTriggerIndex = interactionSystem.GetClosestTriggerIndex();
-        if (closestTriggerIndex <= -1) return;
-        if ((interactKeyPressed || inputRequired == false) && interactionSystem.inInteraction == false)
-        {
-            var io = interactionSystem.GetClosestInteractionObjectInRange();
-            var go = io.gameObject;
-            if (go.GetComponent<WeaponItem>() == true)
-            {
-                audioSource.PlayOneShot(clip);
+    //    var closestTriggerIndex = interactionSystem.GetClosestTriggerIndex();
+    //    if (closestTriggerIndex <= -1) return;
+    //    if ((interactKeyPressed || inputRequired == false) && interactionSystem.inInteraction == false)
+    //    {
+    //        var io = interactionSystem.GetClosestInteractionObjectInRange();
+    //        var go = io.gameObject;
+    //        if (go.GetComponent<WeaponItem>() == true)
+    //        {
+    //            audioSource.PlayOneShot(clip);
 
-                //add weapon type picked up to check against elegible weapon list (attachedweapon script)
-                var item_e = go.GetComponent<WeaponItem>().e;
-                int weaponType = manager.GetComponentData<WeaponItemComponent>(item_e).weaponType; //1 is gun
-                WeaponItemComponent weaponItem = manager.GetComponentData<WeaponItemComponent>(item_e);
-                weaponItem.active = false;
+    //            //add weapon type picked up to check against elegible weapon list (attachedweapon script)
+    //            var item_e = go.GetComponent<WeaponItem>().e;
 
-                manager.SetComponentData(e, new WeaponInteractionComponent { weaponType = weaponType });
-                manager.SetComponentData(item_e, weaponItem);
+    //            int weaponType = manager.GetComponentData<WeaponItemComponent>(item_e).weaponType; //1 is gun
+    //            WeaponItemComponent weaponItem = manager.GetComponentData<WeaponItemComponent>(item_e);
+    //            weaponItem.active = false;
+
+    //            manager.SetComponentData(e, new WeaponInteractionComponent { weaponType = weaponType });
+    //            manager.SetComponentData(item_e, weaponItem);
 
 
-                go.SetActive(false);
-                //manager.DestroyEntity(item_e);//destroy item entity - system when pick up on deletes GO already
+    //            go.SetActive(false);
+    //            //manager.DestroyEntity(item_e);//destroy item entity - system when pick up on deletes GO already
 
-                //look at weapons to see if they have as available same one picked up here and if so activate
-                //system instead but then runs every frame
-                if (GetComponent<AttachWeapon>())
-                {
-                    var potentialWeapons = GetComponent<AttachWeapon>().weaponsList.Count;
-                    for (var i = 0; i < potentialWeapons; i++)
-                        if ((int)GetComponent<AttachWeapon>().weaponsList[i].weaponType == weaponType)
-                        {
-                            GetComponent<AttachWeapon>().AttachPickWeapons(i);
-                        }
-                }
-            }
-            interactionSystem.ik.enabled = true;
-            manager.AddComponentData<CharacterInteractionComponent>(e, new CharacterInteractionComponent());
-            interactionSystem.TriggerInteraction(closestTriggerIndex, true);
-        }
-    }
+    //            //look at weapons to see if they have as available same one picked up here and if so activate
+    //            //system instead but then runs every frame
+    //            if (GetComponent<WeaponManager>())
+    //            {
+    //                var potentialWeapons = GetComponent<WeaponManager>().weaponsList.Count;
+    //                for (var i = 0; i < potentialWeapons; i++)
+    //                    if ((int)GetComponent<WeaponManager>().weaponsList[i].weaponType == weaponType)
+    //                    {
+    //                        GetComponent<WeaponManager>().AttachPickWeapons(i);
+    //                    }
+    //            }
+    //        }
+    //        interactionSystem.ik.enabled = true;
+    //        manager.AddComponentData<CharacterInteractionComponent>(e, new CharacterInteractionComponent());
+    //        interactionSystem.TriggerInteraction(closestTriggerIndex, true);
+    //    }
+    //}
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {

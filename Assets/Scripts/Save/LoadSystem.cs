@@ -202,7 +202,7 @@ public class LoadSystem : SystemBase
         {
             Entity e = WeaponEntities[i];
             WeaponItemComponent saveWeapon = SaveManager.instance.saveData.saveGames[slot].saveWeapons[i];
-            ecb.SetComponent<WeaponItemComponent>(e, saveWeapon);
+            //ecb.SetComponent<WeaponItemComponent>(e, saveWeapon);
             Debug.Log("wea " + saveWeapon.active + " e " + e);
         }
 
@@ -227,7 +227,7 @@ public class LoadSystem : SystemBase
 
         Entities.WithoutBurst().WithAll<PlayerComponent>().ForEach(
             (
-                PlayerComponentAuthoring player, AttachWeapon attachWeapon, AttachWeaponComponent attachWeaponComponent,
+                PlayerComponentAuthoring player, WeaponManager attachWeapon, AttachWeaponComponent attachWeaponComponent,
                 Transform transform
             ) =>
             {

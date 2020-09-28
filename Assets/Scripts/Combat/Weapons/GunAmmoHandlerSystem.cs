@@ -38,6 +38,11 @@ public class GunAmmoHandlerSystem : JobComponentSystem
                 in RatingsComponent ratingsComponent,
                 in GunScript gunScript, in Entity entity, in AttachWeaponComponent attachWeapon) =>
             {
+
+
+                Debug.Log("gun0 " + EntityManager.HasComponent<PlayerComponent>(entity));
+
+
                 if (attachWeapon.attachedWeaponSlot < 0 ||
                     attachWeapon.attachWeaponType != (int)WeaponType.Gun &&
                     attachWeapon.attachSecondaryWeaponType != (int)WeaponType.Gun
@@ -49,6 +54,7 @@ public class GunAmmoHandlerSystem : JobComponentSystem
                     return;
                 }
 
+                Debug.Log("gun1 " + EntityManager.HasComponent<PlayerComponent>(entity));
 
 
                 if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
@@ -62,6 +68,7 @@ public class GunAmmoHandlerSystem : JobComponentSystem
                     }
                 }
 
+                Debug.Log("gun2 " + EntityManager.HasComponent<PlayerComponent>(entity));
 
                 gun.Duration += dt;
                 if ((gun.Duration > gun.gameRate) && (gun.IsFiring == 1))

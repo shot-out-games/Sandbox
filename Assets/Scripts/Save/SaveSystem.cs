@@ -140,15 +140,15 @@ public class SaveSystem : SystemBase
         ).Run();
 
 
-        Entities.WithoutBurst().ForEach
-        (
-            (
-                WeaponItemComponent weaponComponent
-            ) =>
-            {
-                SaveManager.instance.saveData.saveGames[slot].saveWeapons.Add(weaponComponent);
-            }
-        ).Run();
+        //Entities.WithoutBurst().ForEach
+        //(
+        //    (
+        //        WeaponItemComponent weaponComponent
+        //    ) =>
+        //    {
+        //        SaveManager.instance.saveData.saveGames[slot].saveWeapons.Add(weaponComponent);
+        //    }
+        //).Run();
 
         Entities.WithoutBurst().ForEach
         (
