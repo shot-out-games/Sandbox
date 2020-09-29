@@ -11,19 +11,19 @@ using Unity.Jobs;
 
 //[UpdateAfter(typeof(GunAmmoHandlerSystem))]//gunammohandler makes the  bullet first
 //[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-public class AmmoSystem : JobComponentSystem
+public class AmmoSystem : SystemBase
 {
 
 
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
 
 
         float dt = Time.fixedDeltaTime;//bullet duration
 
 
-        Entities.WithoutBurst().ForEach(
+        Entities.WithoutBurst().WithStructuralChanges().ForEach(
             (ref AmmoComponent ammo, in Entity entity) =>
             {
 
@@ -33,17 +33,17 @@ public class AmmoSystem : JobComponentSystem
                 if (ammo.AmmoTimeCounter > ammo.AmmoTime)
                 {
                     var bullet = EntityManager.GetComponentData<AmmoComponent>(entity);
-                    bullet.AmmoDead = true;
-                    bullet.AmmoTimeCounter = 0;
-                    EntityManager.SetComponentData(entity, bullet);
-                    //EntityManager.DestroyEntity(entity);
+                    //bullet.AmmoDead = true;
+                    //bullet.AmmoTimeCounter = 0;
+                    //EntityManager.SetComponentData(entity, bullet);
+                    EntityManager.DestroyEntity(entity);
                     //Debug.Log("amo dead");
                 }
             }
         ).Run();
 
 
-        return default;
+        //return default;
     }
 
 

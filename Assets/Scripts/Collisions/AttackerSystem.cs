@@ -55,10 +55,7 @@ public class AttackerSystem : JobComponentSystem
 
                     float hw = animator.GetFloat("HitWeight");
 
-                    if (type_b == (int)TriggerType.Ground || type_a == (int)TriggerType.Ground)
-                    {
-                        Debug.Log("t b " + type_b + " t a " + type_a);
-                    }
+                    Debug.Log("t b " + type_b + " t a " + type_a);
 
 
                     if (playerA && enemyB || playerB && enemyA) check = true;
@@ -77,7 +74,7 @@ public class AttackerSystem : JobComponentSystem
 
                         //if (enemy == false)
                         //{
-                        Debug.Log("t b " + type_b + " t a " + type_a);
+                        //Debug.Log("t b " + type_b + " t a " + type_a);
 
 
                         if (triggerChecked_a == false)
@@ -131,8 +128,6 @@ public class AttackerSystem : JobComponentSystem
 
 
 
-                    //Debug.Log("ta " + type_a + " tb " + type_b);
-                    //Debug.Log("ea " + collision_entity_a + " eb " + collision_entity_b);
 
 
                     if (type_b == (int)TriggerType.Ammo) //b is ammo so causes damage to entity
@@ -147,6 +142,10 @@ public class AttackerSystem : JobComponentSystem
                                 .OwnerAmmoEntity;
                         }
 
+
+                        //Debug.Log("ta " + type_a + " tb " + type_b);
+                        //Debug.Log("ea " + collision_entity_a + " eb " + collision_entity_b);
+                        Debug.Log("shooter " + shooter);
 
                         if (shooter != Entity.Null)
                         {

@@ -33,7 +33,7 @@ public class GunAmmoHandlerSystem : SystemBase
 
 
         Entities.WithoutBurst().WithStructuralChanges().ForEach(
-            (ref GunComponent gun, ref LocalToWorld gunTransform, ref StatsComponent statsComponent, 
+            (ref GunComponent gun, ref StatsComponent statsComponent, 
                 ref Rotation gunRotation,
                 in RatingsComponent ratingsComponent,
                 in BulletManager bulletManager,
@@ -58,30 +58,46 @@ public class GunAmmoHandlerSystem : SystemBase
 
                 if (EntityManager.HasComponent<EnemyComponent>(entity))
                 {
-                    if(EntityManager.HasComponent<EnemyWeaponMovementComponent>(entity) == false)
+                    if (EntityManager.HasComponent<EnemyWeaponMovementComponent>(entity) == false)
                     {
                         return;
                     }
                 }
 
+                Entity primaryAmmoEntity = gun.PrimaryAmmo;
+                var ammoDataComponent = EntityManager.GetComponentData<AmmoDataComponent>(primaryAmmoEntity);
+                float rate = ammoDataComponent.Rate;
+                float strength = ammoDataComponent.Strength;
+                float damage = ammoDataComponent.Damage;
+
+
+
 
                 gun.Duration += dt;
-                if ((gun.Duration > gun.gameRate) && (gun.IsFiring == 1))
+                if ((gun.Duration > rate) && (gun.IsFiring == 1))
+                //    if ((gun.Duration > gun.gameRate) && (gun.IsFiring == 1))
                 {
+                    //Debug.Log("gun " + gun.PrimaryAmmo);
+
+
                     if (gun.PrimaryAmmo != null)
                     {
 
-                        Debug.Log("gun2 " + EntityManager.HasComponent<PlayerComponent>(entity) + " firing " + gun.IsFiring);
+                        //Debug.Log("gun2 " + EntityManager.HasComponent<PlayerComponent>(entity) + " firing " + gun.IsFiring);
 
 
                         gun.IsFiring = 0;
                         statsComponent.shotsFired += 1;
+
+
+                        //Debug.Log("inst ");
+
                         Entity e = EntityManager.Instantiate(gun.PrimaryAmmo);
                         //Translation translation = new Translation { Value = pos };
                         //Rotation rotation = new Rotation { Value = rot };
 
-                        Translation translation = new Translation() {Value = bulletManager.AmmoStartLocation.position};
-                        Rotation rotation = new Rotation() {Value = gun.AmmoStartRotation.Value};
+                        Translation translation = new Translation() { Value = bulletManager.AmmoStartLocation.position };
+                        Rotation rotation = new Rotation() { Value = gun.AmmoStartRotation.Value };
 
 
                         var playerVelocity = EntityManager.GetComponentData<PhysicsVelocity>(entity);
@@ -90,15 +106,18 @@ public class GunAmmoHandlerSystem : SystemBase
                         var mass = EntityManager.GetComponentData<PhysicsMass>(e);
                         float3 forward = bulletManager.AmmoStartLocation.forward;
                         //float3 forward = gun.AmmoStartPosition.Value * math.forward();
-                        velocity.Linear = forward * (gun.gameStrength + math.abs(playerVelocity.Linear.x));
+                        //velocity.Linear = forward * (gun.gameStrength + math.abs(playerVelocity.Linear.x));
+                        velocity.Linear = forward * (strength + math.abs(playerVelocity.Linear.x));
                         //velocity.Linear = gun.gameStrength;
 
 
-                        //Debug.Log("gun " + gun.gameStrength);
                         EntityManager.SetComponentData(e, translation);
                         EntityManager.SetComponentData(e, rotation);
                         EntityManager.SetComponentData(e, velocity);
-                        bulletManager.CreatePrimaryAmmoInstance(e);
+                        var ammoComponent = EntityManager.GetComponentData<AmmoComponent>(e);
+                        ammoComponent.OwnerAmmoEntity = entity;
+                        EntityManager.SetComponentData(e, ammoComponent);
+                        //bulletManager.CreatePrimaryAmmoInstance(e);
 
                     }
                     gun.Duration = 0;

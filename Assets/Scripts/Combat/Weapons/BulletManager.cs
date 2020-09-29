@@ -47,13 +47,6 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
 
 
 
-
-    private void Start()
-
-    {
-    
-    }
-
     // Referenced prefabs have to be declared so that the conversion system knows about them ahead of time
     public void DeclareReferencedPrefabs(List<GameObject> gameObjects)
     {
@@ -114,40 +107,40 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
 
     }
 
-    public void UpdateSystem()
-    {
-        if (manager == default || entity == Entity.Null) return;
+    //public void UpdateSystem()
+    //{
+    //    if (manager == default || entity == Entity.Null) return;
 
-        Debug.Log("ammo instances " + AmmoInstances.Count);
+    //    Debug.Log("ammo instances " + AmmoInstances.Count);
 
-        if (AmmoInstances.Count > 24 && AmmoInstances[0].GetComponent<AmmoEntityTracker>())
-        {
-            Entity e = AmmoInstances[0].GetComponent<AmmoEntityTracker>().ammoEntity;
-            if (e != Entity.Null)
-            {
-                DestroyImmediate(AmmoInstances[0]);
-                manager.DestroyEntity(e);
-                AmmoInstances.RemoveAt(0);
-            }
-        }
+    //    if (AmmoInstances.Count > 24 && AmmoInstances[0].GetComponent<AmmoEntityTracker>())
+    //    {
+    //        Entity e = AmmoInstances[0].GetComponent<AmmoEntityTracker>().ammoEntity;
+    //        if (e != Entity.Null)
+    //        {
+    //            DestroyImmediate(AmmoInstances[0]);
+    //            manager.DestroyEntity(e);
+    //            AmmoInstances.RemoveAt(0);
+    //        }
+    //    }
 
-    }
+    //}
 
-    public void CreatePrimaryAmmoInstance(Entity e)
-    {
-        UpdateSystem();
-        GameObject go = Instantiate(PrimaryAmmoPrefab, AmmoStartLocation.position, AmmoStartLocation.rotation);
-        //GameObject go = Instantiate(BulletPrefab, AmmoStartLocation.position, Quaternion.identity);
-        AmmoInstances.Add(go);
-        go.GetComponent<AmmoEntityTracker>().ammoEntity = e;
-        go.GetComponent<AmmoEntityTracker>().ownerAmmoEntity = entity;
-        go.GetComponent<AmmoEntityTracker>().ammoTime = AmmoTime;
-        if (audioSource != null)
-        {
-            audioSource.PlayOneShot(
-                weaponAudioClip); //to do - change to ecs - EffectsManager - Effects Componnent - add start clip field = 1 then switch to 0
-        }
-    }
+    //public void CreatePrimaryAmmoInstance(Entity e)
+    //{
+    //    UpdateSystem();
+    //    GameObject go = Instantiate(PrimaryAmmoPrefab, AmmoStartLocation.position, AmmoStartLocation.rotation);
+    //    //GameObject go = Instantiate(BulletPrefab, AmmoStartLocation.position, Quaternion.identity);
+    //    AmmoInstances.Add(go);
+    //    go.GetComponent<AmmoEntityTracker>().ammoEntity = e;
+    //    go.GetComponent<AmmoEntityTracker>().ownerAmmoEntity = entity;
+    //    go.GetComponent<AmmoEntityTracker>().ammoTime = AmmoTime;
+    //    if (audioSource != null)
+    //    {
+    //        audioSource.PlayOneShot(
+    //            weaponAudioClip); //to do - change to ecs - EffectsManager - Effects Componnent - add start clip field = 1 then switch to 0
+    //    }
+    //}
 }
 
 

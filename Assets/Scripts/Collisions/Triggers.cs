@@ -176,11 +176,13 @@ public class CollisionSystem : JobComponentSystem
             bool ammoB = (type_a == (int)TriggerType.Chest || type_a == (int)TriggerType.Head  || type_a == (int)TriggerType.Body ) &&
                          (type_b == (int)TriggerType.Ammo);
 
-
+            //Debug.Log("aa " + ammoA + " ab " + ammoB);
 
             if (punchingA || ammoB)
             {
 
+               // Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
+                //Debug.Log("c b " + ch_b + " c a " + ch_a);
 
                 CollisionComponent collisionComponent =
                     new CollisionComponent()
