@@ -8,7 +8,15 @@ using UnityEngine;
 using Unity.Jobs;
 using Unity.Physics.Extensions;
 
+//public class AmmoRatings
+//{
+//    bool randomize;
+//    public float AmmoTime;
+//    public float Strength;
+//    public float Damage;
+//    public float Rate;
 
+//}
 
 public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObjectToEntity
 {
@@ -17,22 +25,26 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
     [SerializeField]
     private AudioSource audioSource;
     [HideInInspector]
-    public List<GameObject> BulletInstances = new List<GameObject>();
+    public List<GameObject> AmmoInstances = new List<GameObject>();
     public Transform AmmoStartLocation;
-    public GameObject BulletPrefab;
-    public GameObject WeaponPrefab;
+    public GameObject PrimaryAmmoPrefab;
+    public GameObject SecondaryAmmoPrefab;
+    public List<GameObject> AmmoPrefabList = new List<GameObject>();
+
+    //public GameObject WeaponPrefab;
     public AudioClip weaponAudioClip;
 
-    [Header("Weapon Ratings")]
-    [SerializeField] bool randomize;
-    public float AmmoTime;
-    public float Strength;
-    public float Damage;
-    public float Rate;
+    [Header("Ammo Ratings")]
+    [SerializeField]
+    bool randomize;
+    float AmmoTime;
+    float Strength;
+    float Damage;
+    float Rate;
 
     //[Header("Misc")]
     //public bool Disable;
-    
+
 
 
 
@@ -45,25 +57,38 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
     // Referenced prefabs have to be declared so that the conversion system knows about them ahead of time
     public void DeclareReferencedPrefabs(List<GameObject> gameObjects)
     {
-        gameObjects.Add(BulletPrefab);
-        gameObjects.Add(WeaponPrefab);
+        gameObjects.Add(PrimaryAmmoPrefab);
+        gameObjects.Add(SecondaryAmmoPrefab);
+        //gameObjects.Add(WeaponPrefab);
     }
 
-    void Generate()
+    void Generate(bool randomize)
     {
-        float multiplier = .7f;
-        Strength = UnityEngine.Random.Range(Strength * multiplier, Strength * (2 - multiplier));
-        Damage = UnityEngine.Random.Range(Damage * multiplier, Damage * (2 - multiplier));
-        Rate = UnityEngine.Random.Range(Rate * multiplier, Rate * (2 - multiplier));
+        if (randomize)
+        {
+            float multiplier = .7f;
+            Strength = UnityEngine.Random.Range(Strength * multiplier, Strength * (2 - multiplier));
+            Damage = UnityEngine.Random.Range(Damage * multiplier, Damage * (2 - multiplier));
+            Rate = UnityEngine.Random.Range(Rate * multiplier, Rate * (2 - multiplier));
+        }
+        else
+        {
+            Strength = PrimaryAmmoPrefab.GetComponent<AmmoData>().Strength;
+            Damage = PrimaryAmmoPrefab.GetComponent<AmmoData>().Damage;
+            Rate = PrimaryAmmoPrefab.GetComponent<AmmoData>().Rate;
+            Debug.Log("Str " + Strength);
+        }
+
+
     }
 
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        if (randomize == true)
-        {
-            Generate();
-        }
+        //if (randomize == true)
+        //{
+            Generate(randomize);
+        //}
 
         dstManager.AddComponentData<GunComponent>(
             entity,
@@ -71,8 +96,9 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
             {
                 AmmoStartPosition = new Translation(){Value = AmmoStartLocation.position},//not used because cant track bone 
                 AmmoStartRotation = new Rotation(){Value = AmmoStartLocation.rotation},
-                Bullet = conversionSystem.GetPrimaryEntity(BulletPrefab),
-                Weapon = conversionSystem.GetPrimaryEntity(WeaponPrefab),
+                PrimaryAmmo = conversionSystem.GetPrimaryEntity(PrimaryAmmoPrefab),
+                SecondaryAmmo = conversionSystem.GetPrimaryEntity(SecondaryAmmoPrefab),
+                //Weapon = conversionSystem.GetPrimaryEntity(WeaponPrefab),
                 Strength = Strength,
                 gameStrength = Strength,
                 Damage = Damage,
@@ -92,27 +118,27 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
     {
         if (manager == default || entity == Entity.Null) return;
 
+        Debug.Log("ammo instances " + AmmoInstances.Count);
 
-
-        if (BulletInstances.Count > 24 && BulletInstances[0].GetComponent<AmmoEntityTracker>())
+        if (AmmoInstances.Count > 24 && AmmoInstances[0].GetComponent<AmmoEntityTracker>())
         {
-            Entity e = BulletInstances[0].GetComponent<AmmoEntityTracker>().ammoEntity;
+            Entity e = AmmoInstances[0].GetComponent<AmmoEntityTracker>().ammoEntity;
             if (e != Entity.Null)
             {
-                DestroyImmediate(BulletInstances[0]);
+                DestroyImmediate(AmmoInstances[0]);
                 manager.DestroyEntity(e);
-                BulletInstances.RemoveAt(0);
+                AmmoInstances.RemoveAt(0);
             }
         }
 
     }
 
-    public void CreateBulletInstance(Entity e)
+    public void CreatePrimaryAmmoInstance(Entity e)
     {
         UpdateSystem();
-        GameObject go = Instantiate(BulletPrefab, AmmoStartLocation.position, AmmoStartLocation.rotation);
+        GameObject go = Instantiate(PrimaryAmmoPrefab, AmmoStartLocation.position, AmmoStartLocation.rotation);
         //GameObject go = Instantiate(BulletPrefab, AmmoStartLocation.position, Quaternion.identity);
-        BulletInstances.Add(go);
+        AmmoInstances.Add(go);
         go.GetComponent<AmmoEntityTracker>().ammoEntity = e;
         go.GetComponent<AmmoEntityTracker>().ownerAmmoEntity = entity;
         go.GetComponent<AmmoEntityTracker>().ammoTime = AmmoTime;
@@ -123,70 +149,5 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
         }
     }
 }
-
-
-
-
-//public class AmmoRewindSystem : JobComponentSystem
-//{
-
-
-
-//    protected override JobHandle OnUpdate(JobHandle inputDeps)
-//    {
-
-//        bool rt = false;
-//        float damage = 25;
-
-//        Entities.WithoutBurst().ForEach((Entity e, InputController inputController, ControlBarComponent controlBarComponent) =>
-//        {
-
-//            damage = controlBarComponent.value;
-
-//            if (inputController.rightTriggerDown == true && damage < 25)
-//            {
-//                rt = true;
-//            }
-//        }
-//        ).Run();
-
-
-//        Entities.WithoutBurst().ForEach((Entity e,
-//                ref AmmoComponent ammo, ref Translation position, ref Rotation rotation) =>
-//            {
-//                Entity owner = ammo.OwnerAmmoEntity;
-
-//                if (rt == true && damage < 25)
-//                {
-
-//                    PhysicsVelocity pv = EntityManager.GetComponentData<PhysicsVelocity>(e);
-
-//                    PhysicsVelocity velocity = new PhysicsVelocity
-//                    {
-//                        Linear = new float3(-pv.Linear.x, pv.Linear.y, 0) * 1.1f,
-//                        Angular = float3.zero
-//                    };
-//                    EntityManager.SetComponentData(e, position);
-//                    EntityManager.SetComponentData(e, rotation);
-//                    EntityManager.SetComponentData(e, velocity);
-//                    ammo.rewinding = true;
-//                }
-//            }
-
-
-//            ).Run();
-
-
-
-
-//        return default;
-//    }
-
-
-
-//}
-
-
-
 
 

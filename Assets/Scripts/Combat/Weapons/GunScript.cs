@@ -10,7 +10,8 @@ using Unity.Physics.Extensions;
 
 public struct GunComponent : IComponentData
 {
-    public Entity Bullet;
+    public Entity PrimaryAmmo;
+    public Entity SecondaryAmmo;
     public Entity Weapon;
     //public float AmmoTime;
     public float gameStrength;

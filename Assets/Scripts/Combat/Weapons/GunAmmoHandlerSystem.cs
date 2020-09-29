@@ -68,7 +68,7 @@ public class GunAmmoHandlerSystem : SystemBase
                 gun.Duration += dt;
                 if ((gun.Duration > gun.gameRate) && (gun.IsFiring == 1))
                 {
-                    if (gun.Bullet != null)
+                    if (gun.PrimaryAmmo != null)
                     {
 
                         Debug.Log("gun2 " + EntityManager.HasComponent<PlayerComponent>(entity) + " firing " + gun.IsFiring);
@@ -76,7 +76,7 @@ public class GunAmmoHandlerSystem : SystemBase
 
                         gun.IsFiring = 0;
                         statsComponent.shotsFired += 1;
-                        Entity e = EntityManager.Instantiate(gun.Bullet);
+                        Entity e = EntityManager.Instantiate(gun.PrimaryAmmo);
                         //Translation translation = new Translation { Value = pos };
                         //Rotation rotation = new Rotation { Value = rot };
 
@@ -98,7 +98,7 @@ public class GunAmmoHandlerSystem : SystemBase
                         EntityManager.SetComponentData(e, translation);
                         EntityManager.SetComponentData(e, rotation);
                         EntityManager.SetComponentData(e, velocity);
-                        bulletManager.CreateBulletInstance(e);
+                        bulletManager.CreatePrimaryAmmoInstance(e);
 
                     }
                     gun.Duration = 0;
