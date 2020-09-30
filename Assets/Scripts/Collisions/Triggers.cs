@@ -126,8 +126,8 @@ public class CollisionSystem : JobComponentSystem
 
 
 
-            if (triggerComponent_a.Type == (int) TriggerType.Ground ||
-                triggerComponent_b.Type == (int) TriggerType.Ground)
+            if (triggerComponent_a.Type == (int)TriggerType.Ground ||
+                triggerComponent_b.Type == (int)TriggerType.Ground)
             {
                 return;
             }
@@ -158,7 +158,7 @@ public class CollisionSystem : JobComponentSystem
                                                      type_a == (int)TriggerType.RightFoot) || punchingA;
 
 
-            punchingB = (type_a == (int)TriggerType.Chest || type_a== (int)TriggerType.Head) &&
+            punchingB = (type_a == (int)TriggerType.Chest || type_a == (int)TriggerType.Head) &&
                             (type_b == (int)TriggerType.LeftHand || type_b == (int)TriggerType.RightHand
                                                                  || type_b == (int)TriggerType.LeftFoot ||
                                                                  type_b == (int)TriggerType.RightFoot) || punchingB;
@@ -170,10 +170,10 @@ public class CollisionSystem : JobComponentSystem
 
 
 
-            bool ammoA = (type_b == (int)TriggerType.Chest || type_b == (int)TriggerType.Head  || type_b == (int)TriggerType.Body) &&
+            bool ammoA = (type_b == (int)TriggerType.Chest || type_b == (int)TriggerType.Head || type_b == (int)TriggerType.Body) &&
                          (type_a == (int)TriggerType.Ammo);
 
-            bool ammoB = (type_a == (int)TriggerType.Chest || type_a == (int)TriggerType.Head  || type_a == (int)TriggerType.Body ) &&
+            bool ammoB = (type_a == (int)TriggerType.Chest || type_a == (int)TriggerType.Head || type_a == (int)TriggerType.Body) &&
                          (type_b == (int)TriggerType.Ammo);
 
             //Debug.Log("aa " + ammoA + " ab " + ammoB);
@@ -181,8 +181,8 @@ public class CollisionSystem : JobComponentSystem
             if (punchingA || ammoB)
             {
 
-               // Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
-                //Debug.Log("c b " + ch_b + " c a " + ch_a);
+                Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
+                Debug.Log("c b " + ch_b + " c a " + ch_a);
 
                 CollisionComponent collisionComponent =
                     new CollisionComponent()
@@ -215,7 +215,7 @@ public class CollisionSystem : JobComponentSystem
             }
 
 
-        
+
 
         }
     }

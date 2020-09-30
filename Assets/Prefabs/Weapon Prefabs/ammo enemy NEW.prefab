@@ -244,7 +244,7 @@ MonoBehaviour:
     m_BelongsToCategories:
       m_Override: 0
       m_Value:
-        Category00: 0
+        Category00: 1
         Category01: 1
         Category02: 1
         Category03: 1
@@ -340,7 +340,7 @@ MonoBehaviour:
   AmmoTime: 1
   Strength: 13
   Damage: 5
-  Rate: 0.3
+  Rate: 30
 --- !u!1001 &1155093784678171370
 PrefabInstance:
   m_ObjectHideFlags: 0

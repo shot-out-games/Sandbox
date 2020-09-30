@@ -22,8 +22,8 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
 {
     private EntityManager manager;
     private Entity entity;
-    [SerializeField]
-    private AudioSource audioSource;
+    //[SerializeField]
+    public AudioSource weaponAudioSource;
     [HideInInspector]
     public List<GameObject> AmmoInstances = new List<GameObject>();
     public Transform AmmoStartLocation;

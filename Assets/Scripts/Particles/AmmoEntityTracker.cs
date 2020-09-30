@@ -10,6 +10,7 @@ public struct AmmoComponent : IComponentData
     public bool AmmoDead;
     public float AmmoTime;
     public float AmmoTimeCounter;
+    public bool DamageCausedPreviously;
     public bool rewinding;
 
 }

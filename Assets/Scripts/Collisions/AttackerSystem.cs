@@ -55,8 +55,6 @@ public class AttackerSystem : JobComponentSystem
 
                     float hw = animator.GetFloat("HitWeight");
 
-                    Debug.Log("t b " + type_b + " t a " + type_a);
-
 
                     if (playerA && enemyB || playerB && enemyA) check = true;
 
@@ -67,15 +65,6 @@ public class AttackerSystem : JobComponentSystem
 
                         bool triggerChecked_a = trigger_a.collisionChecked;
                         float hitPower = 1;
-
-
-
-                        //bool enemy = EntityManager.HasComponent(entityA, typeof(EnemyComponent));
-
-                        //if (enemy == false)
-                        //{
-                        //Debug.Log("t b " + type_b + " t a " + type_a);
-
 
                         if (triggerChecked_a == false)
                         {
@@ -89,15 +78,11 @@ public class AttackerSystem : JobComponentSystem
                                 bool anyTouchDamage = EntityManager.GetComponentData<MeleeComponent>(entityA)
                                     .anyTouchDamage;
 
-
-
-
                                 if (anyTouchDamage == true && hw < .19)
                                 {
                                     hw = .19f;
                                     Debug.Log(hitPower);
                                 }
-
 
                             }
 
@@ -135,6 +120,7 @@ public class AttackerSystem : JobComponentSystem
                         //damage landed not being credited to shooter currently
                         int shooterTag = -1;
                         Entity shooter = Entity.Null;
+                        bool damageCaused = false;
                         if (EntityManager.HasComponent<AmmoComponent>(collision_entity_b)
                         ) //ammo entity not character if true
                         {
@@ -160,6 +146,12 @@ public class AttackerSystem : JobComponentSystem
                                 EntityManager.GetComponentData<AmmoComponent>(collision_entity_b);
 
                             ammo.AmmoDead = true;
+                            if (ammo.DamageCausedPreviously == true)
+                            {
+                                damage = 0;
+                            }
+
+                            ammo.DamageCausedPreviously = true;
                             ecb.SetComponent<AmmoComponent>(collision_entity_b, ammo);
 
 

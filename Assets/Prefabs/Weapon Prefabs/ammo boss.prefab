@@ -102,8 +102,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoTime: 0
-  spawnPS1: {fileID: 7426520289009152466}
-  spawnPS2: {fileID: 7426520289009152466}
 --- !u!114 &8439595339403142612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145,6 +143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MotionType: 0
+  m_Smoothing: 0
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0
@@ -323,23 +322,7 @@ MonoBehaviour:
         Tag06: 0
         Tag07: 0
     m_SerializedVersion: 1
-    m_BelongsTo_Deprecated:
-      m_Override: 0
-      m_Value: 
-    m_CollidesWith_Deprecated:
-      m_Override: 0
-      m_Value: 
-    m_CustomTags_Deprecated:
-      m_Override: 0
-      m_Value: 
-    m_IsTrigger_Deprecated:
-      m_Override: 0
-      m_Value: 0
-    m_RaisesCollisionEvents_Deprecated:
-      m_Override: 0
-      m_Value: 0
   m_SerializedVersion: 1
-  m_ConvexRadius_Deprecated: -1
 --- !u!1001 &1155093784678171370
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -703,12 +686,6 @@ PrefabInstance:
 --- !u!4 &7426520288993946360 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 432598, guid: e85f4a610ef9e5b4aa9cedce76136489,
-    type: 3}
-  m_PrefabInstance: {fileID: 7426520288993588014}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &7426520289009152466 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 19825404, guid: e85f4a610ef9e5b4aa9cedce76136489,
     type: 3}
   m_PrefabInstance: {fileID: 7426520288993588014}
   m_PrefabAsset: {fileID: 0}

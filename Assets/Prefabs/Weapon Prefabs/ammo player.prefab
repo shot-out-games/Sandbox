@@ -103,8 +103,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoTime: 0
-  spawnPS1: {fileID: 7426520289009152466}
-  spawnPS2: {fileID: 7426520289009152466}
 --- !u!114 &8439595339403142612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -702,12 +700,6 @@ PrefabInstance:
 --- !u!4 &7426520288993946360 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 432598, guid: e85f4a610ef9e5b4aa9cedce76136489,
-    type: 3}
-  m_PrefabInstance: {fileID: 7426520288993588014}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &7426520289009152466 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 19825404, guid: e85f4a610ef9e5b4aa9cedce76136489,
     type: 3}
   m_PrefabInstance: {fileID: 7426520288993588014}
   m_PrefabAsset: {fileID: 0}

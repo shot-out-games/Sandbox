@@ -33,7 +33,7 @@ public class GunAmmoHandlerSystem : SystemBase
 
 
         Entities.WithoutBurst().WithStructuralChanges().ForEach(
-            (ref GunComponent gun, ref StatsComponent statsComponent, 
+            (ref GunComponent gun, ref StatsComponent statsComponent,
                 ref Rotation gunRotation,
                 in RatingsComponent ratingsComponent,
                 in BulletManager bulletManager,
@@ -55,14 +55,16 @@ public class GunAmmoHandlerSystem : SystemBase
 
                 if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
                 if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
+                bool isEnemy = EntityManager.HasComponent<EnemyComponent>(entity);
 
-                if (EntityManager.HasComponent<EnemyComponent>(entity))
+                if (isEnemy)
                 {
                     if (EntityManager.HasComponent<EnemyWeaponMovementComponent>(entity) == false)
                     {
                         return;
                     }
                 }
+
 
                 Entity primaryAmmoEntity = gun.PrimaryAmmo;
                 var ammoDataComponent = EntityManager.GetComponentData<AmmoDataComponent>(primaryAmmoEntity);
@@ -118,6 +120,10 @@ public class GunAmmoHandlerSystem : SystemBase
                         ammoComponent.OwnerAmmoEntity = entity;
                         EntityManager.SetComponentData(e, ammoComponent);
                         //bulletManager.CreatePrimaryAmmoInstance(e);
+                        if (bulletManager.weaponAudioClip && bulletManager.weaponAudioSource)
+                        {
+                            bulletManager.weaponAudioSource.PlayOneShot(bulletManager.weaponAudioClip);
+                        }
 
                     }
                     gun.Duration = 0;
@@ -125,6 +131,9 @@ public class GunAmmoHandlerSystem : SystemBase
                 gun.WasFiring = 1;
             }
         ).Run();
+
+
+
 
     }
 
