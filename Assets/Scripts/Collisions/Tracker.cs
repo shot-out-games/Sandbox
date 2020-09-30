@@ -47,7 +47,7 @@ public class Tracker : MonoBehaviour, IConvertGameObjectToEntity
     public Entity parentEntity;
     public EntityManager manager;
     public TriggerType Type;
-    [SerializeField] private Transform offset;//since we can't make child need position relative to tracked transform
+    //[SerializeField] private Transform offset;//since we can't make child need position relative to tracked transform
                                               //    private Vector3 offsetPosition = Vector3.zero;
                                               // private Quaternion offsetRotation = Quaternion.identity;
 
