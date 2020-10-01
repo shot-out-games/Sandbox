@@ -9,7 +9,7 @@ using Rewired;
 using Rewired.ComponentControls;
 using Unity.Mathematics;
 using Unity.Transforms;
-
+using  Unity.Physics.Authoring;
 
 
 public struct PlayerWeaponAimComponent : IComponentData
