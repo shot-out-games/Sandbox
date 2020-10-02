@@ -57,11 +57,13 @@ namespace SandBox.Player
                         applyImpulseComponent.stickX = leftStickX;
                         applyImpulseComponent.stickY = leftStickY;
 
-                        leftStickY = 0;//2d but need Y for shooting still so save to applyimpulse above
+                        //leftStickY = 0;//2d but need Y for shooting still so save to applyimpulse above
+
+
                         Vector3 stickInput = new Vector3(leftStickX, 0, leftStickY);
                         stickSpeed = stickInput.sqrMagnitude;
                         pv.Linear = applyImpulseComponent.Velocity;
-                        translation.Value.z = 0;
+                        //translation.Value.z = 0;
 
 
                     }

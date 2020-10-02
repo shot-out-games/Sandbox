@@ -55,7 +55,7 @@ namespace SandBox.Player
         //public Quaternion rotation { get; set; }
         public float slerpDampTime { get; set; }
         public int targetFrameRate = -1;
-
+        //public bool threeD;
 
 
 
@@ -179,7 +179,12 @@ namespace SandBox.Player
             _entityManager = dstManager;
 
             startSpeed = GetComponent<PlayerRatings>() ? GetComponent<PlayerRatings>().Ratings.speed : 4f;
-            dstManager.AddComponentData(entity, new PlayerMoveComponent() { negativeForce = negativeForce, currentSpeed = startSpeed, rotateSlerpDampTime = rotateSlerpDampTime });
+            dstManager.AddComponentData(entity, new PlayerMoveComponent()
+            {
+                negativeForce = negativeForce, currentSpeed = startSpeed, rotateSlerpDampTime = rotateSlerpDampTime,
+                
+
+            });
 
         }
     }

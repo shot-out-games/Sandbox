@@ -54,12 +54,12 @@ public class CameraControls : MonoBehaviour
             fov += Time.deltaTime * multiplier;
             ChangeFov(fov);
         }
-        else if (player.GetAxisRaw("Move Vertical") >= 1 && gamePad == false)
+        else if (player.GetAxisRaw("RightVertical") >= 1 && gamePad == false)
         {
             fov -= Time.deltaTime * multiplier;
             ChangeFov(fov);
         }
-        else if (player.GetAxisRaw("Move Vertical") <= -1 && gamePad == false)
+        else if (player.GetAxisRaw("RightVertical") <= -1 && gamePad == false)
         {
             fov += Time.deltaTime * multiplier;
             ChangeFov(fov);

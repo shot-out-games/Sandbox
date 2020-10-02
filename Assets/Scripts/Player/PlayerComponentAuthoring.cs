@@ -31,7 +31,18 @@ public struct SkillTreeComponent : IComponentData
 
 }
 
+[System.Serializable]
+public struct PlayerComponent : IComponentData
+{
+    public int index;
+    public int keys;
+    public int tag;
+    public float speed;
+    public float power;
+    public float maxHealth;
+    public bool threeD;
 
+}
 
 
 [RequiresEntityConversion]
@@ -49,6 +60,7 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
     private bool checkLossCondition = true;
 
 
+    public bool threeD;
 
 
     //void LateUpdate()
