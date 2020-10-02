@@ -152,13 +152,13 @@ public class CollisionSystem : JobComponentSystem
 
 
 
-            punchingA = (type_b == (int)TriggerType.Chest || type_b == (int)TriggerType.Head) &&
+            punchingA = (type_b == (int)TriggerType.Base || type_b == (int)TriggerType.Head) &&
                 (type_a == (int)TriggerType.LeftHand || type_a == (int)TriggerType.RightHand
                                                      || type_a == (int)TriggerType.LeftFoot ||
                                                      type_a == (int)TriggerType.RightFoot) || punchingA;
 
 
-            punchingB = (type_a == (int)TriggerType.Chest || type_a == (int)TriggerType.Head) &&
+            punchingB = (type_a == (int)TriggerType.Base || type_a == (int)TriggerType.Head) &&
                             (type_b == (int)TriggerType.LeftHand || type_b == (int)TriggerType.RightHand
                                                                  || type_b == (int)TriggerType.LeftFoot ||
                                                                  type_b == (int)TriggerType.RightFoot) || punchingB;
@@ -170,10 +170,10 @@ public class CollisionSystem : JobComponentSystem
 
 
 
-            bool ammoA = (type_b == (int)TriggerType.Chest || type_b == (int)TriggerType.Head || type_b == (int)TriggerType.Body) &&
+            bool ammoA = (type_b == (int)TriggerType.Base || type_b == (int)TriggerType.Head || type_b == (int)TriggerType.Body) &&
                          (type_a == (int)TriggerType.Ammo);
 
-            bool ammoB = (type_a == (int)TriggerType.Chest || type_a == (int)TriggerType.Head || type_a == (int)TriggerType.Body) &&
+            bool ammoB = (type_a == (int)TriggerType.Base || type_a == (int)TriggerType.Head || type_a == (int)TriggerType.Body) &&
                          (type_b == (int)TriggerType.Ammo);
 
             //Debug.Log("aa " + ammoA + " ab " + ammoB);

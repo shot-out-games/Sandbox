@@ -16,7 +16,7 @@ public enum WeaponType
 
 public class Weapons
 {
-    public bool isAttached;
+    public bool isAttachedAtStart;
     public WeaponType weaponType;
     public bool secondaryWeapon;
     public GameObject weaponGameObject;//actual weapon

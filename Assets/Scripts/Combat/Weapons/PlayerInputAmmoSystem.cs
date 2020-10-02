@@ -45,8 +45,8 @@ public class PlayerInputAmmoSystem : SystemBase
 
 
                 if (
-                    attachWeapon.attachWeaponType == (int)WeaponType.Gun && ltPressed == true ||
-                attachWeapon.attachSecondaryWeaponType == (int)WeaponType.Gun && ltPressed == true
+                    attachWeapon.attachWeaponType == (int)WeaponType.Gun && rtPressed == true ||
+                attachWeapon.attachSecondaryWeaponType == (int)WeaponType.Gun && rtPressed == true
                     )
                 {
                     gunComponent.IsFiring = 1;

@@ -18,7 +18,7 @@ public enum TriggerType
     None = 0,
     Body = 1,
     Head = 2,
-    Chest = 3,
+    Base = 3,//chest for player
     LeftHand = 4,
     RightHand = 5,
     LeftFoot = 6,

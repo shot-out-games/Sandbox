@@ -31,14 +31,14 @@ public class WeaponManager : MonoBehaviour, IConvertGameObjectToEntity
     {
         if (primaryWeapon != null)
         {
-            if (primaryWeapon.isAttached)
+            if (primaryWeapon.isAttachedAtStart)
             {
                 AttachPrimaryWeapon();
             }
         }
         if (secondaryWeapon != null)
         {
-            if (secondaryWeapon.isAttached)
+            if (secondaryWeapon.isAttachedAtStart)
             {
                 AttachSecondaryWeapon();
             }
@@ -206,7 +206,7 @@ public class AttachWeaponSystem : SystemBase
                     Weapons weapon = attachWeapon.weaponsList[i];
                     currentSlot++;
                     if (currentSlot >= weaponCount) currentSlot = 0;
-                    if (weapon.isAttached == true)
+                    if (weapon.isAttachedAtStart == true)
                     {
                         attachWeapon.AttachPickWeapons(currentSlot);
                         break;
