@@ -42,6 +42,7 @@ public class CameraControls : MonoBehaviour
 
 
         bool gamePad = controller.type == ControllerType.Joystick;
+        bool keyboard = controller.type == ControllerType.Keyboard;
 
 
         if (player.GetAxisRaw("RightVertical") >= 1 && gamePad)
@@ -54,12 +55,12 @@ public class CameraControls : MonoBehaviour
             fov += Time.deltaTime * multiplier;
             ChangeFov(fov);
         }
-        else if (player.GetAxisRaw("RightVertical") >= 1 && gamePad == false)
+        else if (player.GetAxisRaw("RightVertical") >= 1 && keyboard)
         {
             fov -= Time.deltaTime * multiplier;
             ChangeFov(fov);
         }
-        else if (player.GetAxisRaw("RightVertical") <= -1 && gamePad == false)
+        else if (player.GetAxisRaw("RightVertical") <= -1 && keyboard)
         {
             fov += Time.deltaTime * multiplier;
             ChangeFov(fov);

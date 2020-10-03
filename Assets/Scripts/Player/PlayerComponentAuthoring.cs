@@ -76,7 +76,9 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
         playerEntity = entity;
         manager = dstManager;
 
-        dstManager.AddComponent<PlayerComponent>(entity);
+        dstManager.AddComponentData(entity, new PlayerComponent {threeD = threeD }
+            
+            );
         dstManager.AddComponentData(entity, new Pause { value = 0 });
         dstManager.AddComponentData(entity,
             new WinnerComponent

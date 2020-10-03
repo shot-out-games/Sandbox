@@ -178,7 +178,7 @@ namespace SandBox.Player
                  if (rotating && leftStickX != leftStickY && pause.value == 0 && !deadComponent.isDead)
                  {
                      Camera cam = playerMove.mainCam;
-                     float slerpDampTime = playerMoveComponent.rotateSlerpDampTime;
+                     //float slerpDampTime = playerMoveComponent.rotateSlerpDampTime;
                      Quaternion camRotation = cam.transform.rotation;
                      camRotation.x = 0;
                      camRotation.z = 0;
@@ -193,12 +193,28 @@ namespace SandBox.Player
                      forward = forward.normalized;
                      Vector3 right = new Vector3(forward.z, 0.0f, -forward.x);
                      Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
+
+
+
                      if (targetDirection.sqrMagnitude > 1f)
                      {
                          targetDirection = targetDirection.normalized;
                      }
+
+
                      quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
-                     rotation.Value = targetRotation;
+
+                     //rotation.Value = targetRotation;
+
+                     Vector3 desiredDirection = Vector3.Normalize(new Vector3(leftStickX, 0f, leftStickY));
+                     if (desiredDirection != Vector3.zero)
+                     {
+                         //quaternion _rotation = quaternion.LookRotation(desiredDirection, math.up());
+                         quaternion newRotation = math.slerp(playerMove.transform.rotation, targetRotation, playerMoveComponent.rotateSpeed * Time.DeltaTime);
+                         rotation.Value = newRotation;
+                     }
+
+
 
                  }
              }

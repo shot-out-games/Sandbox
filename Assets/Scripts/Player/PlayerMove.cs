@@ -16,7 +16,7 @@ public struct PlayerMoveComponent : IComponentData
 {
     public float currentSpeed;
     public float negativeForce;
-    public float rotateSlerpDampTime;
+    public float rotateSpeed;
 }
 
 
@@ -35,8 +35,8 @@ namespace SandBox.Player
 
 
 
-        //[SerializeField]
-        float rotateSlerpDampTime = 9f;//na
+        [SerializeField]
+        float rotateSpeed = 9;
 
         [HideInInspector]
         public Camera mainCam;
@@ -53,7 +53,7 @@ namespace SandBox.Player
         private bool jumpEnabled;
 
         //public Quaternion rotation { get; set; }
-        public float slerpDampTime { get; set; }
+        //public float slerpDampTime { get; set; }
         public int targetFrameRate = -1;
         //public bool threeD;
 
@@ -82,14 +82,17 @@ namespace SandBox.Player
 
             if (!_entityManager.HasComponent(_entity, typeof(ApplyImpulseComponent))) return;
             if (!_entityManager.HasComponent(_entity, typeof(RatingsComponent))) return;
+            if (!_entityManager.HasComponent(_entity, typeof(PlayerComponent))) return;
             if (!ReInput.isReady) return;
 
+            bool threeD = _entityManager.GetComponentData<PlayerComponent>(_entity).threeD;
 
             ApplyImpulseComponent applyImpulseComponent =
                 _entityManager.GetComponentData<ApplyImpulseComponent>(_entity);
 
 
             float h = applyImpulseComponent.stickX;
+            float stickY = applyImpulseComponent.stickY;
 
             currentSpeed = _entityManager.GetComponentData<RatingsComponent>(_entity).gameSpeed;
             Vector3 velocity = animator.deltaPosition / Time.deltaTime * currentSpeed;
@@ -130,6 +133,10 @@ namespace SandBox.Player
             //vy = negativeForce;
 
             velocity.x = h * currentSpeed;
+            if (threeD)
+            {
+                velocity.z = stickY * currentSpeed;
+            }
             applyImpulseComponent.Velocity = new float3(velocity.x, v, velocity.z);            //
 
             //Debug.Log("v " + applyImpulseComponent.Velocity);
@@ -181,7 +188,7 @@ namespace SandBox.Player
             startSpeed = GetComponent<PlayerRatings>() ? GetComponent<PlayerRatings>().Ratings.speed : 4f;
             dstManager.AddComponentData(entity, new PlayerMoveComponent()
             {
-                negativeForce = negativeForce, currentSpeed = startSpeed, rotateSlerpDampTime = rotateSlerpDampTime,
+                negativeForce = negativeForce, currentSpeed = startSpeed, rotateSpeed = rotateSpeed,
                 
 
             });
