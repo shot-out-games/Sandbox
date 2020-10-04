@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
 
 
@@ -42,6 +43,7 @@ public struct PlayerComponent : IComponentData
     public float power;
     public float maxHealth;
     public bool threeD;
+    public float3 startPosition;
 
 }
 
@@ -77,8 +79,14 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
         playerEntity = entity;
         manager = dstManager;
 
-        dstManager.AddComponentData(entity, new PlayerComponent {threeD = threeD }
-            
+        dstManager.AddComponentData(entity, new PlayerComponent
+        {
+
+
+            threeD = threeD,
+            startPosition = manager.GetComponentData<Translation>(entity).Value
+        }
+
             );
         dstManager.AddComponentData(entity, new Pause { value = 0 });
         dstManager.AddComponentData(entity,
@@ -131,10 +139,10 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
         );
 
         dstManager.AddComponentData(entity, new StatsComponent()
-            {
-                shotsFired = 0,
-                shotsLanded = 0
-            }
+        {
+            shotsFired = 0,
+            shotsLanded = 0
+        }
         );
 
         dstManager.AddComponentData(entity, new CheckedComponent());

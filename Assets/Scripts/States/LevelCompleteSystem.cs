@@ -21,12 +21,12 @@ public struct LevelCompleteComponent : IComponentData
 
 }
 
-[UpdateAfter(typeof(WinnerSystem))]
+//[UpdateAfter(typeof(WinnerSystems))]
 
-public class LevelCompleteSystem : JobComponentSystem
+public class LevelCompleteSystem : SystemBase
 {
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override  void OnUpdate()
     {
 
 
@@ -96,7 +96,7 @@ public class LevelCompleteSystem : JobComponentSystem
         }
 
 
-        return default;
+        //return default;
     }
 
 }

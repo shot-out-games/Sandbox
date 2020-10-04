@@ -47,11 +47,11 @@ public class LevelUpMechanicSystem : SystemBase
                 float pct = skillTreeComponent.CurrentLevelXp / (float)skillTreeComponent.PointsNextLevel;
                 //ndeMechanic.multiplier = .5f;
                 controlBar.value = pct;
-                Debug.Log("ctrl " + controlBar.value);
+                    //Debug.Log("ctrl " + controlBar.value);
                 //float f1 = pct * .5f;
                 //float f2 = pct * .66f;
 
-                ratings.gameSpeed = ratings.speed  + skillTreeComponent.CurrentLevel;
+                //ratings.gameSpeed = ratings.speed  + skillTreeComponent.CurrentLevel;
                 //playerJump.gameStartJumpGravityForce = playerJump.startJumpGravityForce * (f1 + .50f);
 
 

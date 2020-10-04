@@ -19,6 +19,19 @@ public struct WinnerMenuComponent : IComponentData
 
 }
 
+[System.Serializable]
+public struct WinnerComponent : IComponentData
+{
+    public bool active;
+    public int goalCounter;
+    public int goalCounterTarget;
+    public bool targetReached;
+    public bool endGameReached;
+    public bool resetLevel;
+    public bool checkWinCondition;
+    public int winnerCounter;
+    public int keys;
+}
 
 public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 {

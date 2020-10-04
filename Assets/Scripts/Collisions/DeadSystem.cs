@@ -127,6 +127,7 @@ public class DeadSystem : JobComponentSystem //really game over system currently
 
         bool enemyJustDead = false;
 
+        //changed for ld - reset level for boss defeated
         Entities.WithoutBurst().ForEach
         (
             (ref DeadComponent deadComponent, ref WinnerComponent winnerComponent, in NavMeshAgent navMeshAgent, in Entity entity, in Animator animator) =>
@@ -135,26 +136,25 @@ public class DeadSystem : JobComponentSystem //really game over system currently
                     && deadComponent.tag == 2 && deadComponent.justDead == true)//enemy
                 {
                     //ecb.DestroyEntity(entity);//for now 
-                    deadComponent.justDead = false;
-                    Debug.Log("sh0");
-                    enemyJustDead = true;
-                    navMeshAgent.speed = 0;
-                    animator.SetInteger("Zone", 4);
-                    animator.SetInteger("Dead", 1);
-                    LevelManager.instance.levelSettings[currentLevel].enemiesDead += 1;
-
                     if (winnerComponent.checkWinCondition == true)
                     {
-                        winnerComponent.endGameReached = true;
+                        //winnerComponent.endGameReached = true;
+                        winnerComponent.resetLevel = true;
                         Debug.Log("winner");
+                    }
+                    else
+                    {
+                        deadComponent.justDead = false;
+                        Debug.Log("sh0");
+                        enemyJustDead = true;
+                        navMeshAgent.speed = 0;
+                        animator.SetInteger("Zone", 4);
+                        animator.SetInteger("Dead", 1);
+                        LevelManager.instance.levelSettings[currentLevel].enemiesDead += 1;
                     }
 
 
-
                 }
-
-
-
 
             }
         ).Run();
