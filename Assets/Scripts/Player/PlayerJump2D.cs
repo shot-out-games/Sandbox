@@ -125,6 +125,7 @@ namespace SandBox.Player
                     //bool cancelVariableJump = false;
 
                     float leftStickX = inputController.leftStickX;
+                    float leftStickY = inputController.leftStickY;
 
                     bool button_x = inputController.buttonX_Pressed;
                     bool button_x_held = inputController.buttonX_held;
@@ -176,8 +177,8 @@ namespace SandBox.Player
                     {
                         return;
                     }
-             
 
+                    //pv.Linear.z = leftStickY;
                  
                     if ((button_x == true || button_x_held == true) && applyImpulseComponent.InJump == false && frames == 0)
                     {
@@ -191,7 +192,7 @@ namespace SandBox.Player
                         inputController.gameObject.GetComponent<Animator>().SetTrigger("JumpStage");
                         inputController.gameObject.GetComponent<Animator>().applyRootMotion = false;
                         playerJump.JumpStage = JumpStages.JumpStart;
-                        float3 vel = new float3(pv.Linear.x, originalJumpPower, 0);
+                        float3 vel = new float3(pv.Linear.x, originalJumpPower, pv.Linear.z);
                         pv.Linear = vel;
                     }
                     else if (frames >= 1 && frames <= originalJumpFrames && applyImpulseComponent.InJump == true && applyImpulseComponent.Grounded == false && applyImpulseComponent.Falling == false)
@@ -235,7 +236,7 @@ namespace SandBox.Player
                         frames++;
                         airFrames++;
                         //Debug.Log(" air frames " + airFrames);
-                        float3 vel = new float3(pv.Linear.x, pv.Linear.y, 0);
+                        float3 vel = new float3(pv.Linear.x, pv.Linear.y, pv.Linear.z);
                         pv.Linear.y = jumpPower * hiJumpMultiplier;
 
                     }
@@ -253,7 +254,7 @@ namespace SandBox.Player
                         //Debug.Log(" fr start-up " + frames);
                         playerJump.JumpStage = JumpStages.JumpUp;
                         airForceAdd = leftStickX * playerJumpComponent.airForce;
-                        float3 vel = new float3(pv.Linear.x, pv.Linear.y, 0);
+                        float3 vel = new float3(pv.Linear.x, pv.Linear.y, pv.Linear.z);
                         pv.Linear = vel;
                         pv.Linear.x += airForceAdd;
                     }
@@ -263,7 +264,7 @@ namespace SandBox.Player
                         //Debug.Log(" fr up " + frames);
 
                         airForceAdd = leftStickX * playerJumpComponent.airForce;
-                        float3 vel = new float3(pv.Linear.x, pv.Linear.y, 0);
+                        float3 vel = new float3(pv.Linear.x, pv.Linear.y, pv.Linear.z);
                         pv.Linear = vel;
                         //pv.Linear.y = vel.y * expDownAdj;
                         //Debug.Log("vy " + vel.y);

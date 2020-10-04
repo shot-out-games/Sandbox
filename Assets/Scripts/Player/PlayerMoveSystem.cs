@@ -195,6 +195,8 @@ namespace SandBox.Player
                      Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
 
 
+              
+
 
                      if (targetDirection.sqrMagnitude > 1f)
                      {
@@ -204,15 +206,15 @@ namespace SandBox.Player
 
                      quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
 
-                     //rotation.Value = targetRotation;
+                     rotation.Value = targetRotation;
 
-                     Vector3 desiredDirection = Vector3.Normalize(new Vector3(leftStickX, 0f, leftStickY));
-                     if (desiredDirection != Vector3.zero)
-                     {
-                         //quaternion _rotation = quaternion.LookRotation(desiredDirection, math.up());
-                         quaternion newRotation = math.slerp(playerMove.transform.rotation, targetRotation, playerMoveComponent.rotateSpeed * Time.DeltaTime);
-                         rotation.Value = newRotation;
-                     }
+                     //Vector3 desiredDirection = Vector3.Normalize(new Vector3(leftStickX, 0f, leftStickY));
+                     //if (desiredDirection != Vector3.zero)
+                     //{
+                     //    //quaternion _rotation = quaternion.LookRotation(desiredDirection, math.up());
+                     //    quaternion newRotation = math.slerp(playerMove.transform.rotation, targetRotation, playerMoveComponent.rotateSpeed * Time.DeltaTime);
+                     //    rotation.Value = newRotation;
+                     //}
 
 
 

@@ -18,13 +18,14 @@ public struct SkillTreeComponent : IComponentData
     [System.NonSerialized]
     public Entity e;
     public int CurrentLevel;
-    public int CurrentLevelXp;
+    public float CurrentLevelXp;
     public int PointsNextLevel;
 
     public int availablePoints;
     public int SpeedPts;
     public int PowerPts;
     public int ChinPts;
+    public float TotalPoints;
 
     public float baseSpeed;
 
@@ -61,7 +62,7 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
 
 
     public bool threeD;
-
+    public int skillTreePointsToNextLevel = 10;
 
     //void LateUpdate()
     //{
@@ -116,13 +117,14 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
         {
             e = entity,
             availablePoints = 0,
+            TotalPoints = 0,
             SpeedPts = 0,
             PowerPts = 0,
             ChinPts = 0,
             baseSpeed = 0,
             CurrentLevel = 1,
             CurrentLevelXp = 0,
-            PointsNextLevel = 10
+            PointsNextLevel = skillTreePointsToNextLevel
 
         }
 

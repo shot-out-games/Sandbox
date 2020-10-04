@@ -57,9 +57,10 @@ public class HudGroup : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
-    public void ShowLabelLevelTargets()
+    public void ShowLabelLevelTargets(string _label, int _count)
     {
-        label0.text = "Cubes Remain " + cubes;
+        //label0.text = "Cubes Remain " + cubes;
+        label0.text = _label + " " + _count;
 
 
     }

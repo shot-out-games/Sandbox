@@ -22,17 +22,16 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _BASEMAP _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
-        _OCCLUSIONMAP _SPECGLOSSMAP
+      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
       lightmapFlags: 4
       enableInstancingVariants: 0
       doubleSidedGI: 0
-      customRenderQueue: -1
+      customRenderQueue: 2000
       texEnvs:
       - name: _BaseMap
         texture: {fileID: -462782993214867674, guid: 626d6a87c29b21b4cb080a65b12920a4,
           type: 3}
-        scale: {x: 1, y: 1}
+        scale: {x: 100, y: 1}
         offset: {x: 0, y: 0}
       - name: _BumpMap
         texture: {fileID: -8002938666339375038, guid: 626d6a87c29b21b4cb080a65b12920a4,
@@ -45,7 +44,7 @@ ScriptedImporter:
         offset: {x: 0, y: 0}
       - name: _MainTex
         texture: {instanceID: 0}
-        scale: {x: 1, y: 1}
+        scale: {x: 100, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
         texture: {fileID: -4213828253268463407, guid: 626d6a87c29b21b4cb080a65b12920a4,

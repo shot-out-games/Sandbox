@@ -16,6 +16,7 @@ public struct RatingsComponent : IComponentData
 
     public float gameSpeed;
     public float gameWeaponPower;
+    public float WeaponPower;
 
 
 }

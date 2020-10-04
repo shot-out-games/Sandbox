@@ -339,6 +339,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         bool noX = false;
         bool noZ = true;
+        noZ = false;
 
         if (agent.enabled)
         {
@@ -423,7 +424,8 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
                // transform.InverseTransformDirection(Vector3.forward); //world to local so always local forward (0,0,1)
 
             transform.position = agent.nextPosition;
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+
+            //transform.position = new Vector3(transform.position.x, transform.position.y, 0);//2d
 
         }
         else if (isCurrentWayPointJump)

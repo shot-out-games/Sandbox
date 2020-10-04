@@ -65,15 +65,23 @@ public class AttackerSystem : JobComponentSystem
 
                         bool triggerChecked_a = trigger_a.collisionChecked;
                         float hitPower = 1;
+                        float WeaponPower = 1;
 
                         if (triggerChecked_a == false)
                         {
+
+                            bool hasRatings = EntityManager.HasComponent<RatingsComponent>(entityA);
+                            if (hasRatings)
+                            {
+                                WeaponPower = EntityManager.GetComponentData<RatingsComponent>(entityA).gameWeaponPower;//should eventually check to see if weapon attached 
+                            }
+
 
                             bool hasMelee = EntityManager.HasComponent<MeleeComponent>(entityA);
                             if (hasMelee)
                             {
                                 hitPower = EntityManager.GetComponentData<MeleeComponent>(entityA)
-                                    .gameHitPower;
+                                    .gameHitPower * WeaponPower;
 
                                 bool anyTouchDamage = EntityManager.GetComponentData<MeleeComponent>(entityA)
                                     .anyTouchDamage;
@@ -97,12 +105,20 @@ public class AttackerSystem : JobComponentSystem
 
 
                             //for NDE
+                            //var health = EntityManager.GetComponentData<HealthComponent>(entityA);
+                            //health.TotalDamageReceived = health.TotalDamageReceived - 9f;
+                            //if (health.TotalDamageReceived < 5) health.TotalDamageReceived = 9f;
+                            //EntityManager.SetComponentData(entityA, health);
+
+                            //for LevelUp
                             var health = EntityManager.GetComponentData<HealthComponent>(entityA);
-                            health.TotalDamageReceived = health.TotalDamageReceived - 9f;
-                            if (health.TotalDamageReceived < 5) health.TotalDamageReceived = 9f;
+                            var skillComponent = EntityManager.GetComponentData<SkillTreeComponent>(entityA);
+                            health.TotalDamageLanded = health.TotalDamageLanded + damage;
+                            skillComponent.CurrentLevelXp += damage / 10f;
                             EntityManager.SetComponentData(entityA, health);
+                            EntityManager.SetComponentData(entityA, skillComponent);
 
-
+                            Debug.Log("xp " + skillComponent.CurrentLevelXp);
 
                             trigger_a.collisionChecked = true;
                             ecb.SetComponent<CheckedComponent>(entityA, trigger_a);

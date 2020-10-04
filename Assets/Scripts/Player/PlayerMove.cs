@@ -78,7 +78,7 @@ namespace SandBox.Player
         private void OnAnimatorMove()
         {
             if (_entity == Entity.Null) return;
-
+            //changing so we need root animation here only
 
             if (!_entityManager.HasComponent(_entity, typeof(ApplyImpulseComponent))) return;
             if (!_entityManager.HasComponent(_entity, typeof(RatingsComponent))) return;
@@ -86,6 +86,7 @@ namespace SandBox.Player
             if (!ReInput.isReady) return;
 
             bool threeD = _entityManager.GetComponentData<PlayerComponent>(_entity).threeD;
+
 
             ApplyImpulseComponent applyImpulseComponent =
                 _entityManager.GetComponentData<ApplyImpulseComponent>(_entity);
@@ -132,12 +133,24 @@ namespace SandBox.Player
 
             //vy = negativeForce;
 
-            velocity.x = h * currentSpeed;
+            //velocity.x = h * currentSpeed;
             if (threeD)
             {
-                velocity.z = stickY * currentSpeed;
+                //velocity.z = stickY * currentSpeed;
             }
-            applyImpulseComponent.Velocity = new float3(velocity.x, v, velocity.z);            //
+
+            velocity.y = v;
+
+            applyImpulseComponent.Velocity = velocity;
+
+            Vector3 RIGHT = transform.TransformDirection(Vector3.right);//transform right
+            Vector3 FORWARD = transform.TransformDirection(Vector3.forward);
+
+
+            
+
+            //applyImpulseComponent.Velocity = new float3(0 , v, 0);            //
+            //applyImpulseComponent.Velocity = new float3(velocity.x, v, velocity.z);            //
 
             //Debug.Log("v " + applyImpulseComponent.Velocity);
             _entityManager.SetComponentData(_entity, applyImpulseComponent);

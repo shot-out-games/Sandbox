@@ -5,6 +5,7 @@ public class PlayerRatings : MonoBehaviour, IConvertGameObjectToEntity
 {
 
     public PlayerRatingsScriptableObject Ratings;
+    public float meleeWeaponPower = 1;
 
 
 
@@ -15,7 +16,9 @@ public class PlayerRatings : MonoBehaviour, IConvertGameObjectToEntity
             {
                 tag = 1, maxHealth = Ratings.maxHealth, 
                 speed = Ratings.speed,
-                gameSpeed =  Ratings.speed
+                gameSpeed =  Ratings.speed,
+                gameWeaponPower = meleeWeaponPower,
+                WeaponPower = meleeWeaponPower
             })
             ;
     }

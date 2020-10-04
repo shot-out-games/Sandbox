@@ -1,4 +1,5 @@
 ﻿using SandBox.Player;
+using TMPro;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -100,7 +101,7 @@ public class RaycastSystem : SystemBase
 
                 start = translation.Value + new float3(0, .03f, 0);
                 direction = new float3(0, -1, 0);
-                distance =  .35f;
+                distance = .35f;
                 end = start + direction * distance;
 
 
@@ -398,7 +399,7 @@ public class RaycastSystem : SystemBase
                 }
                 if (triggerMB.triggerAudioSource != null)
                 {
-                    
+
                     triggerMB.triggerAudioSource.Play();
                 }
 
@@ -434,7 +435,8 @@ public class RaycastSystem : SystemBase
                 key = false;
                 showMessage = true;
                 hudGroup.cubes -= 1;
-                hudGroup.ShowLabelLevelTargets();
+                string cubeLabel = "Cubes Remain ";
+                hudGroup.ShowLabelLevelTargets(cubeLabel, hudGroup.cubes);
             }
 
 
@@ -442,17 +444,17 @@ public class RaycastSystem : SystemBase
 
 
 
-    Entities.WithoutBurst().WithStructuralChanges().ForEach(
-    (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
-    {
-        if (showMessage == true)
-        {
+        Entities.WithoutBurst().WithStructuralChanges().ForEach(
+            (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
+            {
+                if (showMessage == true)
+                {
 
-            messageMenu.messageString = "Soul Cube Triggered ... ";
-            messageMenu.ShowMenu();
-        }
-    }
-).Run();
+                    messageMenu.messageString = "Soul Cube Triggered ... ";
+                    messageMenu.ShowMenu();
+                }
+            }
+        ).Run();
 
 
 
