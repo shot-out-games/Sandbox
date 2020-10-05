@@ -181,8 +181,8 @@ public class CollisionSystem : JobComponentSystem
             if (punchingA || ammoB)
             {
 
-                Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
-                Debug.Log("c b " + ch_b + " c a " + ch_a);
+                //Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
+                //Debug.Log("c b " + ch_b + " c a " + ch_a);
 
                 CollisionComponent collisionComponent =
                     new CollisionComponent()

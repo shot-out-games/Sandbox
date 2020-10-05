@@ -79,6 +79,7 @@ public class StartGameMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
             {
                 showTimer = 0;
                 startShowTimer = false;
+                showOnce = false;
                 HideMenu();
             }
         }

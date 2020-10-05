@@ -15,11 +15,28 @@ public class SlashSystem : SystemBase
         // For example,
         //     float deltaTime = Time.DeltaTime;
 
+        bool hk = false;
+
         Entities.ForEach((ref SlashComponent slashComponent, in InputControllerComponent input) =>
         {
 
             if (slashComponent.slashActive == false) return;
-            if (input.buttonA_Pressed == true && slashComponent.slashState == (int)SlashStates.None)
+            if (input.rightTriggerPressed == true && slashComponent.slashState == (int)SlashStates.None)//why are triggers backward?
+            {
+                slashComponent.slashState = (int)SlashStates.Started;
+                if (slashComponent.animate == false)
+                {
+                    hk = true;//not supported
+                    slashComponent.hkDamage += 1;
+                    slashComponent.animate = true;
+                }
+
+            }
+
+
+
+            //if (input.buttonA_Pressed == true && slashComponent.slashState == (int)SlashStates.None) 
+            if (input.leftTriggerPressed == true && slashComponent.slashState == (int)SlashStates.None)
             {
                 slashComponent.slashState = (int)SlashStates.Started;
                 if (slashComponent.animate == false)
@@ -28,27 +45,45 @@ public class SlashSystem : SystemBase
                 }
             }
 
-        }).Schedule();
+            //}).Schedule();
+        }).Run();
 
         Entities.WithoutBurst().ForEach((Animator animator, ref SlashComponent slashComponent) =>
-        {
-            if (slashComponent.slashActive == false) return;
+            {
+                if (slashComponent.slashActive == false) return;
             //animator.SetInteger("SlashState", 0);
             //slashComponent.slashState = (int) SlashStates.None;
             if (slashComponent.animate == true && animator.GetInteger("SlashState") == 0)
-            {
-                animator.SetInteger("SlashState", 1);
-                Debug.Log("slash");
-                slashComponent.animate = false;
-            }
-            else if (slashComponent.animate == false && animator.GetInteger("SlashState") == 0)//0 set by slashstate script in animator
-            {
-                slashComponent.slashState = (int) SlashStates.None;
-            }
+                {
+                    if (hk == true && slashComponent.hkDamage == 3)
+                    {
+                        animator.SetInteger("SlashState", 1);
+                       slashComponent.hkDamage += 1;
+                       hk = false;
+
+                    }
+                    else if (hk == true)
+                    {
+                        animator.SetInteger("SlashState", 1);
+                        slashComponent.hkDamage += 1;
+                        hk = false;
+                    }
+                    else
+                    {
+                        animator.SetInteger("SlashState", 2);
+                    }
+
+                    Debug.Log("slash");
+                    slashComponent.animate = false;
+                }
+                else if (slashComponent.animate == false && animator.GetInteger("SlashState") == 0)//0 set by slashstate script in animator
+                {
+                    slashComponent.slashState = (int)SlashStates.None;
+                }
 
 
-        }
-        ).Run();
+            }
+            ).Run();
 
 
     }

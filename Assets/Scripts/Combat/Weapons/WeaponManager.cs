@@ -65,6 +65,20 @@ public class WeaponManager : MonoBehaviour, IConvertGameObjectToEntity
 
     }
 
+    public void DetachPrimaryWeapon()
+    {
+        if (primaryWeapon != null)
+        {
+            //primaryWeapon.weaponGameObject.SetActive(false);
+            Debug.Log("pr " + primaryWeapon.weaponGameObject);
+            primaryWeapon.weaponGameObject.transform.SetParent(null);
+        }
+        //primaryWeapon.weaponGameObject.transform.localPosition = Vector3.zero;
+        //primaryWeapon.weaponGameObject.transform.localRotation = Quaternion.identity;
+
+
+    }
+
     public void AttachSecondaryWeapon()
     {
         secondaryWeapon.weaponGameObject.transform.SetParent(secondaryWeapon.weaponLocation);

@@ -83,7 +83,7 @@ public class PickupRaycastSystem : SystemBase
 
 
                 bool hasPointHit = collisionWorld.CalculateDistance(pointDistanceInput, out DistanceHit pointHit);
-                Debug.Log(" pt e " + pointHit.ColliderKey);
+                //Debug.Log(" pt e " + pointHit.ColliderKey);
 
 
 
@@ -125,15 +125,19 @@ public class PickupRaycastSystem : SystemBase
 
         if (pickedUp)
         {
-            Entities.WithoutBurst().ForEach((WeaponInteraction weaponInteraction) =>
+            Entities.WithoutBurst().ForEach((WeaponInteraction weaponInteraction, WeaponManager weaponManager) =>
             {
+                weaponManager.DetachPrimaryWeapon();//need to add way to set to not picked up  afterwards
                 weaponInteraction.interactionObject = interactionObject;
+                //weaponManager.primaryWeapon.weaponGameObject = interactionObject.gameObject;
+                weaponManager.primaryWeapon.weaponGameObject = interactionObject.GetComponent<WeaponItem>().gameObject;//always the same as go for now
+                weaponManager.AttachPrimaryWeapon();
                 weaponInteraction.UpdateSystem();
                 Debug.Log("MATCH FOUND");
 
             }).Run();
 
-            //EntityManager.DestroyEntity(pickedUpEntity);
+            EntityManager.DestroyEntity(pickedUpEntity);
             
         }
 

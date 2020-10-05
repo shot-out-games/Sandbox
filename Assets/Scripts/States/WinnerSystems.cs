@@ -2,6 +2,7 @@
 //using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
+using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -27,11 +28,11 @@ public class WinnerSystem : SystemBase
             ) =>
             {
                 //ld
-                if (winnerComponent.keys >= 1 && RatingsComponent.tag == 1)//player
+                if (winnerComponent.keys == 1 && RatingsComponent.tag == 1)//player
                 {
                     exit = true;
-                    //winnerComponent.keys = 0;
-                    //Debug.Log("key ld ");
+                    winnerComponent.keys = 1919;
+                    Debug.Log("key ld ");
                     //winnerComponent.endGameReached = true;
                     //endGameCompleteCounter += 1;
                 }
@@ -105,15 +106,21 @@ public class WinnerSystem : SystemBase
         ).Run();
 
         bool loopBroken = false;
+        bool canWin = false;
 
         Entities.WithoutBurst().WithStructuralChanges().ForEach
         (
             (ref WinnerComponent winnerComponent, in Entity e, in PlayerComponent playerComponent, in SkillTreeComponent skillTreeComponent
             ) =>
             {
-                if (skillTreeComponent.CurrentLevel >= 1 && winnerComponent.winnerCounter == skillTreeComponent.CurrentLevel - 1)
+                if (skillTreeComponent.CurrentLevel >= 1)
                 {
-                    winnerComponent.winnerCounter = winnerComponent.winnerCounter + 1;
+                    canWin = true;
+                }
+
+                if (skillTreeComponent.CurrentLevel >= 1 && winnerComponent.winnerCounter == 0)
+                {
+                    winnerComponent.winnerCounter = -1;
                     loopBroken = true;
                 }
 
@@ -121,8 +128,9 @@ public class WinnerSystem : SystemBase
         ).Run();
 
 
+
         //exit = true;
-        if (exit == true || loopBroken == true)
+        if (loopBroken == true)
         {
 
             Entities.WithoutBurst().WithStructuralChanges().ForEach(
@@ -131,19 +139,36 @@ public class WinnerSystem : SystemBase
                     if (messageMenu.showOnce == false)
                     {
                         messageMenu.showOnce = true;
-                        //messageMenu.messageString = "Exit is Open ... Boss can be destroyed";
-                        if (exit)
-                        {
-                            //Debug.Log("exit");
-                            messageMenu.messageString = "Exit is Open ... Boss can be destroyed";
-                        }
-                        else if (loopBroken)
-                        {
-                            //Debug.Log("loop broken");
-                            messageMenu.messageString = "Level 8 ... The Loop must be broken";
-                            //messageMenu.messageString = "I am you ... I am you from a time you can not understand ... ... ...";
-                        }
+                        Debug.Log("loop ");
+                        messageMenu.messageString = "Level 8 ... The Loop must be broken";
+                        messageMenu.ShowMenu();
+                    }
+                }
+            ).Run();
 
+            Entities.WithoutBurst().WithStructuralChanges().ForEach(
+                (WeaponManager weaponManager) =>
+                {
+                    weaponManager.DetachPrimaryWeapon();
+
+                }
+            ).Run();
+
+        }
+        else if (exit == true)
+        {
+
+            Entities.WithoutBurst().WithStructuralChanges().ForEach(
+                (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
+                {
+                    Debug.Log("exit " + exit);
+                    Debug.Log("show  " + messageMenu.showOnce);
+
+                    if (messageMenu.showOnce == false)
+                    {
+                        messageMenu.showOnce = true;
+                        Debug.Log("exit0 " + exit);
+                        messageMenu.messageString = "I am you ... I am you from a time you can not understand ... ... ...";
                         messageMenu.ShowMenu();
                     }
                 }
@@ -209,17 +234,18 @@ public class WinnerSystem : SystemBase
 
         if (resetLevel == true)
         {
-            //Debug.Log("reset level 0");
+            Debug.Log("reset level 0");
 
             Entities.WithoutBurst().ForEach
             (
                 (AudioSource audioSource, TriggerComponent trigger) => { audioSource.Stop(); }
             ).Run();
 
-            Entities.WithoutBurst().ForEach
+            Entities.WithoutBurst().WithStructuralChanges().ForEach
             (
                 (Lighting lighting) =>
                 {
+                    Debug.Log("reset level 1");
                     lighting.directionalLight.color = lighting.directionalLight.color * .5f;
                     lighting.intensity = lighting.intensity * .5f;
                     lighting.UpdateLights();
@@ -230,29 +256,29 @@ public class WinnerSystem : SystemBase
 
 
 
-            //    Entities.WithoutBurst().WithStructuralChanges().ForEach(
-            //        (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
-            //        {
-            //            if (messageMenu.showOnce == false)
-            //            {
-            //                messageMenu.showOnce = true;
-            //                messageMenu.messageString = "That is not the way ....";
-            //                messageMenu.ShowMenu();
-            //            }
-            //        }
-            //    ).Run();
+            Entities.WithoutBurst().WithStructuralChanges().ForEach(
+                (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
+                {
+                    if (messageMenu.showOnce == false)
+                    {
+                        messageMenu.showOnce = true;
+                        messageMenu.messageString = "That is not the way ....";
+                        messageMenu.ShowMenu();
+                    }
+                }
+            ).Run();
 
 
 
 
-            //    Entities.WithoutBurst().ForEach
-            //    (
-            //        (ref PlayerComponent playerComponent, ref Translation translation, ref Rotation rotation) =>
-            //        {
-            //            //Debug.Log("reset ");
-            //            translation.Value = playerComponent.startPosition;
-            //        }
-            //    ).Run();
+            Entities.WithoutBurst().ForEach
+            (
+                (ref PlayerComponent playerComponent, ref Translation translation, ref Rotation rotation) =>
+                {
+                    //Debug.Log("reset ");
+                    translation.Value = playerComponent.startPosition;
+                }
+            ).Run();
 
 
 

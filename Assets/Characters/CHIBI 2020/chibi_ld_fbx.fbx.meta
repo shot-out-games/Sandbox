@@ -1,0 +1,522 @@
+fileFormatVersion: 2
+guid: 77384090dceb0154ea45cd22b7b4dbf9
+ModelImporter:
+  serializedVersion: 20101
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 0
+  humanDescription:
+    serializedVersion: 3
+    human:
+    - boneName: chibi_rig_Hips
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_LeftUpLeg
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_RightUpLeg
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_LeftLeg
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_RightLeg
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_LeftFoot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_RightFoot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_Spine
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_Spine1
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_Neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_Head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_LeftShoulder
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_RightShoulder
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_LeftArm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_RightArm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_LeftForeArm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_RightForeArm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_LeftHand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_RightHand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_LeftToeBase
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_RightToeBase
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: chibi_rig_Spine2
+      humanName: UpperChest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: chibi_ld(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibiBaseMesh:Chibi_basemesh
+      parentName: chibi_ld(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_Guides
+      parentName: chibi_ld(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Head
+      parentName: chibi_rig_Guides
+      position: {x: -0, y: 0.009791495, z: -0.0007205919}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Hips
+      parentName: chibi_rig_Guides
+      position: {x: -0, y: -0.009221632, z: -0.00033116818}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftArm
+      parentName: chibi_rig_Guides
+      position: {x: -0.0045043672, y: 0.00026499748, z: -0.0009906042}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftFoot
+      parentName: chibi_rig_Guides
+      position: {x: -0.0049162046, y: -0.023476796, z: -0.0017397645}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftForeArm
+      parentName: chibi_rig_Guides
+      position: {x: -0.008755461, y: -0.006156007, z: 0.000019973517}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftHand
+      parentName: chibi_rig_Guides
+      position: {x: -0.010639302, y: -0.0091936495, z: 0.0015030019}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftLeg
+      parentName: chibi_rig_Guides
+      position: {x: -0.0040196753, y: -0.01594259, z: -0.00073492643}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftShoulder
+      parentName: chibi_rig_Guides
+      position: {x: -0.0018017468, y: 0.00026499748, z: -0.0009906042}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftToeBase
+      parentName: chibi_rig_Guides
+      position: {x: -0.005058789, y: -0.024991797, z: -0.00037992478}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: LeftUpLeg
+      parentName: chibi_rig_Guides
+      position: {x: -0.00286906, y: -0.009213883, z: -0.0003327763}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Neck
+      parentName: chibi_rig_Guides
+      position: {x: -0, y: 0.0056440644, z: -0.00070441124}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Reference
+      parentName: chibi_rig_Guides
+      position: {x: -0, y: -0.025552921, z: -0.00020712703}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightArm
+      parentName: chibi_rig_Guides
+      position: {x: 0.0045043672, y: 0.00026499748, z: -0.0009906042}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightFoot
+      parentName: chibi_rig_Guides
+      position: {x: 0.0049162046, y: -0.023476796, z: -0.0017397645}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightForeArm
+      parentName: chibi_rig_Guides
+      position: {x: 0.008755461, y: -0.006156007, z: 0.000019973517}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightHand
+      parentName: chibi_rig_Guides
+      position: {x: 0.010639302, y: -0.0091936495, z: 0.0015030019}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightLeg
+      parentName: chibi_rig_Guides
+      position: {x: 0.0040196753, y: -0.01594259, z: -0.00073492643}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightShoulder
+      parentName: chibi_rig_Guides
+      position: {x: 0.0018017468, y: 0.00026499748, z: -0.0009906042}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightToeBase
+      parentName: chibi_rig_Guides
+      position: {x: 0.005058789, y: -0.024991797, z: -0.00037992478}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RightUpLeg
+      parentName: chibi_rig_Guides
+      position: {x: 0.00286906, y: -0.009213883, z: -0.0003327763}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Spine
+      parentName: chibi_rig_Guides
+      position: {x: -0, y: -0.007199175, z: -0.00033035077}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Spine1
+      parentName: chibi_rig_Guides
+      position: {x: -0, y: -0.00517855, z: -0.0003957807}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Spine2
+      parentName: chibi_rig_Guides
+      position: {x: -0, y: -0.0031579244, z: -0.00046121055}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_Reference
+      parentName: chibi_ld(Clone)
+      position: {x: -0, y: -0.025552921, z: -0.00020712703}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_Hips
+      parentName: chibi_rig_Reference
+      position: {x: 0, y: 0.04179641, z: -0.00012404115}
+      rotation: {x: 0.50010103, y: -0.49989894, z: -0.50010103, w: 0.49989894}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_LeftUpLeg
+      parentName: chibi_rig_Hips
+      position: {x: -0.000007748549, y: -0.0000016112651, z: 0.00286906}
+      rotation: {x: -0.071421094, y: -0.004968465, z: 0.9971273, w: 0.024730043}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_LeftLeg
+      parentName: chibi_rig_LeftUpLeg
+      position: {x: -0.0068382123, y: 1.3183898e-18, z: 0}
+      rotation: {x: -0.010157359, y: 0.0004521535, z: -0.044372756, w: 0.9989633}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_LeftFoot
+      parentName: chibi_rig_LeftLeg
+      position: {x: -0.0076536057, y: 1.4571677e-18, z: 0}
+      rotation: {x: -0.023371818, y: -0.041956935, z: 0.41915533, w: 0.9066434}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_LeftToeBase
+      parentName: chibi_rig_LeftFoot
+      position: {x: -0.0020407678, y: 8.699424e-10, z: 4.6489874e-12}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_RightUpLeg
+      parentName: chibi_rig_Hips
+      position: {x: -0.000007748549, y: -0.0000016112651, z: -0.00286906}
+      rotation: {x: -0.0049725845, y: 0.07142242, z: -0.024731519, w: 0.9971271}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_RightLeg
+      parentName: chibi_rig_RightUpLeg
+      position: {x: 0.0068382123, y: 1.1603715e-11, z: 1.15816925e-10}
+      rotation: {x: -0.010142352, y: 0.00044967522, z: -0.044372432, w: 0.9989635}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_RightFoot
+      parentName: chibi_rig_RightLeg
+      position: {x: 0.0076536057, y: -6.938894e-20, z: -1.7281322e-10}
+      rotation: {x: -0.02337986, y: -0.041950665, z: 0.4191568, w: 0.9066428}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_RightToeBase
+      parentName: chibi_rig_RightFoot
+      position: {x: 0.0020407678, y: -8.663801e-10, z: 1.1446496e-10}
+      rotation: {x: 0.000025308756, y: -0.000000028181795, z: 7.132462e-13, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_Spine
+      parentName: chibi_rig_Hips
+      position: {x: -0.0020224573, y: -1.5622644e-11, z: 0}
+      rotation: {x: 0, y: 0, z: 0.016386209, w: 0.9998658}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_Spine1
+      parentName: chibi_rig_Spine
+      position: {x: -0.0020216845, y: -5.7824093e-12, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_Spine2
+      parentName: chibi_rig_Spine1
+      position: {x: -0.0020216845, y: 3.1450977e-11, z: 0}
+      rotation: {x: 0, y: -0, z: -0.0023732684, w: 0.9999972}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_LeftShoulder
+      parentName: chibi_rig_Spine2
+      position: {x: -0.0034362378, y: -0.0004346517, z: 0.0018017468}
+      rotation: {x: -0.49304673, y: 0.5068579, z: 0.49304673, w: 0.5068579}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_LeftArm
+      parentName: chibi_rig_LeftShoulder
+      position: {x: -0.0027026203, y: 0, z: 0}
+      rotation: {x: 0.72294503, y: 0.015503494, z: 0.010748892, w: 0.690648}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_LeftForeArm
+      parentName: chibi_rig_LeftArm
+      position: {x: -0.0077667474, y: 0, z: 0}
+      rotation: {x: -0.0018022058, y: -0.013560236, z: -0.0326519, w: 0.99937326}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_LeftHand
+      parentName: chibi_rig_LeftForeArm
+      position: {x: -0.0038698195, y: 1.3877787e-19, z: 3.469447e-20}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_RightShoulder
+      parentName: chibi_rig_Spine2
+      position: {x: -0.0034362378, y: -0.0004346517, z: -0.0018017468}
+      rotation: {x: 0.5068579, y: 0.49304673, z: -0.5068579, w: 0.49304673}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_RightArm
+      parentName: chibi_rig_RightShoulder
+      position: {x: 0.0027026203, y: 0, z: 0}
+      rotation: {x: 0.72294587, y: 0.015503403, z: 0.010748863, w: 0.6906472}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_RightForeArm
+      parentName: chibi_rig_RightArm
+      position: {x: 0.0077667474, y: 0, z: 0}
+      rotation: {x: -0.0018019967, y: -0.01356049, z: -0.032652177, w: 0.99937314}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_RightHand
+      parentName: chibi_rig_RightForeArm
+      position: {x: 0.0038698195, y: -2.7755575e-19, z: 2.1749239e-12}
+      rotation: {x: -8.1104454e-13, y: 0.0000007748555, z: 0.0000010467043, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_Neck
+      parentName: chibi_rig_Spine2
+      position: {x: -0.008805349, y: -1.6365104e-11, z: 0}
+      rotation: {x: 0, y: -0, z: -0.011860629, w: 0.99992967}
+      scale: {x: 1, y: 1, z: 1}
+    - name: chibi_rig_Head
+      parentName: chibi_rig_Neck
+      position: {x: -0.0041474625, y: 3.6108467e-11, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

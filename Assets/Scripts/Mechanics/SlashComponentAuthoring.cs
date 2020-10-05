@@ -17,6 +17,7 @@ public struct SlashComponent : IComponentData
 {
     public bool slashActive;
     public int slashState;
+    public float hkDamage;//for ld
     public bool animate;
 
 }
