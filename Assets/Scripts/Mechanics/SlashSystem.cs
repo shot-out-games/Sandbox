@@ -42,10 +42,11 @@ public class SlashSystem : SystemBase
 
                 if (currentLevel >= 8 && weaponItemComponent[0].special == true && weaponItemComponent[0].pickedUp == true)
                 {
+                    weaponItem.pickedUp = true;
                     special = true;
                     Debug.Log("active");
                 }
-                else if(currentLevel >= 8 && weaponItemComponent[0].special == true)
+                else if(currentLevel >= 8 && weaponItemComponent[0].special == true && weaponItem.reset == false)
                 {
                     weaponItem.reset = true;
                 }

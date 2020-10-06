@@ -43,6 +43,7 @@ public class WeaponItem : MonoBehaviour, IConvertGameObjectToEntity
     EntityManager manager;
     public bool special;
     public bool reset = false;
+    public bool pickedUp;
 
     void Start()
     {
@@ -58,17 +59,27 @@ public class WeaponItem : MonoBehaviour, IConvertGameObjectToEntity
 
 
 
-        //var item = manager.GetBuffer<WeaponItemComponent>(e);
+        var item = manager.GetBuffer<WeaponItemComponent>(e);
         float3 pos = new Vector3 { x = transform.position.x, y = .09f, z = transform.position.z };
+        var tr = manager.GetComponentData<Translation>(e);
+        tr.Value = pos;
 
-        if (reset == true)
+
+        if (reset == true)//picked up no but need to move(show)
         {
-            var tr = manager.GetComponentData<Translation>(e);
-            tr.Value = pos;
+            //var ro = manager.GetComponentData<Rotation>(e);
+            //ro.Value = 
+            reset = false;
             manager.SetComponentData(e, tr);
             transform.position = pos;
-        };
-
+        }
+        if (pickedUp == true)
+        {
+            pickedUp = false;
+            Debug.Log("pu " + item[0].pickedUp + "re " + item[0].reset);
+            tr.Value.y = -2500;
+            manager.SetComponentData(e, tr);
+        }
 
 
     }
