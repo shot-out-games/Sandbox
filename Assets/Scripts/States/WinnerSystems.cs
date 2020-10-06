@@ -11,6 +11,8 @@ using UnityEngine;
 
 public class WinnerSystem : SystemBase
 {
+    float timer = 0;
+    bool showWin = false;
 
     protected override void OnUpdate()
     {
@@ -21,6 +23,7 @@ public class WinnerSystem : SystemBase
         int endGameCompleteCounter = 0;
         bool exit = false;
         bool resetLevel = false;
+
 
         Entities.WithoutBurst().ForEach
         (
@@ -106,19 +109,24 @@ public class WinnerSystem : SystemBase
         ).Run();
 
         bool loopBroken = false;
-        bool canWin = false;
+        toggleStates winner = toggleStates.off;
 
         Entities.WithoutBurst().WithStructuralChanges().ForEach
         (
             (ref WinnerComponent winnerComponent, in Entity e, in PlayerComponent playerComponent, in SkillTreeComponent skillTreeComponent
             ) =>
             {
-                if (skillTreeComponent.CurrentLevel >= 1)
+                if(winnerComponent.winConditionMet == toggleStates.post)
                 {
-                    canWin = true;
+                    timer = timer + Time.DeltaTime;
+                    winner = toggleStates.post;
                 }
-
-                if (skillTreeComponent.CurrentLevel >= 1 && winnerComponent.winnerCounter == 0)
+                else if (winnerComponent.winConditionMet == toggleStates.on)
+                {
+                    winner = toggleStates.on;
+                    winnerComponent.winConditionMet = toggleStates.post;
+                }
+                else if (skillTreeComponent.CurrentLevel >= 8 && winnerComponent.winnerCounter == 0)
                 {
                     winnerComponent.winnerCounter = -1;
                     loopBroken = true;
@@ -161,45 +169,59 @@ public class WinnerSystem : SystemBase
             Entities.WithoutBurst().WithStructuralChanges().ForEach(
                 (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
                 {
-                    Debug.Log("exit " + exit);
-                    Debug.Log("show  " + messageMenu.showOnce);
-
                     if (messageMenu.showOnce == false)
                     {
                         messageMenu.showOnce = true;
-                        Debug.Log("exit0 " + exit);
+                        messageMenu.showTimeLength = 3.0f;
                         messageMenu.messageString = "I am you ... I am you from a time you can not understand ... ... ...";
+                        messageMenu.showTimeLength = 2.1f;
                         messageMenu.ShowMenu();
                     }
                 }
             ).Run();
 
         }
+        else if (winner == toggleStates.on)
+        {
+
+            Entities.WithoutBurst().WithStructuralChanges().ForEach(
+                (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
+                {
+                    if (messageMenu.showOnce == false)
+                    {
+                        messageMenu.showOnce = true;
+                        //messageMenu.messageString = "Exit is Open ... Boss can be destroyed";
+                        messageMenu.messageString = "Seppuku .. It was the only way ... Die a hero or  live long enough to be the villain ... ";
+                        messageMenu.showTimeLength = 5.0f;
+                        messageMenu.ShowMenu();
+                    }
+                }
+            ).Run();
+        }
+        else if (winner == toggleStates.post && timer > 5.0f && showWin == false)
+        {
+            showWin = true;
+            timer = 0;
+            int currentLevel = LevelManager.instance.currentLevel;
+            LevelManager.instance.audioSourceGame.Stop();
+            LevelManager.instance.audioSourceMenu.Stop();
 
 
-        ////exit = true;
-        //if (exit == true)
-        //{
+            Entities.WithoutBurst().ForEach
+            (
+                (ref WinnerMenuComponent winnerMenuComponent, in WinnerMenuGroup winnerMenuGroup) =>
+                {
+                    LevelManager.instance.levelSettings[currentLevel].completed = true;
+                    if (winnerMenuComponent.hide == true)
+                    {
+                    LevelManager.instance.endGame = true;
+                        winnerMenuGroup.ShowMenu();
+                        winnerMenuComponent.hide = false;
+                    }
+                }
+            ).Run();
 
-        //    Entities.WithoutBurst().WithStructuralChanges().ForEach(
-        //        (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
-        //        {
-        //            if (messageMenu.showOnce == false)
-        //            {
-        //                messageMenu.showOnce = true;
-        //                //messageMenu.messageString = "Exit is Open ... Boss can be destroyed";
-        //                messageMenu.messageString = "Exit is Open ... Boss can be destroyed";
-        //                messageMenu.ShowMenu();
-        //            }
-        //        }
-        //    ).Run();
-
-        //}
-
-
-
-        int currentLevel = LevelManager.instance.currentLevel;
-
+        }
 
 
         //if (resetLevel == false)

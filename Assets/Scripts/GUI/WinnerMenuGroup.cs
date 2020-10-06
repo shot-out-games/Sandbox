@@ -9,6 +9,14 @@ using Unity.Entities;
 using Unity.Jobs;
 using UnityEngine.AI;
 
+
+public enum toggleStates
+{
+    off,
+    on,
+    post
+}
+
 [System.Serializable]
 public struct WinnerMenuComponent : IComponentData
 {
@@ -31,6 +39,9 @@ public struct WinnerComponent : IComponentData
     public bool checkWinCondition;
     public int winnerCounter;
     public int keys;
+    public toggleStates winConditionMet;
+
+
 }
 
 public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity

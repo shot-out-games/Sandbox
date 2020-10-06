@@ -15,19 +15,59 @@ public class SlashSystem : SystemBase
         // For example,
         //     float deltaTime = Time.DeltaTime;
 
-        bool hk = false;
+        NativeArray<bool> hk = new NativeArray<bool>(1, Allocator.TempJob);
+        //var slashGroup = GetComponentDataFromEntity<SlashComponent>(false);
 
-        Entities.ForEach((ref SlashComponent slashComponent, in InputControllerComponent input) =>
+        int currentLevel = 0;
+        Entities.ForEach((in SkillTreeComponent skillTree) =>
+        {
+            currentLevel = skillTree.CurrentLevel;
+
+        }
+        ).Run();
+
+
+
+        var bufferFromEntity = GetBufferFromEntity<WeaponItemComponent>();
+
+        bool special = false;
+
+        Entities.WithoutBurst().ForEach((WeaponItem weaponItem, in Entity e) =>
+        {
+
+            if (bufferFromEntity.HasComponent(e))
+            {
+                var weaponItemComponent = bufferFromEntity[e];
+
+
+                if (currentLevel >= 8 && weaponItemComponent[0].special == true && weaponItemComponent[0].pickedUp == true)
+                {
+                    special = true;
+                    Debug.Log("active");
+                }
+                else if(currentLevel >= 8 && weaponItemComponent[0].special == true)
+                {
+                    weaponItem.reset = true;
+                }
+
+            }
+        }
+
+
+        ).Run();
+
+
+
+
+        Entities.ForEach((ref SlashComponent slashComponent, in InputControllerComponent input, in Entity e) =>
         {
 
             if (slashComponent.slashActive == false) return;
-            if (input.rightTriggerPressed == true && slashComponent.slashState == (int)SlashStates.None)//why are triggers backward?
+            if ((input.leftTriggerPressed == true  || input.rightTriggerPressed == true && special == false) && slashComponent.slashState == (int)SlashStates.None)//why are triggers backward?
             {
                 slashComponent.slashState = (int)SlashStates.Started;
                 if (slashComponent.animate == false)
                 {
-                    hk = true;//not supported
-                    slashComponent.hkDamage += 1;
                     slashComponent.animate = true;
                 }
 
@@ -36,41 +76,47 @@ public class SlashSystem : SystemBase
 
 
             //if (input.buttonA_Pressed == true && slashComponent.slashState == (int)SlashStates.None) 
-            if (input.leftTriggerPressed == true && slashComponent.slashState == (int)SlashStates.None)
+            if (input.rightTriggerPressed == true && special == true && slashComponent.slashState == (int)SlashStates.None)
             {
                 slashComponent.slashState = (int)SlashStates.Started;
                 if (slashComponent.animate == false)
                 {
+                    hk[0] = true;//not supported
+                    //slashComponent.hkDamage += 1;
                     slashComponent.animate = true;
                 }
             }
 
-            //}).Schedule();
-        }).Run();
+        }).Schedule();
+        //}).Run();
 
-        Entities.WithoutBurst().ForEach((Animator animator, ref SlashComponent slashComponent) =>
+        Entities.WithoutBurst().ForEach((Animator animator, ref SlashComponent slashComponent, ref WinnerComponent winner, in SkillTreeComponent skillTree) =>
             {
                 if (slashComponent.slashActive == false) return;
-            //animator.SetInteger("SlashState", 0);
-            //slashComponent.slashState = (int) SlashStates.None;
-            if (slashComponent.animate == true && animator.GetInteger("SlashState") == 0)
+                //animator.SetInteger("SlashState", 0);
+                //slashComponent.slashState = (int) SlashStates.None;
+                if (slashComponent.animate == true && animator.GetInteger("SlashState") == 0)
                 {
-                    if (hk == true && slashComponent.hkDamage == 3)
+                    if (hk[0] == true && skillTree.CurrentLevel >= 8)
                     {
-                        animator.SetInteger("SlashState", 1);
-                       slashComponent.hkDamage += 1;
-                       hk = false;
+                        animator.SetInteger("SlashState", 2);
+                        slashComponent.hkDamage += 1;
+                        if (slashComponent.hkDamage == 3)
+                        {
+                            animator.SetInteger("Dead", 1);
+                            winner.winConditionMet = toggleStates.on;
+                        }
+                        hk[0] = false;
 
                     }
-                    else if (hk == true)
+                    else if (hk[0] == true)
                     {
-                        animator.SetInteger("SlashState", 1);
-                        slashComponent.hkDamage += 1;
-                        hk = false;
+                        animator.SetInteger("SlashState", 2);
+                        hk[0] = false;
                     }
                     else
                     {
-                        animator.SetInteger("SlashState", 2);
+                        animator.SetInteger("SlashState", 1);
                     }
 
                     Debug.Log("slash");
@@ -84,6 +130,8 @@ public class SlashSystem : SystemBase
 
             }
             ).Run();
+
+
 
 
     }

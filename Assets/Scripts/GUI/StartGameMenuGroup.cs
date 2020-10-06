@@ -27,7 +27,7 @@ public class StartGameMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     private CanvasGroup canvasGroup;
     [SerializeField]
     private Button defaultButton;
-    private float showTimeLength = 2.1f;
+    public float showTimeLength = 2.1f;
     private float showTimer = 0f;
     bool startShowTimer;
     [SerializeField] private TextMeshProUGUI message;

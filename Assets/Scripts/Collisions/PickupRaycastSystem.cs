@@ -137,7 +137,8 @@ public class PickupRaycastSystem : SystemBase
 
             }).Run();
 
-            EntityManager.DestroyEntity(pickedUpEntity);
+            //EntityManager.DestroyEntity(pickedUpEntity);
+            EntityManager.SetComponentData(pickedUpEntity, new Translation { Value = new float3(0, -2500, 0) });
             
         }
 
