@@ -34,7 +34,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 100
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -271,7 +271,7 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Head
       parentName: chibi_rig_Guides
-      position: {x: -0, y: 0.009791495, z: -0.0007205919}
+      position: {x: -0, y: 0.009791496, z: -0.0007205919}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hips
@@ -281,22 +281,22 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: LeftArm
       parentName: chibi_rig_Guides
-      position: {x: -0.0045043672, y: 0.00026499748, z: -0.0009906042}
+      position: {x: -0.0045043672, y: 0.0002649975, z: -0.0009906042}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftFoot
       parentName: chibi_rig_Guides
-      position: {x: -0.0049162046, y: -0.023476796, z: -0.0017397645}
+      position: {x: -0.004916205, y: -0.023476798, z: -0.0017397646}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftForeArm
       parentName: chibi_rig_Guides
-      position: {x: -0.008755461, y: -0.006156007, z: 0.000019973517}
+      position: {x: -0.008755461, y: -0.0061560073, z: 0.000019973517}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftHand
       parentName: chibi_rig_Guides
-      position: {x: -0.010639302, y: -0.0091936495, z: 0.0015030019}
+      position: {x: -0.010639303, y: -0.00919365, z: 0.001503002}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftLeg
@@ -306,22 +306,22 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: LeftShoulder
       parentName: chibi_rig_Guides
-      position: {x: -0.0018017468, y: 0.00026499748, z: -0.0009906042}
+      position: {x: -0.0018017469, y: 0.0002649975, z: -0.0009906042}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftToeBase
       parentName: chibi_rig_Guides
-      position: {x: -0.005058789, y: -0.024991797, z: -0.00037992478}
+      position: {x: -0.005058789, y: -0.0249918, z: -0.00037992478}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftUpLeg
       parentName: chibi_rig_Guides
-      position: {x: -0.00286906, y: -0.009213883, z: -0.0003327763}
+      position: {x: -0.0028690603, y: -0.009213883, z: -0.0003327763}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Neck
       parentName: chibi_rig_Guides
-      position: {x: -0, y: 0.0056440644, z: -0.00070441124}
+      position: {x: -0, y: 0.0056440644, z: -0.0007044113}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Reference
@@ -331,22 +331,22 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: RightArm
       parentName: chibi_rig_Guides
-      position: {x: 0.0045043672, y: 0.00026499748, z: -0.0009906042}
+      position: {x: 0.0045043672, y: 0.0002649975, z: -0.0009906042}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightFoot
       parentName: chibi_rig_Guides
-      position: {x: 0.0049162046, y: -0.023476796, z: -0.0017397645}
+      position: {x: 0.004916205, y: -0.023476798, z: -0.0017397646}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightForeArm
       parentName: chibi_rig_Guides
-      position: {x: 0.008755461, y: -0.006156007, z: 0.000019973517}
+      position: {x: 0.008755461, y: -0.0061560073, z: 0.000019973517}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightHand
       parentName: chibi_rig_Guides
-      position: {x: 0.010639302, y: -0.0091936495, z: 0.0015030019}
+      position: {x: 0.010639303, y: -0.00919365, z: 0.001503002}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightLeg
@@ -356,17 +356,17 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: RightShoulder
       parentName: chibi_rig_Guides
-      position: {x: 0.0018017468, y: 0.00026499748, z: -0.0009906042}
+      position: {x: 0.0018017469, y: 0.0002649975, z: -0.0009906042}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightToeBase
       parentName: chibi_rig_Guides
-      position: {x: 0.005058789, y: -0.024991797, z: -0.00037992478}
+      position: {x: 0.005058789, y: -0.0249918, z: -0.00037992478}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightUpLeg
       parentName: chibi_rig_Guides
-      position: {x: 0.00286906, y: -0.009213883, z: -0.0003327763}
+      position: {x: 0.0028690603, y: -0.009213883, z: -0.0003327763}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Spine
@@ -381,7 +381,7 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: Spine2
       parentName: chibi_rig_Guides
-      position: {x: -0, y: -0.0031579244, z: -0.00046121055}
+      position: {x: -0, y: -0.0031579246, z: -0.00046121055}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_Reference
@@ -391,22 +391,22 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_Hips
       parentName: chibi_rig_Reference
-      position: {x: 0, y: 0.04179641, z: -0.00012404115}
+      position: {x: 0, y: 0.041796412, z: -0.00012404115}
       rotation: {x: 0.50010103, y: -0.49989894, z: -0.50010103, w: 0.49989894}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_LeftUpLeg
       parentName: chibi_rig_Hips
-      position: {x: -0.000007748549, y: -0.0000016112651, z: 0.00286906}
+      position: {x: -0.000007748549, y: -0.0000016112652, z: 0.0028690603}
       rotation: {x: -0.071421094, y: -0.004968465, z: 0.9971273, w: 0.024730043}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_LeftLeg
       parentName: chibi_rig_LeftUpLeg
-      position: {x: -0.0068382123, y: 1.3183898e-18, z: 0}
+      position: {x: -0.0068382123, y: 1.3183899e-18, z: 0}
       rotation: {x: -0.010157359, y: 0.0004521535, z: -0.044372756, w: 0.9989633}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_LeftFoot
       parentName: chibi_rig_LeftLeg
-      position: {x: -0.0076536057, y: 1.4571677e-18, z: 0}
+      position: {x: -0.007653606, y: 1.4571677e-18, z: 0}
       rotation: {x: -0.023371818, y: -0.041956935, z: 0.41915533, w: 0.9066434}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_LeftToeBase
@@ -416,17 +416,17 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_RightUpLeg
       parentName: chibi_rig_Hips
-      position: {x: -0.000007748549, y: -0.0000016112651, z: -0.00286906}
+      position: {x: -0.000007748549, y: -0.0000016112652, z: -0.0028690603}
       rotation: {x: -0.0049725845, y: 0.07142242, z: -0.024731519, w: 0.9971271}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_RightLeg
       parentName: chibi_rig_RightUpLeg
-      position: {x: 0.0068382123, y: 1.1603715e-11, z: 1.15816925e-10}
+      position: {x: 0.0068382123, y: 1.1603716e-11, z: 1.1581693e-10}
       rotation: {x: -0.010142352, y: 0.00044967522, z: -0.044372432, w: 0.9989635}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_RightFoot
       parentName: chibi_rig_RightLeg
-      position: {x: 0.0076536057, y: -6.938894e-20, z: -1.7281322e-10}
+      position: {x: 0.007653606, y: -6.9388944e-20, z: -1.7281322e-10}
       rotation: {x: -0.02337986, y: -0.041950665, z: 0.4191568, w: 0.9066428}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_RightToeBase
@@ -441,17 +441,17 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_Spine1
       parentName: chibi_rig_Spine
-      position: {x: -0.0020216845, y: -5.7824093e-12, z: 0}
+      position: {x: -0.0020216848, y: -5.7824097e-12, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_Spine2
       parentName: chibi_rig_Spine1
-      position: {x: -0.0020216845, y: 3.1450977e-11, z: 0}
+      position: {x: -0.0020216848, y: 3.1450977e-11, z: 0}
       rotation: {x: 0, y: -0, z: -0.0023732684, w: 0.9999972}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_LeftShoulder
       parentName: chibi_rig_Spine2
-      position: {x: -0.0034362378, y: -0.0004346517, z: 0.0018017468}
+      position: {x: -0.0034362378, y: -0.0004346517, z: 0.0018017469}
       rotation: {x: -0.49304673, y: 0.5068579, z: 0.49304673, w: 0.5068579}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_LeftArm
@@ -461,17 +461,17 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_LeftForeArm
       parentName: chibi_rig_LeftArm
-      position: {x: -0.0077667474, y: 0, z: 0}
+      position: {x: -0.007766748, y: 0, z: 0}
       rotation: {x: -0.0018022058, y: -0.013560236, z: -0.0326519, w: 0.99937326}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_LeftHand
       parentName: chibi_rig_LeftForeArm
-      position: {x: -0.0038698195, y: 1.3877787e-19, z: 3.469447e-20}
+      position: {x: -0.0038698197, y: 1.3877789e-19, z: 3.4694472e-20}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_RightShoulder
       parentName: chibi_rig_Spine2
-      position: {x: -0.0034362378, y: -0.0004346517, z: -0.0018017468}
+      position: {x: -0.0034362378, y: -0.0004346517, z: -0.0018017469}
       rotation: {x: 0.5068579, y: 0.49304673, z: -0.5068579, w: 0.49304673}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_RightArm
@@ -481,17 +481,17 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_RightForeArm
       parentName: chibi_rig_RightArm
-      position: {x: 0.0077667474, y: 0, z: 0}
+      position: {x: 0.007766748, y: 0, z: 0}
       rotation: {x: -0.0018019967, y: -0.01356049, z: -0.032652177, w: 0.99937314}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_RightHand
       parentName: chibi_rig_RightForeArm
-      position: {x: 0.0038698195, y: -2.7755575e-19, z: 2.1749239e-12}
+      position: {x: 0.0038698197, y: -2.7755578e-19, z: 2.174924e-12}
       rotation: {x: -8.1104454e-13, y: 0.0000007748555, z: 0.0000010467043, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_Neck
       parentName: chibi_rig_Spine2
-      position: {x: -0.008805349, y: -1.6365104e-11, z: 0}
+      position: {x: -0.0088053495, y: -1.6365104e-11, z: 0}
       rotation: {x: 0, y: -0, z: -0.011860629, w: 0.99992967}
       scale: {x: 1, y: 1, z: 1}
     - name: chibi_rig_Head
