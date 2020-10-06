@@ -13,13 +13,13 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     private NavMeshAgent agent;
     private Animator animator;
     private Rigidbody rb;
-    [HideInInspector]
+    //[HideInInspector]
     public Transform AimTransform;
-    [HideInInspector]
+    //[HideInInspector]
     public FullBodyBipedIK ik;
-    [HideInInspector]
+    //[HideInInspector]
     public AimIK aim;
-    [HideInInspector]
+    //[HideInInspector]
     public FABRIK limb;
     public Moves moveUsing = new Moves();
     public float  currentStrikeDistanceZoneBegin;
@@ -62,6 +62,7 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
                     AimTransform = move.aimTransform;
                     if (AimTransform == null)
                     {
+                        Debug.Log("aim ik auto bone ENEMY ");
                         int boneCount = aim.solver.bones.Length;
                         AimTransform = aim.solver.bones[boneCount - 1].transform;
                     }
@@ -223,7 +224,7 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
     }
 
-    private void LateUpdate()
+    public void LateUpdateSystem()
     {
         //if (entityManager.HasComponent<EnemyMeleeMovementComponent>(meleeEntity) == false) return;
         if (entityManager == default) return;

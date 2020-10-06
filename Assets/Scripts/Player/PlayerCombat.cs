@@ -26,6 +26,8 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     private bool active = true;
     [SerializeField]
     private float hitPower = 100;
+
+    [SerializeField] private float fbbIKUseDistance = 8;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -73,6 +75,7 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
             {
                 int boneCount = aim.solver.bones.Length;
                 AimTransform = aim.solver.bones[boneCount - 1].transform;
+                Debug.Log("aim ik auto bone ");
             }
             moveUsing.aimTransform = AimTransform;
             //Debug.Log("at1 " + AimTransform);
@@ -83,8 +86,52 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     public void StartMove(int combatAction)
     {
         animator.SetInteger("CombatAction", combatAction);
+        StartIKPlayer();
     }
 
+    public void StartIKPlayer()
+    {
+        if (moveUsing.usingAim)
+        {
+            aim.enabled = true;
+        }
+        if (moveUsing.usingFbb)
+        {
+            ik.enabled = true;
+        }
+
+    }
+
+    public void StopIKPlayer()
+    {
+        animator.SetFloat("HitWeight", 0);
+        ik.solver.GetEffector(moveUsing.effector).positionWeight =  0;
+//        ik.solver.Update();
+
+        if (moveUsing.usingAim)
+        {
+            aim.enabled = false;
+        }
+        if (moveUsing.usingFbb)
+        {
+            ik.enabled = false;
+        }
+
+    }
+
+    float AdjustWeightToDistanceFromTarget(float weight)
+    {
+        float distance = Vector3.Distance(transform.position, moveUsing.target.position);
+        Debug.Log("dist " + distance);
+        float adjustedWeight = weight;
+        if (distance > fbbIKUseDistance) //change to member for fbbik start using distance
+        {
+            adjustedWeight = 0;
+        }
+
+        return adjustedWeight;
+
+    }
 
     public void Aim()
     {
@@ -104,16 +151,18 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
         if (ik == null || moveUsing.target == null) return;
 
-        if (moveUsing.usingFbb)
+        if (moveUsing.usingFbb && ik.enabled)
         {
+            hitWeight = AdjustWeightToDistanceFromTarget(hitWeight);
+            //Debug.Log("ik " + " hw " + hitWeight + " move weight " + moveUsing.weight);
             ik.solver.GetEffector(moveUsing.effector).position = moveUsing.target.position;
-            ik.solver.GetEffector(moveUsing.effector).positionWeight = hitWeight * hitWeight;
+            ik.solver.GetEffector(moveUsing.effector).positionWeight = hitWeight * moveUsing.weight;
             ik.solver.Update();
         }
 
     }
 
-    private void LateUpdate()
+    public void LateUpdateSystem()
     {
         if (moveList.Count == 0) return;
         Aim();
@@ -125,6 +174,7 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
         Debug.Log("attack stage end");
         AttackStage = AttackStages.End;//
         animator.SetInteger("CombatAction", 0);
+        StopIKPlayer();
         if (_manager.HasComponent<CheckedComponent>(_entity))
         {
             var checkedComponent = _manager.GetComponentData<CheckedComponent>(_entity);
