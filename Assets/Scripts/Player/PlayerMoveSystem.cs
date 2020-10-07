@@ -23,6 +23,22 @@ namespace SandBox.Player
     {
 
 
+
+        //    float leftStickX = inputController.leftStickX;
+        //    float leftStickY = inputController.leftStickY;
+        //    Vector3 stickInput = new Vector3(leftStickX, 0, leftStickY);
+        //    float stickSpeed = stickInput.sqrMagnitude;
+
+        //        if (EntityManager.HasComponent<PlayerStopComponent>(entity))
+        //    {
+        //        if (EntityManager.GetComponentData<PlayerStopComponent>(entity).enabled)
+        //            stickSpeed = 0;//turn off animator
+        //    }
+
+        //    //Debug.Log("ss " + stickSpeed);
+        //    animator.SetFloat("Speed", stickSpeed);
+
+
         protected override void OnUpdate()
         {
             bool rewindPressed = false;
@@ -52,17 +68,20 @@ namespace SandBox.Player
 
                         float leftStickX = inputController.leftStickX;
                         float leftStickY = inputController.leftStickY;
-                        leftStickX = math.abs(leftStickX) < .5 ? 0 : leftStickX;
-                        leftStickY = math.abs(leftStickY) < .5 ? 0 : leftStickY;
-                        applyImpulseComponent.stickX = leftStickX;
-                        applyImpulseComponent.stickY = leftStickY;
+                        //leftStickX = math.abs(leftStickX) < .19 ? 0 : leftStickX;//.5 for 2d ??
+                        //leftStickY = math.abs(leftStickY) < .19 ? 0 : leftStickY;
+                        //applyImpulseComponent.stickX = leftStickX;
+                        //applyImpulseComponent.stickY = leftStickY;
 
                         //leftStickY = 0;//2d but need Y for shooting still so save to applyimpulse above
 
 
-                        Vector3 stickInput = new Vector3(leftStickX, 0, leftStickY);
+                        //Vector3 stickInput = new Vector3(leftStickX, 0, leftStickY);
+                        Vector3 stickInput = new Vector3(0, 0, leftStickY);//x is controlled by rotation
                         stickSpeed = stickInput.sqrMagnitude;
-                        pv.Linear = applyImpulseComponent.Velocity;
+                        //pv.Linear.x = 0;
+                        //pv.Linear = applyImpulseComponent.Velocity;
+
                         //translation.Value.z = 0;
 
 
@@ -159,6 +178,44 @@ namespace SandBox.Player
 
 
 
+   
+
+
+
+
+        }
+
+    }
+
+    [UpdateInGroup(typeof(TransformSystemGroup))]
+    [UpdateAfter(typeof(EndFrameLocalToParentSystem))]
+
+
+    public class PlayerRotateSystem : SystemBase
+    {
+
+
+
+        //    float leftStickX = inputController.leftStickX;
+        //    float leftStickY = inputController.leftStickY;
+        //    Vector3 stickInput = new Vector3(leftStickX, 0, leftStickY);
+        //    float stickSpeed = stickInput.sqrMagnitude;
+
+        //        if (EntityManager.HasComponent<PlayerStopComponent>(entity))
+        //    {
+        //        if (EntityManager.GetComponentData<PlayerStopComponent>(entity).enabled)
+        //            stickSpeed = 0;//turn off animator
+        //    }
+
+        //    //Debug.Log("ss " + stickSpeed);
+        //    animator.SetFloat("Speed", stickSpeed);
+
+
+        protected override void OnUpdate()
+        {
+        
+
+
             Entities.WithoutBurst().ForEach
          (
              (
@@ -179,14 +236,19 @@ namespace SandBox.Player
                  {
                      Camera cam = playerMove.mainCam;
                      //float slerpDampTime = playerMoveComponent.rotateSlerpDampTime;
-                     Quaternion camRotation = cam.transform.rotation;
-                     camRotation.x = 0;
-                     camRotation.z = 0;
+                     //Quaternion camRotation = cam.transform.rotation;
+                     //camRotation.x = 0;
+                     //camRotation.z = 0;
                      // we need some axis derived from camera but aligned with floor plane
                      Vector3 forward =
                           cam.transform.TransformDirection(Vector3.forward); //forward of camera to forward of world
                                                                              //local forward vector of camera will become world vector position that is passed to the forward vector of the player (target) rigidbody 
                                                                              //(The cam and player(target) vector will now always point in the same direction)
+
+
+                     //forward = Vector3.forward;
+
+
 
                      forward.y = 0f;
 
@@ -195,7 +257,7 @@ namespace SandBox.Player
                      Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
 
 
-              
+
 
 
                      if (targetDirection.sqrMagnitude > 1f)
@@ -206,7 +268,18 @@ namespace SandBox.Player
 
                      quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
 
-                     rotation.Value = targetRotation;
+                     //targetRotation = quaternion.RotateY(90 * leftStickX);
+                     //targetRotation = quaternion.RotateZ()
+                     Debug.Log("lsx " + targetRotation);
+
+                     quaternion tmpRotation = rotation.Value;
+
+                     //tmpRotation = quaternion.RotateY(leftStickX);
+                     tmpRotation = math.mul(tmpRotation, quaternion.RotateY(leftStickX));
+
+                     rotation.Value = tmpRotation;
+                     //rotation.Value = targetRotation;
+                     //playerMove.transform.rotation = rotation.Value;
 
                      //Vector3 desiredDirection = Vector3.Normalize(new Vector3(leftStickX, 0f, leftStickY));
                      //if (desiredDirection != Vector3.zero)
@@ -234,5 +307,21 @@ namespace SandBox.Player
         }
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

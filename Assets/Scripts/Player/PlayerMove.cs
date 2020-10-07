@@ -73,6 +73,22 @@ namespace SandBox.Player
 
         }
 
+        //if (!_entityManager.HasComponent(_entity, typeof(ApplyImpulseComponent))) return;
+        //if (!_entityManager.HasComponent(_entity, typeof(PlayerMoveComponent))) return;
+
+        //ApplyImpulseComponent applyImpulseComponent =
+        //    _entityManager.GetComponentData<ApplyImpulseComponent>(_entity);
+        //currentSpeed = _entityManager.GetComponentData<PlayerMoveComponent>(_entity).currentSpeed;
+        //Vector3 velocity = animator.deltaPosition / Time.deltaTime * currentSpeed;
+        ////applyImpulseComponent.Velocity = new float3(velocity.x, velocity.y, velocity.z);
+        //applyImpulseComponent.Velocity = new float3(velocity.x, 0, velocity.z);
+
+        //_entityManager.SetComponentData(_entity, applyImpulseComponent);
+        //if (!jumpEnabled)
+
+        //{
+        //    animator.SetBool("Grounded", true);
+        //}
 
 
         private void OnAnimatorMove()
@@ -99,8 +115,8 @@ namespace SandBox.Player
             Vector3 velocity = animator.deltaPosition / Time.deltaTime * currentSpeed;
 
 
-            float size = math.length(applyImpulseComponent.Velocity);
-            size = 1;
+            //float size = math.length(applyImpulseComponent.Velocity);
+            //size = 1;
 
 
             float v = applyImpulseComponent.InJump ? negativeForce : 0;
@@ -109,24 +125,24 @@ namespace SandBox.Player
                 v = negativeForce;
             }
 
-            if (applyImpulseComponent.BumpLeft == true)
-            {
-                if (h < 0)
-                {
-                    h = -negativeForce * size;
-                    v = negativeForce * size;
-                    applyImpulseComponent.InJump = false;
-                }
-            }
-            else if (applyImpulseComponent.BumpRight == true)
-            {
-                if (h > 0)
-                {
-                    h = negativeForce * size;
-                    v = negativeForce * size;
-                    applyImpulseComponent.InJump = false;
-                }
-            }
+            //if (applyImpulseComponent.BumpLeft == true)
+            //{
+            //    if (h < 0)
+            //    {
+            //        h = -negativeForce * size;
+            //        v = negativeForce * size;
+            //        applyImpulseComponent.InJump = false;
+            //    }
+            //}
+            //else if (applyImpulseComponent.BumpRight == true)
+            //{
+            //    if (h > 0)
+            //    {
+            //        h = negativeForce * size;
+            //        v = negativeForce * size;
+            //        applyImpulseComponent.InJump = false;
+            //    }
+            //}
 
 
 
@@ -139,12 +155,18 @@ namespace SandBox.Player
                 //velocity.z = stickY * currentSpeed;
             }
 
-            velocity.y = v;
+            //velocity.y = v;
+            //velocity.x = 0;
+
+            applyImpulseComponent.Velocity = new float3(velocity.x, 0, velocity.z);
+
 
             applyImpulseComponent.Velocity = velocity;
 
-            Vector3 RIGHT = transform.TransformDirection(Vector3.right);//transform right
-            Vector3 FORWARD = transform.TransformDirection(Vector3.forward);
+
+
+            //Vector3 RIGHT = transform.TransformDirection(Vector3.right);//transform right
+            //Vector3 FORWARD = transform.TransformDirection(Vector3.forward);
 
 
             
@@ -152,7 +174,7 @@ namespace SandBox.Player
             //applyImpulseComponent.Velocity = new float3(0 , v, 0);            //
             //applyImpulseComponent.Velocity = new float3(velocity.x, v, velocity.z);            //
 
-            //Debug.Log("v " + applyImpulseComponent.Velocity);
+            //Debug.Log("velocity " + applyImpulseComponent.Velocity);
             _entityManager.SetComponentData(_entity, applyImpulseComponent);
 
 

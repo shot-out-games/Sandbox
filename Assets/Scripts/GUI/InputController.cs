@@ -74,7 +74,7 @@ public class InputController : MonoBehaviour, IConvertGameObjectToEntity
 
     public Player player;
     public int playerId = 0; // The Rewired player id of this character
-    float deadZone = .2f;
+    float deadZone = .003f;
 
 
     [Header("Left Stick")]

@@ -10,11 +10,11 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2020
 		Month: 10
-		Day: 3
-		Hour: 16
-		Minute: 10
-		Second: 3
-		Millisecond: 224
+		Day: 7
+		Hour: 10
+		Minute: 16
+		Second: 57
+		Millisecond: 936
 	}
 	Creator: "FBX SDK/FBX Plugins version 2016.1.1"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -30,8 +30,8 @@ FBXHeaderExtension:  {
 			Comment: ""
 		}
 		Properties70:  {
-			P: "DocumentUrl", "KString", "Url", "", "H:\UNITY\PROJECTS 2020\Sandbox 2020\Assets\Misc\ldFloor"
-			P: "SrcDocumentUrl", "KString", "Url", "", "H:\UNITY\PROJECTS 2020\Sandbox 2020\Assets\Misc\ldFloor"
+			P: "DocumentUrl", "KString", "Url", "", "H:\UNITY\PROJECTS 2020\Sandbox 2020\Assets\Misc\ldFloor.fbx"
+			P: "SrcDocumentUrl", "KString", "Url", "", "H:\UNITY\PROJECTS 2020\Sandbox 2020\Assets\Misc\ldFloor.fbx"
 			P: "Original", "Compound", "", ""
 			P: "Original|ApplicationVendor", "KString", "", "", "SideFX Software"
 			P: "Original|ApplicationName", "KString", "", "", "Houdini"
@@ -77,7 +77,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 4945168896, "", "Scene" {
+	Document: 3847532544, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", ""
@@ -272,9 +272,9 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 4954959872, "Geometry::level1", "Mesh" {
+	Geometry: 5396674048, "Geometry::level1", "Mesh" {
 		Vertices: *72 {
-			a: -50,0,-50,50,0,-50,-50,0,-50,50,0,-50,50,0,-50,50,0,50,50,0,-50,50,0,50,50,0,50,-50,0,50,50,0,50,-50,0,50,-50,0,-50,-50,0,50,-50,0,-50,-50,0,50,-50,0,-50,50,0,-50,50,0,50,-50,0,50,-50,0,-50,50,0,-50,50,0,50,-50,0,50
+			a: -250,0,-250,250,0,-250,-250,0,-250,250,0,-250,250,0,-250,250,0,250,250,0,-250,250,0,250,250,0,250,-250,0,250,250,0,250,-250,0,250,-250,0,-250,-250,0,250,-250,0,-250,-250,0,250,-250,0,-250,250,0,-250,250,0,250,-250,0,250,-250,0,-250,250,0,-250,250,0,250,-250,0,250
 		} 
 		PolygonVertexIndex: *24 {
 			a: 0,2,3,-2,4,6,7,-6,8,10,11,-10,13,15,14,-13,19,16,17,-19,20,23,22,-22
@@ -286,7 +286,7 @@ Objects:  {
 			MappingInformationType: "ByPolygonVertex"
 			ReferenceInformationType: "IndexToDirect"
 			UV: *24 {
-				a: -50,0,50,0,50,0,-50,0,-49.9999961853027,50,-49.9999961853027,-50,49.9999961853027,-50,49.9999961853027,50,-49.9999961853027,50,-49.9999961853027,-50,49.9999961853027,-50,49.9999961853027,50
+				a: -250,0,250,0,250,0,-250,0,-249.999984741211,250,-249.999984741211,-250,249.999984741211,-250,249.999984741211,250,-249.999984741211,250,-249.999984741211,-250,249.999984741211,-250,249.999984741211,250
 			} 
 			UVIndex: *24 {
 				a: 0,0,1,1,1,1,2,2,2,2,3,3,3,3,0,0,4,5,6,7,8,9,10,11
@@ -331,7 +331,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 213213312, "Model::level1", "Mesh" {
+	Model: 5392335104, "Model::level1", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationActive", "bool", "", "",1
@@ -342,7 +342,7 @@ Objects:  {
 		Shading: Y
 		Culling: "CullingOff"
 	}
-	Material: 4954950144, "Material::Material_2", "" {
+	Material: 5396666880, "Material::Material_2", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
@@ -360,7 +360,7 @@ Objects:  {
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Video: 4945048576, "Video::Material_2_texture1", "Clip" {
+	Video: 5392763392, "Video::Material_2_texture1", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "H:/UNITY/HOUDINI/The Crypts of Ukon 20.png"
@@ -369,7 +369,7 @@ Objects:  {
 		Filename: "H:/UNITY/HOUDINI/The Crypts of Ukon 20.png"
 		RelativeFilename: "..\..\..\..\HOUDINI\The Crypts of Ukon 20.png"
 	}
-	Video: 4945035520, "Video::Material_2_texture1", "Clip" {
+	Video: 5392763008, "Video::Material_2_texture1", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "C:/Users/frankr/My Documents/GitHub/Brackeys/Assets/World Building/Materials/Cobblestone/Stylized Cobblestone Payment_Normal.png"
@@ -378,7 +378,7 @@ Objects:  {
 		Filename: "C:/Users/frankr/My Documents/GitHub/Brackeys/Assets/World Building/Materials/Cobblestone/Stylized Cobblestone Payment_Normal.png"
 		RelativeFilename: "C:\Users\frankr\My Documents\GitHub\Brackeys\Assets\World Building\Materials\Cobblestone\Stylized Cobblestone Payment_Normal.png"
 	}
-	Texture: 4949521920, "Texture::Material_2_texture1", "" {
+	Texture: 5396665856, "Texture::Material_2_texture1", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::Material_2_texture1"
@@ -393,7 +393,7 @@ Objects:  {
 		Texture_Alpha_Source: "None"
 		Cropping: 0,0,0,0
 	}
-	Texture: 4954949120, "Texture::Material_2_texture1", "" {
+	Texture: 5396666368, "Texture::Material_2_texture1", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::Material_2_texture1"
@@ -416,25 +416,25 @@ Objects:  {
 Connections:  {
 	
 	;Model::level1, Model::RootNode
-	C: "OO",213213312,0
+	C: "OO",5392335104,0
 	
 	;Geometry::level1, Model::level1
-	C: "OO",4954959872,213213312
+	C: "OO",5396674048,5392335104
 	
 	;Material::Material_2, Model::level1
-	C: "OO",4954950144,213213312
+	C: "OO",5396666880,5392335104
 	
 	;Texture::Material_2_texture1, Material::Material_2
-	C: "OP",4949521920,4954950144, "DiffuseColor"
+	C: "OP",5396665856,5396666880, "DiffuseColor"
 	
 	;Texture::Material_2_texture1, Material::Material_2
-	C: "OP",4954949120,4954950144, "NormalMap"
+	C: "OP",5396666368,5396666880, "NormalMap"
 	
 	;Video::Material_2_texture1, Texture::Material_2_texture1
-	C: "OO",4945048576,4949521920
+	C: "OO",5392763392,5396665856
 	
 	;Video::Material_2_texture1, Texture::Material_2_texture1
-	C: "OO",4945035520,4954949120
+	C: "OO",5392763008,5396666368
 }
 ;Takes section
 ;----------------------------------------------------
