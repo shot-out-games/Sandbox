@@ -43,6 +43,7 @@ public struct CollisionComponent : IComponentData
     public int Part_other_entity;
     public Entity Character_entity;
     public Entity Character_other_entity;
+    public bool isMelee;
     //public float currentFrame;
 }
 
@@ -150,6 +151,16 @@ public class CollisionSystem : JobComponentSystem
 
             if (type_a == type_b && punchingA == false && punchingB == false) return;
 
+            bool meleeA = false;
+            bool meleeB = false;
+
+
+            meleeA = (type_b == (int)TriggerType.Base || type_b == (int)TriggerType.Head) &&
+    (type_a == (int)TriggerType.Melee);
+
+            meleeB = (type_a == (int)TriggerType.Base || type_a == (int)TriggerType.Head) &&
+    (type_b == (int)TriggerType.Melee);
+
 
 
             punchingA = (type_b == (int)TriggerType.Base || type_b == (int)TriggerType.Head) &&
@@ -178,11 +189,11 @@ public class CollisionSystem : JobComponentSystem
 
             //Debug.Log("aa " + ammoA + " ab " + ammoB);
 
-            if (punchingA || ammoB)
+            if (punchingA || ammoB || meleeA)
             {
 
-                //Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
-                //Debug.Log("c b " + ch_b + " c a " + ch_a);
+                Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
+                Debug.Log("c b " + ch_b + " c a " + ch_a);
 
                 CollisionComponent collisionComponent =
                     new CollisionComponent()
@@ -190,11 +201,12 @@ public class CollisionSystem : JobComponentSystem
                         Part_entity = triggerComponent_a.Type,
                         Part_other_entity = triggerComponent_b.Type,
                         Character_entity = ch_a,
-                        Character_other_entity = ch_b
+                        Character_other_entity = ch_b,
+                        isMelee = meleeA
                     };
                 CommandBuffer.AddComponent(ch_a, collisionComponent);
             }
-            else if (punchingB || ammoA)
+            else if (punchingB || ammoA || meleeB)
             {
 
                 //Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
@@ -209,7 +221,9 @@ public class CollisionSystem : JobComponentSystem
                         Part_entity = triggerComponent_b.Type,
                         Part_other_entity = triggerComponent_a.Type,
                         Character_entity = ch_b,
-                        Character_other_entity = ch_a
+                        Character_other_entity = ch_a,
+                        isMelee = meleeA
+
                     };
                 CommandBuffer.AddComponent(ch_b, collisionComponent);
             }
@@ -229,11 +243,6 @@ public class CollisionSystem : JobComponentSystem
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
 
-        //Entities.WithoutBurst().ForEach(
-        //    (ref TriggerComponent triggerComponent) =>
-        //    {
-        //        triggerComponent.CurrentFrame++;
-        //    }).Run();
 
 
         inputDeps = JobHandle.CombineDependencies(inputDeps, buildPhysicsWorldSystem.GetOutputDependency());

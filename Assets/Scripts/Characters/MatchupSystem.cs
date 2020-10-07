@@ -164,7 +164,7 @@ public class MatchupSystem : JobComponentSystem
 
                 if (closestEnemy != null)
                 {
-                    Debug.Log("closest " + closestEnemy.name);
+                    //Debug.Log("closest " + closestEnemy.name);
                     if (player.GetComponent<PlayerCombat>())
                     {
                         player.GetComponent<PlayerCombat>().moveUsing.target =

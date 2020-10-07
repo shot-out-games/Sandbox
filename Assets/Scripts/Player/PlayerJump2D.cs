@@ -221,7 +221,7 @@ namespace SandBox.Player
                         }
 
 
-                        float3 vel = new float3(pv.Linear.x, originalJumpPower, 0);
+                        float3 vel = new float3(pv.Linear.x, originalJumpPower, leftStickY);
                         pv.Linear = vel;
                     }
                     else if (applyImpulseComponent.hiJump == true &&
@@ -265,6 +265,7 @@ namespace SandBox.Player
 
                         airForceAdd = leftStickX * playerJumpComponent.airForce;
                         float3 vel = new float3(pv.Linear.x, pv.Linear.y, pv.Linear.z);
+                        //float3 vel = new float3(pv.Linear.x, pv.Linear.y, leftStickY);
                         pv.Linear = vel;
                         //pv.Linear.y = vel.y * expDownAdj;
                         //Debug.Log("vy " + vel.y);

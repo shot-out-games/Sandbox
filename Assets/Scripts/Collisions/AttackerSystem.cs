@@ -39,6 +39,7 @@ public class AttackerSystem : JobComponentSystem
                     int type_b = collisionComponent.Part_other_entity;
                     Entity collision_entity_a = collisionComponent.Character_entity;
                     Entity collision_entity_b = collisionComponent.Character_other_entity;
+                    bool isMelee = collisionComponent.isMelee;
 
                     Entity entityA = collision_entity_a;
                     Entity entityB = collision_entity_b;
@@ -71,9 +72,10 @@ public class AttackerSystem : JobComponentSystem
                         {
 
                             bool hasRatings = EntityManager.HasComponent<RatingsComponent>(entityA);
-                            if (hasRatings)
+                            if (hasRatings && isMelee)
                             {
                                 WeaponPower = EntityManager.GetComponentData<RatingsComponent>(entityA).gameWeaponPower;//should eventually check to see if weapon attached 
+                                Debug.Log("isMelee " + WeaponPower);
                             }
 
 
@@ -89,11 +91,11 @@ public class AttackerSystem : JobComponentSystem
                                 if (anyTouchDamage == true && hw < .19)
                                 {
                                     hw = .19f;
-                                    Debug.Log(hitPower);
                                 }
 
                             }
 
+                            Debug.Log("hp " + hitPower + " hw " + hw + " wp " + WeaponPower + " game hp " + EntityManager.GetComponentData<MeleeComponent>(entityA).gameHitPower);
 
                             float damage = hitPower * hw;
                             Debug.Log("damage " + damage);

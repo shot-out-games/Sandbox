@@ -30,7 +30,7 @@ public class SlashSystem : SystemBase
 
         var bufferFromEntity = GetBufferFromEntity<WeaponItemComponent>();
 
-        bool special = false;
+        bool special = true;
 
         Entities.WithoutBurst().ForEach((WeaponItem weaponItem, in Entity e) =>
         {
@@ -60,6 +60,8 @@ public class SlashSystem : SystemBase
 
 
 
+
+
         Entities.ForEach((ref SlashComponent slashComponent, in InputControllerComponent input, in Entity e) =>
         {
 
@@ -82,6 +84,7 @@ public class SlashSystem : SystemBase
                 slashComponent.slashState = (int)SlashStates.Started;
                 if (slashComponent.animate == false)
                 {
+                    Debug.Log("slash animate");
                     hk[0] = true;//not supported
                     //slashComponent.hkDamage += 1;
                     slashComponent.animate = true;
@@ -91,16 +94,19 @@ public class SlashSystem : SystemBase
         }).Schedule();
         //}).Run();
 
-        Entities.WithoutBurst().ForEach((Animator animator, ref SlashComponent slashComponent, ref WinnerComponent winner, in SkillTreeComponent skillTree) =>
+        Entities.WithoutBurst().WithStructuralChanges().ForEach((Animator animator, PlayerCombat playerCombat, ref SlashComponent slashComponent, ref WinnerComponent winner, in SkillTreeComponent skillTree) =>
             {
                 if (slashComponent.slashActive == false) return;
+                //playerCombat.haraKiri = false;
                 //animator.SetInteger("SlashState", 0);
                 //slashComponent.slashState = (int) SlashStates.None;
                 if (slashComponent.animate == true && animator.GetInteger("SlashState") == 0)
                 {
                     if (hk[0] == true && skillTree.CurrentLevel >= 8)
                     {
-                        animator.SetInteger("SlashState", 2);
+                        //animator.SetInteger("SlashState", 2);
+                        playerCombat.SelectMove(3);
+                        playerCombat.StartMove(3);
                         slashComponent.hkDamage += 1;
                         if (slashComponent.hkDamage == 3)
                         {
@@ -112,12 +118,18 @@ public class SlashSystem : SystemBase
                     }
                     else if (hk[0] == true)
                     {
-                        animator.SetInteger("SlashState", 2);
+                        Debug.Log("hk on");
+                        playerCombat.SelectMove(3);
+                        playerCombat.haraKiri = true;//kill yourself
+                        playerCombat.StartMove(3);
+                        //animator.SetInteger("SlashState", 2);
                         hk[0] = false;
                     }
                     else
                     {
-                        animator.SetInteger("SlashState", 1);
+                        playerCombat.SelectMove(3);
+                        playerCombat.StartMove(3);
+                        //animator.SetInteger("SlashState", 1);
                     }
 
                     Debug.Log("slash");
