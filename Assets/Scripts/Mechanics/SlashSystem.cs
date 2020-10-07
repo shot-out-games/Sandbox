@@ -30,7 +30,7 @@ public class SlashSystem : SystemBase
 
         var bufferFromEntity = GetBufferFromEntity<WeaponItemComponent>();
 
-        bool special = true;
+        bool special = false;
 
         Entities.WithoutBurst().ForEach((WeaponItem weaponItem, in Entity e) =>
         {
@@ -66,7 +66,7 @@ public class SlashSystem : SystemBase
         {
 
             if (slashComponent.slashActive == false) return;
-            if ((input.leftTriggerPressed == true  || input.rightTriggerPressed == true && special == false) && slashComponent.slashState == (int)SlashStates.None)//why are triggers backward?
+            if ((input.leftTriggerPressed == true ) && slashComponent.slashState == (int)SlashStates.None)//why are triggers backward?
             {
                 slashComponent.slashState = (int)SlashStates.Started;
                 if (slashComponent.animate == false)
@@ -79,7 +79,7 @@ public class SlashSystem : SystemBase
 
 
             //if (input.buttonA_Pressed == true && slashComponent.slashState == (int)SlashStates.None) 
-            if (input.rightTriggerPressed == true && special == true && slashComponent.slashState == (int)SlashStates.None)
+            if (input.rightTriggerPressed == true && slashComponent.slashState == (int)SlashStates.None)
             {
                 slashComponent.slashState = (int)SlashStates.Started;
                 if (slashComponent.animate == false)
@@ -102,11 +102,11 @@ public class SlashSystem : SystemBase
                 //slashComponent.slashState = (int) SlashStates.None;
                 if (slashComponent.animate == true && animator.GetInteger("SlashState") == 0)
                 {
-                    if (hk[0] == true && skillTree.CurrentLevel >= 8)
+                    if (hk[0] == true && special == true)
                     {
                         //animator.SetInteger("SlashState", 2);
                         playerCombat.SelectMove(3);
-                        playerCombat.StartMove(3);
+                        playerCombat.StartMove(4);
                         slashComponent.hkDamage += 1;
                         if (slashComponent.hkDamage == 3)
                         {

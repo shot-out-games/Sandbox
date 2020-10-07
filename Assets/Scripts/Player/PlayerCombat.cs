@@ -29,7 +29,7 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
     [SerializeField] private float fbbIKUseDistance = 8;
     public bool haraKiri = false;
-
+    public Transform haraKiriTarget;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -155,8 +155,8 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
             aim.solver.IKPositionWeight = hitWeight * moveUsing.weight;
             if (haraKiri == true)
             {
-                aim.solver.IKPosition = transform.position;
-                aim.solver.IKPositionWeight = 1;
+                aim.solver.IKPosition = haraKiriTarget.position;
+                //aim.solver.IKPositionWeight = 1;
             }
 
             aim.solver.Update();
@@ -166,15 +166,15 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
         if (moveUsing.usingFbb && ik.enabled)
         {
-            hitWeight = AdjustWeightToDistanceFromTarget(hitWeight);
+            float adjHitWeight = AdjustWeightToDistanceFromTarget(hitWeight);
             //Debug.Log("ik " + " hw " + hitWeight + " move weight " + moveUsing.weight);
             ik.solver.GetEffector(moveUsing.effector).position = moveUsing.target.position;
-            ik.solver.GetEffector(moveUsing.effector).positionWeight = hitWeight * moveUsing.weight;
+            ik.solver.GetEffector(moveUsing.effector).positionWeight = adjHitWeight * moveUsing.weight;
 
             if (haraKiri == true)
             {
-                ik.solver.GetEffector(moveUsing.effector).position = transform.position;
-                ik.solver.GetEffector(moveUsing.effector).positionWeight = 1;
+                ik.solver.GetEffector(moveUsing.effector).position = haraKiriTarget.position;
+                ik.solver.GetEffector(moveUsing.effector).positionWeight = hitWeight * moveUsing.weight;
             }
 
 

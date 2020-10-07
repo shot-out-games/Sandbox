@@ -63,8 +63,8 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 6
-    m_ConditionEvent: SlashState
-    m_EventTreshold: 2
+    m_ConditionEvent: CombatAction
+    m_EventTreshold: 4
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -7379979808925900798}
   m_Solo: 0
@@ -261,7 +261,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 6288679089260461058}
-    m_Position: {x: -160, y: 210, z: 0}
+    m_Position: {x: -220, y: 180, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5850002510506051018}
     m_Position: {x: -170, y: -20, z: 0}
