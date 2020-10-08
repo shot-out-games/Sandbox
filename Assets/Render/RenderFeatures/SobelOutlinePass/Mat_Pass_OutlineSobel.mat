@@ -25,7 +25,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Delta: 0.0025
-    - _DepthIntensity: 0
+    - _DepthIntensity: 1000
     - _Raw: 0
     - _Value: 0.4
     m_Colors:
