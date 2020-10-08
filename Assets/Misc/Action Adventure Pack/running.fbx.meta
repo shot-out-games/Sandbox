@@ -22,7 +22,9 @@ ModelImporter:
     rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
-    animationRetargetingWarnings: 
+    animationRetargetingWarnings: "\nRetargeting quality report for clip 'mixamo.com':\n\tLeftFoot
+      average orientation error 0.4 deg and maximum orientation error 1.5 deg at
+      time 0:11 (52.4%) Frame 11\n"
     animationDoRetargetingWarnings: 1
     importAnimatedCustomProperties: 0
     importConstraints: 0
@@ -41,13 +43,13 @@ ModelImporter:
       firstFrame: 0
       lastFrame: 21
       wrapMode: 0
-      orientationOffsetY: 0
+      orientationOffsetY: 0.05
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 0
+      loopBlend: 1
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 0

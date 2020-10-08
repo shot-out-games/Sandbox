@@ -30,9 +30,9 @@ public class StatsSystem : SystemBase
 
                     if (HasComponent<LevelUpMechanicComponent>(e) == true)
                     {
-                        ratingsComponent.gameSpeed = ratingsComponent.gameSpeed + 1;
-                        ratingsComponent.gameWeaponPower = ratingsComponent.gameWeaponPower * 2f;
-                        ratingsComponent.maxHealth = ratingsComponent.maxHealth * 2f;
+                        ratingsComponent.gameSpeed = ratingsComponent.gameSpeed * 1.1f;
+                        ratingsComponent.gameWeaponPower = ratingsComponent.gameWeaponPower * 1.1f;
+                        ratingsComponent.maxHealth = ratingsComponent.maxHealth * 1.1f;
                         showMessage = true;
                         Debug.Log("speed boost");
                     }
