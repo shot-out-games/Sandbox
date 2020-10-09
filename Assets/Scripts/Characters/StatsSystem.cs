@@ -28,7 +28,7 @@ public class StatsSystem : SystemBase
                     skillTree.CurrentLevel += 1;
                     skillTree.availablePoints += 1;
 
-                    if (HasComponent<LevelUpMechanicComponent>(e) == true)
+                    if (HasComponent<LevelUpMechanicComponent>(e) == true && skillTree.CurrentLevel <= 8)
                     {
                         ratingsComponent.gameSpeed = ratingsComponent.gameSpeed * 1.1f;
                         ratingsComponent.gameWeaponPower = ratingsComponent.gameWeaponPower * 1.1f;

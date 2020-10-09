@@ -269,6 +269,7 @@ public class WinnerSystem : SystemBase
             LevelManager.instance.currentLevel = 1;
             LevelManager.instance.PlayLevelMusic();
             LevelManager.instance.currentLevel = currentLevel;
+            LevelManager.instance.audioSourceGame.pitch *= .9f;
 
             Entities.WithoutBurst().WithStructuralChanges().ForEach
             (
