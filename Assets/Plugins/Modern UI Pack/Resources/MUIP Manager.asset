@@ -17,7 +17,7 @@ MonoBehaviour:
   editorHints: 1
   animatedIconColor: {r: 1, g: 1, b: 1, a: 1}
   buttonThemeType: 1
-  buttonFont: {fileID: 11400000, guid: 84dd14695854bbc43a5faa24fcf93d0d, type: 2}
+  buttonFont: {fileID: 11400000, guid: edda57bceb682c6428b72fb54fa91ae8, type: 2}
   buttonFontSize: 32
   buttonBorderColor: {r: 0.8745098, g: 0.9019608, b: 0.9137255, a: 1}
   buttonFilledColor: {r: 1, g: 0.91764706, b: 0.6784314, a: 1}

@@ -77,7 +77,8 @@ public class WinnerSystem : SystemBase
             (in TriggerComponent triggerComponent, in AudioSource audioSource
             ) =>
             {
-                if (exit == true && triggerComponent.Type == (int)TriggerType.Home)
+                //if (exit == true && triggerComponent.Type == (int)TriggerType.Home)
+                if (exit == true)
                 {
 
                     //Debug.Log("boss song");
@@ -116,7 +117,7 @@ public class WinnerSystem : SystemBase
             (ref WinnerComponent winnerComponent, in Entity e, in PlayerComponent playerComponent, in SkillTreeComponent skillTreeComponent
             ) =>
             {
-                if(winnerComponent.winConditionMet == toggleStates.post)
+                if (winnerComponent.winConditionMet == toggleStates.post)
                 {
                     timer = timer + Time.DeltaTime;
                     winner = toggleStates.post;
@@ -172,7 +173,7 @@ public class WinnerSystem : SystemBase
                     if (messageMenu.showOnce == false)
                     {
                         messageMenu.showOnce = true;
-                        messageMenu.showTimeLength = 3.0f;
+                        messageMenu.showTimeLength = 4.2f;
                         messageMenu.messageString = "I am you ... I am you from a time you can not understand ... ... ...";
                         messageMenu.showTimeLength = 2.1f;
                         messageMenu.ShowMenu();
@@ -214,7 +215,7 @@ public class WinnerSystem : SystemBase
                     LevelManager.instance.levelSettings[currentLevel].completed = true;
                     if (winnerMenuComponent.hide == true)
                     {
-                    LevelManager.instance.endGame = true;
+                        LevelManager.instance.endGame = true;
                         winnerMenuGroup.ShowMenu();
                         winnerMenuComponent.hide = false;
                     }
@@ -262,6 +263,12 @@ public class WinnerSystem : SystemBase
             (
                 (AudioSource audioSource, TriggerComponent trigger) => { audioSource.Stop(); }
             ).Run();
+
+
+            int currentLevel = LevelManager.instance.currentLevel;
+            LevelManager.instance.currentLevel = 1;
+            LevelManager.instance.PlayLevelMusic();
+            LevelManager.instance.currentLevel = currentLevel;
 
             Entities.WithoutBurst().WithStructuralChanges().ForEach
             (

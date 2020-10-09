@@ -401,6 +401,7 @@ public class RaycastSystem : SystemBase
                 {
 
                     triggerMB.triggerAudioSource.Play();
+                    Debug.Log("active audio source play ");
                 }
 
 
@@ -408,6 +409,7 @@ public class RaycastSystem : SystemBase
             else if (key == true && triggerMB.triggerAudioSource != null)
             {
                 triggerMB.triggerAudioSource.Stop();
+                Debug.Log("active audio source play  stop ");
             }
 
 
@@ -444,17 +446,17 @@ public class RaycastSystem : SystemBase
 
 
 
-        Entities.WithoutBurst().WithStructuralChanges().ForEach(
-            (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
-            {
-                if (showMessage == true)
-                {
+        //Entities.WithoutBurst().WithStructuralChanges().ForEach(
+        //    (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
+        //    {
+        //        if (showMessage == true)
+        //        {
 
-                    messageMenu.messageString = "Soul Cube Triggered ... ";
-                    messageMenu.ShowMenu();
-                }
-            }
-        ).Run();
+        //            messageMenu.messageString = "Soul Cube Triggered ... ";
+        //            messageMenu.ShowMenu();
+        //        }
+        //    }
+        //).Run();
 
 
 
