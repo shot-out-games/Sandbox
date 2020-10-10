@@ -49,6 +49,7 @@ public class PlayerInputAmmoSystem : SystemBase
                 attachWeapon.attachSecondaryWeaponType == (int)WeaponType.Gun && rtPressed == true
                     )
                 {
+
                     gunComponent.IsFiring = 1;
                     playerWeaponAimComponent.weaponUpTimer = 0;
                     playerWeaponAimComponent.weaponRaised = true;

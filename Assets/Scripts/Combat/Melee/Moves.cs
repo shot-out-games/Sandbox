@@ -20,6 +20,10 @@ public class Moves
     public FABRIK limbIk;
     public bool active = true;
     public Transform aimTransform = null;
+    public AudioSource moveAudioSource;
+    public AudioClip moveAudioClip;
+    public ParticleSystem moveParticleSystem;
+
 
 
     //   { get; set; } = 1.0f;

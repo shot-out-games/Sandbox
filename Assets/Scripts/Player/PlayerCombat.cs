@@ -80,6 +80,17 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
                 Debug.Log("aim ik auto bone ");
             }
             moveUsing.aimTransform = AimTransform;
+            if (moveUsing.moveAudioSource && moveUsing.moveAudioClip)
+            {
+                moveUsing.moveAudioSource.clip = moveUsing.moveAudioClip;
+                moveUsing.moveAudioSource.Play();
+            }
+            if(moveUsing.moveParticleSystem)
+            {
+                moveUsing.moveParticleSystem.Play(true);
+            }
+          
+
             //if (combatAction == 3)
             //{
                // moveUsing.target = transform;
@@ -113,6 +124,10 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
         animator.SetFloat("HitWeight", 0);
         ik.solver.GetEffector(moveUsing.effector).positionWeight =  0;
         //        ik.solver.Update();
+        if(moveUsing.moveParticleSystem)
+        {
+            moveUsing.moveParticleSystem.Stop(true);
+        }
 
         haraKiri = false;
         if (moveUsing.usingAim)

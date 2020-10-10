@@ -7,6 +7,7 @@ using Unity.Jobs;
 [System.Serializable]
 public struct AttachWeaponComponent : IComponentData
 {
+    public bool isAttached;//na
     public int attachedWeaponSlot;
     public int attachWeaponType;
     public int attachSecondaryWeaponType;
@@ -24,6 +25,8 @@ public class WeaponManager : MonoBehaviour, IConvertGameObjectToEntity
     private int weaponIndex = 0;//index of weapons list to start with
     private EntityManager manager;
     public Entity e;
+    [HideInInspector]
+    public bool primaryAttached = false;
 
     private bool attachedWeapon;
 
@@ -58,6 +61,7 @@ public class WeaponManager : MonoBehaviour, IConvertGameObjectToEntity
 
     public void AttachPrimaryWeapon()
     {
+        primaryAttached = true;
         primaryWeapon.weaponGameObject.transform.SetParent(primaryWeapon.weaponLocation);
         primaryWeapon.weaponGameObject.transform.localPosition = Vector3.zero;
         primaryWeapon.weaponGameObject.transform.localRotation = Quaternion.identity;
@@ -69,6 +73,7 @@ public class WeaponManager : MonoBehaviour, IConvertGameObjectToEntity
     {
         if (primaryWeapon != null)
         {
+            primaryAttached = false;
             //primaryWeapon.weaponGameObject.SetActive(false);
             Debug.Log("pr " + primaryWeapon.weaponGameObject);
             primaryWeapon.weaponGameObject.transform.SetParent(null);

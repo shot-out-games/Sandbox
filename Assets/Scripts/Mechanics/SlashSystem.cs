@@ -94,12 +94,22 @@ public class SlashSystem : SystemBase
         }).Schedule();
         //}).Run();
 
-        Entities.WithoutBurst().WithStructuralChanges().ForEach((Animator animator, PlayerCombat playerCombat, ref SlashComponent slashComponent, ref WinnerComponent winner, in SkillTreeComponent skillTree) =>
+        Entities.WithoutBurst().WithStructuralChanges().ForEach((
+            Animator animator, PlayerCombat playerCombat, WeaponManager weaponManager,
+            ref SlashComponent slashComponent, ref WinnerComponent winner, in SkillTreeComponent skillTree) =>
             {
                 if (slashComponent.slashActive == false) return;
                 //playerCombat.haraKiri = false;
                 //animator.SetInteger("SlashState", 0);
                 //slashComponent.slashState = (int) SlashStates.None;
+                if(weaponManager.primaryAttached == false)
+                {
+                    slashComponent.animate = false;
+                    slashComponent.slashState = (int)SlashStates.None;
+                    return;
+                }
+
+
                 if (slashComponent.animate == true && animator.GetInteger("SlashState") == 0)
                 {
                     if (hk[0] == true && special == true)
