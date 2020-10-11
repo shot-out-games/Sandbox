@@ -136,12 +136,15 @@ public class CollisionSystem : JobComponentSystem
 
             bool punchingA = false;
             bool punchingB = false;
-            if (anyPVEtouchA == true && type_a == (int)TriggerType.Body)
+            if (anyPVEtouchA == true &&
+                (type_a == (int)TriggerType.Body || type_a == (int)TriggerType.Base) || type_a == (int)TriggerType.Head)
             {
                 punchingA = true;
                 Debug.Log("cha " + ch_a);
             }
-            else if (anyPVEtouchB == true && type_b == (int)TriggerType.Body)
+            else if (anyPVEtouchB == true && 
+                (type_b == (int)TriggerType.Body || type_b == (int)TriggerType.Base) || type_b == (int)TriggerType.Head)
+
             {
                 punchingB = true;
                 Debug.Log("chb" + ch_b);
