@@ -75,7 +75,7 @@ public class AttackerSystem : JobComponentSystem
                             if (hasRatings && isMelee)
                             {
                                 WeaponPower = EntityManager.GetComponentData<RatingsComponent>(entityA).gameWeaponPower;//should eventually check to see if weapon attached 
-                                Debug.Log("isMelee " + WeaponPower);
+                                //Debug.Log("isMelee " + WeaponPower);
                             }
 
 
@@ -95,10 +95,10 @@ public class AttackerSystem : JobComponentSystem
 
                             }
 
-                            Debug.Log("hp " + hitPower + " hw " + hw + " wp " + WeaponPower + " game hp " + EntityManager.GetComponentData<MeleeComponent>(entityA).gameHitPower);
+                            //Debug.Log("hp " + hitPower + " hw " + hw + " wp " + WeaponPower + " game hp " + EntityManager.GetComponentData<MeleeComponent>(entityA).gameHitPower);
 
                             float damage = hitPower * hw;
-                            Debug.Log("damage " + damage);
+                            //Debug.Log("damage " + damage);
 
 
 
@@ -113,17 +113,36 @@ public class AttackerSystem : JobComponentSystem
                             //EntityManager.SetComponentData(entityA, health);
 
                             //for LevelUp
-                            var health = EntityManager.GetComponentData<HealthComponent>(entityA);
-                            var skillComponent = EntityManager.GetComponentData<SkillTreeComponent>(entityA);
-                            health.TotalDamageLanded = health.TotalDamageLanded + damage;
-                            skillComponent.CurrentLevelXp += damage / 10f;
-                            EntityManager.SetComponentData(entityA, health);
-                            EntityManager.SetComponentData(entityA, skillComponent);
+                            //HARA KIRI turn off skill boost when hitting Leader
+                            bool skillBoost = true;
+                            if (EntityManager.HasComponent(entityB, typeof(MatchupComponent)))
+                            {
+                                skillBoost = !EntityManager.GetComponentData<MatchupComponent>(entityB).leader;
+                            }
 
-                            Debug.Log("xp " + skillComponent.CurrentLevelXp);
+                            bool isDead = EntityManager.GetComponentData<DeadComponent>(entityB).isDead;
 
-                            trigger_a.collisionChecked = true;
-                            ecb.SetComponent<CheckedComponent>(entityA, trigger_a);
+                            if (isDead == false)
+                            {
+
+                                var health = EntityManager.GetComponentData<HealthComponent>(entityA);
+                                var skillComponent = EntityManager.GetComponentData<SkillTreeComponent>(entityA);
+                                float oppHealthFactor =
+                                    50f / EntityManager.GetComponentData<RatingsComponent>(entityB).maxHealth;
+                                health.TotalDamageLanded = health.TotalDamageLanded + damage;
+                                skillComponent.CurrentLevelXp += damage / 10f  * oppHealthFactor;
+                                //skillComponent.CurrentLevel = 8;
+                                EntityManager.SetComponentData(entityA, health);
+                                if (skillBoost)
+                                {
+                                    EntityManager.SetComponentData(entityA, skillComponent);
+                                }
+                            }
+                            //Debug.Log("xp " + skillComponent.CurrentLevelXp);
+
+                                trigger_a.collisionChecked = true;
+                                ecb.SetComponent<CheckedComponent>(entityA, trigger_a);
+                            
 
                         }
                     }

@@ -116,49 +116,55 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: velx
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: CombatAction
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: HitWeight
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Zone
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: HitReact
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Aim
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 1
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   - m_Name: Dead
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
+  - m_Name: JumpState
+    m_Type: 3
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -1155,7 +1161,7 @@ AnimatorStateMachine:
     m_Position: {x: -3640, y: -3490, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1692295827097674467}
-    m_Position: {x: -4010, y: -2820, z: 0}
+    m_Position: {x: -4160, y: -2810, z: 0}
   m_ChildStateMachines:
   - serializedVersion: 1
     m_StateMachine: {fileID: 1107207875399562484}
@@ -1179,12 +1185,6 @@ AnimatorStateMachine:
     - {fileID: 1109112860819485390}
     - {fileID: 1109672928268927246}
     - {fileID: 6101663916600044459}
-  - first: {fileID: 1107307722106823392}
-    second:
-    - {fileID: 1109913253060915142}
-    - {fileID: 1109570012312463826}
-    - {fileID: 1109774867614999348}
-    - {fileID: 679964280760080689}
   - first: {fileID: 1107438325616211404}
     second:
     - {fileID: 1109317717955878916}
@@ -1197,6 +1197,12 @@ AnimatorStateMachine:
     - {fileID: 1109240068903722994}
     - {fileID: 1109593820650369714}
     - {fileID: 847929189910277423}
+  - first: {fileID: 1107307722106823392}
+    second:
+    - {fileID: 1109913253060915142}
+    - {fileID: 1109570012312463826}
+    - {fileID: 1109774867614999348}
+    - {fileID: 679964280760080689}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: -3300, y: -3390, z: 0}
   m_EntryPosition: {x: -3960, y: -3430, z: 0}
@@ -1479,6 +1485,18 @@ AnimatorTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 1
+--- !u!114 &1553262990975248417
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5f7bd5be1b299e4dbc5986333326ddf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1102 &1692295827097674467
 AnimatorState:
   serializedVersion: 5
@@ -1490,7 +1508,8 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 1553262990975248417}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

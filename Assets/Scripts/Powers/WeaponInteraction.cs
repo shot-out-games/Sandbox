@@ -7,6 +7,7 @@ using UnityEngine;
 public struct WeaponInteractionComponent : IComponentData
 {
     public int weaponType;
+    public bool canPickup;
 }
 
 public struct CharacterInteractionComponent : IComponentData
@@ -28,6 +29,9 @@ public class WeaponInteraction : MonoBehaviour, IConvertGameObjectToEntity
     public bool interactKeyPressed;
     [SerializeField]
     private bool inputRequired;
+
+    
+    public bool canPickup;
 
     private AudioSource audioSource;
     [SerializeField]
@@ -130,7 +134,7 @@ public class WeaponInteraction : MonoBehaviour, IConvertGameObjectToEntity
         e = entity;
         manager = dstManager;
         manager.AddComponentData<WeaponInteractionComponent>(e,
-            new WeaponInteractionComponent { weaponType = 0 }); //0 is none
+            new WeaponInteractionComponent { weaponType = 0, canPickup = canPickup }); //0 is none
 
     }
 

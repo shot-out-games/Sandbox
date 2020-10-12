@@ -43,8 +43,10 @@ public class LevelUpMechanicSystem : SystemBase
 
             ) =>
             {
+                int pointsNeeded = skillTreeComponent.PointsNextLevel * skillTreeComponent.CurrentLevel;
 
-                float pct = skillTreeComponent.CurrentLevelXp / (float)skillTreeComponent.PointsNextLevel;
+
+                float pct = skillTreeComponent.CurrentLevelXp / (float)pointsNeeded;
                 //ndeMechanic.multiplier = .5f;
                 controlBar.value = pct;
                     //Debug.Log("ctrl " + controlBar.value);

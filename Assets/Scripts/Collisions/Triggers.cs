@@ -140,14 +140,14 @@ public class CollisionSystem : JobComponentSystem
                 (type_a == (int)TriggerType.Body || type_a == (int)TriggerType.Base) || type_a == (int)TriggerType.Head)
             {
                 punchingA = true;
-                Debug.Log("cha " + ch_a);
+                //Debug.Log("cha " + ch_a);
             }
-            else if (anyPVEtouchB == true && 
+            else if (anyPVEtouchB == true &&
                 (type_b == (int)TriggerType.Body || type_b == (int)TriggerType.Base) || type_b == (int)TriggerType.Head)
 
             {
                 punchingB = true;
-                Debug.Log("chb" + ch_b);
+                //Debug.Log("chb" + ch_b);
             }
 
 
@@ -195,8 +195,8 @@ public class CollisionSystem : JobComponentSystem
             if (punchingA || ammoB || meleeA)
             {
 
-                Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
-                Debug.Log("c b " + ch_b + " c a " + ch_a);
+                //Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
+                //Debug.Log("c b " + ch_b + " c a " + ch_a);
 
                 CollisionComponent collisionComponent =
                     new CollisionComponent()

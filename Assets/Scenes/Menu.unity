@@ -869,7 +869,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.043137256, g: 0.13725491, b: 0.14509805, a: 1}
+  m_Color: {r: 0.105882354, g: 0.10980392, b: 0.12156863, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2676,7 +2676,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Fight your way through and find the mysterious leader
+  m_text: Reach Level 8 to unlock the mysterious weapon and dispose of the Protector
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f17e8bb3967fe14093d5fec798fffd9, type: 2}
   m_sharedMaterial: {fileID: 21700449227511232, guid: 2f17e8bb3967fe14093d5fec798fffd9,
@@ -2704,7 +2704,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 48
+  m_fontSize: 37.75
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -3116,7 +3116,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: How to Play
+  m_text: How to Play Hara Kiri
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: edda57bceb682c6428b72fb54fa91ae8, type: 2}
   m_sharedMaterial: {fileID: -5790984483419766717, guid: edda57bceb682c6428b72fb54fa91ae8,
@@ -8833,7 +8833,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.2
+  m_fontSize: 31.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9456,7 +9456,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 200}
+  m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1686915481
 MonoBehaviour:
@@ -9764,15 +9764,21 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'CONTROLS (Gamepad Combatible)
 
-    USE WEAPON :  Left Mouse Click (Left
+    MOVE : WASD
+
+    STRIKE :  Left Mouse
+    Click / Space (X Button XBOX One)
+
+    HARA KIRI :  Right Mouse Click (Right
     Trigger XBOX One)
 
-    HARA KIRI :  Right Mouse Click (Right Trigger XBOX One)
+    PUNCH: Right Arrow / Z Key (B Button)
 
-    PUNCH:
-    Z Key (B Button)
+    KICK: Left
+    Arrow / X Key (Y Button)
 
-    KICK: X Key (Y Button)'
+    ZOOM CAMERA : Mouse Scroll / Up and Down Arrow
+    / Right Stick'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f17e8bb3967fe14093d5fec798fffd9, type: 2}
   m_sharedMaterial: {fileID: 21700449227511232, guid: 2f17e8bb3967fe14093d5fec798fffd9,
@@ -9800,7 +9806,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.35
+  m_fontSize: 31.45
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -11662,7 +11668,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Reach Level 8 to unlock the secret sword
+  m_text: Defeat the lurkers to increase your abilities
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f17e8bb3967fe14093d5fec798fffd9, type: 2}
   m_sharedMaterial: {fileID: 21700449227511232, guid: 2f17e8bb3967fe14093d5fec798fffd9,
@@ -11776,7 +11782,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 400}
+  m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2044624454
 MonoBehaviour:
@@ -12750,7 +12756,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 171436231, guid: e005c907876cd5e449e043d236d1c3cb, type: 3}
       propertyPath: m_Volume
-      value: 0.25
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 171436231, guid: e005c907876cd5e449e043d236d1c3cb, type: 3}
+      propertyPath: m_Pitch
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 6265239057108782675, guid: e005c907876cd5e449e043d236d1c3cb,
         type: 3}
@@ -12761,12 +12771,12 @@ PrefabInstance:
         type: 3}
       propertyPath: levelMediaList.Array.data[0].levelMusic
       value: 
-      objectReference: {fileID: 8300000, guid: 1a70bfcf32ff2a54ebf829bd8641dcbf, type: 3}
+      objectReference: {fileID: 8300000, guid: 6d3d40055b82d6c49a5936faab3204ec, type: 3}
     - target: {fileID: 6265239057108782675, guid: e005c907876cd5e449e043d236d1c3cb,
         type: 3}
       propertyPath: levelMediaList.Array.data[1].levelMusic
       value: 
-      objectReference: {fileID: 8300000, guid: 42436fad55521ad4fa5735a9a3b8a9c1, type: 3}
+      objectReference: {fileID: 8300000, guid: a94c215f471644345be7745a51830b31, type: 3}
     - target: {fileID: 6265239057108782675, guid: e005c907876cd5e449e043d236d1c3cb,
         type: 3}
       propertyPath: audioSourceGame

@@ -23,6 +23,9 @@ public struct WeaponItemComponent : IBufferElementData
     public bool pickedUp;
     public bool special;//for ld
     public bool reset;
+    public bool playerPickupAllowed;
+    public bool enemyPickupAllowed;
+
 }
 
 
@@ -44,6 +47,10 @@ public class WeaponItem : MonoBehaviour, IConvertGameObjectToEntity
     public bool special;
     public bool reset = false;
     public bool pickedUp;
+    [SerializeField]
+    bool enemyPickupAllowed = false;
+    [SerializeField]
+    bool playerPickupAllowed = false;
 
     void Start()
     {
@@ -98,7 +105,9 @@ public class WeaponItem : MonoBehaviour, IConvertGameObjectToEntity
                 e = entity,
                 active = active,
                 weaponType = (int)weaponData.weaponType,
-                special = special
+                special = special,
+                playerPickupAllowed = playerPickupAllowed,
+                enemyPickupAllowed = enemyPickupAllowed
             }
         );
 

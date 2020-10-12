@@ -19,7 +19,7 @@ public class SlashSystem : SystemBase
         //var slashGroup = GetComponentDataFromEntity<SlashComponent>(false);
 
         int currentLevel = 0;
-        Entities.ForEach((in SkillTreeComponent skillTree) =>
+        Entities.WithAll<PlayerComponent>().ForEach((in SkillTreeComponent skillTree) =>
         {
             currentLevel = skillTree.CurrentLevel;
 

@@ -12,6 +12,9 @@ public class CameraControls : MonoBehaviour
     public int playerId = 0; // The Rewired player id of this character
 
     public CinemachineVirtualCamera vcam;
+    public CinemachineFreeLook freeLook;
+    public CinemachineFreeLook freeLookCombat;
+    //public CinemachineFollowZoom FollowZoom;
     public float fov;
     [SerializeField]
     float maxFov = 200;
@@ -20,6 +23,8 @@ public class CameraControls : MonoBehaviour
 
     [SerializeField]
     float multiplier = 2;
+    [SerializeField]
+    float combatZoomFactor = .8f;
     [SerializeField]
     bool active;
 
@@ -45,26 +50,28 @@ public class CameraControls : MonoBehaviour
         bool keyboard = controller.type == ControllerType.Keyboard;
 
 
-        if (player.GetAxisRaw("RightVertical") >= 1 && gamePad)
+        if (player.GetAxisRaw("RightVertical") >= 1)
         {
             fov -= Time.deltaTime * multiplier;
             ChangeFov(fov);
         }
-        else if (player.GetAxisRaw("RightVertical") <= -1 && gamePad)
+        else if (player.GetAxisRaw("RightVertical") <= -1)
         {
             fov += Time.deltaTime * multiplier;
             ChangeFov(fov);
         }
-        else if (player.GetAxisRaw("RightVertical") >= 1 && keyboard)
+        else if (player.GetAxisRaw("RightVertical") >= 1)
         {
             fov -= Time.deltaTime * multiplier;
             ChangeFov(fov);
         }
-        else if (player.GetAxisRaw("RightVertical") <= -1 && keyboard)
+        else if (player.GetAxisRaw("RightVertical") <= -1)
         {
             fov += Time.deltaTime * multiplier;
             ChangeFov(fov);
         }
+
+
 
     }
 
@@ -73,8 +80,25 @@ public class CameraControls : MonoBehaviour
     {
         //fov = fov > maxFov ?  maxFov : fov;
         //fov = fov < minFov ?  minFov : fov;
-        fov = math.clamp(fov, minFov, maxFov);
-        vcam.m_Lens.FieldOfView = _fov;
+        if (freeLook)
+        {
+            fov = math.clamp(fov, minFov, maxFov);
+            //Debug.Log("fov " + fov);
+            freeLook.m_Lens.FieldOfView = _fov;
+            if (freeLookCombat)
+            {
+                freeLookCombat.m_Lens.FieldOfView = _fov * combatZoomFactor;
+            }
+        }
+        else if (vcam)
+        {
+            fov = math.clamp(fov, minFov, maxFov);
+            Debug.Log("fov " + fov);
+            vcam.m_Lens.FieldOfView = _fov;
+        }
+
+
+
     }
 
 

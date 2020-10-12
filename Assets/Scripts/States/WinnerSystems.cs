@@ -94,21 +94,6 @@ public class WinnerSystem : SystemBase
 
 
 
-        Entities.WithoutBurst().WithStructuralChanges().ForEach
-        (
-            (in TriggerComponent triggerComponent, in Entity e
-            ) =>
-            {
-                if (exit == true && triggerComponent.Type == (int)TriggerType.Home)
-                {
-
-                    //EntityManager.DestroyEntity(e);//destroyed for collect keys not for  final boss key entry
-
-                }
-
-            }
-        ).Run();
-
         bool loopBroken = false;
         toggleStates winner = toggleStates.off;
 
@@ -117,6 +102,10 @@ public class WinnerSystem : SystemBase
             (ref WinnerComponent winnerComponent, in Entity e, in PlayerComponent playerComponent, in SkillTreeComponent skillTreeComponent
             ) =>
             {
+
+
+
+
                 if (winnerComponent.winConditionMet == toggleStates.post)
                 {
                     timer = timer + Time.DeltaTime;
@@ -141,6 +130,26 @@ public class WinnerSystem : SystemBase
         //exit = true;
         if (loopBroken == true)
         {
+
+
+            Entities.WithoutBurst().WithStructuralChanges().ForEach
+            (
+                (in TriggerComponent triggerComponent, in Entity triggerEntity
+                ) =>
+                {
+                    if (triggerComponent.Type == (int)TriggerType.Obstacle)
+                    {
+
+                        EntityManager.DestroyEntity(triggerEntity);
+
+                    }
+
+                }
+            ).Run();
+
+
+
+
 
             Entities.WithoutBurst().WithStructuralChanges().ForEach(
                 (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>

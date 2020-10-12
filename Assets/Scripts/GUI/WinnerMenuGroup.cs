@@ -131,7 +131,7 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
         if (score < 3)
         {
             //message.SetText("Curse you!  My plans for domination are ruined");
-            message.SetText("The curse is broken");
+            message.SetText("The loop is broken thanks to your sacrifice ... You will not be what you are doomed to become ...");
         }
         else if (score > 99)
         {

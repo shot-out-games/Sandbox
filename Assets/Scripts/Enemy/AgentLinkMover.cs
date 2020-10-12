@@ -48,7 +48,7 @@ public class AgentLinkMover : MonoBehaviour
                 agent.enabled = true;
                 agent.CompleteOffMeshLink();
                 anim.SetInteger("JumpState", 0);
-                //Debug.Log("jump");
+                Debug.Log("jump");
                 //}
 
             }

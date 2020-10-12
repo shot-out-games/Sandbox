@@ -37,17 +37,22 @@ public class PickupRaycastSystem : SystemBase
         bool pickedUp = false;
         Entity pickedUpEntity = Entity.Null;
         InteractionObject interactionObject = null;
+        Entity pickerUpper = Entity.Null;
+
 
         var bufferFromEntity = GetBufferFromEntity<WeaponItemComponent>();
 
+
+
         //        Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity entity, WeaponItem WeaponItem, ref WeaponItemComponent weaponItemComponent,
         //         ref Translation translation, ref PhysicsCollider collider, ref Rotation rotation) =>
-        Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity entity, WeaponItem WeaponItem, 
+        Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity entity, WeaponItem WeaponItem,
                 ref Translation translation, ref PhysicsCollider collider, ref Rotation rotation) =>
         {
 
             if (bufferFromEntity.HasComponent(entity))
             {
+                //var bufferFromEntity = GetBufferFromEntity<WeaponItemComponent>();
                 var weaponItemComponent = bufferFromEntity[entity];
 
 
@@ -83,12 +88,19 @@ public class PickupRaycastSystem : SystemBase
 
 
                 bool hasPointHit = collisionWorld.CalculateDistance(pointDistanceInput, out DistanceHit pointHit);
-                //Debug.Log(" pt e " + pointHit.ColliderKey);
+                if (HasComponent<TriggerComponent>(pointHit.Entity))
+                {
+                    var parent = EntityManager.GetComponentData<TriggerComponent>(pointHit.Entity).ParentEntity;
+                    pickerUpper = parent;
+                    Debug.Log(" pt e " + pickerUpper);
 
+                }
 
 
                 if (hasPointHit && weaponItemComponent[0].pickedUp == false)
                 {
+
+
                     Entity e = physicsWorldSystem.PhysicsWorld.Bodies[pointHit.RigidBodyIndex].Entity;
                     //Debug.Log("ve " + applyImpulse.Velocity.x);
                     //Debug.Log("left / right");
@@ -103,7 +115,7 @@ public class PickupRaycastSystem : SystemBase
                         pickedUp = true;
                         pickedUpEntity = entity;
                         interactionObject = WeaponItem.interactionObject;
-                        Debug.Log(" pt e " + e);
+                        //Debug.Log(" pt e " + e);
                     }
                 }
 
@@ -125,24 +137,47 @@ public class PickupRaycastSystem : SystemBase
 
         if (pickedUp)
         {
-            Entities.WithoutBurst().ForEach((WeaponInteraction weaponInteraction, WeaponManager weaponManager) =>
+
+
+
+            Entities.WithoutBurst().ForEach((WeaponInteraction weaponInteraction, WeaponManager weaponManager, Entity e) =>
             {
-                weaponManager.DetachPrimaryWeapon();//need to add way to set to not picked up  afterwards
-                weaponInteraction.interactionObject = interactionObject;
-                //weaponManager.primaryWeapon.weaponGameObject = interactionObject.gameObject;
-                weaponManager.primaryWeapon.weaponGameObject = interactionObject.GetComponent<WeaponItem>().gameObject;//always the same as go for now
-                weaponManager.AttachPrimaryWeapon();
-                weaponInteraction.UpdateSystem();
-                Debug.Log("MATCH FOUND");
+                if (pickerUpper == e)
+                {
+                    weaponManager.DetachPrimaryWeapon(); //need to add way to set to not picked up  afterwards
+                    weaponInteraction.interactionObject = interactionObject;
+                    //weaponManager.primaryWeapon.weaponGameObject = interactionObject.gameObject;
+                    weaponManager.primaryWeapon.weaponGameObject =
+                        interactionObject.GetComponent<WeaponItem>().gameObject; //always the same as go for now
+                    weaponManager.AttachPrimaryWeapon();
+                    weaponInteraction.UpdateSystem();
+                    Debug.Log("MATCH FOUND");
+                }
+                else
+                {
+                    pickedUp = false;
+                    var weaponItemBufferList = GetBufferFromEntity<WeaponItemComponent>();
+                    var weaponItemComponent = bufferFromEntity[pickedUpEntity];
+                    var intBufferElement = weaponItemComponent[0];
+                    intBufferElement.pickedUp = false;
+                    weaponItemComponent[0] = intBufferElement;
+
+                }
 
             }).Run();
 
             //EntityManager.DestroyEntity(pickedUpEntity);
-            EntityManager.SetComponentData(pickedUpEntity, new Translation { Value = new float3(0, -2500, 0) });
-            
+
         }
 
+        if (pickedUp == true)
+        {
+            EntityManager.SetComponentData(pickedUpEntity, new Translation { Value = new float3(0, -2500, 0) });
+        }
+        else
+        {
 
+        }
 
 
     }

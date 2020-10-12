@@ -169,7 +169,7 @@ public class DeadSystem : JobComponentSystem //really game over system currently
             Entities.WithoutBurst().WithStructuralChanges().ForEach(
                 (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
                 {
-                    messageMenu.messageString = "Opposition destroyed ... ";
+                    messageMenu.messageString = "Lurker destroyed ... ";
                     messageMenu.ShowMenu();
                 }
             ).Run();

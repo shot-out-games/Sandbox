@@ -22,7 +22,11 @@ public class StatsSystem : SystemBase
             ) =>
             {
                 //Debug.Log("skill tree available");
-                if (skillTree.CurrentLevelXp >= skillTree.PointsNextLevel)
+
+                int pointsNeeded = skillTree.PointsNextLevel * skillTree.CurrentLevel;
+
+
+                if (skillTree.CurrentLevelXp >= pointsNeeded)
                 {
                     skillTree.CurrentLevelXp = 0;
                     skillTree.CurrentLevel += 1;

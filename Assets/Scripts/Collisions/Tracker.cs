@@ -33,7 +33,8 @@ public enum TriggerType
     Lever = 15,
     Key = 16,
     Home = 17,
-    Melee = 18
+    Melee = 18,
+    Obstacle = 19
 }
 
 [RequiresEntityConversion]

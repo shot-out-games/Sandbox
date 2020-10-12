@@ -42,7 +42,7 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     private TextMeshProUGUI currentInstruction;
 
     [SerializeField]
-    private int instructionCount = 1;
+    private int instructionCount = 0;
 
     [SerializeField]
     private int totalInstructions = 2;
@@ -83,9 +83,15 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
                 instructionCount = instructionCount + 1;
                 float fontSize = 25;
                 if (mobile == true) fontSize = 75;
+                if (instructionCount == 2)
+                {
+                    currentInstruction.fontSize = fontSize;
+                    currentInstruction.text = "Reach Level 8 to unlock the mysterious weapon and dispose of the leader.";
+
+                }
                 if (instructionCount == 3)
                 {
-                    currentInstruction.text = "The Robies can be shocked but not destroyed.  Shocking them increases your health.";
+                    currentInstruction.text = "Discover the secret to breaking the loop.";
                     //currentInstruction.text = ".";
                     currentInstruction.fontSize = fontSize;
                 }
@@ -93,18 +99,12 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
                 {
                     currentInstruction.fontSize = fontSize;
                     //currentInstruction.text = "Please use Right Click to aim directly in front of you.";
-                    currentInstruction.text = "The nearer you are to death the more powerful  you become. Jump Higher, Run faster, Shoot quicker.";
+                    currentInstruction.text = "Sacrifices must be made.";
                 }
-                if (instructionCount == 2)
-                {
-                    currentInstruction.fontSize = fontSize;
-                    currentInstruction.text = "Find the eight Soul Cubes to unlock the gate to escape this strange empire.";
-
-                }
-                if (instructionCount == 5)
-                {
-                    currentInstruction.text = "Go through this gate and destroy the leader. Do you have too much health and not enough power?";
-                }
+                //if (instructionCount == 5)
+                //{
+                   // currentInstruction.text = "-";
+                //}
                 //if (instructionCount == 6)
                 //{
                 //    currentInstruction.text = "Reverse shots are very powerful and activate triggers.";
