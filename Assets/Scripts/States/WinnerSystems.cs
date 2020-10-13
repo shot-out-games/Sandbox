@@ -164,7 +164,7 @@ public class WinnerSystem : SystemBase
                 }
             ).Run();
 
-            Entities.WithoutBurst().WithStructuralChanges().ForEach(
+            Entities.WithoutBurst().WithAll<PlayerComponent>().WithStructuralChanges().ForEach(
                 (WeaponManager weaponManager) =>
                 {
                     weaponManager.DetachPrimaryWeapon();
@@ -312,8 +312,9 @@ public class WinnerSystem : SystemBase
 
             Entities.WithoutBurst().ForEach
             (
-                (ref PlayerComponent playerComponent, ref Translation translation, ref Rotation rotation) =>
+                (PlayerCombat playerCombat, ref Translation translation, in PlayerComponent playerComponent) =>
                 {
+                    playerCombat.StopIKPlayer();
                     //Debug.Log("reset ");
                     translation.Value = playerComponent.startPosition;
                 }
