@@ -82,7 +82,7 @@ namespace SandBox.Player
                         //pv.Linear.x = 0;
                         //pv.Linear = applyImpulseComponent.Velocity;
 
-                        //translation.Value.z = 0;
+                        translation.Value.y = 0;//change for jump use
 
 
                     }
@@ -235,7 +235,7 @@ namespace SandBox.Player
                  if (rotating && leftStickX != leftStickY && pause.value == 0 && !deadComponent.isDead)
                  {
                      Camera cam = playerMove.mainCam;
-                     //float slerpDampTime = playerMoveComponent.rotateSlerpDampTime;
+                     float slerpDampTime = playerMoveComponent.rotateSpeed;
                      //Quaternion camRotation = cam.transform.rotation;
                      //camRotation.x = 0;
                      //camRotation.z = 0;
@@ -283,7 +283,11 @@ namespace SandBox.Player
                      //tmpRotation = math.mul(tmpRotation, quaternion.RotateY(leftStickX));
 
                      //rotation.Value = tmpRotation;
-                     rotation.Value = targetRotation;
+
+                     //rotation.Value = targetRotation;
+                     rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime);
+
+
                      //playerMove.transform.rotation = rotation.Value;
 
                      //Vector3 desiredDirection = Vector3.Normalize(new Vector3(leftStickX, 0f, leftStickY));
