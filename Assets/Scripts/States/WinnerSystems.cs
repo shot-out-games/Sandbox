@@ -183,6 +183,7 @@ public class WinnerSystem : SystemBase
                     {
                         messageMenu.showOnce = true;
                         messageMenu.showTimeLength = 4.2f;
+                        messageMenu.audioSource.PlayOneShot(messageMenu.voiceClip1);
                         messageMenu.messageString = "I am you ... I am you from a time you can not understand ... ... ...";
                         messageMenu.showTimeLength = 2.1f;
                         messageMenu.ShowMenu();

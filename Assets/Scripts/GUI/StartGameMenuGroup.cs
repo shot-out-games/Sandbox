@@ -20,9 +20,9 @@ public class StartGameMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 {
     private EntityManager manager;
     public Entity entity;
-    AudioSource audioSource;
+    public AudioSource audioSource;
     private List<Button> buttons;
-    public AudioClip clickSound;
+    //public AudioClip clickSound;
     public EventSystem eventSystem;
     private CanvasGroup canvasGroup;
     [SerializeField]
@@ -34,6 +34,9 @@ public class StartGameMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     public string messageString;
     [HideInInspector]
     public bool showOnce;
+    public AudioClip voiceClip1;
+    public AudioClip voiceClip2;
+    public AudioClip voiceClip3;
 
 
 
@@ -56,9 +59,9 @@ public class StartGameMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 
         audioSource = GetComponent<AudioSource>();
         canvasGroup = GetComponent<CanvasGroup>();
-        buttons = gameObject.GetComponentsInChildren<Button>().ToList();
-        buttons.ForEach((btn) => btn.onClick.AddListener(() =>
-        PlayMenuClickSound(clickSound)));//shortcut instead of using inspector to add to each button
+        //buttons = gameObject.GetComponentsInChildren<Button>().ToList();
+        //buttons.ForEach((btn) => btn.onClick.AddListener(() =>
+        //PlayMenuClickSound(clickSound)));//shortcut instead of using inspector to add to each button
         startShowTimer = true;
 
     }
@@ -121,11 +124,11 @@ public class StartGameMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 
     }
 
-    void PlayMenuClickSound(AudioClip clip)
-    {
-        audioSource.PlayOneShot(clip);
+    //void PlayMenuClickSound(AudioClip clip)
+    //{
+       // audioSource.PlayOneShot(clip);
 
-    }
+    //}
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {

@@ -23,12 +23,13 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     public Entity entity;
     AudioSource audioSource;
     private List<Button> buttons;
-    public AudioClip clickSound;
+    //public AudioClip clickSound;
     public EventSystem eventSystem;
     private CanvasGroup canvasGroup;
     [SerializeField]
     private Button defaultButton;
-    private float showTimeLength = 2.95f;
+    [SerializeField]
+    private float showTimeLength = 3f;
     private float showTimer = 0f;
     private bool startShowTimer;
 
@@ -56,8 +57,8 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
         audioSource = GetComponent<AudioSource>();
         canvasGroup = GetComponent<CanvasGroup>();
         buttons = gameObject.GetComponentsInChildren<Button>().ToList();
-        buttons.ForEach((btn) => btn.onClick.AddListener(() =>
-            PlayMenuClickSound(clickSound)));//shortcut instead of using inspector to add to each button
+        //buttons.ForEach((btn) => btn.onClick.AddListener(() =>
+           // PlayMenuClickSound(clickSound)));//shortcut instead of using inspector to add to each button
         startShowTimer = true;
         //currentInstruction.text = "Please Find the Weapon";
         float fontSize = 25;
@@ -86,7 +87,9 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
                 if (instructionCount == 2)
                 {
                     currentInstruction.fontSize = fontSize;
-                    currentInstruction.text = "Reach Level 8 to unlock the mysterious weapon and dispose of the leader.";
+                    currentInstruction.text = "Reach Level 8 to unlock the mysterious weapon and dispose of this leader.";
+                    audioSource.Play();
+                    showTimeLength = 5;
 
                 }
                 if (instructionCount == 3)
@@ -94,16 +97,18 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
                     currentInstruction.text = "Discover the secret to breaking the loop.";
                     //currentInstruction.text = ".";
                     currentInstruction.fontSize = fontSize;
+                    showTimeLength = 3;
                 }
                 if (instructionCount == 4)
                 {
                     currentInstruction.fontSize = fontSize;
                     //currentInstruction.text = "Please use Right Click to aim directly in front of you.";
                     currentInstruction.text = "Sacrifices must be made.";
+                    showTimeLength = 3;
                 }
                 //if (instructionCount == 5)
                 //{
-                   // currentInstruction.text = "-";
+                // currentInstruction.text = "-";
                 //}
                 //if (instructionCount == 6)
                 //{
@@ -191,11 +196,11 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 
     }
 
-    void PlayMenuClickSound(AudioClip clip)
-    {
-        audioSource.PlayOneShot(clip);
-        Debug.Log("clip " + clip);
-    }
+    //void PlayMenuClickSound(AudioClip clip)
+    //{
+    // audioSource.PlayOneShot(clip);
+    //Debug.Log("clip " + clip);
+    //}
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
