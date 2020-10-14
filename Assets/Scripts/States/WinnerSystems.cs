@@ -321,7 +321,18 @@ public class WinnerSystem : SystemBase
                 }
             ).Run();
 
-
+            Entities.WithoutBurst().ForEach//dont know why emnemy is following without entity tracker????
+            (
+                (EnemyMelee enemyCombat, EnemyMove EnemyMove,
+                    ref Translation translation, in EnemyComponent enemyComponent) =>
+                {
+                    enemyCombat.StopIK();
+                    enemyCombat.StopAimIK();
+                    Debug.Log("reset enemy");
+                    translation.Value = enemyComponent.startPosition;
+                    enemyCombat.transform.position = EnemyMove.originalPosition;
+                }
+            ).Run();
 
         }
 

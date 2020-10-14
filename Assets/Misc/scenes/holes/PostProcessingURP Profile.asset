@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81180773991d8724ab7f2d216912b564, type: 3}
   m_Name: ChromaticAberration
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   intensity:
     m_OverrideState: 1
-    m_Value: 0.027
+    m_Value: 0.019
     min: 0
     max: 1
 --- !u!114 &-5916726899376225334
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97c23e3b12dc18c42a140437e53d3951, type: 3}
   m_Name: Tonemapping
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 1
@@ -235,30 +235,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
   m_Name: ColorAdjustments
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   postExposure:
     m_OverrideState: 1
     m_Value: 2.4
   contrast:
-    m_OverrideState: 1
-    m_Value: 7.7
+    m_OverrideState: 0
+    m_Value: 52.2
     min: -100
     max: 100
   colorFilter:
-    m_OverrideState: 1
-    m_Value: {r: 0.8773585, g: 0.8630117, b: 0.84149164, a: 1}
+    m_OverrideState: 0
+    m_Value: {r: 0.58852494, g: 0.6348657, b: 0.8584906, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
   hueShift:
-    m_OverrideState: 1
-    m_Value: -38
+    m_OverrideState: 0
+    m_Value: -36.2
     min: -180
     max: 180
   saturation:
-    m_OverrideState: 1
-    m_Value: -41.3
+    m_OverrideState: 0
+    m_Value: -0.2
     min: -100
     max: 100
 --- !u!114 &7461340921268097194

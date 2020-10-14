@@ -5,7 +5,31 @@ using Unity.Entities;
 using Unity.Transforms;
 
 
-[RequiresEntityConversion]
+
+using System.Numerics;
+using Unity.Entities;
+using Unity.Mathematics;
+using Vector3 = UnityEngine.Vector3;
+
+[System.Serializable]
+public struct EnemyComponent : IComponentData
+{
+    [System.NonSerialized]
+    public Entity e;
+    //public int saveIndex;
+    public float3 position;
+    public float speed;
+    public float combatStrikeDistance;
+    public float combatRangeDistance;
+    public float chaseRange;
+    public float aggression;
+    public float maxHealth;
+    public bool invincible;
+    public float3 startPosition;
+
+}
+
+
 
 public class EnemyComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 {
@@ -38,8 +62,13 @@ public class EnemyComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
         enemyEntity = entity;
         manager = dstManager;
-        dstManager.AddComponentData(entity, 
-            new EnemyComponent { e = entity, invincible = invincible }
+        dstManager.AddComponentData(entity,
+            new EnemyComponent
+            {
+                e = entity,
+                invincible = invincible,
+                startPosition = manager.GetComponentData<Translation>(entity).Value
+            }
             );
         dstManager.AddComponentData(entity, new Pause { value = 0 });
 
@@ -97,12 +126,12 @@ public class EnemyComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 
 
         dstManager.AddComponentData(entity, new DeadComponent
-            {
-                tag = 2,
-                isDead = false,
-                checkLossCondition = checkLossCondition
+        {
+            tag = 2,
+            isDead = false,
+            checkLossCondition = checkLossCondition
 
-            }
+        }
         );
 
         //string str = gameObject.name;

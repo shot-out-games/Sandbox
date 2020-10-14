@@ -127,8 +127,8 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     public float speedMultiple;
     public bool backup;
 
-    [SerializeField]
-    private Vector3 originalPosition;
+    [HideInInspector]
+    public Vector3 originalPosition;
     private Vector3 destinationBeforeRewind;
     private bool currentRewind;
 

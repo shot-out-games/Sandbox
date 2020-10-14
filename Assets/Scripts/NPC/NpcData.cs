@@ -14,8 +14,6 @@ public class NpcData
     public DeadComponent savedDead;
     public WinnerComponent savedWinner;
     public HealthComponent savedHealth;
-    //this project only
-    public HitsComponent savedHits;
 
 
 }
