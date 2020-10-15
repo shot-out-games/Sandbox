@@ -228,9 +228,9 @@ public class InputController : MonoBehaviour, IConvertGameObjectToEntity
         leftTriggerValue = player.GetAxis("LeftTrigger");
         rightTriggerValue = player.GetAxis("RightTrigger");
 
-        leftTriggerPressed = leftTriggerValue > 0.02;
-        rightTriggerPressed = rightTriggerValue > 0.02;
-
+        leftTriggerPressed = player.GetButtonDown("LeftTrigger");
+        rightTriggerPressed = player.GetButtonDown("RightTrigger");
+        
         leftTriggerLast = player.GetAxisPrev("LeftTrigger");
         rightTriggerLast = player.GetAxisPrev("RightTrigger");
 
