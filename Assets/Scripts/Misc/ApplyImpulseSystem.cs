@@ -70,7 +70,12 @@ public class ApplyImpulseSystem : SystemBase
                 //ComponentExtensions.ApplyLinearImpulse(ref physicsVelocity, physicsMass,
                 //applyImpulseData.Direction * applyImpulseData.Force);
 
-                physicsVelocity.Linear = applyImpulseData.Velocity;
+                
+                
+                //physicsVelocity.Linear = applyImpulseData.Velocity;
+
+
+
                 //translation.Value.y = 0;
 
 

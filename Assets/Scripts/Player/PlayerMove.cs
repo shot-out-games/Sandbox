@@ -91,7 +91,8 @@ namespace SandBox.Player
         //}
 
 
-        private void OnAnimatorMove()
+        //private void OnAnimatorMove()
+        private void Update()
         {
             if (_entity == Entity.Null) return;
             //changing so we need root animation here only
@@ -101,105 +102,36 @@ namespace SandBox.Player
             if (!_entityManager.HasComponent(_entity, typeof(PlayerComponent))) return;
             if (!ReInput.isReady) return;
 
-            bool threeD = _entityManager.GetComponentData<PlayerComponent>(_entity).threeD;
+            //ApplyImpulseComponent applyImpulseComponent =
+            //    _entityManager.GetComponentData<ApplyImpulseComponent>(_entity);
 
 
-            ApplyImpulseComponent applyImpulseComponent =
-                _entityManager.GetComponentData<ApplyImpulseComponent>(_entity);
+
+            ////_entityManager.SetComponentData(_entity, applyImpulseComponent);
 
 
-            float h = applyImpulseComponent.stickX;
-            float stickY = applyImpulseComponent.stickY;
-
-            currentSpeed = _entityManager.GetComponentData<RatingsComponent>(_entity).gameSpeed;
-            Vector3 velocity = animator.deltaPosition / Time.deltaTime * currentSpeed;
+            //bool grounded = applyImpulseComponent.Grounded;
 
 
-            //float size = math.length(applyImpulseComponent.Velocity);
-            //size = 1;
+            ////if (!jumpEnabled && animator != null)
 
-
-            float v = applyImpulseComponent.InJump ? negativeForce : 0;
-            if (applyImpulseComponent.Falling || applyImpulseComponent.fallingFramesCounter > 1)
-            {
-                v = negativeForce;
-            }
-
-            //if (applyImpulseComponent.BumpLeft == true)
+            //if (animator != null)
             //{
-            //    if (h < 0)
-            //    {
-            //        h = -negativeForce * size;
-            //        v = negativeForce * size;
-            //        applyImpulseComponent.InJump = false;
-            //    }
+            //    //Debug.Log("v " + velocity);
+            //    animator.SetBool("Grounded", grounded);
             //}
-            //else if (applyImpulseComponent.BumpRight == true)
-            //{
-            //    if (h > 0)
-            //    {
-            //        h = negativeForce * size;
-            //        v = negativeForce * size;
-            //        applyImpulseComponent.InJump = false;
-            //    }
-            //}
-
-
-
-
-            //vy = negativeForce;
-
-            //velocity.x = h * currentSpeed;
-            if (threeD)
-            {
-                //velocity.z = stickY * currentSpeed;
-            }
-
-            //velocity.y = v;
-            //velocity.x = 0;
-
-            applyImpulseComponent.Velocity = new float3(velocity.x, 0, velocity.z);
-
-
-            applyImpulseComponent.Velocity = velocity;
-
-
-
-            //Vector3 RIGHT = transform.TransformDirection(Vector3.right);//transform right
-            //Vector3 FORWARD = transform.TransformDirection(Vector3.forward);
-
-
-            
-
-            //applyImpulseComponent.Velocity = new float3(0 , v, 0);            //
-            //applyImpulseComponent.Velocity = new float3(velocity.x, v, velocity.z);            //
-
-            //Debug.Log("velocity " + applyImpulseComponent.Velocity);
-            _entityManager.SetComponentData(_entity, applyImpulseComponent);
-
-
-            bool grounded = applyImpulseComponent.Grounded;
-
-
-            //if (!jumpEnabled && animator != null)
-
-            if (animator != null)
-            {
-                //Debug.Log("v " + velocity);
-                animator.SetBool("Grounded", grounded);
-            }
 
 
         }
 
         void LateUpdate()
         {
-            if (Terrain.activeTerrain != null && !jumpEnabled)
-            {
-                Vector3 newpos = transform.position;
-                newpos.y = Terrain.activeTerrain.SampleHeight(transform.position);
-                transform.position = newpos;
-            }
+            //if (Terrain.activeTerrain != null && !jumpEnabled)
+            //{
+            //    Vector3 newpos = transform.position;
+            //    newpos.y = Terrain.activeTerrain.SampleHeight(transform.position);
+            //    transform.position = newpos;
+            //}
 
         }
 
