@@ -80,7 +80,7 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
                 Debug.Log("aim ik auto bone ");
             }
             moveUsing.aimTransform = AimTransform;
-            if (moveUsing.moveAudioSource && moveUsing.moveAudioClip)
+            if (moveUsing.moveAudioSource && moveUsing.moveAudioClip && moveUsing.moveAudioSource.isPlaying == false)
             {
                 moveUsing.moveAudioSource.clip = moveUsing.moveAudioClip;
                 moveUsing.moveAudioSource.Play();
