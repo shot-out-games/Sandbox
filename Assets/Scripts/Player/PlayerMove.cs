@@ -37,6 +37,8 @@ namespace SandBox.Player
 
         [SerializeField]
         float rotateSpeed = 9;
+        //[SerializeField]
+        //private float desiredRotationAngle = ;
 
         [HideInInspector]
         public Camera mainCam;

@@ -82,7 +82,7 @@ namespace SandBox.Player
                     //pv.Linear = applyImpulseComponent.Velocity;
 
                     animator.SetFloat("Vertical", stickSpeed, .03f, Time.DeltaTime);
-                    animator.SetFloat("Horizontal", stickInput.x);
+                    //animator.SetFloat("Horizontal", stickInput.x);
 
                     velocity.y = 0;
                     pv.Linear = velocity;
@@ -138,14 +138,16 @@ namespace SandBox.Player
 
     }
 
-    [UpdateInGroup(typeof(TransformSystemGroup))]
-    [UpdateAfter(typeof(EndFrameLocalToParentSystem))]
-    //addd[UpdateAfter(typeof(PlayerRotateSystem))]
+    //[UpdateInGroup(typeof(TransformSystemGroup))]
+    //[UpdateAfter(typeof(EndFrameLocalToParentSystem))]
+    [UpdateAfter(typeof(PlayerRotateSystem))]
 
 
     public class PlayerRotateSystem : SystemBase
     {
 
+        //public float desiredRotationAngle;
+        public float CurrentRotationAngle;
 
 
 
@@ -159,9 +161,11 @@ namespace SandBox.Player
              (
                  PlayerMove playerMove,
                  ref Rotation rotation,
+                 ref PhysicsVelocity pv,
                  in Pause pause, in DeadComponent deadComponent,
                  in PlayerMoveComponent playerMoveComponent,
-                 in InputController inputController
+                 in RatingsComponent ratingsComponent,
+                     in InputController inputController
 
              ) =>
              {
@@ -169,53 +173,125 @@ namespace SandBox.Player
                  float leftStickY = inputController.leftStickY;
                  //bool rotating = inputController.rotating;
 
-                 bool haveInput = (math.abs(leftStickX) > float.Epsilon);
+                 //bool haveInput = (math.abs(leftStickX) > float.Epsilon);
 
 
-                 if (leftStickX != leftStickY && pause.value == 0 && !deadComponent.isDead)
+
+
+                 if (pause.value == 0 && !deadComponent.isDead)
                  {
                      Camera cam = playerMove.mainCam;
                      float slerpDampTime = playerMoveComponent.rotateSpeed;
-                     Vector3 forward =
-                          cam.transform.TransformDirection(Vector3.forward); //forward of camera to forward of world
-                                                                             //local forward vector of camera will become world vector position that is passed to the forward vector of the player (target) rigidbody 
-                                                                             //(The cam and player(target) vector will now always point in the same direction)
+                     var up = math.up();
+                     //local forward vector of camera will become world vector position that is passed to the forward vector of the player (target) rigidbody 
+                     //(The cam and player(target) vector will now always point in the same direction)
 
 
-                     forward = playerMove.transform.forward;
 
-                     forward.y = 0f;
 
-                     //forward = forward.normalized;
+                     //forward.y = 0f;
+                     //float3 requestedMovementDirection = float3.zero;
 
-                     //forward = playerMove.transform.forward;
-
-                     //forward = Vector3.forward;
-
-                     Vector3 right = Quaternion.Euler(0, 90, 0) * forward;
-
-                     right = playerMove.transform.right;
-
-                     forward.Normalize();
-                     right.Normalize();
-
-                     Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
-                     //Vector3 targetDirection = (leftStickX * right);
-
-//                     if (targetDirection.sqrMagnitude > 1f)
                      //{
-//                         targetDirection = targetDirection.normalized;
+                     //float3 forward = math.forward(quaternion.identity);
+                     //    float3 right = math.cross(up, forward);
+
+                     //    float horizontal = leftStickX;
+                     //    float vertical = leftStickY;
+                     //    //bool jumpRequested = ccInternalData.Input.Jumped != 0;
+                     //    //ccInternalData.Input.Jumped = 0; // "consume" the event
+                     //    if (haveInput)
+                     //    {
+                     //        float3 localSpaceMovement = forward * vertical + right * horizontal;
+                     //        float3 worldSpaceMovement = math.rotate(quaternion.AxisAngle(up, CurrentRotationAngle), localSpaceMovement);
+                     //        requestedMovementDirection = math.normalize(worldSpaceMovement);
+                     //    }
                      //}
 
-                     //targetDirection = targetDirection.normalized;
+                     //// Turning
+                     //{
+                     //    float horizontal = leftStickX;
+                     //    bool haveInput = (math.abs(horizontal) > float.Epsilon);
+                     //    if (haveInput)
+                     //    {
+                     //        var userRotationSpeed = horizontal * slerpDampTime;
+                     //        pv.Angular = userRotationSpeed * up;
+                     //        CurrentRotationAngle += userRotationSpeed *  Time.DeltaTime;
+                     //    }
+                     //    else
+                     //    {
+                     //        pv.Angular = 0f;
+                     //    }
+                     //}
 
-                     quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
-                     //rotation.Value = targetRotation;
 
-                     //rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime);
+                     //pv.Linear = requestedMovementDirection * ratingsComponent.gameSpeed;
 
-                 //pv.
+                     // forward =
+                     // cam.transform.TransformDirection(Vector3.forward); //forward of camera to forward of world
 
+
+
+                     bool haveInput = (math.abs(leftStickX) > float.Epsilon) || (math.abs(leftStickY) > float.Epsilon);
+
+
+                     if (haveInput)
+                     {
+
+                         Vector3 forward = cam.transform.forward;
+
+                         //Vector3 right = playerMove.transform.right;
+                         //Vector3 right = Quaternion.Euler(0, 90, 0) * forward;
+                         Vector3 right = cam.transform.right;
+
+                         //forward.Normalize();
+                         //right.Normalize();
+
+                         Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
+                         targetDirection.Normalize();
+                         ////Vector3 targetDirection = (leftStickX * right);
+
+                         ////if (targetDirection.sqrMagnitude > 1f)
+                         ////{
+                         ////targetDirection = targetDirection.normalized;
+                         ////}
+
+
+                         quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
+
+
+                         float diff = Quaternion.Angle(rotation.Value, targetRotation);
+                         Debug.Log("diff " + diff);
+                         if (diff < 90)
+                         {
+                         }
+
+                         rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime);
+
+                         //rotation.Value = targetRotation;
+
+                         //rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime);
+
+                         //pv.
+
+                         //desiredRotationAngle = Vector3.Angle(playerMove.transform.forward, targetRotation);
+                         //var crossProduct = Vector3.Cross(playerMove.transform.forward, forward).y;
+                         //if (crossProduct < 0)
+                         //{
+                         //    desiredRotationAngle *= -1;
+                         //}
+
+
+
+
+
+
+                         //if (desiredRotationAngle > 10 || desiredRotationAngle < -10)
+                         //{
+                         //    rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime);
+                         //   // transform.Rotate(Vector3.up * desiredRotationAngle * rotationSpeed * Time.deltaTime);
+                         //}
+                     }
 
                  }
              }
