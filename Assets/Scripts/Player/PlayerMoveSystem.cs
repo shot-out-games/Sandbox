@@ -70,6 +70,9 @@ namespace SandBox.Player
                     in RatingsComponent ratingsComponent
                 ) =>
                 {
+                    Camera cam = playerMove.mainCam;
+                    //animator.applyRootMotion = true;
+
 
                     float currentSpeed = ratingsComponent.gameSpeed;
                     Vector3 velocity = animator.deltaPosition / Time.DeltaTime * currentSpeed;
@@ -77,15 +80,27 @@ namespace SandBox.Player
                     float leftStickX = inputController.leftStickX;
                     float leftStickY = inputController.leftStickY;
 
+                    Vector3 moveDir = cam.transform.forward * leftStickY + cam.transform.right * leftStickX;
+                    moveDir.Normalize();
+
                     stickInput = new Vector3(leftStickX, 0, leftStickY);//x is controlled by rotation
+
+
                     stickSpeed = stickInput.sqrMagnitude;
                     //pv.Linear = applyImpulseComponent.Velocity;
 
                     animator.SetFloat("Vertical", stickSpeed, .03f, Time.DeltaTime);
                     //animator.SetFloat("Horizontal", stickInput.x);
 
-                    velocity.y = 0;
-                    pv.Linear = velocity;
+                    //velocity = moveDir * currentSpeed;
+                    //velocity.y = 0;
+                    pv.Linear = cam.transform.right * leftStickX * currentSpeed + cam.transform.forward * leftStickY * currentSpeed;
+                    //pv.Linear.z = 0;
+                    pv.Linear.y = 0;
+                    Debug.Log("pv " + pv.Linear);
+
+
+
 
                     animator.SetBool("Grounded", applyImpulseComponent.Grounded);
 
@@ -180,7 +195,6 @@ namespace SandBox.Player
 
                  if (pause.value == 0 && !deadComponent.isDead)
                  {
-                     Camera cam = playerMove.mainCam;
                      float slerpDampTime = playerMoveComponent.rotateSpeed;
                      var up = math.up();
                      //local forward vector of camera will become world vector position that is passed to the forward vector of the player (target) rigidbody 
@@ -235,14 +249,14 @@ namespace SandBox.Player
                      bool haveInput = (math.abs(leftStickX) > float.Epsilon) || (math.abs(leftStickY) > float.Epsilon);
 
 
-                     if (haveInput)
+                 if (leftStickX != leftStickY)
                      {
 
-                         Vector3 forward = cam.transform.forward;
-
-                         //Vector3 right = playerMove.transform.right;
+                         Vector3 forward = playerMove.mainCam.transform.forward;
+                         forward.y = 0;
+                         Vector3 right = playerMove.mainCam.transform.right;
                          //Vector3 right = Quaternion.Euler(0, 90, 0) * forward;
-                         Vector3 right = cam.transform.right;
+                         //Vector3 right = Vector3.right;
 
                          //forward.Normalize();
                          //right.Normalize();
@@ -260,15 +274,13 @@ namespace SandBox.Player
                          quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
 
 
-                         float diff = Quaternion.Angle(rotation.Value, targetRotation);
-                         Debug.Log("diff " + diff);
-                         if (diff < 90)
-                         {
-                         }
+                         //float diff = Quaternion.Angle(rotation.Value, targetRotation);
+                       
+                    
 
-                         rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime);
+                         //rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime * Time.DeltaTime);
 
-                         //rotation.Value = targetRotation;
+                         rotation.Value = targetRotation;
 
                          //rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime);
 
