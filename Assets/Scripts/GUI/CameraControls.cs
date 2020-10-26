@@ -93,7 +93,7 @@ public class CameraControls : MonoBehaviour
         else if (vcam)
         {
             fov = math.clamp(fov, minFov, maxFov);
-            Debug.Log("fov " + fov);
+            //Debug.Log("fov " + fov);
             vcam.m_Lens.FieldOfView = _fov;
         }
 

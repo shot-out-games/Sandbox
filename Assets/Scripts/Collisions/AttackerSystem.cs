@@ -7,25 +7,58 @@ using Unity.Physics;
 
 public class AttackerSystem : JobComponentSystem
 {
-    public int counta;
-    public int countb;
+    //public int counta;
+    //public int countb;
 
     protected override JobHandle OnUpdate(JobHandle inputDeps)
     {
         EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
 
 
+
         Entities.WithoutBurst().ForEach(
-                //(HealthBar healthBar, DynamicBuffer<CollisionComponent> collisionComponent,
-                (
-                    Animator animator,
-                    HealthBar healthBar,
-                    in CollisionComponent collisionComponent,
-                    in Entity entity
+            //(HealthBar healthBar, DynamicBuffer<CollisionComponent> collisionComponent,
+            (
+                ref CheckedComponent checkedComponent
 
 
-                ) =>
+            ) =>
+            {
+                int countDown = 60;
+                if (checkedComponent.collisionChecked == true && checkedComponent.timer < countDown)
                 {
+                    checkedComponent.timer++;
+                }
+                else
+                {
+                    checkedComponent.collisionChecked = false;
+                    checkedComponent.timer = 0;
+                }
+
+
+
+            }
+            ).Run();
+
+
+
+
+
+
+
+
+
+            Entities.WithoutBurst().ForEach(
+            //(HealthBar healthBar, DynamicBuffer<CollisionComponent> collisionComponent,
+            (
+                Animator animator,
+                HealthBar healthBar,
+                in CollisionComponent collisionComponent,
+                in Entity entity
+
+
+            ) =>
+            {
                     bool dead = false;
                     if (EntityManager.HasComponent<DeadComponent>(entity))
                     {
@@ -45,7 +78,8 @@ public class AttackerSystem : JobComponentSystem
                     Entity entityB = collision_entity_b;
                     //int typeA = type_a;
                     //int typeB = type_b;
-
+                    //Debug.Log("as0 " + entityA);
+                    //Debug.Log("as1 " + entityB);
 
                     bool playerA = EntityManager.HasComponent(collision_entity_a, typeof(PlayerComponent));
                     bool playerB = EntityManager.HasComponent(collision_entity_b, typeof(PlayerComponent));
@@ -61,6 +95,10 @@ public class AttackerSystem : JobComponentSystem
 
                     if (check == true)
                     {
+
+
+                        //Debug.Log("hp check");
+
 
                         var trigger_a = EntityManager.GetComponentData<CheckedComponent>(entityA);
 
@@ -78,6 +116,11 @@ public class AttackerSystem : JobComponentSystem
                                 //Debug.Log("isMelee " + WeaponPower);
                             }
 
+                            var healthB = EntityManager.GetComponentData<HealthComponent>(entityB);
+                            bool alwaysDamage = healthB.AlwaysDamage;
+
+                            if(alwaysDamage == false)
+                            {
 
                             bool hasMelee = EntityManager.HasComponent<MeleeComponent>(entityA);
                             if (hasMelee)
@@ -93,6 +136,14 @@ public class AttackerSystem : JobComponentSystem
                                     hw = .19f;
                                 }
 
+                            }
+
+                            }
+                            else
+                            {
+                                hw = 1;
+                                hitPower = 10;//add to arcadeGame Component later
+                                //Debug.Log("hp 1d");
                             }
 
                             //Debug.Log("hp " + hitPower + " hw " + hw + " wp " + WeaponPower + " game hp " + EntityManager.GetComponentData<MeleeComponent>(entityA).gameHitPower);

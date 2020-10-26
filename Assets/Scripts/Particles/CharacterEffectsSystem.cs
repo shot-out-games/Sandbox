@@ -37,10 +37,10 @@ public class CharacterEffectsSystem : SystemBase
                 //if (input.rightTriggerDown == true && controlBar.value < 25f) 
                 if (pause.value == 1) return;
 
-                if (input.leftTriggerDown == true || input.rightTriggerDown == true)
-                {
-                    impulse.impulseSource.GenerateImpulse();
-                }
+                //if (input.leftTriggerDown == true || input.rightTriggerDown == true)
+                //{
+                    //impulse.impulseSource.GenerateImpulse();
+                //}
 
             }
         ).Run();

@@ -33,6 +33,7 @@ public struct TriggerComponent : IComponentData
 public struct CheckedComponent : IComponentData
 {
     public bool collisionChecked;
+    public float timer;
 
 }
 
@@ -52,17 +53,8 @@ public struct PowerTriggerComponent : IComponentData
     public int TriggerType;
 }
 
-
-//[UpdateBefore(typeof(BeginFixedStepSimulationEntityCommandBufferSystem))]
-
-//[UpdateAfter(typeof(BuildPhysicsWorld))]
-//[UpdateAfter(typeof(EndFramePhysicsSystem))]
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 [UpdateBefore(typeof(PlayerMoveSystem))]
-//[UpdateBefore(typeof(FixedStepSimulationSystemGroup))]
-
-//[UpdateInGroup(typeof(SimulationSystemGroup))]
-
 
 public class CollisionSystem : JobComponentSystem
 {
@@ -81,6 +73,7 @@ public class CollisionSystem : JobComponentSystem
         [ReadOnly] public PhysicsWorld physicsWorld;
         [ReadOnly] public ComponentDataFromEntity<TriggerComponent> triggerGroup;
         [ReadOnly] public ComponentDataFromEntity<MeleeComponent> meleeGroup;
+        [ReadOnly] public ComponentDataFromEntity<HealthComponent> healthGroup;
         public EntityCommandBuffer CommandBuffer;
         public void Execute(CollisionEvent ev) // this is never called
         {
@@ -93,10 +86,15 @@ public class CollisionSystem : JobComponentSystem
             var triggerComponent_a = triggerGroup[a];
             var triggerComponent_b = triggerGroup[b];
 
+            //var healthComponent_a = healthGroup[a];
+            //var healthComponent_b = healthGroup[a];
+
             Entity ch_a = triggerComponent_a.ParentEntity;
             Entity ch_b = triggerComponent_b.ParentEntity;
             int type_a = triggerComponent_a.Type;
             int type_b = triggerComponent_b.Type;
+
+            //Debug.Log("cha " + ch_a + " chb  " + ch_b);
 
 
             if (ch_a == ch_b) return;////?????
@@ -124,6 +122,23 @@ public class CollisionSystem : JobComponentSystem
             }
 
 
+            bool alwaysDamageA = false;
+            if (healthGroup.HasComponent(ch_a) == true)
+            {
+                var healthComponent_a = healthGroup[ch_a];
+                alwaysDamageA = healthComponent_a.AlwaysDamage;
+            }
+
+            bool alwaysDamageB = false;
+            if (healthGroup.HasComponent(ch_b) == true)
+            {
+                var healthComponent_b = healthGroup[ch_b];
+                alwaysDamageB = healthComponent_b.AlwaysDamage;//regardless of type trigger
+            }
+
+
+
+
 
 
 
@@ -131,6 +146,15 @@ public class CollisionSystem : JobComponentSystem
                 triggerComponent_b.Type == (int)TriggerType.Ground)
             {
                 return;
+            }
+
+            //Debug.Log("ta " + triggerComponent_a.Type);
+            //Debug.Log("tb " + triggerComponent_b.Type);
+
+            if (triggerComponent_a.Type == (int)TriggerType.Contact ||
+                triggerComponent_b.Type == (int)TriggerType.Contact)
+            {
+               // Debug.Log("cont");
             }
 
 
@@ -152,7 +176,7 @@ public class CollisionSystem : JobComponentSystem
 
 
 
-            if (type_a == type_b && punchingA == false && punchingB == false) return;
+            if (type_a == type_b && punchingA == false && punchingB == false && alwaysDamageA == false && alwaysDamageB == false) return;
 
             bool meleeA = false;
             bool meleeB = false;
@@ -190,9 +214,9 @@ public class CollisionSystem : JobComponentSystem
             bool ammoB = (type_a == (int)TriggerType.Base || type_a == (int)TriggerType.Head || type_a == (int)TriggerType.Body) &&
                          (type_b == (int)TriggerType.Ammo);
 
-            //Debug.Log("aa " + ammoA + " ab " + ammoB);
+            //Debug.Log("aa " + alwaysDamageA + " ab " + alwaysDamageB);
 
-            if (punchingA || ammoB || meleeA)
+            if (punchingA || ammoB || meleeA || alwaysDamageB)
             {
 
                 //Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
@@ -209,10 +233,10 @@ public class CollisionSystem : JobComponentSystem
                     };
                 CommandBuffer.AddComponent(ch_a, collisionComponent);
             }
-            else if (punchingB || ammoA || meleeB)
+            else if (punchingB || ammoA || meleeB || alwaysDamageA)
             {
 
-                //Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
+               // Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
                 //Debug.Log("c b " + ch_b + " c a " + ch_a);
 
 
@@ -257,6 +281,7 @@ public class CollisionSystem : JobComponentSystem
             CommandBuffer = m_EntityCommandBufferSystem.CreateCommandBuffer(),
             triggerGroup = GetComponentDataFromEntity<TriggerComponent>(true),
             meleeGroup = GetComponentDataFromEntity<MeleeComponent>(true),
+            healthGroup = GetComponentDataFromEntity<HealthComponent>(true)
         };
         JobHandle collisionHandle = collisionJob.Schedule(stepPhysicsWorld.Simulation, ref physicsWorld, inputDeps);
         collisionHandle.Complete();

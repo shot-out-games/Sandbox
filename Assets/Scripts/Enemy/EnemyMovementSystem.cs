@@ -37,7 +37,7 @@ public class EnemyMovementSystem : SystemBase
 
 
 
-                if (enemyMove.target != null)
+                if (enemyMove.target != null && enemyMove.enemyRole != EnemyRoles.None)
                 {
                     enemyMove.speedMultiple = 1;
                     enemyMovementComponent.speedMultiple =
@@ -119,11 +119,11 @@ public class EnemyMovementSystem : SystemBase
 
                     enemyState = new EnemyStateComponent() { MoveState = MoveState };
 
+                    translation.Value.z = 0;
                 }
 
-                translation.Value.z = 0;
 
-
+                translation.Value.y = 0;//only if no jumping enemy temp
 
 
 
@@ -141,8 +141,13 @@ public class EnemyMovementSystem : SystemBase
               ) =>
               {
                   AudioSource audioSource = enemyMove.audioSource;
+                  Vector3 velocity = Vector3.zero;
 
-                  Vector3 velocity = enemyMove.agent.velocity;
+                  if (enemyMove.agent)
+                  {
+                      velocity = enemyMove.agent.velocity;
+                  }
+
                   float speed = velocity.magnitude;
 
                   if (speed >= .01f && math.abs(velocity.y) <= .000001f)

@@ -33,7 +33,6 @@ public class LevelUpMechanicSystem : SystemBase
         Entities.ForEach(
             (
                 Entity e,
-                //int entityInQueryIndex,
                 ref ControlBarComponent controlBar,
                 ref LevelUpMechanicComponent levelUpMechanic,
                 ref RatingsComponent ratings,

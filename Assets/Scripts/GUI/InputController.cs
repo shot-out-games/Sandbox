@@ -237,8 +237,8 @@ public class InputController : MonoBehaviour, IConvertGameObjectToEntity
         leftTriggerChange = player.GetAxisDelta("LeftTrigger");
         rightTriggerChange = player.GetAxisDelta("RightTrigger");
 
-        leftTriggerDown = player.GetButtonDown("LeftTrigger");
-        rightTriggerDown = player.GetButtonDown("RightTrigger");
+        leftTriggerDown = player.GetButton("LeftTrigger");
+        rightTriggerDown = player.GetButton("RightTrigger");
 
         leftTriggerUp = player.GetButtonUp("LeftTrigger");
         rightTriggerUp = player.GetButtonUp("RightTrigger");

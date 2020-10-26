@@ -34,7 +34,8 @@ public enum TriggerType
     Key = 16,
     Home = 17,
     Melee = 18,
-    Obstacle = 19
+    Obstacle = 19,
+    Contact = 20
 }
 
 [RequiresEntityConversion]

@@ -8,7 +8,7 @@ public struct HealthComponent : IComponentData
 {
     public float TotalDamageLanded;
     public float TotalDamageReceived;
-    [System.NonSerialized]
+    public bool AlwaysDamage;//ignore hit weights and similar
     Entity Entity;
 }
 
@@ -29,6 +29,7 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
     public Image _healthBar = null;
     public Entity entity;
     private EntityManager entityManager;
+    [SerializeField] private bool alwaysDamage;
     public void HealthChange()
     {
 
@@ -69,6 +70,10 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
     {
         entityManager = dstManager;
         entity = _entity;
-        entityManager.AddComponentData(entity, new HealthComponent { TotalDamageLanded = 0, TotalDamageReceived = 0 });
+        entityManager.AddComponentData(entity, new HealthComponent
+        {
+            TotalDamageLanded = 0, TotalDamageReceived = 0,
+            AlwaysDamage = alwaysDamage
+        });
     }
 }

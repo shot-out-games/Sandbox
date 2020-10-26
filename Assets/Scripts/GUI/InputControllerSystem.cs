@@ -6,6 +6,8 @@ using Unity.Mathematics;
 using Unity.Transforms;
 
 
+
+[UpdateBefore(typeof(FixedStepSimulationSystemGroup))]
 [UpdateBefore(typeof(InputControllerSystemLateUpdate))]
 
 public class InputControllerSystemUpdate : SystemBase

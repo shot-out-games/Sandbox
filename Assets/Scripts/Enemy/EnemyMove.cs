@@ -52,6 +52,7 @@ public enum CombatStates
 
 public enum EnemyRoles
 {
+    None,
     Chase,
     Patrol,
     Evade,
@@ -174,21 +175,27 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             chaseRange = ratings.chaseRangeDistance;
             combatRangeDistance = ratings.combatRangeDistance;
             shootRangeDistance = ratings.shootRangeDistance;
-            agent.speed = ratings.speed;
-            moveSpeed = agent.speed;
+            if (agent)
+            {
+                agent.speed = ratings.speed;
+                moveSpeed = agent.speed;
+            }
 
         }
 
 
 
-        agent.autoBraking = false;
-        anim = GetComponent<Animator>();
-        agent.updateRotation = false;
-        agent.autoTraverseOffMeshLink = false;
-
-        //agent.updatePosition = false;
-
         originalPosition = transform.position;
+        anim = GetComponent<Animator>();
+
+        if (agent)
+        {
+            agent.autoBraking = false;
+            agent.updateRotation = false;
+            agent.autoTraverseOffMeshLink = false;
+            //agent.updatePosition = false;
+        }
+
 
 
     }
@@ -306,6 +313,9 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     public void FacePlayer()
     {
+        if(!agent) return;
+        
+
         if (!agent.enabled) return;
         Vector3 lookDir = target.position - transform.position;
         lookDir.y = 0;
@@ -337,15 +347,11 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     {
         if (agent == null || manager == null || entity == Entity.Null) return;
 
-        bool noX = false;
-        bool noZ = true;
-        noZ = false;
-
         if (agent.enabled)
         {
             Vector3 nextPosition = target.position;
-            if (noZ) nextPosition.z = 0;
             agent.destination = nextPosition;
+            Debug.Log("nav  " + agent.speed);
             AnimationMovement();
         }
     }
@@ -361,51 +367,55 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         if (target == null || anim == null) return;
 
 
-        if (backup == false)
+        if (agent)
         {
-            agent.updatePosition = true;
+
+            if (backup == false)
+            {
+                agent.updatePosition = true;
+            }
+
+
+            MoveStates state = manager.GetComponentData<EnemyStateComponent>(entity).MoveState;
+            int pursuitMode = anim.GetInteger("Zone");
+            agent.speed = pursuitMode >= 2 ? moveSpeed : moveSpeed * 2;
+            Vector3 forward =
+                transform.InverseTransformDirection(transform.forward); //world to local so always local forward (0,0,1)
+
+
+            float velx = 0;
+            float velz = forward.normalized.z;
+
+            if (currentRewind == true)
+            {
+                agent.speed = moveSpeed * 2;
+                velz = velz * 2;
+            }
+            else if (state == MoveStates.Idle)
+            {
+                agent.speed = 0;
+                velz = 0;
+            }
+            else if (state == MoveStates.Patrol)
+            {
+                agent.speed = moveSpeed * .5f;
+                velz = .5f;
+            }
+
+            velz = velz * speedMultiple;
+
+            //if (math.abs(agent.velocity.magnitude) < .000001f) velz = 0;
+
+            speed = Mathf.Lerp(speed, (transform.position - lastPosition).magnitude / Time.deltaTime, .19f);
+            //bool lastSpeed = speed > .000001f;
+            //speed = (transform.position - lastPosition).magnitude;
+            if (math.abs(speed) <= .000001f) velz = 0;
+            lastPosition = transform.position;
+
+            //Debug.Log("sp " + speed);
+            //anim.SetFloat("velx", velx);
+            anim.SetFloat("velz", velz);
         }
-
-
-        MoveStates state = manager.GetComponentData<EnemyStateComponent>(entity).MoveState;
-        int pursuitMode = anim.GetInteger("Zone");
-        agent.speed = pursuitMode >= 2 ? moveSpeed : moveSpeed * 2;
-        Vector3 forward =
-            transform.InverseTransformDirection(transform.forward); //world to local so always local forward (0,0,1)
-
-
-        float velx = 0;
-        float velz = forward.normalized.z;
-
-        if (currentRewind == true)
-        {
-            agent.speed = moveSpeed * 2;
-            velz = velz * 2;
-        }
-        else if (state == MoveStates.Idle)
-        {
-            agent.speed = 0;
-            velz = 0;
-        }
-        else if (state == MoveStates.Patrol)
-        {
-            agent.speed = moveSpeed * .5f;
-            velz = .5f;
-        }
-
-        velz = velz * speedMultiple;
-
-        //if (math.abs(agent.velocity.magnitude) < .000001f) velz = 0;
-
-        speed = Mathf.Lerp(speed, (transform.position - lastPosition).magnitude / Time.deltaTime, .19f);
-        //bool lastSpeed = speed > .000001f;
-        //speed = (transform.position - lastPosition).magnitude;
-        if (math.abs(speed) <= .000001f) velz = 0;
-        lastPosition = transform.position;
-
-        //Debug.Log("sp " + speed);
-        //anim.SetFloat("velx", velx);
-        anim.SetFloat("velz", velz);
 
     }
 
@@ -417,13 +427,15 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         if (isCurrentWayPointJump == false)
         {
             agent.updatePosition = true;
-            float speed = speedMultiple * 1.0f;
-            Vector3 velocity = anim.deltaPosition / Time.deltaTime * speed;
+            //float speed = speedMultiple * 1.0f;
+            //Vector3 velocity = anim.deltaPosition / Time.deltaTime * speed;
 
             //Vector3 forward =
                // transform.InverseTransformDirection(Vector3.forward); //world to local so always local forward (0,0,1)
 
             transform.position = agent.nextPosition;
+
+
 
             //transform.position = new Vector3(transform.position.x, transform.position.y, 0);//2d
 
