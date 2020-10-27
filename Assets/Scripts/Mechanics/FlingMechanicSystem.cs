@@ -37,7 +37,8 @@ namespace SandBox.Player
                     ref PhysicsVelocity pv,
                     ref FlingMechanicComponent flingMechanic,
                     in InputController inputController,
-                    in PlayerMove playerMove
+                    in PlayerMove playerMove,
+                    in FlingMechanicComponentAuthoring flingMechanicComponentAuthoring
 
                 ) =>
                 {
@@ -57,6 +58,16 @@ namespace SandBox.Player
                     {
                         pv.Linear = Vector3.zero;
                         flingMechanic.inFling = false;
+                        flingMechanic.vulnerable = true;
+                        if (flingMechanicComponentAuthoring.inFlingParticleSystem)
+                        {
+                            flingMechanicComponentAuthoring.inFlingParticleSystem.Stop(true);
+                        }
+
+                        if (flingMechanicComponentAuthoring.vulnerableParticleSystem)
+                        {
+                            flingMechanicComponentAuthoring.vulnerableParticleSystem.Play(true);
+                        }
                         //flingMechanic.inFlingTime = 0;
                     }
                     else if (flingMechanic.inFling == true && flingMechanic.inFlingTime < flingMechanic.inFlingMaxTime)
@@ -64,14 +75,32 @@ namespace SandBox.Player
                         //pv.Linear = forward * flingMechanic.force;
                         flingMechanic.inFlingTime = flingMechanic.inFlingTime + Time.DeltaTime;
                     }
-                    else if (inputController.leftTriggerPressed == true)
+                    else if (inputController.leftTriggerPressed == true && flingMechanic.vulnerable == false)
                     {
                         pv.Linear = forward * flingMechanic.force;
                         Debug.Log("pv ");
                         flingMechanic.inFling = true;
                         flingMechanic.inFlingTime = 0;
-                    }
+                        if (flingMechanicComponentAuthoring.inFlingParticleSystem)
+                        {
+                            flingMechanicComponentAuthoring.inFlingParticleSystem.Play(true);
+                        }
 
+                    }
+                    else if(flingMechanic.vulnerable == true && flingMechanic.vulnerableTime < flingMechanic.vulnerableMaxTime)
+                    {
+                        flingMechanic.vulnerableTime = flingMechanic.vulnerableTime + Time.DeltaTime;
+                    }
+                    else
+                    {
+                        flingMechanic.vulnerable = false;
+                        flingMechanic.vulnerableTime = 0;
+                        if (flingMechanicComponentAuthoring.vulnerableParticleSystem)
+                        {
+                            flingMechanicComponentAuthoring.vulnerableParticleSystem.Stop(true);
+                        }
+
+                    }
                 }
 
 
