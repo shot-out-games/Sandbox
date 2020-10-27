@@ -250,26 +250,6 @@ public class InputController : MonoBehaviour, IConvertGameObjectToEntity
 
     }
 
-    public void LateUpdateSystem()
-    {
-        if (manager == null || playerEntity == Entity.Null) return;
-
-
-        bool hasComponent = manager.HasComponent<InputControllerComponent>(playerEntity);
-        if (hasComponent == false) return;
-
-        if (Mathf.Abs(leftStickX) >= deadZone || Mathf.Abs(leftStickY) >= deadZone)
-        {
-            rotating = true;
-        }
-        else
-        {
-            rotating = false;
-        }
-
-
-    }
-
     
     void UpdateInputControllerComponent()
     {

@@ -130,11 +130,13 @@ public class EnemyMoveGenericSystem : SystemBase
 
 
         Entities.WithoutBurst().WithStructuralChanges().WithAny<EnemyMoveGenericComponent>().ForEach((Entity e, EnemyMoveGeneric move,
-            ref Translation translation
+            ref Translation translation,
+            in DeadComponent dead
             //in Pause pause
         ) =>
         {
             //if (pause.value == 1) return;
+            if (dead.isDead) return;
             move.SetDestination();
             translation.Value.y = 0;//no jump for 1d jam
             //Debug.Log("en");

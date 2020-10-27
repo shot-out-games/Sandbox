@@ -4,6 +4,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Physics;
+using Unity.Physics.Systems;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace SandBox.Player
 
 
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-
+    [UpdateAfter(typeof(ExportPhysicsWorld)), UpdateBefore(typeof(EndFramePhysicsSystem))]
 
 
     public class PlayerMoveSystem : SystemBase
@@ -45,7 +46,24 @@ namespace SandBox.Player
                     in RatingsComponent ratingsComponent
                 ) =>
                 {
+
+                    translation.Value.y = 0;//change for jump use
+
+
+                    bool hasFling = HasComponent<FlingMechanicComponent>(e);
+                    if(hasFling)
+                    {
+                       if(EntityManager.GetComponentData<FlingMechanicComponent>(e).inFling == true)
+                        {
+                            return;
+                        }
+                    }
+
+
+
                     Camera cam = playerMove.mainCam;
+
+
 
                     float currentSpeed = ratingsComponent.gameSpeed;
                     //Vector3 velocity = animator.deltaPosition / Time.DeltaTime * currentSpeed;
@@ -111,7 +129,6 @@ namespace SandBox.Player
                     }
 
 
-                    translation.Value.y = 0;//change for jump use
 
 
                 }
@@ -125,6 +142,9 @@ namespace SandBox.Player
 
     }
 
+
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+    [UpdateAfter(typeof(ExportPhysicsWorld)), UpdateBefore(typeof(EndFramePhysicsSystem))]
     [UpdateAfter(typeof(PlayerMoveSystem))]
 
 
@@ -186,9 +206,9 @@ namespace SandBox.Player
 
                          //rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime * Time.DeltaTime);
 
-                         //rotation.Value = targetRotation;
+                         rotation.Value = targetRotation;
 
-                         rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime);
+                         //rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime);
 
                          //desiredRotationAngle = Vector3.Angle(playerMove.transform.forward, targetRotation);
                          //var crossProduct = Vector3.Cross(playerMove.transform.forward, forward).y;

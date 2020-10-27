@@ -43,14 +43,14 @@ public class StartGameMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 
     private void OnEnable()
     {
-        LevelOpen.showMessage += SetupMessage;
+        //LevelOpen.showMessage += SetupMessage;
 
     }
 
 
     private void OnDisable()
     {
-        LevelOpen.showMessage -= SetupMessage;
+        //LevelOpen.showMessage -= SetupMessage;
     }
 
 

@@ -7,6 +7,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Physics;
+using Unity.Physics.Systems;
 using Unity.Transforms;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
@@ -14,9 +15,10 @@ using Debug = UnityEngine.Debug;
 
 namespace SandBox.Player
 {
+    //[UpdateAfter(typeof(ExportPhysicsWorld)), UpdateBefore(typeof(EndFramePhysicsSystem))]
+    //[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+    //[UpdateAfter(typeof(PlayerRotateSystem))]
 
-    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-    [UpdateAfter(typeof(PlayerRotateSystem))]
     public class FlingMechanicSystem : SystemBase
     {
 
@@ -34,7 +36,7 @@ namespace SandBox.Player
                     Entity e,
                     ref PhysicsVelocity pv,
                     ref FlingMechanicComponent flingMechanic,
-                    in InputControllerComponent inputController,
+                    in InputController inputController,
                     in PlayerMove playerMove
 
                 ) =>
@@ -44,22 +46,25 @@ namespace SandBox.Player
                     forward = math.normalize(forward);
                     //Debug.Log("fw " + forward);
 
-                    /*
+                    if (inputController.leftTriggerPressed == true)
+                    {
+                        Debug.Log("press");
+                    }
+
+
+
                     if (flingMechanic.inFling == true && flingMechanic.inFlingTime >= flingMechanic.inFlingMaxTime)
                     {
                         pv.Linear = Vector3.zero;
-                        flingMechanic.inFling= false;
+                        flingMechanic.inFling = false;
                         //flingMechanic.inFlingTime = 0;
                     }
                     else if (flingMechanic.inFling == true && flingMechanic.inFlingTime < flingMechanic.inFlingMaxTime)
                     {
                         //pv.Linear = forward * flingMechanic.force;
-                        flingMechanic.inFlingTime = flingMechanic.inFlingTime + Time.fixedDeltaTime;
+                        flingMechanic.inFlingTime = flingMechanic.inFlingTime + Time.DeltaTime;
                     }
-                    */
-
-
-                    if (inputController.leftTriggerPressed == true)
+                    else if (inputController.leftTriggerPressed == true)
                     {
                         pv.Linear = forward * flingMechanic.force;
                         Debug.Log("pv ");

@@ -29,7 +29,7 @@ public class SaveGames
 
 
     //this project only
-    public List<HoleComponent> savedHoles = new List<HoleComponent>();
+    //public List<HoleComponent> savedHoles = new List<HoleComponent>();
 
 
 

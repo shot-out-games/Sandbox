@@ -93,9 +93,6 @@ public class SaveSystem : SystemBase
         SaveManager.instance.saveData.saveGames[slot].saveNpc.Clear();
         SaveManager.instance.saveData.saveGames[slot].saveWeapons.Clear();
         SaveManager.instance.saveData.saveGames[slot].savePowerItems.Clear();
-
-
-        SaveManager.instance.saveData.saveGames[slot].savedHoles.Clear();
         SaveManager.instance.saveData.saveGames[slot].saveLevelData.Clear();
 
         int level = LevelManager.instance.currentLevel;
@@ -128,16 +125,6 @@ public class SaveSystem : SystemBase
                 LevelManager.instance.levelSettings[i].NpcDead;
         }
 
-
-        Entities.WithoutBurst().ForEach
-        (
-            (
-                HoleComponent holeComponent
-            ) =>
-            {
-                SaveManager.instance.saveData.saveGames[slot].savedHoles.Add(holeComponent);
-            }
-        ).Run();
 
 
         //Entities.WithoutBurst().ForEach
