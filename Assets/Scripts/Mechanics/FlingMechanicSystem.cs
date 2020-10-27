@@ -31,6 +31,37 @@ namespace SandBox.Player
         protected override void OnUpdate()
         {
 
+
+            Entities.WithoutBurst().WithAll<FlingMechanicComponent>().ForEach(
+                (
+                    in Pause pause,
+                    in DamageComponent damageComponent,
+                    in Impulse impulse) =>
+                {
+                    if (damageComponent.DamageReceived <= math.EPSILON || pause.value == 1) return;
+                    impulse.impulseSourceHitReceived.GenerateImpulse();
+
+                }
+            ).Run();
+
+
+
+            Entities.WithoutBurst().WithAll<FlingMechanicComponent>().ForEach(
+                (
+                    in Pause pause,
+                    in ScoreComponent score,
+                    in Impulse impulse) =>
+                {
+                    if (score.pointsScored == false || pause.value == 1) return;
+                    impulse.impulseSourceHitLanded.GenerateImpulse();
+
+                }
+            ).Run();
+
+
+
+
+
             Entities.WithoutBurst().ForEach(
                 (
                     Entity e,
@@ -68,6 +99,8 @@ namespace SandBox.Player
                         {
                             flingMechanicComponentAuthoring.vulnerableParticleSystem.Play(true);
                         }
+
+
                         //flingMechanic.inFlingTime = 0;
                     }
                     else if (flingMechanic.inFling == true && flingMechanic.inFlingTime < flingMechanic.inFlingMaxTime)
@@ -78,12 +111,16 @@ namespace SandBox.Player
                     else if (inputController.leftTriggerPressed == true && flingMechanic.vulnerable == false)
                     {
                         pv.Linear = forward * flingMechanic.force;
-                        Debug.Log("pv ");
+                        //Debug.Log("pv ");
                         flingMechanic.inFling = true;
                         flingMechanic.inFlingTime = 0;
                         if (flingMechanicComponentAuthoring.inFlingParticleSystem)
                         {
                             flingMechanicComponentAuthoring.inFlingParticleSystem.Play(true);
+                        }
+                        if (flingMechanicComponentAuthoring.flingAudioSource)
+                        {
+                            flingMechanicComponentAuthoring.flingAudioSource.PlayOneShot(flingMechanicComponentAuthoring.flingAudioClip);
                         }
 
                     }

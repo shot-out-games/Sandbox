@@ -5,12 +5,12 @@ using UnityEngine;
 using Unity.Collections;
 using Unity.Physics;
 
-public class AttackerSystem : JobComponentSystem
+public class AttackerSystem : SystemBase
 {
     //public int counta;
     //public int countb;
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
         EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
 
@@ -157,14 +157,33 @@ public class AttackerSystem : JobComponentSystem
                         inFling = EntityManager.GetComponentData<FlingMechanicComponent>(entityB).inFling;//flinging so causes damage not receive
 
                     }
+
+
                     if (inFling)
                     {
+                        if (HasComponent<ScoreComponent>(entityB))
+                        {
+                            var scoreComponent = EntityManager.GetComponentData<ScoreComponent>(entityB);
+                            scoreComponent.pointsScored = true;
+                            EntityManager.SetComponentData(entityB, scoreComponent);
+                        }
+
+
 
                         ecb.AddComponent<DamageComponent>(entityA,
                         new DamageComponent { DamageLanded = 0, DamageReceived = damage });
                     }
                     else
                     {
+
+                        if (HasComponent<ScoreComponent>(entityA))
+                        {
+                            var scoreComponent = EntityManager.GetComponentData<ScoreComponent>(entityA);
+                            scoreComponent.pointsScored = true;
+                            EntityManager.SetComponentData(entityA, scoreComponent);
+                        }
+
+
 
                         ecb.AddComponent<DamageComponent>(entityB,
                             new DamageComponent { DamageLanded = 0, DamageReceived = damage });
@@ -288,7 +307,7 @@ public class AttackerSystem : JobComponentSystem
         ecb.Dispose();
 
 
-        return default;
+        //return default;
     }
 
 }

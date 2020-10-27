@@ -22,7 +22,7 @@ public class CharacterEffectsSystem : SystemBase
                 in Impulse impulse) =>
             {
                 if (damageComponent.DamageReceived == 0 || pause.value == 1) return;
-                impulse.impulseSource.GenerateImpulse();
+                //impulse.impulseSourceHitReceived.GenerateImpulse();
 
             }
         ).Run();

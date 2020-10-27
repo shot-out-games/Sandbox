@@ -107,17 +107,6 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
             defaultButton.Select();
         }
 
-        int npcDead = LevelManager.instance.NpcDead;
-        int npcSaved = LevelManager.instance.NpcSaved;
-        int totalPossible = LevelManager.instance.potentialGameTargets;
-
-        float f = (float)npcSaved  /  (float)totalPossible * 100f;
-        int score = Mathf.FloorToInt(f);
-
-        Debug.Log("f " + f);
-        Debug.Log("sc " + score);
-
-
         if (winnerParticleSystem)
         {
             winnerParticleSystem.Play(true);
@@ -128,27 +117,42 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
             audioSource.Play();
         }
 
-        if (score < 3)
-        {
-            //message.SetText("Curse you!  My plans for domination are ruined");
-            message.SetText("The loop is broken thanks to your sacrifice ... You will not be what you are doomed to become ...");
-        }
-        else if (score > 99)
-        {
-            message.SetText("You did it! Or did you? Now GTFO");
-        }
-        else if (score > 90)
-        {
-            message.SetText("Yes, you did well. No, that is not good enough");
-        }
-        else if (score > 75)
-        {
-            message.SetText("This is not good enough");
-        }
-        else
-        {
-            message.SetText("Your success can only be classified as pathetic");
-        }
+        message.SetText("Winner!");
+
+
+        //int npcDead = LevelManager.instance.NpcDead;
+        //int npcSaved = LevelManager.instance.NpcSaved;
+        //int totalPossible = LevelManager.instance.potentialGameTargets;
+
+        //float f = (float)npcSaved  /  (float)totalPossible * 100f;
+        //int score = Mathf.FloorToInt(f);
+
+        //Debug.Log("f " + f);
+        //Debug.Log("sc " + score);
+
+
+
+        //if (score < 3)
+        //{
+        //    //message.SetText("Curse you!  My plans for domination are ruined");
+        //    message.SetText("The loop is broken thanks to your sacrifice ... You will not be what you are doomed to become ...");
+        //}
+        //else if (score > 99)
+        //{
+        //    message.SetText("You did it! Or did you? Now GTFO");
+        //}
+        //else if (score > 90)
+        //{
+        //    message.SetText("Yes, you did well. No, that is not good enough");
+        //}
+        //else if (score > 75)
+        //{
+        //    message.SetText("This is not good enough");
+        //}
+        //else
+        //{
+        //    message.SetText("Your success can only be classified as pathetic");
+        //}
 
     }
 

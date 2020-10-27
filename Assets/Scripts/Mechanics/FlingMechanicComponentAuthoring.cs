@@ -27,6 +27,8 @@ public class FlingMechanicComponentAuthoring: MonoBehaviour, IConvertGameObjectT
     public float vulnerableMaxTime = 2.0f;
     public ParticleSystem vulnerableParticleSystem;
     public ParticleSystem inFlingParticleSystem;
+    public AudioSource flingAudioSource;
+    public AudioClip flingAudioClip;
 
 
 

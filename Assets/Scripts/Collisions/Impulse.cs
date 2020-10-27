@@ -5,7 +5,8 @@ using UnityEngine;
 public class Impulse : MonoBehaviour, IConvertGameObjectToEntity
 {
 
-    public CinemachineImpulseSource impulseSource;
+    public CinemachineImpulseSource impulseSourceHitReceived;
+    public CinemachineImpulseSource impulseSourceHitLanded;
     private Entity e;
     private EntityManager manager;
 
@@ -14,7 +15,7 @@ public class Impulse : MonoBehaviour, IConvertGameObjectToEntity
     void Awake()
     {
 
-        impulseSource = GetComponent<CinemachineImpulseSource>();
+        //impulseSource = GetComponent<CinemachineImpulseSource>();
 
     }
 
@@ -26,7 +27,7 @@ public class Impulse : MonoBehaviour, IConvertGameObjectToEntity
         e = entity;
         manager = dstManager;
 
-        conversionSystem.AddHybridComponent(impulseSource);
+        //conversionSystem.AddHybridComponent(impulseSource);
 
     }
 }
