@@ -241,14 +241,14 @@ namespace SandBox.Player
 
 
 
-    public class PlayerJumpSystem : JobComponentSystem
+    public class PlayerJumpSystem : SystemBase
     {
 
 
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void OnUpdate()
         {
 
-            Entities.WithoutBurst().WithStructuralChanges().ForEach(
+            Entities.WithoutBurst().WithStructuralChanges().WithNone<Pause>().ForEach(
             (
                 (
                     in Entity e,
@@ -260,7 +260,7 @@ namespace SandBox.Player
                     ) =>
                 {
 
-                    if (EntityManager.GetComponentData<Pause>(e).value == 1) return;
+                    //if (EntityManager.GetComponentData<Pause>(e).value == 1) return;
 
 
                     float leftStickX = inputController.leftStickX;
@@ -297,7 +297,7 @@ namespace SandBox.Player
                 ).Run();
 
 
-            return default;
+            //return default;
 
         }
 

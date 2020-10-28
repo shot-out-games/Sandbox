@@ -3,13 +3,13 @@ using UnityEngine;
 using Unity.Jobs;
 using Unity.Transforms;
 
-public class EnemyMeleeMovementSystem : JobComponentSystem
+public class EnemyMeleeMovementSystem : SystemBase
 {
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
 
-        Entities.WithoutBurst().WithStructuralChanges().ForEach
+        Entities.WithoutBurst().WithNone<Pause>().WithAll<EnemyComponent>().WithStructuralChanges().ForEach
         (
         (
             ref EnemyMeleeMovementComponent enemyMovementComponent,
@@ -22,7 +22,6 @@ public class EnemyMeleeMovementSystem : JobComponentSystem
 
         ) =>
         {
-            if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
             if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
             if (enemyMovementComponent.enabled == false) return;
 
@@ -140,7 +139,7 @@ public class EnemyMeleeMovementSystem : JobComponentSystem
 
 
 
-        return default;
+        //return default;
     }
 
 }

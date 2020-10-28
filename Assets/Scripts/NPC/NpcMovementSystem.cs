@@ -8,10 +8,10 @@ using Unity.Jobs;
 
 
 
-public class NpcMovementSystem : JobComponentSystem
+public class NpcMovementSystem : SystemBase
 {
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
 
         var entityManager = World.EntityManager;
@@ -32,7 +32,7 @@ public class NpcMovementSystem : JobComponentSystem
             ) =>
             {
 
-                if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
+                //if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
                 if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
                 if (levelComplete.active == false)
                 {
@@ -151,7 +151,7 @@ public class NpcMovementSystem : JobComponentSystem
 
 
 
-        return default;
+        //return default;
     }
 
 }
@@ -182,7 +182,7 @@ public class NpcMovementGenericSystem : JobComponentSystem
             ) =>
             {
 
-                if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
+                //if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
                 if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
                 if (levelComplete.active == false)
                 {

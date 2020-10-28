@@ -161,13 +161,13 @@ namespace SandBox.Player
 
 
 
-            Entities.WithoutBurst().WithAll<PlayerComponent>(). ForEach
+            Entities.WithoutBurst().WithStructuralChanges().WithAll<PlayerComponent>().WithNone<Pause>().ForEach
          (
              (
                  PlayerMove playerMove,
                  ref Rotation rotation,
                  ref PhysicsVelocity pv,
-                 in Pause pause, in DeadComponent deadComponent,
+                 in DeadComponent deadComponent,
                  in PlayerMoveComponent playerMoveComponent,
                  in RatingsComponent ratingsComponent,
                      in InputController inputController
@@ -177,7 +177,7 @@ namespace SandBox.Player
                  float leftStickX = inputController.leftStickX;
                  float leftStickY = inputController.leftStickY;
 
-                 if (pause.value == 0 && !deadComponent.isDead)
+                 if (!deadComponent.isDead)
                  {
                      float slerpDampTime = playerMoveComponent.rotateSpeed;
                      var up = math.up();

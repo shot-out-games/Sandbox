@@ -9,12 +9,12 @@ using Unity.Jobs;
 
 public struct GameInterfaceComponent : IComponentData
 {
-    public int pause;
+    public bool paused;
 }
 
 public struct Pause : IComponentData
 {
-    public int value;
+    //public int value;
 }
 
 public class GameInterface : MonoBehaviour, IConvertGameObjectToEntity
@@ -77,7 +77,7 @@ public class GameInterface : MonoBehaviour, IConvertGameObjectToEntity
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        dstManager.AddComponentData<GameInterfaceComponent>(entity, new GameInterfaceComponent { pause = 0 });
+        dstManager.AddComponentData<GameInterfaceComponent>(entity, new GameInterfaceComponent { paused = paused });
     }
 }
 
@@ -103,7 +103,7 @@ public class GameInterfaceSystem : SystemBase
 
 
 
-        Entities.WithoutBurst().ForEach
+        Entities.WithoutBurst().WithStructuralChanges().ForEach
             (
                 (
                     Entity entity,
@@ -122,23 +122,33 @@ public class GameInterfaceSystem : SystemBase
 
             ).Run();
 
-        int pause = paused ? 1 : 0;
-        Entities.WithoutBurst().ForEach((Animator animator, Entity entity, Pause pauseComponent) =>
+        if (selectPressed)
         {
-            animator.speed = paused ? 0 : 1; ;
-            EntityManager.SetComponentData<Pause>(entity, new Pause { value = pause });
-        }
-        ).Run();
+            Debug.Log("select pressed");
 
-
-        Entities.WithoutBurst().ForEach((EnemyMove enemyMove, Entity entity, NavMeshAgent agent, Pause pauseComponent, RatingsComponent enemyRatings, DeadComponent dead) =>
-        {
-            enemyMove.moveSpeed = paused || dead.isDead ? 0 : enemyRatings.speed;
-            //agent.speed = paused || dead.isDead ? 0 : enemyRatings.speed;
-            //agent.speed = enemyMove.moveSpeed;
-            EntityManager.SetComponentData<Pause>(entity, new Pause { value = pause });
+            Entities.WithoutBurst().WithAll<RatingsComponent>().WithStructuralChanges().ForEach((Entity entity) =>
+            {
+                if (paused)
+                {
+                    Debug.Log("select pause");
+                    EntityManager.AddComponent<Pause>(entity);
+                }
+                else
+                {
+                    EntityManager.RemoveComponent<Pause>(entity);
+                }
+            }
+            ).Run();
         }
-        ).Run();
+
+        //Entities.WithoutBurst().ForEach((EnemyMove enemyMove, Entity entity, NavMeshAgent agent, Pause pauseComponent, RatingsComponent enemyRatings, DeadComponent dead) =>
+        //{
+        //    //enemyMove.moveSpeed = paused || dead.isDead ? 0 : enemyRatings.speed;
+        //    //agent.speed = paused || dead.isDead ? 0 : enemyRatings.speed;
+        //    //agent.speed = enemyMove.moveSpeed;
+        //    EntityManager.SetComponentData<Pause>(entity, new Pause { value = pause });
+        //}
+        //).Run();
 
     }
 }

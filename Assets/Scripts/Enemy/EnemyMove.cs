@@ -328,7 +328,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     public void SetBackup()
     {
-        if (agent == null || manager == null || entity == Entity.Null) return;
+        if (agent == null || manager == default || entity == Entity.Null) return;
 
         if (agent.enabled)
         {
@@ -345,7 +345,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     public void SetDestination()
     {
-        if (agent == null || manager == null || entity == Entity.Null) return;
+        if (agent == null || manager == default || entity == Entity.Null) return;
 
         if (agent.enabled)
         {
@@ -383,7 +383,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
                 transform.InverseTransformDirection(transform.forward); //world to local so always local forward (0,0,1)
 
 
-            float velx = 0;
+            //float velx = 0;
             float velz = forward.normalized.z;
 
             if (currentRewind == true)
@@ -423,7 +423,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     void OnAnimatorMove()
     {
 
-        if (agent == null || manager == null || entity == Entity.Null) return;
+        if (agent == null || manager == default || entity == Entity.Null) return;
         if (isCurrentWayPointJump == false)
         {
             agent.updatePosition = true;

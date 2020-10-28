@@ -61,7 +61,7 @@ public class NpcComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 
     void LateUpdate()
     {
-        if (manager == null) return;
+        if (manager == default) return;
         if (!manager.HasComponent(npcEntity, typeof(Translation))) return;
         manager.SetComponentData(npcEntity, new Translation { Value = transform.position });
     }
@@ -115,7 +115,7 @@ public class NpcComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
             }
         );
 
-        manager.AddComponentData(npcEntity, new Pause { value = 0 });
+        //manager.AddComponentData(npcEntity, new Pause { value = 0 });
 
 
         manager.AddComponentData(npcEntity,

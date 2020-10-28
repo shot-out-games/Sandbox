@@ -3,11 +3,6 @@ using System.Linq;
 using UnityEngine;
 using Unity.Entities;
 using Unity.Transforms;
-
-
-
-using System.Numerics;
-using Unity.Entities;
 using Unity.Mathematics;
 using Vector3 = UnityEngine.Vector3;
 
@@ -48,10 +43,13 @@ public class EnemyComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField]
     int saveIndex;
 
+    [SerializeField]
+    bool paused = false;
+
 
     void LateUpdate()
     {
-        if (manager == null) return;
+        if (manager == default) return;
         if (!manager.HasComponent(enemyEntity, typeof(Translation))) return;
 
         manager.SetComponentData(enemyEntity, new Translation { Value = transform.position });
@@ -70,7 +68,11 @@ public class EnemyComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
                 startPosition = manager.GetComponentData<Translation>(entity).Value
             }
             );
-        dstManager.AddComponentData(entity, new Pause { value = 0 });
+
+        if (paused == true)
+        {
+            dstManager.AddComponent<Pause>(entity);
+        }
 
 
         dstManager.AddComponentData(entity, new StatsComponent()

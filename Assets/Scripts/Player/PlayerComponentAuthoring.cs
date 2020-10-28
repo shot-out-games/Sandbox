@@ -66,6 +66,9 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
     public bool threeD;
     public int skillTreePointsToNextLevel = 10;
 
+    [SerializeField]
+    bool paused = false;
+
     //void LateUpdate()
     //{
     //    if (manager == null) return;
@@ -88,7 +91,14 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
         }
 
             );
-        dstManager.AddComponentData(entity, new Pause { value = 0 });
+
+
+        if (paused == true)
+        {
+            dstManager.AddComponent<Pause>(entity);
+        }
+
+
         dstManager.AddComponentData(entity,
             new WinnerComponent
             {

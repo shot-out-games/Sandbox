@@ -18,7 +18,7 @@ public class EnemyMovementSystem : SystemBase
         var entityManager = World.EntityManager;
 
 
-        Entities.WithoutBurst().ForEach
+        Entities.WithAll<EnemyComponent>().WithNone<Pause>().WithoutBurst().ForEach
         (
             (
                 ref EnemyMovementComponent enemyMovementComponent,
@@ -30,7 +30,7 @@ public class EnemyMovementSystem : SystemBase
             ) =>
             {
 
-                if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
+                //if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
                 if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
                 if (enemyMovementComponent.enabled == false) return;
 
@@ -133,7 +133,7 @@ public class EnemyMovementSystem : SystemBase
 
 
 
-        Entities.WithoutBurst().ForEach(
+        Entities.WithoutBurst().WithAll<EnemyComponent>().ForEach(
               (
                   Entity e,
                   EnemyMove enemyMove,

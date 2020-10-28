@@ -6,7 +6,7 @@ using Unity.Mathematics;
 using Random = Unity.Mathematics.Random;
 
 
-public class EnemyBehaviorSystem : JobComponentSystem
+public class EnemyBehaviorSystem : SystemBase
 {
     private Random random;
 
@@ -18,13 +18,13 @@ public class EnemyBehaviorSystem : JobComponentSystem
     }
 
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
 
         EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
 
 
-        Entities.WithoutBurst().WithStructuralChanges().ForEach
+        Entities.WithoutBurst().WithStructuralChanges().WithNone<Pause>().ForEach
         (
         (
             ref EnemyMovementComponent enemyBasicMovementComponent,
@@ -35,7 +35,7 @@ public class EnemyBehaviorSystem : JobComponentSystem
         ) =>
         {
 
-            if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
+            //if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
             if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
 
             if (enemyMeleeMovementComponent.switchUp == false || enemyWeaponMovementComponent.switchUp == false) return;
@@ -68,7 +68,7 @@ public class EnemyBehaviorSystem : JobComponentSystem
 
 
 
-        return default;
+        //return default;
 
 
     }

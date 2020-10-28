@@ -28,14 +28,14 @@ public class FreezeSystem : SystemBase
     {
 
 
-        Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity e, EnemyMove move,
+        Entities.WithoutBurst().WithStructuralChanges().WithNone<Pause>().ForEach((Entity e, EnemyMove move,
             ref FreezeComponent freezeComponent,
             ref EnemyStateComponent enemyStateComponent,
-            in RatingsComponent ratingsComponent,
-            in Pause pause
+            in RatingsComponent ratingsComponent
+            
         ) =>
         {
-            if (pause.value == 1) return;
+            //if (pause.value == 1) return;
 
             bool hasDamage = EntityManager.HasComponent(e, typeof(DamageComponent));
             if (hasDamage)

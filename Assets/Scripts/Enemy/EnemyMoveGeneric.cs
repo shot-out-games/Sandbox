@@ -93,7 +93,7 @@ public class EnemyMoveGeneric : MonoBehaviour, IConvertGameObjectToEntity
 
     public void SetDestination()
     {
-        if (agent == null || manager == null || entity == Entity.Null) return;
+        if (agent == null || manager == default || entity == Entity.Null) return;
 
         if (agent.enabled)
         {
@@ -129,7 +129,7 @@ public class EnemyMoveGenericSystem : SystemBase
     {
 
 
-        Entities.WithoutBurst().WithStructuralChanges().WithAny<EnemyMoveGenericComponent>().ForEach((Entity e, EnemyMoveGeneric move,
+        Entities.WithoutBurst().WithNone<Pause>().WithStructuralChanges().WithAll<EnemyMoveGenericComponent, EnemyComponent>().ForEach((Entity e, EnemyMoveGeneric move,
             ref Translation translation,
             in DeadComponent dead
             //in Pause pause

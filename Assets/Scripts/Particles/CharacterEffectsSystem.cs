@@ -17,11 +17,10 @@ public class CharacterEffectsSystem : SystemBase
 
         Entities.WithoutBurst().ForEach(
             (
-                in Pause pause,
                 in DamageComponent damageComponent,
                 in Impulse impulse) =>
             {
-                if (damageComponent.DamageReceived == 0 || pause.value == 1) return;
+                if (damageComponent.DamageReceived == 0) return;
                 //impulse.impulseSourceHitReceived.GenerateImpulse();
 
             }
@@ -31,11 +30,11 @@ public class CharacterEffectsSystem : SystemBase
 
         Entities.WithoutBurst().ForEach(
             (
-                InputController input, ControlBarComponent controlBar, in Pause pause,
+                InputController input, ControlBarComponent controlBar, 
                 in Impulse impulse) =>
             {
                 //if (input.rightTriggerDown == true && controlBar.value < 25f) 
-                if (pause.value == 1) return;
+                //if (pause.value == 1) return;
 
                 //if (input.leftTriggerDown == true || input.rightTriggerDown == true)
                 //{
@@ -50,17 +49,16 @@ public class CharacterEffectsSystem : SystemBase
 
 
 
-        Entities.WithoutBurst().ForEach(
+        Entities.WithoutBurst().WithNone<Pause>().ForEach(
             (
                 Entity e,
-                in Pause pause,
                 in EffectsComponent effectsComponent,
                 in DamageComponent damageComponent,
                 in Transform transform,
                 in Animator animator,
                 in EffectsManager effects) =>
             {
-                if (damageComponent.DamageReceived == 0 || pause.value == 1) return;
+                if (damageComponent.DamageReceived == 0) return;
 
                 bool skip = false;
                 //if (EntityManager.HasComponent(e, typeof(EnemyComponent)))

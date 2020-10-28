@@ -251,15 +251,15 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
 
 
-public class EnemyMeleeSystem : JobComponentSystem
+public class EnemyMeleeSystem : SystemBase
 {
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
 
 
 
-        Entities.WithStructuralChanges().WithoutBurst().ForEach
+        Entities.WithStructuralChanges().WithAll<EnemyComponent>().WithoutBurst().ForEach
         (
             (
                 ref EnemyAttackComponent enemyAttackComponent,
@@ -324,7 +324,7 @@ public class EnemyMeleeSystem : JobComponentSystem
             }
         ).Run();
 
-        return default;
+        //return default;
     }
 
 

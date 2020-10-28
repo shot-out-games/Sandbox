@@ -6,12 +6,12 @@ using UnityEngine;
 
 
 
-public class EnemyWeaponMovementSystem : JobComponentSystem
+public class EnemyWeaponMovementSystem :  SystemBase
 {
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
 
-        Entities.WithoutBurst().WithStructuralChanges().ForEach
+        Entities.WithoutBurst().WithAll<EnemyComponent>().WithNone<Pause>().WithStructuralChanges().ForEach
         (
             (
                 ref EnemyWeaponMovementComponent enemyMovementComponent,
@@ -21,7 +21,7 @@ public class EnemyWeaponMovementSystem : JobComponentSystem
            ) =>
             {
 
-                if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
+                //if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
                 if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
                 if (enemyMovementComponent.enabled == false) return;
 
@@ -98,7 +98,7 @@ public class EnemyWeaponMovementSystem : JobComponentSystem
 
             }
         ).Run();
-        return default;
+        //return default;
     }
 
 }

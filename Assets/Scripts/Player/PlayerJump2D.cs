@@ -105,7 +105,7 @@ namespace SandBox.Player
         protected override void OnUpdate()
         {
 
-            Entities.WithoutBurst().WithStructuralChanges().ForEach(
+            Entities.WithoutBurst().WithStructuralChanges().WithNone<Pause>().ForEach(
             (
                 (
                     Entity e,
@@ -117,8 +117,7 @@ namespace SandBox.Player
                     in PlayerJumpComponent playerJumpComponent
                     ) =>
                 {
-
-                    if (EntityManager.GetComponentData<Pause>(e).value == 1) return;
+                    //if (EntityManager.GetComponentData<Pause>(e).value == 1) return;
 
                     bool variableJump = true;
                     //int fallingFramesAllowed = 3;

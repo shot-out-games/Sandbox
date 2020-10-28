@@ -32,7 +32,7 @@ public class GunAmmoHandlerSystem : SystemBase
 
 
 
-        Entities.WithoutBurst().WithStructuralChanges().ForEach(
+        Entities.WithoutBurst().WithStructuralChanges().WithNone<Pause>().ForEach(
             (ref GunComponent gun, ref StatsComponent statsComponent,
                 ref Rotation gunRotation,
                 in RatingsComponent ratingsComponent,
@@ -53,7 +53,7 @@ public class GunAmmoHandlerSystem : SystemBase
                 }
 
 
-                if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
+                //if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
                 if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
                 bool isEnemy = EntityManager.HasComponent<EnemyComponent>(entity);
 

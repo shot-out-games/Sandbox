@@ -66,7 +66,7 @@ public class NpcSpawner : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGame
             }
         );
 
-        manager.AddComponentData(npcEntity, new Pause { value = 0 });
+        //manager.AddComponentData(npcEntity, new Pause { value = 0 });
 
 
         manager.AddComponentData(npcEntity,
