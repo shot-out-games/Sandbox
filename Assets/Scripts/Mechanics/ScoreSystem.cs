@@ -8,13 +8,13 @@ using Unity.Transforms;
 using UnityEngine;
 
 
-[UpdateAfter(typeof(FlingMechanicSystem))]
+//[UpdateAfter(typeof(FlingMechanicSystem))]
 
 public class ScoreSystem : SystemBase
 {
     protected override void OnUpdate()
     {
-        Entities.WithoutBurst().WithAll<PlayerComponent>().ForEach((ref ScoreComponent score, in ScoreComponentAuthoring scoreComponentAuthoring) =>
+        Entities.WithoutBurst().ForEach((ref ScoreComponent score, in ScoreComponentAuthoring scoreComponentAuthoring) =>
             {
                 if (score.pointsScored == true)
                 {

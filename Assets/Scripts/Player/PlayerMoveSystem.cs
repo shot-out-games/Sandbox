@@ -34,7 +34,7 @@ namespace SandBox.Player
 
 
 
-            Entities.WithoutBurst().ForEach(
+            Entities.WithoutBurst().WithAll<PlayerComponent>().ForEach(
                 (
                     Entity e,
                     PlayerMove playerMove,
@@ -161,7 +161,7 @@ namespace SandBox.Player
 
 
 
-            Entities.WithoutBurst().ForEach
+            Entities.WithoutBurst().WithAll<PlayerComponent>(). ForEach
          (
              (
                  PlayerMove playerMove,

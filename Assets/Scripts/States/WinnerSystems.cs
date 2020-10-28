@@ -5,14 +5,14 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
-
-
+using Unity.Physics;
 
 public class BasicWinnerSystem : SystemBase
 {
 
     protected override void OnUpdate()
     {
+        EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
 
         bool winner = true;
 
@@ -29,8 +29,52 @@ public class BasicWinnerSystem : SystemBase
             }
         ).Run();
 
+        //winner = true;
 
         if (winner == false) return;
+
+
+        Entities.WithoutBurst().ForEach
+            ((AudioSource AudioSource)=>
+            {
+                if (AudioSource.isPlaying)
+                {
+                    AudioSource.Stop();
+                }
+            }
+
+            ).Run();
+
+        Entities.WithoutBurst().WithAny<PlayerComponent, EnemyComponent>().ForEach
+        ((in Entity e) =>
+        {
+            if (HasComponent<PlayerComponent>(e))
+            {
+                ecb.RemoveComponent<PlayerComponent>(e);
+            }
+            else if(HasComponent<EnemyComponent>(e))
+            {
+                ecb.RemoveComponent<EnemyComponent>(e);
+            }
+
+            if(HasComponent<PhysicsVelocity>(e))
+            {
+                ecb.RemoveComponent<PhysicsVelocity>(e);
+            }
+
+        }
+        ).Run();
+
+
+        Entities.WithoutBurst().ForEach
+        ((in Entity e, in EnemyComponent enemyComponent) =>
+        {
+            ecb.RemoveComponent<EnemyComponent>(e);
+        }
+        ).Run();
+
+
+
 
         Entities.WithoutBurst().ForEach
         (
@@ -44,6 +88,13 @@ public class BasicWinnerSystem : SystemBase
                 }
             }
         ).Run();
+
+
+        ecb.Playback(EntityManager);
+        ecb.Dispose();
+
+
+
 
     }
 

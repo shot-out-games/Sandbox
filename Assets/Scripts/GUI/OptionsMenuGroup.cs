@@ -1,10 +1,10 @@
-﻿using Rewired.UI.ControlMapper;
+﻿using Rewired;
+using Rewired.UI.ControlMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
-using Michsky.UI.ModernUIPack;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
@@ -25,12 +25,14 @@ using UnityEngine.UI;
 public class OptionsMenuGroup : MonoBehaviour
 {
 
+    public Player player;
+    public int playerId = 0; // The Rewired player id of this character
 
 
     public static event Action OptionsExitBackClickedEvent;
 
 
-    private InputController inputController;
+    //private InputController inputController;
     private List<Button> buttons;
     private List<Resolution> resolutions = new List<Resolution>();
     private Resolution currentResolution;
@@ -118,10 +120,15 @@ public class OptionsMenuGroup : MonoBehaviour
 
     void Start()
     {
+
+        if (!ReInput.isReady) return;
+        player = ReInput.players.GetPlayer(playerId);
+
+
         resLabelDefaultColor = resLabelHighlighted.color;
         qualityLabelDefaultColor = qualityLabelHighlighted.color;
         optionsCanvasGroup = GetComponent<CanvasGroup>();
-        inputController = GetComponent<InputController>();
+        //inputController = GetComponent<InputController>();
         SaveWorld sw = SaveManager.instance.saveWorld;
         soundSlider.value = sw.soundVolume;
         musicSlider.value = sw.musicVolume;
@@ -225,10 +232,13 @@ public class OptionsMenuGroup : MonoBehaviour
 
     private void Update()
     {
-        if (!inputController || optionsCanvasGroup == null || GetComponent<CanvasGroup>() == null || eventSystem == null) return;
+        if (!ReInput.isReady) return;
+
+
+        if (optionsCanvasGroup == null || GetComponent<CanvasGroup>() == null || eventSystem == null) return;
         if (eventSystem.currentSelectedGameObject == null) return;
 
-        if (inputController.buttonSelect_Pressed && optionsCanvasGroup.interactable)
+        if (player.GetButtonDown("select") && optionsCanvasGroup.interactable)
         {
             OnExitButtonClicked();
             HideMenu();
@@ -244,7 +254,7 @@ public class OptionsMenuGroup : MonoBehaviour
         var selected = eventSystem.currentSelectedGameObject.name;
         if (selected == resButton.name)
         {
-            if (inputController.buttonA_Pressed) resButtonPressed = !resButtonPressed;
+            if (player.GetButtonDown("FireA")) resButtonPressed = !resButtonPressed;
             if (resButtonPressed)
             {
                 resLabelHighlighted.color = new Color32(21, 132, 222, 255);
@@ -262,7 +272,7 @@ public class OptionsMenuGroup : MonoBehaviour
 
         if (selected == qualityButton.name)
         {
-            if (inputController.buttonA_Pressed) qualityButtonPressed = !qualityButtonPressed;
+            if (player.GetButtonDown("FireA")) qualityButtonPressed = !qualityButtonPressed;
             if (qualityButtonPressed)
             {
                 qualityLabelHighlighted.color = new Color32(21, 132, 222, 255);
@@ -283,8 +293,11 @@ public class OptionsMenuGroup : MonoBehaviour
         eventSystem.sendNavigationEvents = false;
 
 
-        float v = inputController.leftStickY;
-        if (inputController.leftStickYreleased == false) return;
+        float v = player.GetAxis("Move Vertical"); ;
+
+        bool leftStickYreleased = Mathf.Abs(player.GetAxisPrev("Move Vertical")) <= math.EPSILON;
+
+        if (leftStickYreleased == false) return;
 
         if (v > .19)
         {
@@ -305,8 +318,9 @@ public class OptionsMenuGroup : MonoBehaviour
     private void ChangeQualityLeftStick()
     {
         eventSystem.sendNavigationEvents = false;
-        float v = inputController.leftStickY;
-        if (inputController.leftStickYreleased == false) return;
+        bool leftStickYreleased = Mathf.Abs(player.GetAxisPrev("Move Vertical")) <= math.EPSILON;
+        float v = player.GetAxis("Move Vertical"); ;
+        if (leftStickYreleased == false) return;
 
         if (v > .19)
         {

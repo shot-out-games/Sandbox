@@ -32,13 +32,12 @@ namespace SandBox.Player
         {
 
 
-            Entities.WithoutBurst().WithAll<FlingMechanicComponent>().ForEach(
+            Entities.WithoutBurst().WithAll<FlingMechanicComponent, PlayerComponent>().ForEach(
                 (
-                    in Pause pause,
                     in DamageComponent damageComponent,
                     in Impulse impulse) =>
                 {
-                    if (damageComponent.DamageReceived <= math.EPSILON || pause.value == 1) return;
+                    if (damageComponent.DamageReceived <= math.EPSILON) return;
                     impulse.impulseSourceHitReceived.GenerateImpulse();
 
                 }
@@ -46,13 +45,12 @@ namespace SandBox.Player
 
 
 
-            Entities.WithoutBurst().WithAll<FlingMechanicComponent>().ForEach(
+            Entities.WithoutBurst().WithAll<FlingMechanicComponent, PlayerComponent>().ForEach(
                 (
-                    in Pause pause,
                     in ScoreComponent score,
                     in Impulse impulse) =>
                 {
-                    if (score.pointsScored == false || pause.value == 1) return;
+                    if (score.pointsScored == false) return;
                     impulse.impulseSourceHitLanded.GenerateImpulse();
 
                 }
@@ -62,7 +60,7 @@ namespace SandBox.Player
 
 
 
-            Entities.WithoutBurst().ForEach(
+            Entities.WithoutBurst().WithAll<PlayerComponent>().ForEach(
                 (
                     Entity e,
                     ref PhysicsVelocity pv,

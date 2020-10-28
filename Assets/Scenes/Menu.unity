@@ -7224,7 +7224,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 99.5
+  m_fontSize: 128
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8072,7 +8072,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 99.5
+  m_fontSize: 128
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -12758,7 +12758,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 171436231, guid: e005c907876cd5e449e043d236d1c3cb, type: 3}
       propertyPath: m_Pitch
-      value: 0.75
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6265239057108782675, guid: e005c907876cd5e449e043d236d1c3cb,
         type: 3}
@@ -12769,7 +12769,7 @@ PrefabInstance:
         type: 3}
       propertyPath: levelMediaList.Array.data[0].levelMusic
       value: 
-      objectReference: {fileID: 8300000, guid: 6d3d40055b82d6c49a5936faab3204ec, type: 3}
+      objectReference: {fileID: 8300000, guid: 9843c519367ee9448b8f381ecb2f9906, type: 3}
     - target: {fileID: 6265239057108782675, guid: e005c907876cd5e449e043d236d1c3cb,
         type: 3}
       propertyPath: levelMediaList.Array.data[1].levelMusic
@@ -20112,6 +20112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a006698aacc47346a1764f6b39bb2c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
   eventSystem: {fileID: 1587758665}
   optionsCanvasGroup: {fileID: 4397670895295081913}
   exitButton: {fileID: 7773029550341669572}
@@ -28147,6 +28148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a006698aacc47346a1764f6b39bb2c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
   eventSystem: {fileID: 1587758665}
   optionsCanvasGroup: {fileID: 8991694698278273286}
   exitButton: {fileID: 3030951000597474939}

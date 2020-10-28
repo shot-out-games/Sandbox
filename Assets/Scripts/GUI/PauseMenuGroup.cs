@@ -19,6 +19,7 @@ public class PauseMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     public static event Action OptionsClickedEvent;//this is same as two lines above - action keyword shorthand
     public static event Action SaveExitClickedEvent;
     public static event Action ExitClickedEvent;
+    public static event Action ScoresClickedEvent;
 
     private CanvasGroup canvasGroup = null;
     [SerializeField]
@@ -33,6 +34,8 @@ public class PauseMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     private Button saveExitButton;
     [SerializeField]
     private Button exitButton;
+    [SerializeField]
+    private Button scoresButton;
 
     private EntityManager manager;
     private Entity e;
@@ -69,6 +72,13 @@ public class PauseMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 
     }
 
+    private void OnScoresClickedEvent()
+    {
+        ScoresClickedEvent?.Invoke();
+        //subscriber score menu group -> showmenu(false)
+
+    }
+
 
     void Start()
     {
@@ -79,6 +89,7 @@ public class PauseMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
         optionsButton.onClick.AddListener(() => ShowMenu(false));
         optionsButton.onClick.AddListener(OnOptionsClickedEvent);
         saveExitButton.onClick.AddListener(OnSaveExitClickedEvent);
+        scoresButton.onClick.AddListener(OnScoresClickedEvent);
         exitButton.onClick.AddListener(OnExitClickedEvent);
 
     }
