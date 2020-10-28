@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
 using Unity.Jobs;
+using Unity.Physics.Systems;
 
 public struct GameInterfaceComponent : IComponentData
 {
@@ -87,6 +88,15 @@ public class GameInterface : MonoBehaviour, IConvertGameObjectToEntity
 public class GameInterfaceSystem : SystemBase
 {
 
+    StepPhysicsWorld stepPhysicsWorld;
+
+    protected override void OnCreate()
+    {
+        stepPhysicsWorld = World.GetOrCreateSystem<StepPhysicsWorld>();
+    }
+
+
+
     protected override void OnUpdate()
     {
 
@@ -116,25 +126,29 @@ public class GameInterfaceSystem : SystemBase
                     if (selectPressed && deadMenuDisplayed == false && winnerMenuDisplayed == false)
                     {
                         gameInterface.SelectClicked();
+                        Debug.Log("select " + selectPressed);
+                        paused = gameInterface.paused;//should probably be component
                     }
-                    paused = gameInterface.paused;//should probably be component
+                    Debug.Log("paused " + paused);
                 }
 
             ).Run();
 
         if (selectPressed)
         {
-            Debug.Log("select pressed");
 
             Entities.WithoutBurst().WithAll<RatingsComponent>().WithStructuralChanges().ForEach((Entity entity) =>
             {
                 if (paused)
                 {
-                    Debug.Log("select pause");
+                    Debug.Log("add");
+                    stepPhysicsWorld.Enabled = false;
                     EntityManager.AddComponent<Pause>(entity);
                 }
                 else
                 {
+                    Debug.Log("remove");
+                    stepPhysicsWorld.Enabled = true;
                     EntityManager.RemoveComponent<Pause>(entity);
                 }
             }

@@ -60,7 +60,7 @@ namespace SandBox.Player
 
 
 
-            Entities.WithoutBurst().WithAll<PlayerComponent>().ForEach(
+            Entities.WithoutBurst().WithAll<PlayerComponent>().WithNone<Pause>().ForEach(
                 (
                     Entity e,
                     ref PhysicsVelocity pv,
