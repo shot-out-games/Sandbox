@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8423592499447884473}
   - component: {fileID: 8423592499447884472}
   - component: {fileID: 8423592499447884455}
-  - component: {fileID: 8423592499447884454}
+  - component: {fileID: 1771649649}
   m_Layer: 0
   m_Name: Scores Menu Group
   m_TagString: Untagged
@@ -27,7 +27,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8423592499447884452}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -51,7 +51,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 243675593093930852, guid: 3cfb8b2a43afdf44b9f25032d6f5fc38,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 632d1cc1e81b7cc45902c8bd21260745, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -145,7 +145,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8423592499447884452}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ConversionMode: 1
---- !u!114 &8423592499447884454
+--- !u!114 &1771649649
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,10 +171,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8423592499447884452}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 668b570141a97344b80a179c1abbc04f, type: 3}
+  m_Script: {fileID: 11500000, guid: fb9620e9034a3534ea5b35a39e4bf207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickSound: {fileID: 8300000, guid: f18d0f324574212489b8cb96090c751d, type: 3}
+  clickSound: {fileID: 8300000, guid: 67197f96cd6755944bb49f617b4937c0, type: 3}
   eventSystem: {fileID: 0}
   defaultButton: {fileID: 8423592499667037435}
   score1: {fileID: 8423592501182552017}
@@ -182,6 +182,7 @@ MonoBehaviour:
   score3: {fileID: 8423592501290806545}
   score4: {fileID: 8423592500686308576}
   score5: {fileID: 8423592499625757616}
+  playerId: 0
 --- !u!1 &8423592499625757630
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,8 +250,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: TEXT
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: edda57bceb682c6428b72fb54fa91ae8, type: 2}
+  m_sharedMaterial: {fileID: -5790984483419766717, guid: edda57bceb682c6428b72fb54fa91ae8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -331,7 +333,7 @@ GameObject:
   - component: {fileID: 8423592499667037434}
   - component: {fileID: 8423592499667037433}
   m_Layer: 5
-  m_Name: Exit Button (1)
+  m_Name: Exit Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -399,8 +401,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 4
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 8423592500005307259}
+    m_SelectOnDown: {fileID: 8423592500005307259}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 3
@@ -428,7 +430,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8423592499447884454}
+      - m_Target: {fileID: 1771649649}
         m_TargetAssemblyTypeName: ScoreMenuGroup, Assembly-CSharp
         m_MethodName: HideMenu
         m_Mode: 1
@@ -549,7 +551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.39607844, g: 0.4745098, b: 0.59607846, a: 0.9254902}
+  m_Color: {r: 0.18431373, g: 0.19215687, b: 0.2627451, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -652,8 +654,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: TEXT
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: edda57bceb682c6428b72fb54fa91ae8, type: 2}
+  m_sharedMaterial: {fileID: -5790984483419766717, guid: edda57bceb682c6428b72fb54fa91ae8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -734,7 +737,7 @@ GameObject:
   - component: {fileID: 8423592500005307258}
   - component: {fileID: 8423592500005307257}
   m_Layer: 5
-  m_Name: Exit Button (2)
+  m_Name: Reset Scores Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -802,8 +805,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 4
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnUp: {fileID: 8423592499667037435}
+    m_SelectOnDown: {fileID: 8423592499667037435}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 3
@@ -831,31 +834,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SaveManager, Assembly-CSharp
-        m_MethodName: DeleteHighScoreData
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SaveManager, Assembly-CSharp
-        m_MethodName: LoadHighScoreData
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8423592499447884454}
+      - m_Target: {fileID: 1771649649}
         m_TargetAssemblyTypeName: ScoreMenuGroup, Assembly-CSharp
         m_MethodName: ResetScores
         m_Mode: 1
@@ -1118,8 +1097,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Reset Scores
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 84dd14695854bbc43a5faa24fcf93d0d, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 40becc657b3f05a46a055d2cbb28c220, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: edda57bceb682c6428b72fb54fa91ae8, type: 2}
+  m_sharedMaterial: {fileID: -5790984483419766717, guid: edda57bceb682c6428b72fb54fa91ae8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1143,7 +1123,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 55.75
+  m_fontSize: 75.05
   m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1253,8 +1233,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Back
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 84dd14695854bbc43a5faa24fcf93d0d, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 40becc657b3f05a46a055d2cbb28c220, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: edda57bceb682c6428b72fb54fa91ae8, type: 2}
+  m_sharedMaterial: {fileID: -5790984483419766717, guid: edda57bceb682c6428b72fb54fa91ae8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1278,7 +1259,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 55.75
+  m_fontSize: 75.05
   m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1387,8 +1368,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Reset Scores
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 84dd14695854bbc43a5faa24fcf93d0d, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 40becc657b3f05a46a055d2cbb28c220, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: edda57bceb682c6428b72fb54fa91ae8, type: 2}
+  m_sharedMaterial: {fileID: -5790984483419766717, guid: edda57bceb682c6428b72fb54fa91ae8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1412,7 +1394,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 55.75
+  m_fontSize: 75.05
   m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1720,8 +1702,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: TEXT
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: edda57bceb682c6428b72fb54fa91ae8, type: 2}
+  m_sharedMaterial: {fileID: -5790984483419766717, guid: edda57bceb682c6428b72fb54fa91ae8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1854,8 +1837,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Back
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 84dd14695854bbc43a5faa24fcf93d0d, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 40becc657b3f05a46a055d2cbb28c220, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: edda57bceb682c6428b72fb54fa91ae8, type: 2}
+  m_sharedMaterial: {fileID: -5790984483419766717, guid: edda57bceb682c6428b72fb54fa91ae8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1879,7 +1863,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 55.75
+  m_fontSize: 75.05
   m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1979,7 +1963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.18431373, g: 0.19215687, b: 0.2627451, a: 1}
+  m_Color: {r: 0.24705882, g: 0.38431373, b: 0.2901961, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2122,8 +2106,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: TEXT
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: edda57bceb682c6428b72fb54fa91ae8, type: 2}
+  m_sharedMaterial: {fileID: -5790984483419766717, guid: edda57bceb682c6428b72fb54fa91ae8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2325,8 +2310,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: TEXT
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: edda57bceb682c6428b72fb54fa91ae8, type: 2}
+  m_sharedMaterial: {fileID: -5790984483419766717, guid: edda57bceb682c6428b72fb54fa91ae8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2574,7 +2560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.18431373, g: 0.19215687, b: 0.2627451, a: 1}
+  m_Color: {r: 0.24705882, g: 0.38431373, b: 0.2901961, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

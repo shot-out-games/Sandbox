@@ -61,13 +61,13 @@ public class LoadSystem : SystemBase
         LevelManager.instance.currentLevel = sg.currentLevel;
 
         var dead_e = GetSingletonEntity<DeadMenuComponent>();
-        ecb.SetComponent<DeadMenuComponent>(dead_e, SaveManager.instance.saveData.saveGames[slot].savedDeadWorld);
+        //ecb.SetComponent<DeadMenuComponent>(dead_e, SaveManager.instance.saveData.saveGames[slot].savedDeadWorld);
 
         var win_e = GetSingletonEntity<WinnerMenuComponent>();
-        ecb.SetComponent<WinnerMenuComponent>(win_e, SaveManager.instance.saveData.saveGames[slot].savedWinnerWorld);
+        //ecb.SetComponent<WinnerMenuComponent>(win_e, SaveManager.instance.saveData.saveGames[slot].savedWinnerWorld);
 
         var level_e = GetSingletonEntity<LevelCompleteMenuComponent>();
-        ecb.SetComponent<LevelCompleteMenuComponent>(level_e, SaveManager.instance.saveData.saveGames[slot].savedLevelWorld);
+        //ecb.SetComponent<LevelCompleteMenuComponent>(level_e, SaveManager.instance.saveData.saveGames[slot].savedLevelWorld);
 
         int currentLevel =  LevelManager.instance.currentLevel;
 
@@ -112,21 +112,21 @@ public class LoadSystem : SystemBase
             Entity e = PlayerEntities[i];
             var pl = SaveManager.instance.saveData.saveGames[slot].savePlayers[i];
             var player = pl.playerData.savedPlayer;
-            var skillTree = pl.playerData.skillTree;
+            //var skillTree = pl.playerData.skillTree;
             var health = pl.playerData.savedHealth;
-            var control = pl.playerData.savedControl;
-            var level = pl.playerData.savedLevelComplete;
-            var winner = pl.playerData.savedWinner;
-            var dead = pl.playerData.savedDead;
-            var attach = pl.playerData.savedAttachWeapon;
+            //var control = pl.playerData.savedControl;
+            //var level = pl.playerData.savedLevelComplete;
+            //var winner = pl.playerData.savedWinner;
+            //var dead = pl.playerData.savedDead;
+            //var attach = pl.playerData.savedAttachWeapon;
             ecb.SetComponent<PlayerComponent>(e, player);
-            ecb.SetComponent<SkillTreeComponent>(e, skillTree);
+            //ecb.SetComponent<SkillTreeComponent>(e, skillTree);
             ecb.SetComponent<HealthComponent>(e, health);
-            ecb.SetComponent<ControlBarComponent>(e, control);
-            ecb.SetComponent<LevelCompleteComponent>(e, level);
-            ecb.SetComponent<WinnerComponent>(e, winner);
-            ecb.SetComponent<DeadComponent>(e, dead);
-            ecb.SetComponent<AttachWeaponComponent>(e, attach);
+            //ecb.SetComponent<ControlBarComponent>(e, control);
+            //ecb.SetComponent<LevelCompleteComponent>(e, level);
+            //ecb.SetComponent<WinnerComponent>(e, winner);
+            //ecb.SetComponent<DeadComponent>(e, dead);
+            //ecb.SetComponent<AttachWeaponComponent>(e, attach);
             Translation ps = new Translation
             {
                 Value =
@@ -143,77 +143,77 @@ public class LoadSystem : SystemBase
 
 
 
-        for (int i = 0; i < EnemyEntities.Length; i++)
-        {
-            Entity e = EnemyEntities[i];
-            var en = SaveManager.instance.saveData.saveGames[slot].saveEnemies[i];
-            var enemy = en.enemyData.savedEnemy;
-            var skillTree = en.enemyData.skillTree;
-            var health = en.enemyData.savedHealth;
-            var level = en.enemyData.savedLevelComplete;
-            var winner = en.enemyData.savedWinner;
-            var dead = en.enemyData.savedDead;
-            ecb.SetComponent<EnemyComponent>(e, enemy);
-            ecb.SetComponent<SkillTreeComponent>(e, skillTree);
-            ecb.SetComponent<HealthComponent>(e, health);
-            ecb.SetComponent<LevelCompleteComponent>(e, level);
-            ecb.SetComponent<WinnerComponent>(e, winner);
-            ecb.SetComponent<DeadComponent>(e, dead);
-            Translation ps = new Translation
-            {
-                Value =
-                {
-                    x = en.enemyData.position[0], y = en.enemyData.position[1], z = en.enemyData.position[2]
-                }
-            };
-            ecb.SetComponent<Translation>(e, ps);
-        }
+        //for (int i = 0; i < EnemyEntities.Length; i++)
+        //{
+        //    Entity e = EnemyEntities[i];
+        //    var en = SaveManager.instance.saveData.saveGames[slot].saveEnemies[i];
+        //    var enemy = en.enemyData.savedEnemy;
+        //    var skillTree = en.enemyData.skillTree;
+        //    var health = en.enemyData.savedHealth;
+        //    var level = en.enemyData.savedLevelComplete;
+        //    var winner = en.enemyData.savedWinner;
+        //    var dead = en.enemyData.savedDead;
+        //    ecb.SetComponent<EnemyComponent>(e, enemy);
+        //    ecb.SetComponent<SkillTreeComponent>(e, skillTree);
+        //    ecb.SetComponent<HealthComponent>(e, health);
+        //    ecb.SetComponent<LevelCompleteComponent>(e, level);
+        //    ecb.SetComponent<WinnerComponent>(e, winner);
+        //    ecb.SetComponent<DeadComponent>(e, dead);
+        //    Translation ps = new Translation
+        //    {
+        //        Value =
+        //        {
+        //            x = en.enemyData.position[0], y = en.enemyData.position[1], z = en.enemyData.position[2]
+        //        }
+        //    };
+        //    ecb.SetComponent<Translation>(e, ps);
+        //}
 
 
-        for (int i = 0; i < NpcEntities.Length; i++)
-        {
-            Entity e = NpcEntities[i];
-            var np = SaveManager.instance.saveData.saveGames[slot].saveNpc[i];
-            var npc = np.npcData.savedNpc;
-            var skillTree = np.npcData.skillTree;
-            var health = np.npcData.savedHealth;
-            var level = np.npcData.savedLevelComplete;
-            var winner = np.npcData.savedWinner;
-            var dead = np.npcData.savedDead;
-            ecb.SetComponent<NpcComponent>(e, npc);
-            ecb.SetComponent<SkillTreeComponent>(e, skillTree);
-            ecb.SetComponent<HealthComponent>(e, health);
-            ecb.SetComponent<LevelCompleteComponent>(e, level);
-            ecb.SetComponent<WinnerComponent>(e, winner);
-            ecb.SetComponent<DeadComponent>(e, dead);
-            Translation ps = new Translation
-            {
-                Value =
-                {
-                    x = np.npcData.position[0], y = np.npcData.position[1], z = np.npcData.position[2]
-                }
-            };
-            ecb.SetComponent<Translation>(e, ps);
-            //Debug.Log("npc " + ps + " e " + e);
-        }
+        //for (int i = 0; i < NpcEntities.Length; i++)
+        //{
+        //    Entity e = NpcEntities[i];
+        //    var np = SaveManager.instance.saveData.saveGames[slot].saveNpc[i];
+        //    var npc = np.npcData.savedNpc;
+        //    var skillTree = np.npcData.skillTree;
+        //    var health = np.npcData.savedHealth;
+        //    var level = np.npcData.savedLevelComplete;
+        //    var winner = np.npcData.savedWinner;
+        //    var dead = np.npcData.savedDead;
+        //    ecb.SetComponent<NpcComponent>(e, npc);
+        //    ecb.SetComponent<SkillTreeComponent>(e, skillTree);
+        //    ecb.SetComponent<HealthComponent>(e, health);
+        //    ecb.SetComponent<LevelCompleteComponent>(e, level);
+        //    ecb.SetComponent<WinnerComponent>(e, winner);
+        //    ecb.SetComponent<DeadComponent>(e, dead);
+        //    Translation ps = new Translation
+        //    {
+        //        Value =
+        //        {
+        //            x = np.npcData.position[0], y = np.npcData.position[1], z = np.npcData.position[2]
+        //        }
+        //    };
+        //    ecb.SetComponent<Translation>(e, ps);
+        //    //Debug.Log("npc " + ps + " e " + e);
+        //}
 
-        Debug.Log("we " + WeaponEntities.Length);
-        for (int i = 0; i < WeaponEntities.Length; i++)
-        {
-            Entity e = WeaponEntities[i];
-            WeaponItemComponent saveWeapon = SaveManager.instance.saveData.saveGames[slot].saveWeapons[i];
-            //ecb.SetComponent<WeaponItemComponent>(e, saveWeapon);
-            Debug.Log("wea " + saveWeapon.active + " e " + e);
-        }
+        //Debug.Log("we " + WeaponEntities.Length);
+        //for (int i = 0; i < WeaponEntities.Length; i++)
+        //{
+        //    Entity e = WeaponEntities[i];
+        //    WeaponItemComponent saveWeapon = SaveManager.instance.saveData.saveGames[slot].saveWeapons[i];
+        //    //ecb.SetComponent<WeaponItemComponent>(e, saveWeapon);
+        //    Debug.Log("wea " + saveWeapon.active + " e " + e);
+        //}
 
-        Debug.Log("power " + PowerEntities.Length);
-        for (int i = 0; i < PowerEntities.Length; i++)
-        {
-            Entity e = PowerEntities[i];
-            PowerItemComponent savePowers = SaveManager.instance.saveData.saveGames[slot].savePowerItems[i];
-            ecb.SetComponent<PowerItemComponent>(e, savePowers);
-            Debug.Log("pwr " + savePowers.active + " e " + e);
-        }
+        //Debug.Log("power " + PowerEntities.Length);
+        //for (int i = 0; i < PowerEntities.Length; i++)
+        //{
+        //    Entity e = PowerEntities[i];
+        //    PowerItemComponent savePowers = SaveManager.instance.saveData.saveGames[slot].savePowerItems[i];
+        //    ecb.SetComponent<PowerItemComponent>(e, savePowers);
+        //    Debug.Log("pwr " + savePowers.active + " e " + e);
+        //}
 
         ecb.Playback(EntityManager);
         ecb.Dispose();
@@ -225,47 +225,47 @@ public class LoadSystem : SystemBase
         PowerEntities.Dispose();
 
 
-        Entities.WithoutBurst().WithAll<PlayerComponent>().ForEach(
-            (
-                PlayerComponentAuthoring player, WeaponManager attachWeapon, AttachWeaponComponent attachWeaponComponent,
-                Transform transform
-            ) =>
-            {
-                var e = player.playerEntity;
-                var attachedSlot = EntityManager.GetComponentData<AttachWeaponComponent>(e).attachedWeaponSlot;
-                var ps = EntityManager.GetComponentData<Translation>(e);
-                var position = new Vector3(ps.Value.x, ps.Value.y, ps.Value.z);
-                if (attachedSlot >= 0) attachWeapon.AttachPickWeapons(attachedSlot);
-                transform.position = position;
-            }
-        ).Run();
+        //Entities.WithoutBurst().WithAll<PlayerComponent>().ForEach(
+        //    (
+        //        PlayerComponentAuthoring player, WeaponManager attachWeapon, AttachWeaponComponent attachWeaponComponent,
+        //        Transform transform
+        //    ) =>
+        //    {
+        //        var e = player.playerEntity;
+        //        var attachedSlot = EntityManager.GetComponentData<AttachWeaponComponent>(e).attachedWeaponSlot;
+        //        var ps = EntityManager.GetComponentData<Translation>(e);
+        //        var position = new Vector3(ps.Value.x, ps.Value.y, ps.Value.z);
+        //        if (attachedSlot >= 0) attachWeapon.AttachPickWeapons(attachedSlot);
+        //        transform.position = position;
+        //    }
+        //).Run();
 
 
-        Entities.WithoutBurst().WithAll<EnemyComponent>().ForEach(
-            (
-                EnemyComponentAuthoring enemy, Transform transform
-            ) =>
-            {
-                var e = enemy.enemyEntity;
-                var ps = EntityManager.GetComponentData<Translation>(e);
-                var position = new Vector3(ps.Value.x, ps.Value.y, ps.Value.z);
-                transform.position = position;
-            }
-        ).Run();
+        //Entities.WithoutBurst().WithAll<EnemyComponent>().ForEach(
+        //    (
+        //        EnemyComponentAuthoring enemy, Transform transform
+        //    ) =>
+        //    {
+        //        var e = enemy.enemyEntity;
+        //        var ps = EntityManager.GetComponentData<Translation>(e);
+        //        var position = new Vector3(ps.Value.x, ps.Value.y, ps.Value.z);
+        //        transform.position = position;
+        //    }
+        //).Run();
 
 
-        Entities.WithoutBurst().WithAll<NpcComponent>().ForEach(
-            (
-                NpcComponentAuthoring npc, Transform transform
-            ) =>
-            {
-                var e = npc.npcEntity;
-                var ps = EntityManager.GetComponentData<Translation>(e);
-                var position = new Vector3(ps.Value.x, ps.Value.y, ps.Value.z);
-                //Debug.Log("npc ps " + position);
-                transform.position = position;
-            }
-        ).Run();
+        //Entities.WithoutBurst().WithAll<NpcComponent>().ForEach(
+        //    (
+        //        NpcComponentAuthoring npc, Transform transform
+        //    ) =>
+        //    {
+        //        var e = npc.npcEntity;
+        //        var ps = EntityManager.GetComponentData<Translation>(e);
+        //        var position = new Vector3(ps.Value.x, ps.Value.y, ps.Value.z);
+        //        //Debug.Log("npc ps " + position);
+        //        transform.position = position;
+        //    }
+        //).Run();
 
 
 

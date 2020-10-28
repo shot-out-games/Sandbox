@@ -9,7 +9,7 @@ public struct HealthComponent : IComponentData
     public float TotalDamageLanded;
     public float TotalDamageReceived;
     public bool AlwaysDamage;//ignore hit weights and similar
-    Entity Entity;
+    //Entity Entity;
 }
 
 

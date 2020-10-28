@@ -1,4 +1,5 @@
-﻿using Unity.Entities;
+﻿using System.Collections.Generic;
+using Unity.Entities;
 //using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
@@ -35,11 +36,14 @@ public class BasicWinnerSystem : SystemBase
 
 
         Entities.WithoutBurst().ForEach
-            ((AudioSource AudioSource)=>
+            ((AudioSource AudioSource) =>
             {
-                if (AudioSource.isPlaying)
+                if (AudioSource)
                 {
-                    AudioSource.Stop();
+                    if (AudioSource.isPlaying)
+                    {
+                        AudioSource.Stop();
+                    }
                 }
             }
 
@@ -52,12 +56,12 @@ public class BasicWinnerSystem : SystemBase
             {
                 ecb.RemoveComponent<PlayerComponent>(e);
             }
-            else if(HasComponent<EnemyComponent>(e))
+            else if (HasComponent<EnemyComponent>(e))
             {
                 ecb.RemoveComponent<EnemyComponent>(e);
             }
 
-            if(HasComponent<PhysicsVelocity>(e))
+            if (HasComponent<PhysicsVelocity>(e))
             {
                 ecb.RemoveComponent<PhysicsVelocity>(e);
             }
@@ -68,13 +72,27 @@ public class BasicWinnerSystem : SystemBase
 
         Entities.WithoutBurst().ForEach
         ((in Entity e, in EnemyComponent enemyComponent) =>
-        {
-            ecb.RemoveComponent<EnemyComponent>(e);
-        }
+            {
+                ecb.RemoveComponent<EnemyComponent>(e);
+            }
+        ).Run();
+
+
+        //grab "last" player score if any
+        int score = 0;
+        bool hasScoreMenuOption = false;
+        Entities.WithoutBurst().WithAll<PlayerComponent>().ForEach
+        ((ScoreComponent scoreComponent) =>
+            {
+                score = scoreComponent.score;
+                hasScoreMenuOption = true;
+            }
         ).Run();
 
 
 
+        if(hasScoreMenuOption == false)
+        {
 
         Entities.WithoutBurst().ForEach
         (
@@ -83,11 +101,86 @@ public class BasicWinnerSystem : SystemBase
                 if (winnerMenuComponent.hide == true)
                 {
                     LevelManager.instance.endGame = true;
-                    winnerMenuGroup.ShowMenu();
+                    winnerMenuGroup.ShowMenu(showScoreboard: false);
                     winnerMenuComponent.hide = false;
                 }
             }
         ).Run();
+
+
+        }
+        else
+        {
+
+            int currentLevel = LevelManager.instance.currentLevel;
+
+            int slot = SaveManager.instance.saveWorld.lastLoadedSlot - 1;
+            List<float> scores = SaveManager.instance.saveData.saveGames[slot].scoreList;
+
+            bool showScores = false;
+
+            Entities.WithoutBurst().ForEach
+            (
+                (ref WinnerMenuComponent winnerMenuComponent, in WinnerMenuGroup winnerMenuGroup) =>
+                {
+                    winnerMenuComponent.score = score;
+                    //winnerMenuComponent.scoreBoard = true;
+                    LevelManager.instance.levelSettings[currentLevel].completed = true;
+                    if (winnerMenuComponent.hide == true)
+                    {
+                        showScores = true;
+                        SaveManager.instance.LoadHighScoreData();
+                        scores.Add(score);
+                        scores.Sort();
+                        SaveManager.instance.saveData.saveGames[slot] = new SaveGames {scoreList = scores};
+                        SaveManager.instance.SaveHighScoreData();
+                        LevelManager.instance.endGame = true;
+                        int rank = 1;
+                        int count = scores.Count;
+                        for (int i = 0; i < count; i++)
+                        {
+                            if (scores[i] > score)
+                            {
+                                rank += 1;
+                            }
+                        }
+
+                        winnerMenuGroup.rank = rank;
+                        winnerMenuGroup.score = score;
+                        winnerMenuGroup.ShowMenu(true);
+                        winnerMenuComponent.hide = false;
+                    }
+
+                }
+
+
+            ).Run();
+
+
+            Entities.WithoutBurst().ForEach
+            (
+                (ref ScoresMenuComponent scoresMenuComponent) => { CalcScores(scores, ref scoresMenuComponent); }
+            ).Run();
+
+
+            Entities.WithoutBurst().ForEach
+            (
+                (ref ScoresMenuComponent scoresMenuComponent, in ScoreMenuGroup scoreMenuGroup) =>
+                {
+
+                    if (showScores == true && scoresMenuComponent.index == 0)
+                    {
+                        scoresMenuComponent.index = 1;
+                        CalcScores(scores, ref scoresMenuComponent);
+                        scoresMenuComponent.hide = false;
+                    }
+                }
+
+
+            ).Run();
+
+        }
+
 
 
         ecb.Playback(EntityManager);
@@ -97,6 +190,46 @@ public class BasicWinnerSystem : SystemBase
 
 
     }
+
+
+
+
+    void CalcScores(List<float> scores, ref ScoresMenuComponent scoresMenuComponent)
+    {
+        int slot = scores.Count;
+        if (scores.Count > 0)
+        {
+            scoresMenuComponent.hi1 = (int)scores[slot - 1];
+        }
+
+        if (scores.Count > 1)
+        {
+            scoresMenuComponent.hi2 = (int)scores[slot - 2];
+        }
+
+        if (scores.Count > 2)
+        {
+            scoresMenuComponent.hi3 = (int)scores[slot - 3];
+        }
+
+        if (scores.Count > 3)
+        {
+            scoresMenuComponent.hi4 = (int)scores[slot - 4];
+        }
+
+        if (scores.Count > 4)
+        {
+            scoresMenuComponent.hi5 = (int)scores[slot - 5];
+        }
+
+
+
+    }
+
+
+
+
+
 
 }
 

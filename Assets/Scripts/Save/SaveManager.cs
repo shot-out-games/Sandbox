@@ -145,6 +145,72 @@ public class SaveManager : MonoBehaviour
 
     }
 
+
+
+
+
+
+    public void LoadHighScoreData()
+    {
+        SaveData sd = new SaveData();
+        string path = Application.persistentDataPath + "/savedGames" + ".sog";
+        if (File.Exists(path))
+        {
+            Debug.Log(path + " exists");
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(path, FileMode.Open);
+            sd = bf.Deserialize(file) as SaveData;
+            file.Close();
+
+        }
+        else
+        {
+            Debug.Log(path + " created");
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Create(path);
+            sd = new SaveData();
+            bf.Serialize(file, sd);
+            file.Close();
+        }
+
+        saveData = sd;
+
+    }
+
+
+
+    public void SaveHighScoreData()
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        //string fileName = Application.persistentDataPath + "/savedGames" + (saveWorld.lastLoadedSlot).ToString() + ".sog";
+        string fileName = Application.persistentDataPath + "/savedGames" + ".sog";
+        FileStream file = File.Create(fileName);
+        Debug.Log(Application.persistentDataPath);
+        bf.Serialize(file, saveData);
+        file.Close();
+
+
+
+    }
+
+
+    public void DeleteHighScoreData()
+    {
+        int slot = saveWorld.lastLoadedSlot - 1;
+        saveData.saveGames[slot] = new SaveGames();
+        SaveHighScoreData();
+
+    }
+
 }
+
+
+
+
+
+
+
+
+
 
 

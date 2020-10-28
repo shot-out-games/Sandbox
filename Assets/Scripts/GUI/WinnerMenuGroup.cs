@@ -24,6 +24,9 @@ public struct WinnerMenuComponent : IComponentData
     public int levelTargetReachedCounter;
     public int endGameTargetReachedCounter;
     public int npcDeadCounter;
+    public int score;
+    //public bool scoreBoard;
+
 
 }
 
@@ -40,6 +43,7 @@ public struct WinnerComponent : IComponentData
     public int winnerCounter;
     public int keys;
     public toggleStates winConditionMet;
+
 
 
 }
@@ -63,6 +67,8 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     private TextMeshProUGUI message;
 
     [SerializeField] private ParticleSystem winnerParticleSystem;
+    public int rank = 0;
+    public int score = 0;
 
     void Start()
     {
@@ -96,7 +102,7 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
-    public void ShowMenu()
+    public void ShowMenu(bool showScoreboard)
     {
         //Debug.Log("end " + manager.GetComponentData<WinnerMenuComponent>(entity).endGameTargetReachedCounter);
         canvasGroup.alpha = 1;
@@ -117,8 +123,15 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
             audioSource.Play();
         }
 
-        message.SetText("Winner!");
 
+        if (showScoreboard == false)
+        {
+            message.SetText("Winner!");
+        }
+        else
+        {
+            message.SetText("SCORE: " + score + " RANK:  " + rank);
+        }
 
         //int npcDead = LevelManager.instance.NpcDead;
         //int npcSaved = LevelManager.instance.NpcSaved;

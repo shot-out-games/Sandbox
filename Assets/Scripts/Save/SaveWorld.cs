@@ -19,9 +19,6 @@ public class SaveWorld
     public bool isFullScreen { get; set; }
 
 
-
-
-
 }
 
 
