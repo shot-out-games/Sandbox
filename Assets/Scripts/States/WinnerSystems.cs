@@ -33,6 +33,7 @@ public class BasicWinnerSystem : SystemBase
         //winner = true;
 
         if (winner == false) return;
+        LevelManager.instance.endGame = true;
 
 
         Entities.WithoutBurst().ForEach
@@ -100,7 +101,6 @@ public class BasicWinnerSystem : SystemBase
                 {
                     if (winnerMenuComponent.hide == true)
                     {
-                        LevelManager.instance.endGame = true;
                         winnerMenuGroup.score = score;
                         winnerMenuGroup.rank = rank;
                         winnerMenuGroup.ShowMenu(showScoresOnWinScreen);

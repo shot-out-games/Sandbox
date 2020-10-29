@@ -75,6 +75,7 @@ public class DeadSystem : SystemBase //really game over system currently
 
         if (dead == true)
         {
+            LevelManager.instance.endGame = true;
             LevelManager.instance.audioSourceGame.Stop();
             Entities.WithoutBurst().ForEach
             (

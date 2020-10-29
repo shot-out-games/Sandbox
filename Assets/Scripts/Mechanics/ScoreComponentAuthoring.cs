@@ -12,6 +12,7 @@ public struct ScoreComponent : IComponentData
     public int rank;
     public bool pointsScored;
     public int defaultPointsScored;
+    public int scoreChecked;
 
 
 }

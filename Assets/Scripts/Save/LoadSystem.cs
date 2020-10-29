@@ -50,7 +50,14 @@ public class LoadSystem : SystemBase
 
         if (SaveManager.instance.saveWorld == null) return;
         int savedGames = SaveManager.instance.saveData.saveGames.Count;
-        if (savedGames == 0) return;
+        if (savedGames == 0)
+        {
+            SaveManager.instance.saveData.saveGames.Clear();
+            SaveManager.instance.saveData.saveGames.Add(new SaveGames()); //slot 0
+            SaveManager.instance.saveData.saveGames.Add(new SaveGames()); // slot 1
+            SaveManager.instance.saveData.saveGames.Add(new SaveGames()); // slot 2
+            return;
+        }
 
         int slot = SaveManager.instance.saveWorld.lastLoadedSlot - 1;
         int savedPlayers = SaveManager.instance.saveData.saveGames[slot].savePlayers.Count;

@@ -65,6 +65,7 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
 
     public void ClearGameData()
     {
+        endGame = false;
         currentLevel = 0;
         playersDead = 0;
         enemiesDead = 0;
