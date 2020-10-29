@@ -15,31 +15,58 @@ public class ScoreSystem : SystemBase
 {
     protected override void OnUpdate()
     {
+
+        //var flingGroup = GetComponentDataFromEntity<FlingMechanicComponent>(true);
+
+
         int currentScore = 0;
         int scoreChecked = 0;
-        Entities.WithoutBurst().ForEach((ref ScoreComponent score, in ScoreComponentAuthoring scoreComponentAuthoring) =>
+        Entities.WithoutBurst().ForEach((ref ScoreComponent score, in ScoreComponentAuthoring scoreComponentAuthoring, in Entity e) =>
             {
+                
+
                 if (score.pointsScored == true)
                 {
-                    score.score = score.score + score.defaultPointsScored;
+                    float defaultScore = score.defaultPointsScored;
+
+                    float timeBonus = (10 - score.timeSinceLastScore) * defaultScore;
+                    timeBonus = math.clamp(timeBonus,  .5f * defaultScore, 2f * defaultScore);
+                    score.score = score.score + score.defaultPointsScored + (int)timeBonus;
+
                     score.pointsScored = false;
                     scoreComponentAuthoring.ShowLabelScore(score.score);
+                    score.timeSinceLastScore = 0;
                 }
+                else
+                {
+                    score.timeSinceLastScore += Time.DeltaTime;
+                }
+
                 scoreChecked = score.scoreChecked;
                 currentScore = score.score;
             }
         ).Run();
 
+
+
+
+
+
+        bool updateScoreForMenu = SaveManager.instance.updateScore;
         //run rank score loop only when endgame
-        if (LevelManager.instance.endGame == true && scoreChecked == 0 || SaveManager.instance.updateScore == true)
+        if (LevelManager.instance.endGame == true && scoreChecked == 0 || updateScoreForMenu == true)//update score if clicked from menu
         {
             SaveManager.instance.updateScore = false;
             int slot = SaveManager.instance.saveWorld.lastLoadedSlot - 1;
             List<float> scores = SaveManager.instance.saveData.saveGames[slot].scoreList;
             Debug.Log("cs " + currentScore);
-            scores.Add(currentScore);
+            if (updateScoreForMenu == false)
+            {
+                scores.Add(currentScore);
+                scoreChecked = 1;
+            }
             scores.Sort();
-            SaveManager.instance.saveData.saveGames[slot].scoreList = scores ;
+            SaveManager.instance.saveData.saveGames[slot].scoreList = scores;
             SaveManager.instance.SaveGameData();
             int rank = 1;
             int count = scores.Count;
@@ -56,7 +83,7 @@ public class ScoreSystem : SystemBase
                 (ref ScoreComponent scoreComponent) =>
                 {
                     scoreComponent.rank = rank;
-                    scoreComponent.scoreChecked = 1;
+                    scoreComponent.scoreChecked = scoreChecked;
                 }
             ).Run();
 
@@ -71,22 +98,7 @@ public class ScoreSystem : SystemBase
             ).Run();
 
         }
-        //Entities.WithoutBurst().ForEach
-        //(
-        //    (ref ScoresMenuComponent scoresMenuComponent, in ScoreMenuGroup scoreMenuGroup) =>
-        //    {
-
-        //        if (showScores == true && scoresMenuComponent.index == 0)
-        //        {
-        //            scoresMenuComponent.index = 1;
-        //            //CalcScores(scores, ref scoresMenuComponent);
-
-        //            scoresMenuComponent.hide = false;
-        //        }
-        //    }
-
-
-        //).Run();
+    
 
     }
 

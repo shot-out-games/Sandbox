@@ -25,6 +25,8 @@ public struct WinnerMenuComponent : IComponentData
     public int endGameTargetReachedCounter;
     public int npcDeadCounter;
     public int score;
+    public int rank;
+    public bool showScore;
     //public bool scoreBoard;
 
 

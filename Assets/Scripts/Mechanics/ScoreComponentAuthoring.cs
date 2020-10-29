@@ -13,6 +13,8 @@ public struct ScoreComponent : IComponentData
     public bool pointsScored;
     public int defaultPointsScored;
     public int scoreChecked;
+    public float timeSinceLastScore;
+    public int streak;
 
 
 }

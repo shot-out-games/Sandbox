@@ -100,14 +100,21 @@ public class ScoreMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 
     private void OnEnable()
     {
-        PauseMenuGroup.ScoresClickedEvent += ShowMenu;
+        PauseMenuGroup.ScoresClickedEvent += UpdateScoreShowMenu;
         //GameInterface.HideMenuEvent += HideMenu;
 
     }
 
+    private void UpdateScoreShowMenu()
+    {
+        SaveManager.instance.updateScore = true;
+        Debug.Log("update score");
+        ShowMenu();
+    }
+
     private void OnDisable()
     {
-        PauseMenuGroup.ScoresClickedEvent -= ShowMenu;
+        PauseMenuGroup.ScoresClickedEvent -= UpdateScoreShowMenu;
 
         //GameInterface.HideMenuEvent -= HideMenu;
     }
@@ -126,6 +133,7 @@ public class ScoreMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 
         manager.SetComponentData(entity, scores);
 
+        SaveManager.instance.DeleteHighScoreData();
 
 
     }

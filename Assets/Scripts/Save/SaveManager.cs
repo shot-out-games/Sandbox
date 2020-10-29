@@ -199,7 +199,7 @@ public class SaveManager : MonoBehaviour
         int slot = saveWorld.lastLoadedSlot - 1;
         saveData.saveGames[slot].scoreList.Clear();
         Debug.Log("clear");
-        //SaveHighScoreData();
+        SaveGameData();
 
     }
 

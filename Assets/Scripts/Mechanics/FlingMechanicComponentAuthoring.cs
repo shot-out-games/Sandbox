@@ -14,6 +14,7 @@ public struct FlingMechanicComponent : IComponentData
     public bool vulnerable;
     public float vulnerableTime;
     public float vulnerableMaxTime;
+    public float timeSinceCausingDamage;
 
 }
 

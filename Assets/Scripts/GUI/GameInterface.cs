@@ -57,6 +57,10 @@ public class GameInterface : MonoBehaviour, IConvertGameObjectToEntity
         paused = pause;
     }
 
+    public void SetPauseMember(bool pause)
+    {
+        paused = pause;
+    }
 
 
     public void SelectClicked()//only called with button from system no menu item currently
@@ -127,28 +131,30 @@ public class GameInterfaceSystem : SystemBase
                     {
                         gameInterface.SelectClicked();
                         Debug.Log("select " + selectPressed);
-                        paused = gameInterface.paused;//should probably be component
                     }
-                    Debug.Log("paused " + paused);
+                    paused = gameInterface.paused;//should probably be component
+
                 }
 
             ).Run();
+
+        stepPhysicsWorld.Enabled = !paused;
+
 
         if (selectPressed)
         {
 
             Entities.WithoutBurst().WithAll<RatingsComponent>().WithStructuralChanges().ForEach((Entity entity) =>
             {
+
                 if (paused)
                 {
                     Debug.Log("add");
-                    stepPhysicsWorld.Enabled = false;
                     EntityManager.AddComponent<Pause>(entity);
                 }
                 else
                 {
                     Debug.Log("remove");
-                    stepPhysicsWorld.Enabled = true;
                     EntityManager.RemoveComponent<Pause>(entity);
                 }
             }

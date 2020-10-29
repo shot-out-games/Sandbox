@@ -30,6 +30,7 @@ namespace SandBox.Player
 
         protected override void OnUpdate()
         {
+            
 
 
             Entities.WithoutBurst().WithAll<FlingMechanicComponent, PlayerComponent>().ForEach(
@@ -81,7 +82,7 @@ namespace SandBox.Player
                         Debug.Log("press");
                     }
 
-
+                    flingMechanic.timeSinceCausingDamage += Time.DeltaTime;
 
                     if (flingMechanic.inFling == true && flingMechanic.inFlingTime >= flingMechanic.inFlingMaxTime)
                     {

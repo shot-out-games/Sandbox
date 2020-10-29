@@ -12,6 +12,12 @@ public struct LevelComponent : IComponentData
     public int potentialGameTargets;//in some games max of something ie potential saved robots
 }
 
+public enum GameResult
+{
+    None = 0,
+    Winner = 1,
+    Loser = 2
+}
 
 
 public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
@@ -19,6 +25,8 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
     public bool mobile;
     [HideInInspector]
     public bool endGame = false;
+
+    [HideInInspector] public GameResult gameResult = GameResult.None;
     [HideInInspector]
     public int potentialGameTargets;//in some games max of something ie potential saved robots
     //[HideInInspector]
@@ -66,6 +74,7 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
     public void ClearGameData()
     {
         endGame = false;
+        gameResult = GameResult.None;
         currentLevel = 0;
         playersDead = 0;
         enemiesDead = 0;
