@@ -9,6 +9,7 @@ using UnityEngine;
 public struct ScoreComponent : IComponentData
 {
     public int score;
+    public int rank;
     public bool pointsScored;
     public int defaultPointsScored;
 

@@ -15,6 +15,7 @@ public struct ScoresMenuComponent : IComponentData
 {
     public bool hide;
     public int index;
+    //public int rank;
     public int hi1;
     public int hi2;
     public int hi3;
@@ -97,7 +98,7 @@ public class ScoreMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
-        private void OnEnable()
+    private void OnEnable()
     {
         PauseMenuGroup.ScoresClickedEvent += ShowMenu;
         //GameInterface.HideMenuEvent += HideMenu;

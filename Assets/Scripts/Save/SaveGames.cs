@@ -30,6 +30,11 @@ public class SaveGames
     public int NpcSaved;
 
 
+    public SaveGames()
+    {
+        //scoreList.Add(0);
+    }
+
     //this project only
     //public List<HoleComponent> savedHoles = new List<HoleComponent>();
 

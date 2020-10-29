@@ -80,106 +80,107 @@ public class BasicWinnerSystem : SystemBase
 
         //grab "last" player score if any
         int score = 0;
-        bool hasScoreMenuOption = false;
+        int rank = 0;
+        bool showScoresOnWinScreen = false;
         Entities.WithoutBurst().WithAll<PlayerComponent>().ForEach
         ((ScoreComponent scoreComponent) =>
-            {
-                score = scoreComponent.score;
-                hasScoreMenuOption = true;
-            }
+        {
+            score = scoreComponent.score;
+            rank = scoreComponent.rank;
+            showScoresOnWinScreen = true;
+        }
         ).Run();
 
 
 
-        if(hasScoreMenuOption == false)
-        {
 
         Entities.WithoutBurst().ForEach
-        (
-            (ref WinnerMenuComponent winnerMenuComponent, in WinnerMenuGroup winnerMenuGroup) =>
-            {
-                if (winnerMenuComponent.hide == true)
-                {
-                    LevelManager.instance.endGame = true;
-                    winnerMenuGroup.ShowMenu(showScoreboard: false);
-                    winnerMenuComponent.hide = false;
-                }
-            }
-        ).Run();
-
-
-        }
-        else
-        {
-
-            int currentLevel = LevelManager.instance.currentLevel;
-
-            int slot = SaveManager.instance.saveWorld.lastLoadedSlot - 1;
-            List<float> scores = SaveManager.instance.saveData.saveGames[slot].scoreList;
-
-            bool showScores = false;
-
-            Entities.WithoutBurst().ForEach
             (
                 (ref WinnerMenuComponent winnerMenuComponent, in WinnerMenuGroup winnerMenuGroup) =>
                 {
-                    winnerMenuComponent.score = score;
-                    //winnerMenuComponent.scoreBoard = true;
-                    LevelManager.instance.levelSettings[currentLevel].completed = true;
                     if (winnerMenuComponent.hide == true)
                     {
-                        showScores = true;
-                        SaveManager.instance.LoadHighScoreData();
-                        scores.Add(score);
-                        scores.Sort();
-                        SaveManager.instance.saveData.saveGames[slot] = new SaveGames {scoreList = scores};
-                        SaveManager.instance.SaveHighScoreData();
                         LevelManager.instance.endGame = true;
-                        int rank = 1;
-                        int count = scores.Count;
-                        for (int i = 0; i < count; i++)
-                        {
-                            if (scores[i] > score)
-                            {
-                                rank += 1;
-                            }
-                        }
-
-                        winnerMenuGroup.rank = rank;
                         winnerMenuGroup.score = score;
-                        winnerMenuGroup.ShowMenu(true);
+                        winnerMenuGroup.rank = rank;
+                        winnerMenuGroup.ShowMenu(showScoresOnWinScreen);
                         winnerMenuComponent.hide = false;
                     }
-
                 }
-
-
             ).Run();
 
 
-            Entities.WithoutBurst().ForEach
-            (
-                (ref ScoresMenuComponent scoresMenuComponent) => { CalcScores(scores, ref scoresMenuComponent); }
-            ).Run();
+        //}
+        //else
+        //{
+
+        //    //int currentLevel = LevelManager.instance.currentLevel;
+
+        //    //int slot = SaveManager.instance.saveWorld.lastLoadedSlot - 1;
+        //    //List<float> scores = SaveManager.instance.saveData.saveGames[slot].scoreList;
+
+        //    //bool showScores = false;
+
+        //    Entities.WithoutBurst().ForEach
+        //    (
+        //        (ref WinnerMenuComponent winnerMenuComponent, in WinnerMenuGroup winnerMenuGroup) =>
+        //        {
+        //            winnerMenuComponent.score = score;
+        //            //LevelManager.instance.levelSettings[currentLevel].completed = true;
+        //            if (winnerMenuComponent.hide == true)
+        //            {
+        //                //showScores = true;
+        //                //SaveManager.instance.LoadHighScoreData();
+        //                //scores.Add(score);
+        //                //scores.Sort();
+        //                //SaveManager.instance.saveData.saveGames[slot] = new SaveGames {scoreList = scores};
+        //                //SaveManager.instance.SaveHighScoreData();
+        //                //LevelManager.instance.endGame = true;
+        //                //int rank = 1;
+        //                //int count = scores.Count;
+        //                //for (int i = 0; i < count; i++)
+        //                //{
+        //                // if (scores[i] > score)
+        //                //{
+        //                // rank += 1;
+        //                //}
+        //                //}
+
+        //                winnerMenuGroup.rank = rank;
+        //                winnerMenuGroup.score = score;
+        //                winnerMenuGroup.ShowMenu(true);
+        //                winnerMenuComponent.hide = false;
+        //            }
+
+        //        }
 
 
-            Entities.WithoutBurst().ForEach
-            (
-                (ref ScoresMenuComponent scoresMenuComponent, in ScoreMenuGroup scoreMenuGroup) =>
-                {
-
-                    if (showScores == true && scoresMenuComponent.index == 0)
-                    {
-                        scoresMenuComponent.index = 1;
-                        CalcScores(scores, ref scoresMenuComponent);
-                        scoresMenuComponent.hide = false;
-                    }
-                }
+        //    ).Run();
 
 
-            ).Run();
+            //Entities.WithoutBurst().ForEach
+            //(
+            //    (ref ScoresMenuComponent scoresMenuComponent) => { CalcScores(scores, ref scoresMenuComponent); }
+            //).Run();
 
-        }
+
+            //Entities.WithoutBurst().ForEach
+            //(
+            //    (ref ScoresMenuComponent scoresMenuComponent, in ScoreMenuGroup scoreMenuGroup) =>
+            //    {
+
+            //        if (showScores == true && scoresMenuComponent.index == 0)
+            //        {
+            //            scoresMenuComponent.index = 1;
+            //            CalcScores(scores, ref scoresMenuComponent);
+            //            scoresMenuComponent.hide = false;
+            //        }
+            //    }
+
+
+            //).Run();
+
+        //}
 
 
 
@@ -187,51 +188,11 @@ public class BasicWinnerSystem : SystemBase
         ecb.Dispose();
 
 
-
-
     }
-
-
-
-
-    void CalcScores(List<float> scores, ref ScoresMenuComponent scoresMenuComponent)
-    {
-        int slot = scores.Count;
-        if (scores.Count > 0)
-        {
-            scoresMenuComponent.hi1 = (int)scores[slot - 1];
-        }
-
-        if (scores.Count > 1)
-        {
-            scoresMenuComponent.hi2 = (int)scores[slot - 2];
-        }
-
-        if (scores.Count > 2)
-        {
-            scoresMenuComponent.hi3 = (int)scores[slot - 3];
-        }
-
-        if (scores.Count > 3)
-        {
-            scoresMenuComponent.hi4 = (int)scores[slot - 4];
-        }
-
-        if (scores.Count > 4)
-        {
-            scoresMenuComponent.hi5 = (int)scores[slot - 5];
-        }
-
-
-
-    }
-
-
-
-
-
 
 }
+
+
 
 
 
