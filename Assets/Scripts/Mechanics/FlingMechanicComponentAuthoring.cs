@@ -14,7 +14,12 @@ public struct FlingMechanicComponent : IComponentData
     public bool vulnerable;
     public float vulnerableTime;
     public float vulnerableMaxTime;
+    public float vulnerableMaxTimeGame;
     public float timeSinceCausingDamage;
+    public bool lastShotConnected;
+    public bool shotLanded;
+    public bool resetTimerAfterHitLanded;
+
 
 }
 
@@ -26,6 +31,8 @@ public class FlingMechanicComponentAuthoring: MonoBehaviour, IConvertGameObjectT
     public float force = 24f;
     public float inFlingMaxTime = 1.0f;
     public float vulnerableMaxTime = 2.0f;
+    [SerializeField] bool resetTimerAfterHitLanded;
+
     public ParticleSystem vulnerableParticleSystem;
     public ParticleSystem inFlingParticleSystem;
     public AudioSource flingAudioSource;
@@ -35,7 +42,13 @@ public class FlingMechanicComponentAuthoring: MonoBehaviour, IConvertGameObjectT
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        dstManager.AddComponentData(entity, new FlingMechanicComponent() {active = active, force = force, inFlingMaxTime = inFlingMaxTime, vulnerableMaxTime = vulnerableMaxTime});
+        dstManager.AddComponentData(entity, new FlingMechanicComponent()
+        {
+            active = active, force = force, inFlingMaxTime = inFlingMaxTime, vulnerableMaxTime = vulnerableMaxTime, 
+            vulnerableMaxTimeGame = vulnerableMaxTime,
+            resetTimerAfterHitLanded = resetTimerAfterHitLanded
+
+        });
 
     }
 }

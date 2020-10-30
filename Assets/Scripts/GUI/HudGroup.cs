@@ -136,11 +136,11 @@ public class HudGroup : MonoBehaviour, IConvertGameObjectToEntity
 
     }
 
-    
+
+
     void Update()
     {
         if (manager == null || e == Entity.Null) return;
-
 
         //ShowLabelLevelHeader();
         //ShowLabelLevelTargets();
@@ -154,22 +154,6 @@ public class HudGroup : MonoBehaviour, IConvertGameObjectToEntity
 
     }
 
-
-    //void CreateList()
-    //{
-    //    EntityQuery m_Query = manager.CreateEntityQuery(typeof(EnemyComponent), ComponentType.ReadOnly<HealthComponent>());
-    //    list = m_Query.ToEntityArray(Allocator.Persistent);
-    //    int count = list.Length;
-    //    foreach (var item in list)
-    //    {
-    //        Debug.Log(item.Index);
-    //    }
-    //}
-
-    //void OnDisable()
-    //{
-    //    list.Dispose();
-    //}
 
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)

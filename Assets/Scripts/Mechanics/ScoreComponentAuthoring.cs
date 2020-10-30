@@ -15,6 +15,7 @@ public struct ScoreComponent : IComponentData
     public int scoreChecked;
     public float timeSinceLastScore;
     public int streak;
+    public int combo;
 
 
 }
@@ -25,14 +26,27 @@ public class ScoreComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 {
     [SerializeField]
     private TextMeshProUGUI labelScore;
+    [SerializeField]
+    private TextMeshProUGUI labelStreak;
+    [SerializeField]
+    private TextMeshProUGUI labelCombo;
 
     [SerializeField] private int defaultPointsScored = 100;
 
+    public void ShowLabelStreak(int streak)
+    {
+        labelStreak.text = "Streak " + streak.ToString();
+    }
 
 
     public void ShowLabelScore(int score)
     {
         labelScore.text = "Score : " + score;
+    }
+
+    public void ShowLabelCombo(int score)
+    {
+        labelCombo.text = "Combo: " + score;
     }
 
 

@@ -58,6 +58,8 @@ namespace SandBox.Player
             ).Run();
 
 
+            var scoreGroup = GetComponentDataFromEntity<ScoreComponent>(false);
+
 
 
 
@@ -73,6 +75,10 @@ namespace SandBox.Player
                 ) =>
                 {
 
+
+                    bool hasScore = HasComponent<ScoreComponent>(e);
+
+
                     float3 forward = playerMove.transform.forward;
                     forward = math.normalize(forward);
                     //Debug.Log("fw " + forward);
@@ -86,9 +92,37 @@ namespace SandBox.Player
 
                     if (flingMechanic.inFling == true && flingMechanic.inFlingTime >= flingMechanic.inFlingMaxTime)
                     {
+
                         pv.Linear = Vector3.zero;
                         flingMechanic.inFling = false;
                         flingMechanic.vulnerable = true;
+
+                        if(flingMechanic.shotLanded == true)
+                        {
+                            flingMechanic.lastShotConnected = true;
+                            flingMechanic.vulnerableMaxTimeGame = flingMechanic.vulnerableMaxTimeGame * .8f;//less time that can not shoot as streak grows
+                        }
+                        else
+                        {
+                            flingMechanic.lastShotConnected = false;
+                            flingMechanic.vulnerableMaxTimeGame = flingMechanic.vulnerableMaxTime;//reset after streak broken
+                        }
+
+                        if (hasScore)
+                        {
+                            var score = scoreGroup[e];
+                            score.combo = 0;
+                            if(flingMechanic.lastShotConnected == false)
+                            {
+                                score.streak = 0;
+                            }
+                            scoreGroup[e] = score;
+                        }
+
+
+
+                        flingMechanic.shotLanded = false;
+
                         if (flingMechanicComponentAuthoring.inFlingParticleSystem)
                         {
                             flingMechanicComponentAuthoring.inFlingParticleSystem.Stop(true);
@@ -109,6 +143,8 @@ namespace SandBox.Player
                     }
                     else if (inputController.leftTriggerPressed == true && flingMechanic.vulnerable == false)
                     {
+                        flingMechanic.shotLanded = false;
+
                         pv.Linear = forward * flingMechanic.force;
                         //Debug.Log("pv ");
                         flingMechanic.inFling = true;
@@ -123,7 +159,7 @@ namespace SandBox.Player
                         }
 
                     }
-                    else if(flingMechanic.vulnerable == true && flingMechanic.vulnerableTime < flingMechanic.vulnerableMaxTime)
+                    else if(flingMechanic.vulnerable == true && flingMechanic.vulnerableTime < flingMechanic.vulnerableMaxTimeGame)
                     {
                         flingMechanic.vulnerableTime = flingMechanic.vulnerableTime + Time.DeltaTime;
                     }

@@ -16,25 +16,57 @@ public class ScoreSystem : SystemBase
     protected override void OnUpdate()
     {
 
-        //var flingGroup = GetComponentDataFromEntity<FlingMechanicComponent>(true);
+        var flingGroup = GetComponentDataFromEntity<FlingMechanicComponent>(false);
+        EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
 
 
         int currentScore = 0;
         int scoreChecked = 0;
         Entities.WithoutBurst().ForEach((ref ScoreComponent score, in ScoreComponentAuthoring scoreComponentAuthoring, in Entity e) =>
             {
-                
+
 
                 if (score.pointsScored == true)
                 {
+                    if (HasComponent<FlingMechanicComponent>(e))
+                    {
+                        var fling = flingGroup[e];
+                        fling.shotLanded = true;
+                        score.combo += 1;
+                        if(fling.resetTimerAfterHitLanded == true)
+                        {
+                            fling.inFlingTime = fling.inFlingMaxTime * .5f;
+                        }
+
+                        if (fling.lastShotConnected == true && score.combo == 1)//only add to streak  once per shot that is why we check combo count
+                        {
+                            score.streak += 1;
+                        }
+                        else
+                        {
+                            score.streak = 1;
+                        }
+                        fling.lastShotConnected = true;
+                        flingGroup[e] = fling;
+                        Debug.Log("combo " + score.combo);
+
+                    }
+
+
+
                     float defaultScore = score.defaultPointsScored;
 
-                    float timeBonus = (10 - score.timeSinceLastScore) * defaultScore;
-                    timeBonus = math.clamp(timeBonus,  .5f * defaultScore, 2f * defaultScore);
-                    score.score = score.score + score.defaultPointsScored + (int)timeBonus;
+                    float timeBonus = (5 - score.timeSinceLastScore) * defaultScore;
+                    timeBonus = math.clamp(timeBonus, -.5f * defaultScore, 2f * defaultScore);
+
+                    float streakBonus = math.pow(score.streak * defaultScore, 2) / 100;
+
+                    float comboBonus = math.pow(score.combo * defaultScore, 2) / 100;
+                    Debug.Log("combo Bonus " + comboBonus);
+
+                    score.score = score.score + score.defaultPointsScored + (int)timeBonus + (int)streakBonus + (int)comboBonus;
 
                     score.pointsScored = false;
-                    scoreComponentAuthoring.ShowLabelScore(score.score);
                     score.timeSinceLastScore = 0;
                 }
                 else
@@ -44,6 +76,10 @@ public class ScoreSystem : SystemBase
 
                 scoreChecked = score.scoreChecked;
                 currentScore = score.score;
+                scoreComponentAuthoring.ShowLabelScore(score.score);
+                scoreComponentAuthoring.ShowLabelStreak(score.streak);
+                scoreComponentAuthoring.ShowLabelCombo(score.combo);
+
             }
         ).Run();
 
@@ -98,7 +134,12 @@ public class ScoreSystem : SystemBase
             ).Run();
 
         }
-    
+
+
+        ecb.Playback(EntityManager);
+        ecb.Dispose();
+
+
 
     }
 
