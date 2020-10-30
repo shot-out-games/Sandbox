@@ -19,7 +19,7 @@ public class DeadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 {
 
     // Use this for initialization
-    AudioSource audioSource;
+    public AudioSource audioSource;
     private List<Button> buttons;
     public AudioClip clickSound;
     public EventSystem eventSystem;

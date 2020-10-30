@@ -29,6 +29,7 @@ public class EffectsManager : MonoBehaviour, IConvertGameObjectToEntity
     public AudioClip powerEnabledAudioClip;
 
     public ParticleSystem playerDeadEffect;
+    public ParticleSystem playerDeadEffectInstance;
     public AudioClip playerDeadAudioClip;
 
     public ParticleSystem playerHurtEffect;
@@ -49,23 +50,42 @@ public class EffectsManager : MonoBehaviour, IConvertGameObjectToEntity
 
         if (playerDeadEffect)
         {
-            playerDeadEffect.transform.SetParent(transform);
-            playerDeadEffect.transform.localPosition = new Vector3(0, playerDeadEffect.transform.localPosition.y, 0);
+            var ps = Instantiate(playerDeadEffect);
+            ps.transform.parent = transform;
+            ps.transform.localPosition = new Vector3(0, ps.transform.localPosition.y, 0);
+            playerDeadEffectInstance = ps;
         }
 
-        if (powerTriggerEffect)
-        {
-            powerTriggerEffect.transform.SetParent(transform);
-            powerTriggerEffect.transform.localPosition = new Vector3(0, powerTriggerEffect.transform.localPosition.y, 0);
-        }
 
-        if (powerEnabledEffect)
-        {
-            powerEnabledEffect.transform.SetParent(transform);
-            powerEnabledEffect.transform.localPosition = new Vector3(0, powerEnabledEffect.transform.localPosition.y, 0);
+        //if (playerDeadEffect)
+        //{
+        //    playerDeadEffect.transform.SetParent(transform);
+        //    playerDeadEffect.transform.localPosition = new Vector3(0, playerDeadEffect.transform.localPosition.y, 0);
+        //}
 
-        }
+        //if (powerTriggerEffect)
+        //{
+        //    powerTriggerEffect.transform.SetParent(transform);
+        //    powerTriggerEffect.transform.localPosition = new Vector3(0, powerTriggerEffect.transform.localPosition.y, 0);
+        //}
 
+        //if (powerEnabledEffect)
+        //{
+        //    powerEnabledEffect.transform.SetParent(transform);
+        //    powerEnabledEffect.transform.localPosition = new Vector3(0, powerEnabledEffect.transform.localPosition.y, 0);
+
+        //}
+
+    }
+
+    public void DeclareReferencedPrefabs(List<GameObject> referencedPrefabs)
+    {
+
+        //for (int i = 0; i < NpcGameObjects.Length; i++)
+        //{
+        // Debug.Log("npc " + NpcGameObjects[i]);
+        //referencedPrefabs.Add(playerDeadEffect);
+        //}
     }
 
 

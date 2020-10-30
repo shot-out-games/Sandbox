@@ -58,7 +58,7 @@ public class CharacterEffectsSystem : SystemBase
                 in Animator animator,
                 in EffectsManager effects) =>
             {
-                if (damageComponent.DamageReceived == 0) return;
+                if (damageComponent.DamageReceived <= .0001) return;
 
                 bool skip = false;
                 //if (EntityManager.HasComponent(e, typeof(EnemyComponent)))
@@ -74,11 +74,18 @@ public class CharacterEffectsSystem : SystemBase
                     AudioSource audioSource = effects.audioSource;
 
 
-                    if (effects.playerHurtEffect)
+                    if (effects.playerDeadEffectInstance)//test only
                     {
                         timer = 0f;
-                        effects.playerHurtEffect.Play(true);
+                        effects.playerDeadEffect.Play(true);
+                        Debug.Log("dead effect");
                     }
+                    //else if (effects.playerHurtEffect)
+                    //{
+                    //    timer = 0f;
+                    //    effects.playerHurtEffect.Play(true);
+                    //}
+
 
                     if (effects.playerHurtAudioClip)
                     {

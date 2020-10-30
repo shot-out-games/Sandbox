@@ -8,6 +8,42 @@ using Unity.Physics.Systems;
 using Unity.Transforms;
 using UnityEngine;
 
+
+
+
+
+
+public class BasicLoserSystem : SystemBase
+{
+
+    protected override void OnUpdate()
+    {
+
+        bool loser = false;
+
+
+        Entities.WithAll<PlayerComponent>().WithoutBurst().ForEach
+        (
+            (in DeadComponent dead) =>
+            {
+                if (dead.isDead == true)
+                {
+                    loser = true;
+                }
+            }
+        ).Run();
+
+   
+        if (loser == false) return;
+
+        LevelManager.instance.endGame = true;
+        LevelManager.instance.gameResult = GameResult.Loser;
+
+    }
+}
+
+
+
 [UpdateAfter(typeof(BasicWinnerSystem))]
 
 public class EndGameSystem : SystemBase
@@ -23,39 +59,19 @@ public class EndGameSystem : SystemBase
 
     protected override void OnUpdate()
     {
+        EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
 
-        if (LevelManager.instance.gameResult == GameResult.Winner)
+
+        if (LevelManager.instance.gameResult == GameResult.Winner || LevelManager.instance.gameResult == GameResult.Loser)
         {
 
 
-            EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
 
-
-            Entities.WithoutBurst().ForEach
-            ((AudioSource AudioSource) =>
-                {
-                    if (AudioSource)
-                    {
-                        if (AudioSource.isPlaying)
-                        {
-                            AudioSource.Stop();
-                        }
-                    }
-                }
-            ).Run();
 
             Entities.WithoutBurst().WithAny<PlayerComponent, EnemyComponent>().ForEach
             ((in Entity e) =>
                 {
-                    if (HasComponent<PlayerComponent>(e))
-                    {
-                        //ecb.RemoveComponent<PlayerComponent>(e);
-                    }
-                    else if (HasComponent<EnemyComponent>(e))
-                    {
-                        //ecb.RemoveComponent<EnemyComponent>(e);
-                    }
-
+            
                     if (HasComponent<PhysicsVelocity>(e))
                     {
                         ecb.RemoveComponent<PhysicsVelocity>(e);
@@ -69,14 +85,11 @@ public class EndGameSystem : SystemBase
             ).Run();
 
 
-
-
-            ecb.Playback(EntityManager);
-            ecb.Dispose();
-
-
-
         }
+
+        ecb.Playback(EntityManager);
+        ecb.Dispose();
+
 
     }
 }

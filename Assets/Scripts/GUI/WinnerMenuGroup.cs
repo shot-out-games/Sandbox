@@ -55,7 +55,7 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     private EntityManager manager;
     public Entity entity;
 
-    AudioSource audioSource;
+    public AudioSource audioSource;
     private List<Button> buttons;
     public AudioClip clickSound;
     public EventSystem eventSystem;

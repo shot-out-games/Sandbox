@@ -48,7 +48,7 @@ public class HealthSystem : JobComponentSystem
                 {
                     dead.isDead = true;
                     dead.justDead= true;
-                    ecb.SetComponent(entity, dead);//tag player or enemy
+                    ecb.SetComponent(entity, dead);
                 }
 
             }

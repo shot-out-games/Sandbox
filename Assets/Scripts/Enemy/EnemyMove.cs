@@ -77,6 +77,10 @@ public enum AttackStages
     End
 }
 
+public struct NavMeshAgentComponent : IComponentData
+{
+
+}
 
 public struct MeleeComponent : IComponentData
 {
@@ -190,6 +194,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         if (agent)
         {
+            manager.AddComponent<NavMeshAgentComponent>(entity);
             agent.autoBraking = false;
             agent.updateRotation = false;
             agent.autoTraverseOffMeshLink = false;

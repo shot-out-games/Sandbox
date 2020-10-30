@@ -38,8 +38,8 @@ public class NpcSpawner : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGame
 
         //for (int i = 0; i < NpcGameObjects.Length; i++)
         //{
-           // Debug.Log("npc " + NpcGameObjects[i]);
-            referencedPrefabs.Add(NpcGameObject);
+        // Debug.Log("npc " + NpcGameObjects[i]);
+        referencedPrefabs.Add(NpcGameObject);
         //}
     }
 
@@ -179,78 +179,78 @@ public class NpcSpawner : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGame
 
 
 
-//}
+    //}
 
 
-//public class GunAmmoHandlerSystem : JobComponentSystem
-//{
-
-
-
-//    protected override JobHandle OnUpdate(JobHandle inputDeps)
-//    {
-
-
-//        //EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.TempJob);
-//        float dt = UnityEngine.Time.fixedDeltaTime;//gun duration
-
-
-//        Entities.WithoutBurst().WithStructuralChanges().ForEach(
-//            (ref GunComponent gun, ref LocalToWorld gunTransform, ref StatsComponent statsComponent,
-//                ref Rotation gunRotation, in GunScript gunScript, in Entity entity, in AttachWeaponComponent attachWeapon) =>
-//            {
-//                if (gun.IsFiring == 0 || attachWeapon.attachedWeaponSlot < 0 ||
-//                    attachWeapon.attachWeaponType != (int)WeaponType.Gun &&
-//                    attachWeapon.attachSecondaryWeaponType != (int)WeaponType.Gun
-//                    )
-//                {
-//                    gun.IsFiring = 0;
-//                    gun.Duration = 0;
-//                    gun.WasFiring = 0;
-//                    return;
-//                }
-
-
-//                if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
-//                if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
-
-//                gun.Duration += dt;
-//                if ((gun.Duration > gun.Rate) || (gun.WasFiring == 0))
-//                {
-//                    if (gun.Bullet != null)
-//                    {
-//                        statsComponent.shotsFired += 1;
-//                        Entity e = EntityManager.Instantiate(gun.Bullet);
-//                        Translation position = new Translation { Value = gunScript.AmmoStartLocation.transform.position };
-//                        Rotation rotation = new Rotation { Value = gunScript.AmmoStartLocation.rotation };
-//                        PhysicsVelocity velocity = new PhysicsVelocity
-//                        {
-//                            Linear = gunScript.AmmoStartLocation.forward * gun.Strength,
-//                            Angular = float3.zero
-//                        };
-//                        EntityManager.SetComponentData(e, position);
-//                        EntityManager.SetComponentData(e, rotation);
-//                        EntityManager.SetComponentData(e, velocity);
-//                        gunScript.CreateBulletInstance(e);
-
-
-//                    }
-//                    gun.Duration = 0;
-//                }
+    //public class GunAmmoHandlerSystem : JobComponentSystem
+    //{
 
 
 
-
-//                gun.WasFiring = 1;
-//            }
-//        ).Run();
+    //    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    //    {
 
 
-//        return default;
-//    }
+    //        //EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.TempJob);
+    //        float dt = UnityEngine.Time.fixedDeltaTime;//gun duration
+
+
+    //        Entities.WithoutBurst().WithStructuralChanges().ForEach(
+    //            (ref GunComponent gun, ref LocalToWorld gunTransform, ref StatsComponent statsComponent,
+    //                ref Rotation gunRotation, in GunScript gunScript, in Entity entity, in AttachWeaponComponent attachWeapon) =>
+    //            {
+    //                if (gun.IsFiring == 0 || attachWeapon.attachedWeaponSlot < 0 ||
+    //                    attachWeapon.attachWeaponType != (int)WeaponType.Gun &&
+    //                    attachWeapon.attachSecondaryWeaponType != (int)WeaponType.Gun
+    //                    )
+    //                {
+    //                    gun.IsFiring = 0;
+    //                    gun.Duration = 0;
+    //                    gun.WasFiring = 0;
+    //                    return;
+    //                }
+
+
+    //                if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
+    //                if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
+
+    //                gun.Duration += dt;
+    //                if ((gun.Duration > gun.Rate) || (gun.WasFiring == 0))
+    //                {
+    //                    if (gun.Bullet != null)
+    //                    {
+    //                        statsComponent.shotsFired += 1;
+    //                        Entity e = EntityManager.Instantiate(gun.Bullet);
+    //                        Translation position = new Translation { Value = gunScript.AmmoStartLocation.transform.position };
+    //                        Rotation rotation = new Rotation { Value = gunScript.AmmoStartLocation.rotation };
+    //                        PhysicsVelocity velocity = new PhysicsVelocity
+    //                        {
+    //                            Linear = gunScript.AmmoStartLocation.forward * gun.Strength,
+    //                            Angular = float3.zero
+    //                        };
+    //                        EntityManager.SetComponentData(e, position);
+    //                        EntityManager.SetComponentData(e, rotation);
+    //                        EntityManager.SetComponentData(e, velocity);
+    //                        gunScript.CreateBulletInstance(e);
+
+
+    //                    }
+    //                    gun.Duration = 0;
+    //                }
 
 
 
-//}
+
+    //                gun.WasFiring = 1;
+    //            }
+    //        ).Run();
+
+
+    //        return default;
+    //    }
+
+
+
+    //}
 
 }

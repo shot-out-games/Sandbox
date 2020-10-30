@@ -30,8 +30,6 @@ public class BasicWinnerSystem : SystemBase
             }
         ).Run();
 
-        //winner = true;
-
         if (winner == false) return;
 
         LevelManager.instance.endGame = true;
@@ -52,6 +50,14 @@ public class ShowMenuSystem : SystemBase
     protected override void OnUpdate()
     {
 
+        if (LevelManager.instance.gameResult == GameResult.Winner ||
+            LevelManager.instance.gameResult == GameResult.Loser)
+        {
+
+            LevelManager.instance.StopAudioSources();//level manager not an entity so cant use for each to stop audio sources so use this
+
+        }
+
         if (LevelManager.instance.gameResult == GameResult.Winner)
         {
 
@@ -65,7 +71,6 @@ public class ShowMenuSystem : SystemBase
                     score = scoreComponent.score;
                     rank = scoreComponent.rank;
                     showScoresOnWinScreen = true;
-                    Debug.Log("ss0 " + showScoresOnWinScreen);
                 }
             ).Run();
 
@@ -76,7 +81,6 @@ public class ShowMenuSystem : SystemBase
                 {
                     if (winnerMenuComponent.hide == true)
                     {
-                        Debug.Log("ss1 " + showScoresOnWinScreen);
                         winnerMenuGroup.score = score;
                         winnerMenuGroup.rank = rank;
                         winnerMenuGroup.ShowMenu(showScoresOnWinScreen);
@@ -86,13 +90,27 @@ public class ShowMenuSystem : SystemBase
             ).Run();
 
 
+        }
+        else if (LevelManager.instance.gameResult == GameResult.Loser)
+        {
 
 
+             
+            Entities.WithoutBurst().ForEach
+            (
+                (ref DeadMenuComponent deadMenuComponent, in DeadMenuGroup deadMenuGroup) =>
+                {
+                    if (deadMenuComponent.hide == true)
+                    {
+                        deadMenuGroup.ShowMenu();
+                        deadMenuComponent.hide = false;
+                    }
+                }
+            ).Run();
 
 
 
         }
-
     }
 }
 

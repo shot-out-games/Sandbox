@@ -127,6 +127,11 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
         potentialGameTargets = counter;
     }
 
+    public void StopAudioSources()
+    {
+        audioSourceGame.Stop();
+        audioSourceMenu.Stop();
+    }
 
     public void PlayMenuMusic()
     {
