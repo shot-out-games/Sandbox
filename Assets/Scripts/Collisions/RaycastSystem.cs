@@ -447,7 +447,7 @@ public class RaycastSystem : SystemBase
 
 
         //Entities.WithoutBurst().WithStructuralChanges().ForEach(
-        //    (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
+        //    (in StartGameMenuComponent messageMenuComponent, in ShowMessageMenuGroup messageMenu) =>
         //    {
         //        if (showMessage == true)
         //        {

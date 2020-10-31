@@ -12,11 +12,17 @@ public class ParticleConversionSystem : GameObjectConversionSystem
 {
     protected override void OnUpdate()
     {
+        Debug.Log("conversion");
+
+
         Entities.ForEach((ParticleSystem particleSystem, ParticleSystemRenderer particleSystemRenderer) =>
+        //Entities.ForEach((ParticleSystem ps) =>
         {
+            //AddHybridComponent(animator);
             AddHybridComponent(particleSystem);
             AddHybridComponent(particleSystemRenderer);
-            //Debug.Log("ps " + particleSystem.name);
+            Debug.Log("ps " + particleSystem.name);
+            Debug.Log("am ");
 
         });
 

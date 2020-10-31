@@ -29,26 +29,22 @@ public class LevelCompleteSystem : SystemBase
     protected override  void OnUpdate()
     {
 
-
-
-
-        bool levelCompleteCounter = false;//# reached end that are required to complete the level
+        int levelCompleteCounter = 0;//# reached end that are required to complete the level
+        int levelCompleteRequired = 1;
         int currentLevel = LevelManager.instance.currentLevel;
         int totalGameLevels = LevelManager.instance.totalLevels;
         if (LevelManager.instance.levelSettings.Count < totalGameLevels)
             totalGameLevels = LevelManager.instance.levelSettings.Count;
 
-
         Entity playerEntity = Entity.Null;
 
         Entities.WithoutBurst().ForEach
         (
-            (ref LevelCompleteComponent LevelCompleteComponent, ref WinnerComponent winner, in PlayerComponent player, in Entity entity) =>
+            (ref LevelCompleteComponent LevelCompleteComponent, in PlayerComponent player, in Entity entity) =>
             {
                 if (LevelCompleteComponent.targetReached)
                 {
-                    levelCompleteCounter = true;
-                        //winner.endGameReached = true;
+                    levelCompleteCounter += 1;
                     playerEntity = entity;
                     Debug.Log("LEVEL COMPLETE " + currentLevel);
                 }
@@ -59,7 +55,7 @@ public class LevelCompleteSystem : SystemBase
 
 
 
-        if (levelCompleteCounter == true)
+        if (levelCompleteCounter >= levelCompleteRequired)
         {
 
 

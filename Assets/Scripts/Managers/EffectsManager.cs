@@ -22,18 +22,21 @@ public class EffectsManager : MonoBehaviour, IConvertGameObjectToEntity
     private float timeActive = .5f;
 
     [SerializeField] private bool pauseEffect;
-    public ParticleSystem powerTriggerEffect;
+    public ParticleSystem powerTriggerEffectPrefab;
+    public ParticleSystem powerTriggerEffectInstance;
     public AudioClip powerTriggerAudioClip;
 
-    public ParticleSystem powerEnabledEffect;
+    public ParticleSystem powerEnabledEffectPrefab;
+    public ParticleSystem powerEnabledEffectInstance;
     public AudioClip powerEnabledAudioClip;
 
-    public ParticleSystem playerDeadEffect;
-    public ParticleSystem playerDeadEffectInstance;
-    public AudioClip playerDeadAudioClip;
+    public ParticleSystem actorDeadEffectPrefab;
+    public ParticleSystem actorDeadEffectInstance;
+    public AudioClip actorDeadAudioClip;
 
-    public ParticleSystem playerHurtEffect;
-    public AudioClip playerHurtAudioClip;
+    public ParticleSystem actorHurtEffectPrefab;
+    public ParticleSystem actorHurtEffectInstance;
+    public AudioClip actorHurtAudioClip;
 
 
     public AudioClip playerLevelCompleteClip;
@@ -42,50 +45,39 @@ public class EffectsManager : MonoBehaviour, IConvertGameObjectToEntity
 
     void Start()
     {
-        if (playerHurtEffect)
+        if (actorHurtEffectPrefab)
         {
-            playerHurtEffect.transform.SetParent(transform);
-            playerHurtEffect.transform.localPosition = new Vector3(0, playerHurtEffect.transform.localPosition.y, 0);
-        }
-
-        if (playerDeadEffect)
-        {
-            var ps = Instantiate(playerDeadEffect);
+            var ps = Instantiate(actorHurtEffectPrefab);
             ps.transform.parent = transform;
             ps.transform.localPosition = new Vector3(0, ps.transform.localPosition.y, 0);
-            playerDeadEffectInstance = ps;
+            actorHurtEffectInstance = ps;
+        }
+
+        if (actorDeadEffectPrefab)
+        {
+            var ps = Instantiate(actorDeadEffectPrefab);
+            ps.transform.parent = transform;
+            ps.transform.localPosition = new Vector3(0, ps.transform.localPosition.y, 0);
+            actorDeadEffectInstance = ps;
+        }
+
+        if (powerTriggerEffectPrefab)
+        {
+            var ps = Instantiate(powerTriggerEffectPrefab);
+            ps.transform.parent = transform;
+            ps.transform.localPosition = new Vector3(0, ps.transform.localPosition.y, 0);
+            powerTriggerEffectInstance = ps;
+        }
+
+        if (powerEnabledEffectPrefab)
+        {
+            var ps = Instantiate(powerEnabledEffectPrefab);
+            ps.transform.parent = transform;
+            ps.transform.localPosition = new Vector3(0, ps.transform.localPosition.y, 0);
+            powerEnabledEffectInstance = ps;
         }
 
 
-        //if (playerDeadEffect)
-        //{
-        //    playerDeadEffect.transform.SetParent(transform);
-        //    playerDeadEffect.transform.localPosition = new Vector3(0, playerDeadEffect.transform.localPosition.y, 0);
-        //}
-
-        //if (powerTriggerEffect)
-        //{
-        //    powerTriggerEffect.transform.SetParent(transform);
-        //    powerTriggerEffect.transform.localPosition = new Vector3(0, powerTriggerEffect.transform.localPosition.y, 0);
-        //}
-
-        //if (powerEnabledEffect)
-        //{
-        //    powerEnabledEffect.transform.SetParent(transform);
-        //    powerEnabledEffect.transform.localPosition = new Vector3(0, powerEnabledEffect.transform.localPosition.y, 0);
-
-        //}
-
-    }
-
-    public void DeclareReferencedPrefabs(List<GameObject> referencedPrefabs)
-    {
-
-        //for (int i = 0; i < NpcGameObjects.Length; i++)
-        //{
-        // Debug.Log("npc " + NpcGameObjects[i]);
-        //referencedPrefabs.Add(playerDeadEffect);
-        //}
     }
 
 

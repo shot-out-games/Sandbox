@@ -30,7 +30,7 @@ public class CharacterEffectsSystem : SystemBase
 
         Entities.WithoutBurst().ForEach(
             (
-                InputController input, ControlBarComponent controlBar, 
+                InputController input, ControlBarComponent controlBar,
                 in Impulse impulse) =>
             {
                 //if (input.rightTriggerDown == true && controlBar.value < 25f) 
@@ -38,11 +38,14 @@ public class CharacterEffectsSystem : SystemBase
 
                 //if (input.leftTriggerDown == true || input.rightTriggerDown == true)
                 //{
-                    //impulse.impulseSource.GenerateImpulse();
+                //impulse.impulseSource.GenerateImpulse();
                 //}
 
             }
         ).Run();
+
+
+
 
 
 
@@ -54,43 +57,41 @@ public class CharacterEffectsSystem : SystemBase
                 Entity e,
                 in EffectsComponent effectsComponent,
                 in DamageComponent damageComponent,
-                in Transform transform,
+                in DeadComponent deadComponent,
                 in Animator animator,
                 in EffectsManager effects) =>
             {
-                if (damageComponent.DamageReceived <= .0001) return;
 
-                bool skip = false;
-                //if (EntityManager.HasComponent(e, typeof(EnemyComponent)))
-                //{
-                //    skip = EntityManager.GetComponentData<EnemyComponent>(e).invincible;
-                //}
+                animator.SetInteger("HitReact", 1);
 
-                if (skip == false)
+                AudioSource audioSource = effects.audioSource;
+
+                if (deadComponent.isDead)
                 {
 
-                    animator.SetInteger("HitReact", 1);
-
-                    AudioSource audioSource = effects.audioSource;
-
-
-                    if (effects.playerDeadEffectInstance)//test only
+                    if (effects.actorDeadEffectInstance)
                     {
-                        timer = 0f;
-                        effects.playerDeadEffect.Play(true);
+                        effects.actorDeadEffectInstance.Play(true);
                         Debug.Log("dead effect");
                     }
-                    //else if (effects.playerHurtEffect)
-                    //{
-                    //    timer = 0f;
-                    //    effects.playerHurtEffect.Play(true);
-                    //}
-
-
-                    if (effects.playerHurtAudioClip)
+                    if (effects.actorDeadAudioClip)
                     {
-                        //audioSource.PlayOneShot(effects.playerHurtAudioClip);
-                        audioSource.clip = effects.playerHurtAudioClip;
+                        audioSource.clip = effects.actorDeadAudioClip;
+                        audioSource.Play();
+                    }
+                }
+                else
+                {
+                    if (damageComponent.DamageReceived <= .0001) return;
+
+                    if (effects.actorHurtEffectInstance)
+                    {
+                        effects.actorHurtEffectInstance.Play(true);
+                        Debug.Log("hurt effect");
+                    }
+                    if (effects.actorHurtAudioClip)
+                    {
+                        audioSource.clip = effects.actorHurtAudioClip;
                         audioSource.Play();
                     }
                 }
@@ -105,36 +106,38 @@ public class CharacterEffectsSystem : SystemBase
             {
                 if (power.enabled == false)
                 {
-                    if (effects.powerEnabledEffect)
+                    if (effects.powerEnabledEffectInstance)
                     {
-                        effects.powerEnabledEffect.Stop(true);
+                        effects.powerEnabledEffectInstance.Stop(true);
                     }
                     return;
                 }
-
+                //
                 if (power.enabled == true)
                 {
-                    if (effects.powerEnabledEffect)
+                    if (effects.powerEnabledEffectInstance)
                     {
-                        if (effects.powerTriggerEffect.isPlaying == false)
+                        if (effects.powerTriggerEffectInstance.isPlaying == false)
                         {
-                            effects.powerEnabledEffect.Play(true);
+                            effects.powerEnabledEffectInstance.Play(true);
                             Debug.Log("power enabled");
                         }
                     }
-                    if (effects.powerEnabledAudioClip) audioSource.PlayOneShot(effects.powerEnabledAudioClip);
+                    if (effects.powerEnabledAudioClip)
+                    {
+                        audioSource.PlayOneShot(effects.powerEnabledAudioClip);
+                    }
                 }
                 else if (power.triggered == true)
                 {
-                    if (effects.powerTriggerEffect)
+                    if (effects.powerTriggerEffectInstance)
                     {
-                        if (effects.powerTriggerEffect.isPlaying == false)
+                        if (effects.powerTriggerEffectInstance.isPlaying == false)
                         {
-                            effects.powerTriggerEffect.Play(true);
+                            effects.powerTriggerEffectInstance.Play(true);
                             Debug.Log("power triggered");
                         }
                     }
-
                     if (effects.powerTriggerAudioClip)
                     {
                         audioSource.PlayOneShot(effects.powerTriggerAudioClip);

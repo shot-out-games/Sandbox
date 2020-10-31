@@ -116,7 +116,7 @@ public class DeadSystem : SystemBase //really game over system currently
         {
 
             Entities.WithoutBurst().WithStructuralChanges().ForEach(
-                (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
+                (in ShowMessageMenuComponent messageMenuComponent, in ShowMessageMenuGroup messageMenu) =>
                 {
                     messageMenu.messageString = "Lurker destroyed ... ";
                     messageMenu.ShowMenu();

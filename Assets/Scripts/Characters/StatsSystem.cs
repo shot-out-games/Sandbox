@@ -46,7 +46,7 @@ public class StatsSystem : SystemBase
         ).Run();
 
         Entities.WithoutBurst().WithStructuralChanges().ForEach(
-            (in StartGameMenuComponent messageMenuComponent, in StartGameMenuGroup messageMenu) =>
+            (in ShowMessageMenuComponent messageMenuComponent, in ShowMessageMenuGroup messageMenu) =>
             {
                 if (showMessage == true)
                 {
