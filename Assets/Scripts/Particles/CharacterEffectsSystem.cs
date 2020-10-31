@@ -4,6 +4,8 @@ using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
 
+[UpdateAfter(typeof(DeadSystem))]
+
 public class CharacterEffectsSystem : SystemBase
 {
     private float timer;
@@ -56,11 +58,12 @@ public class CharacterEffectsSystem : SystemBase
             (
                 Entity e,
                 in EffectsComponent effectsComponent,
-                in DamageComponent damageComponent,
                 in DeadComponent deadComponent,
                 in Animator animator,
                 in EffectsManager effects) =>
             {
+
+                var damageGroup = GetComponentDataFromEntity<DamageComponent>(true);
 
                 animator.SetInteger("HitReact", 1);
 
@@ -68,31 +71,44 @@ public class CharacterEffectsSystem : SystemBase
 
                 if (deadComponent.isDead)
                 {
+                    Debug.Log("dead");
 
                     if (effects.actorDeadEffectInstance)
                     {
-                        effects.actorDeadEffectInstance.Play(true);
-                        Debug.Log("dead effect");
+                        if (effects.actorDeadEffectInstance.isPlaying == false)
+                        {
+                            effects.actorDeadEffectInstance.Play(true);
+                            Debug.Log("dead effect");
+                        }
                     }
-                    if (effects.actorDeadAudioClip)
+                    if (audioSource.isPlaying == false)
                     {
-                        audioSource.clip = effects.actorDeadAudioClip;
-                        audioSource.Play();
+                        if (effects.actorDeadAudioClip)
+                        {
+                            audioSource.clip = effects.actorDeadAudioClip;
+                            audioSource.Play();
+                        }
                     }
                 }
                 else
                 {
-                    if (damageComponent.DamageReceived <= .0001) return;
+                    bool hasDamage = HasComponent<DamageComponent>(e);
+                    if (hasDamage == true)
+                    {
+                        var damageComponent = damageGroup[e];
+                        if (damageComponent.DamageReceived <= .0001) return;
 
-                    if (effects.actorHurtEffectInstance)
-                    {
-                        effects.actorHurtEffectInstance.Play(true);
-                        Debug.Log("hurt effect");
-                    }
-                    if (effects.actorHurtAudioClip)
-                    {
-                        audioSource.clip = effects.actorHurtAudioClip;
-                        audioSource.Play();
+                        if (effects.actorHurtEffectInstance)
+                        {
+                            effects.actorHurtEffectInstance.Play(true);
+                            Debug.Log("hurt effect");
+                        }
+                        if (effects.actorHurtAudioClip)
+                        {
+                            audioSource.clip = effects.actorHurtAudioClip;
+                            audioSource.Play();
+                        }
+
                     }
                 }
             }

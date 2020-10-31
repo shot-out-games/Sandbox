@@ -46,13 +46,34 @@ public class BasicWinnerSystem : SystemBase
 public class ShowMenuSystem : SystemBase
 {
 
+    int score = 0;
+    int rank = 0;
+    bool showScoresOnMenu = false;
+
+    protected override void OnCreate()
+    {
+    }
+
 
     protected override void OnUpdate()
     {
 
+
+
         if (LevelManager.instance.gameResult == GameResult.Winner ||
             LevelManager.instance.gameResult == GameResult.Loser)
         {
+
+            //grab "last" player score if any
+            Entities.WithoutBurst().WithAll<PlayerComponent>().ForEach
+            ((ScoreComponent scoreComponent) =>
+            {
+                score = scoreComponent.score;
+                rank = scoreComponent.rank;
+                showScoresOnMenu = true;
+            }
+            ).Run();
+
 
             LevelManager.instance.StopAudioSources();//level manager not an entity so cant use for each to stop audio sources so use this
 
@@ -61,18 +82,6 @@ public class ShowMenuSystem : SystemBase
         if (LevelManager.instance.gameResult == GameResult.Winner)
         {
 
-            //grab "last" player score if any
-            int score = 0;
-            int rank = 0;
-            bool showScoresOnWinScreen = false;
-            Entities.WithoutBurst().WithAll<PlayerComponent>().ForEach
-            ((ScoreComponent scoreComponent) =>
-                {
-                    score = scoreComponent.score;
-                    rank = scoreComponent.rank;
-                    showScoresOnWinScreen = true;
-                }
-            ).Run();
 
 
             Entities.WithoutBurst().ForEach
@@ -81,9 +90,7 @@ public class ShowMenuSystem : SystemBase
                 {
                     if (winnerMenuComponent.hide == true)
                     {
-                        winnerMenuGroup.score = score;
-                        winnerMenuGroup.rank = rank;
-                        winnerMenuGroup.ShowMenu(showScoresOnWinScreen);
+                        winnerMenuGroup.ShowMenu(showScoresOnMenu, score, rank);
                         winnerMenuComponent.hide = false;
                     }
                 }
@@ -102,7 +109,7 @@ public class ShowMenuSystem : SystemBase
                 {
                     if (deadMenuComponent.hide == true)
                     {
-                        deadMenuGroup.ShowMenu();
+                        deadMenuGroup.ShowMenu(showScoresOnMenu, score, rank);
                         deadMenuComponent.hide = false;
                     }
                 }

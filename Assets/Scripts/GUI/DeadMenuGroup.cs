@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Unity.Entities;
 using Unity.Jobs;
 using UnityEngine.AI;
+using TMPro;
 
 [System.Serializable]
 public struct DeadMenuComponent : IComponentData
@@ -28,7 +29,10 @@ public class DeadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     private Button defaultButton;
 
     [SerializeField] private ParticleSystem deadParticleSystem;
-    
+    [SerializeField]
+    private TextMeshProUGUI message;
+
+
 
     void Start()
     {
@@ -54,11 +58,19 @@ public class DeadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     }
 
    
-    public void ShowMenu()
+
+    public void ShowMenu(bool showScoreboard, int score, int rank)
     {
+        canvasGroup.alpha = 1;
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
+        if (defaultButton)
+        {
+            defaultButton.Select();
+        }
 
         if (deadParticleSystem)
-        { 
+        {
             deadParticleSystem.Play(true);
         }
 
@@ -68,15 +80,21 @@ public class DeadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
         }
 
 
-
-        canvasGroup.alpha = 1;
-        canvasGroup.interactable = true;
-        canvasGroup.blocksRaycasts = true;
-        if (defaultButton)
+        if (showScoreboard == false)
         {
-            defaultButton.Select();
+            message.SetText("Game Over");
         }
+        else
+        {
+            message.SetText("SCORE: " + score + " RANK:  " + rank);
+        }
+
+
+
     }
+
+
+
 
     public void HideMenu()
     {
