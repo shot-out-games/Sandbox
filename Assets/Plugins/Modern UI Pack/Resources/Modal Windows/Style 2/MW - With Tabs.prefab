@@ -1057,11 +1057,17 @@ MonoBehaviour:
   buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  useCustomContent: 0
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 0}
   normalIcon: {fileID: 114007618823866986}
   highlightedIcon: {fileID: 114124904606692408}
   normalText: {fileID: 114545313782262384}
   highlightedText: {fileID: 114260947654168614}
+  soundSource: {fileID: 0}
+  useCustomContent: 0
+  enableButtonSounds: 0
+  useHoverSound: 1
+  useClickSound: 1
 --- !u!114 &114512917394978224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1640,11 +1646,17 @@ MonoBehaviour:
   buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  useCustomContent: 0
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 0}
   normalIcon: {fileID: 114535163056099066}
   highlightedIcon: {fileID: 114793359037318784}
   normalText: {fileID: 114543991995930970}
   highlightedText: {fileID: 114641648636683388}
+  soundSource: {fileID: 0}
+  useCustomContent: 0
+  enableButtonSounds: 0
+  useHoverSound: 1
+  useClickSound: 1
 --- !u!114 &114161803268005394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2118,6 +2130,7 @@ MonoBehaviour:
   windowDescription: {fileID: 114156003217958296}
   confirmButton: {fileID: 114512917394978224}
   cancelButton: {fileID: 114161803268005394}
+  mwAnimator: {fileID: 95869883003942390}
   icon: {fileID: 21300000, guid: 9df0f4d8c02014347ad2d7de427e0ced, type: 3}
   titleText: TITLE
   descriptionText: '
@@ -2156,7 +2169,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 0659078b92ce3aa4b93c2525d8d8c0c4, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 

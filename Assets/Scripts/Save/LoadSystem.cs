@@ -60,6 +60,12 @@ public class LoadSystem : SystemBase
         }
 
         int slot = SaveManager.instance.saveWorld.lastLoadedSlot - 1;
+        if (slot == -1)//new file
+        {
+            slot = 0;
+            SaveManager.instance.saveWorld.lastLoadedSlot = 1;
+        }
+
         int savedPlayers = SaveManager.instance.saveData.saveGames[slot].savePlayers.Count;
         if (savedPlayers == 0) return;//new game so no need to fill data
 

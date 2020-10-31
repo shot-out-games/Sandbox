@@ -9,14 +9,14 @@ namespace Michsky.UI.ModernUIPack
     {
         [Header("RESOURCES")]
         public GameObject fieldTrigger;
-        private TMP_InputField inputText;
-        private Animator inputFieldAnimator;
+        [HideInInspector] public TMP_InputField inputText;
+        [HideInInspector] public Animator inputFieldAnimator;
 
         // [Header("SETTINGS")]
-        private bool isEmpty = true;
-        private bool isClicked = false;
-        private string inAnim = "In";
-        private string outAnim = "Out";
+        [HideInInspector] public bool isEmpty = true;
+        [HideInInspector] public bool isClicked = false;
+        [HideInInspector] public string inAnim = "In";
+        [HideInInspector] public string outAnim = "Out";
 
         void Start()
         {

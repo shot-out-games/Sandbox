@@ -20,7 +20,6 @@ public class HowMenuGroup : MonoBehaviour
 
 
     public Player player;
-    public int playerId = 0; // The Rewired player id of this character
     public static event Action HowExitBackClickedEvent;
 
 
@@ -29,7 +28,7 @@ public class HowMenuGroup : MonoBehaviour
     {
 
         if (!ReInput.isReady) return;
-        player = ReInput.players.GetPlayer(playerId);
+        player = ReInput.players.GetPlayer(0);
 
 
         audioSource = GetComponent<AudioSource>();

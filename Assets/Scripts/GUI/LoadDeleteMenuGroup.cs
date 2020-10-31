@@ -24,17 +24,16 @@ public class LoadDeleteMenuGroup : MonoBehaviour
 
     public void OnLoadSlot(int slot)
     {
-        if(!loadButton || !deleteButton) return;
+        if(!deleteButton) return;
         selectedSlot = slot;
         bool isSlotSaved = SaveManager.instance.saveWorld.isSlotSaved[slot];
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;
-        loadButton.Select();
+        deleteButton.Select();
         deleteButton.interactable = isSlotSaved;
-        loadButton.gameObject.SetActive(true);
         deleteButton.gameObject.SetActive(isSlotSaved);
 
-        Debug.Log("slot");
+        Debug.Log("slot " + isSlotSaved);
     }
 
     public void OnButtonDelete()
@@ -46,6 +45,9 @@ public class LoadDeleteMenuGroup : MonoBehaviour
         }
 
         OnLoadSlot(selectedSlot);
+        defaultButton.Select();
+
+
     }
 
 

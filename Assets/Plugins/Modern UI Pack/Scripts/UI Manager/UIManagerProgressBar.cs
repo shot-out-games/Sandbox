@@ -38,25 +38,26 @@ namespace Michsky.UI.ModernUIPack
             if (dynamicUpdateEnabled == false)
             {
                 this.enabled = true;
-                UpdateDropdown();
+                UpdateProgressBar();
             }
         }
 
         void LateUpdate()
         {
-            if (UIManagerAsset != null)
+            if (Application.isEditor == true && UIManagerAsset != null)
             {
                 if (UIManagerAsset.enableDynamicUpdate == true)
+                {
                     dynamicUpdateEnabled = true;
+                    UpdateProgressBar();
+                }
+
                 else
                     dynamicUpdateEnabled = false;
-
-                if (dynamicUpdateEnabled == true)
-                    UpdateDropdown();
             }
         }
 
-        void UpdateDropdown()
+        void UpdateProgressBar()
         {
             try
             {

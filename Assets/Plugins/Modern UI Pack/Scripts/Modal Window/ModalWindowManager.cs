@@ -13,6 +13,7 @@ namespace Michsky.UI.ModernUIPack
         public TextMeshProUGUI windowDescription;
         public Button confirmButton;
         public Button cancelButton;
+        public Animator mwAnimator;
 
         // Content
         public Sprite icon;
@@ -27,32 +28,17 @@ namespace Michsky.UI.ModernUIPack
         public bool sharpAnimations = false;
         public bool useCustomValues = false;
 
-        Animator mwAnimator;
         public bool isOn = false;
 
         void Start()
         {
-            try
-            {
+            if (mwAnimator == null)
                 mwAnimator = gameObject.GetComponent<Animator>();
-            }
 
-            catch
-            {
-                Debug.LogError("Modal Window - Cannot initalize the window due to missing 'Animator' variable.", this);
-            }
+            if (confirmButton != null)
+                confirmButton.onClick.AddListener(onConfirm.Invoke);
 
-            if (onConfirm == null)
-                Debug.LogError("Modal Window - Cannot initalize the events due to missing 'OnConfirm' variable.", this);
-            else
-            {
-                if(confirmButton != null)
-                    confirmButton.onClick.AddListener(onConfirm.Invoke);
-            }              
-
-            if (onCancel == null)
-                Debug.LogError("Modal Window - Cannot initalize the events due to missing 'OnCancel' variable.", this);
-            else
+            if (cancelButton != null)
                 cancelButton.onClick.AddListener(onCancel.Invoke);
 
             if (useCustomValues == false)

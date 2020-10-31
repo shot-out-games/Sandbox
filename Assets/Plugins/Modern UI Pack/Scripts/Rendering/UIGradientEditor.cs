@@ -24,6 +24,7 @@ namespace UnityEngine.UI
                 else
                     customSkin = (GUISkin)Resources.Load("Editor\\Custom Skin Light");
 
+                GUILayout.Space(-70);
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
 
@@ -39,19 +40,19 @@ namespace UnityEngine.UI
 
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
+                GUILayout.Space(60);
+
+                currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
+
+                GUILayout.FlexibleSpace();
+                GUILayout.EndHorizontal();
+                GUILayout.BeginHorizontal();
+                GUILayout.FlexibleSpace();
+                GUILayout.Space(50);
 
                 // Draw toolbar tabs as a button
                 if (GUILayout.Button(new GUIContent("Settings", "Settings"), customSkin.FindStyle("Toolbar Settings")))
                     currentTab = 0;
-
-                GUILayout.FlexibleSpace();
-                GUILayout.EndHorizontal();
-
-                GUILayout.BeginHorizontal();
-                GUILayout.FlexibleSpace();
-
-                // Draw toolbar indicators
-                currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
 
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
@@ -65,8 +66,9 @@ namespace UnityEngine.UI
                 switch (currentTab)
                 {
                     case 0:
+                        GUILayout.Space(20);
                         GUILayout.Label("SETTINGS", customSkin.FindStyle("Header"));
-
+                        GUILayout.Space(2);
                         GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                         EditorGUILayout.LabelField(new GUIContent("Gradient"), customSkin.FindStyle("Text"), GUILayout.Width(120));

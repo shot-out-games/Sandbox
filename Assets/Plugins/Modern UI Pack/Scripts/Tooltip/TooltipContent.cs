@@ -41,20 +41,22 @@ namespace Michsky.UI.ModernUIPack
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (tooltipRect.activeSelf && tooltipRect != null)
+            if (tooltipRect != null)
             {
                 descriptionText.text = description;
                 tpManager.allowUpdating = true;
+                tooltipAnimator.gameObject.SetActive(false);
+                tooltipAnimator.gameObject.SetActive(true);
                 tooltipAnimator.Play("In");
             }
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (tooltipRect.activeSelf && tooltipRect != null)
+            if (tooltipRect != null)
             {
                 tooltipAnimator.Play("Out");
-                tpManager.allowUpdating = true;
+                tpManager.allowUpdating = false;
             }
         }
     }

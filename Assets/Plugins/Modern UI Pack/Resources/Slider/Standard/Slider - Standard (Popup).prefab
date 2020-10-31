@@ -615,8 +615,8 @@ GameObject:
   - component: {fileID: 224853003228392580}
   - component: {fileID: 114357131658011682}
   - component: {fileID: 114378571723717360}
-  - component: {fileID: 95831639254873352}
   - component: {fileID: 114089150849025076}
+  - component: {fileID: 95831639254873352}
   m_Layer: 5
   m_Name: Slider - Standard (Popup)
   m_TagString: Untagged
@@ -674,6 +674,8 @@ MonoBehaviour:
   sliderEvent:
     m_PersistentCalls:
       m_Calls: []
+  sliderAnimator: {fileID: 0}
+  saveValue: 0
 --- !u!114 &114378571723717360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,25 +726,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!95 &95831639254873352
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1760475365308172}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c149d8d7e6ebd27449cdc50e0fe309f5, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114089150849025076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -763,3 +746,22 @@ MonoBehaviour:
   handle: {fileID: 114333804096509154}
   label: {fileID: 0}
   popupLabel: {fileID: 114632935360333978}
+--- !u!95 &95831639254873352
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760475365308172}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c149d8d7e6ebd27449cdc50e0fe309f5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

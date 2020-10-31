@@ -1,4 +1,4 @@
-Modern UI Pack - v4.0.0
+Modern UI Pack - v4.2.0
 
 Import TextMesh Pro and its essentials from Package Manager if you haven't already!
 
@@ -15,6 +15,35 @@ Geno (Contributor)
 Filmos (Tester)
 Kabbouchi (Tester)
 Takashi Sakai
+
+Changelog v4.2.0
+----------------------------------------
+• Added context menu (beta)
+• Added border detection
+• UI Manager changes and optimization
+----------------------------------------
+
+Changelog v4.1.2
+----------------------------------------
+• Improved Dropdown item creation
+• Improved UI Manager look
+• Fixed minor issues
+----------------------------------------
+
+Changelog v4.1.1
+----------------------------------------
+• Added notification stacking
+• Fixed minor bugs
+----------------------------------------
+
+Changelog v4.1.0
+----------------------------------------
+• Added button sound feature
+• Improved documentation
+• Improved editor look
+• Improved tooltip system
+• Improved undo system
+----------------------------------------
 
 Changelog v4.0.0
 ----------------------------------------

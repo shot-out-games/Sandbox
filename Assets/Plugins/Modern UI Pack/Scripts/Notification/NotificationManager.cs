@@ -14,7 +14,7 @@ namespace Michsky.UI.ModernUIPack
         [TextArea] public string description = "Notification description";
 
         // Resources
-        Animator notificationAnimator;
+        public Animator notificationAnimator;
         public Image iconObj;
         public TextMeshProUGUI titleObj;
         public TextMeshProUGUI descriptionObj;
@@ -23,6 +23,7 @@ namespace Michsky.UI.ModernUIPack
         public bool enableTimer = true;
         public float timer = 3f;
         public bool useCustomContent = false;
+        public bool useStacking = false;
         public NotificationStyle notificationStyle;
 
         public enum NotificationStyle
@@ -50,7 +51,20 @@ namespace Michsky.UI.ModernUIPack
             catch
             {
                 Debug.LogError("Notification - Cannot initalize the object due to missing components.", this);
-            }         
+            }
+
+            if (useStacking == true)
+            {
+                try
+                {
+                    var stacking = (NotificationStacking)GameObject.FindObjectsOfType(typeof(NotificationStacking))[0];
+                    stacking.notifications.Add(this);
+                    stacking.enableUpdating = true;
+                    gameObject.SetActive(false);
+                }
+
+                catch { }
+            }
         }
 
         IEnumerator StartTimer()
