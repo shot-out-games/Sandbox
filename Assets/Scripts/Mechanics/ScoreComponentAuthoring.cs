@@ -35,18 +35,18 @@ public class ScoreComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 
     public void ShowLabelStreak(int streak)
     {
-        labelStreak.text = "Streak " + streak.ToString();
+        labelStreak.text = streak.ToString();
     }
 
 
     public void ShowLabelScore(int score)
     {
-        labelScore.text = "Score : " + score;
+        labelScore.text = score.ToString();
     }
 
-    public void ShowLabelCombo(int score)
+    public void ShowLabelCombo(int combo)
     {
-        labelCombo.text = "Combo: " + score;
+        labelCombo.text = combo.ToString();
     }
 
 
