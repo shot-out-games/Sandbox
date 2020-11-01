@@ -105,6 +105,7 @@ public class CharacterEffectsSystem : SystemBase
                         }
                         if (effects.actorHurtAudioClip)
                         {
+                            Debug.Log("sound");
                             audioSource.clip = effects.actorHurtAudioClip;
                             audioSource.Play();
                         }
