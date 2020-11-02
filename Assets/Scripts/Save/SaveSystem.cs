@@ -15,25 +15,15 @@ public class SaveSystem : SystemBase
     public NativeArray<Entity> PlayerEntities;
     [DeallocateOnJobCompletion]
     public NativeArray<Entity> EnemyEntities;
-    [DeallocateOnJobCompletion]
-    public NativeArray<Entity> NpcEntities;
 
-    [DeallocateOnJobCompletion]
-    public NativeArray<Entity> WeaponEntities;
-    [DeallocateOnJobCompletion]
-    public NativeArray<Entity> PowerEntities;
 
     private EntityQuery playerQuery;
     private EntityQuery enemyQuery;
-    private EntityQuery npcQuery;
-    private EntityQuery weaponQuery;
-    private EntityQuery powerQuery;
 
 
 
     protected override void OnCreate()
     {
-        //EnemyEntities = new NativeList<Entity>(100, Allocator.Persistent);
     }
 
 
@@ -57,20 +47,9 @@ public class SaveSystem : SystemBase
 
         playerQuery = GetEntityQuery(ComponentType.ReadOnly<PlayerComponent>());
         enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyComponent>());
-        npcQuery = GetEntityQuery(ComponentType.ReadOnly<NpcComponent>());
-        weaponQuery = GetEntityQuery(ComponentType.ReadOnly<WeaponItemComponent>());
-        powerQuery = GetEntityQuery(ComponentType.ReadOnly<PowerItemComponent>());
 
         PlayerEntities = playerQuery.ToEntityArray(Allocator.Persistent);
         EnemyEntities = enemyQuery.ToEntityArray(Allocator.Persistent);
-        NpcEntities = npcQuery.ToEntityArray(Allocator.Persistent);
-        WeaponEntities = weaponQuery.ToEntityArray(Allocator.Persistent);
-        PowerEntities = powerQuery.ToEntityArray(Allocator.Persistent);
-
-        //PlayerEntities.Sort(new IndexComparer());
-        //EnemyEntities.Sort(new IndexComparer());
-        //NpcEntities.Sort(new IndexComparer());
-
 
         //setup manager
         int slot = SaveManager.instance.saveWorld.lastLoadedSlot - 1;
@@ -84,10 +63,6 @@ public class SaveSystem : SystemBase
         }
 
         SaveManager.instance.saveData.saveGames[slot].savePlayers.Clear();
-        //SaveManager.instance.saveData.saveGames[slot].saveEnemies.Clear();
-        //SaveManager.instance.saveData.saveGames[slot].saveNpc.Clear();
-        //SaveManager.instance.saveData.saveGames[slot].saveWeapons.Clear();
-        //SaveManager.instance.saveData.saveGames[slot].savePowerItems.Clear();
         SaveManager.instance.saveData.saveGames[slot].saveLevelData.Clear();
 
         int level = LevelManager.instance.currentLevel;
@@ -98,65 +73,12 @@ public class SaveSystem : SystemBase
 
         SaveManager.instance.saveData.saveGames[slot].currentLevel = level;
 
-        var single_dead = GetSingleton<DeadMenuComponent>();
-        //SaveManager.instance.saveData.saveGames[slot].savedDeadWorld = single_dead;
-
-        var single_win = GetSingleton<WinnerMenuComponent>();
-        //SaveManager.instance.saveData.saveGames[slot].savedWinnerWorld = single_win;
-
-        var single_level = GetSingleton<LevelCompleteMenuComponent>();
-        //SaveManager.instance.saveData.saveGames[slot].savedLevelWorld = single_level;
-
-        SaveManager.instance.saveData.saveGames[slot].NpcSaved = LevelManager.instance.NpcSaved;
-        SaveManager.instance.saveData.saveGames[slot].NpcDead = LevelManager.instance.NpcDead;
-
-
-
-        for (int i = 0; i <= level; i++)
-        {
-            SaveManager.instance.saveData.saveGames[slot].saveLevelData[i].NpcSaved =
-                LevelManager.instance.levelSettings[i].NpcSaved;
-            SaveManager.instance.saveData.saveGames[slot].saveLevelData[i].NpcDead =
-                LevelManager.instance.levelSettings[i].NpcDead;
-        }
-
-
-
-        //Entities.WithoutBurst().ForEach
-        //(
-        //    (
-        //        WeaponItemComponent weaponComponent
-        //    ) =>
-        //    {
-        //        SaveManager.instance.saveData.saveGames[slot].saveWeapons.Add(weaponComponent);
-        //    }
-        //).Run();
-
-        Entities.WithoutBurst().ForEach
-        (
-            (
-                PowerItemComponent powerComponent
-            ) =>
-            {
-                //SaveManager.instance.saveData.saveGames[slot].savePowerItems.Add(powerComponent);
-            }
-        ).Run();
-
-
-
-
         for (int i = 0; i < PlayerEntities.Length; i++)
         {
 
             Entity e = PlayerEntities[i];
             PlayerComponent player = EntityManager.GetComponentData<PlayerComponent>(e);
             HealthComponent health = EntityManager.GetComponentData<HealthComponent>(e);
-            //ControlBarComponent control = EntityManager.GetComponentData<ControlBarComponent>(e);
-            //SkillTreeComponent skill = EntityManager.GetComponentData<SkillTreeComponent>(e);
-            //DeadComponent dead = EntityManager.GetComponentData<DeadComponent>(e);
-            //LevelCompleteComponent levelComplete = EntityManager.GetComponentData<LevelCompleteComponent>(e);
-            //WinnerComponent win = EntityManager.GetComponentData<WinnerComponent>(e);
-            //AttachWeaponComponent attachWeapon = EntityManager.GetComponentData<AttachWeaponComponent>(e);
             Translation ps = EntityManager.GetComponentData<Translation>(e);
             var pl = new SavePlayers
             {
@@ -164,12 +86,6 @@ public class SaveSystem : SystemBase
                 {
                     savedPlayer = player,
                     savedHealth = health,
-                    //savedControl =  control,
-                    //skillTree = skill,
-                    //savedDead = dead,
-                    //savedLevelComplete = levelComplete,
-                    //savedWinner = win,
-                    //savedAttachWeapon = attachWeapon,
                     position =
                     {
                         [0] = ps.Value.x,
@@ -182,76 +98,31 @@ public class SaveSystem : SystemBase
         }
 
 
-        //for (int i = 0; i < EnemyEntities.Length; i++)
-        //{
-        //    Entity e = EnemyEntities[i];
-        //    EnemyComponent enemy = EntityManager.GetComponentData<EnemyComponent>(e);
-        //    HealthComponent health = EntityManager.GetComponentData<HealthComponent>(e);
-        //    SkillTreeComponent skill = EntityManager.GetComponentData<SkillTreeComponent>(e);
-        //    DeadComponent dead = EntityManager.GetComponentData<DeadComponent>(e);
-        //    LevelCompleteComponent levelComplete = EntityManager.GetComponentData<LevelCompleteComponent>(e);
-        //    WinnerComponent win = EntityManager.GetComponentData<WinnerComponent>(e);
-        //    Translation ps = EntityManager.GetComponentData<Translation>(e);
+        for (int i = 0; i < EnemyEntities.Length; i++)
+        {
+            Entity e = EnemyEntities[i];
+            EnemyComponent enemy = EntityManager.GetComponentData<EnemyComponent>(e);
+            HealthComponent health = EntityManager.GetComponentData<HealthComponent>(e);
+            Translation ps = EntityManager.GetComponentData<Translation>(e);
 
-        //    var en = new SaveEnemies
-        //    {
-        //        enemyData = new EnemyData
-        //        {
-        //            savedEnemy = enemy,
-        //            savedHealth = health,
-        //            skillTree = skill,
-        //            savedDead = dead,
-        //            savedLevelComplete = levelComplete,
-        //            savedWinner = win,
-        //            position =
-        //            {
-        //                [0] = ps.Value.x,
-        //                [1] = ps.Value.y,
-        //                [2] = ps.Value.z
-        //            }
-        //        }
-        //    };
-
-        //    SaveManager.instance.saveData.saveGames[slot].saveEnemies.Add(en);
-        //}
-
-        //for (int i = 0; i < NpcEntities.Length; i++)
-        //{
-        //    Entity e = NpcEntities[i];
-
-        //    NpcComponent npc = EntityManager.GetComponentData<NpcComponent>(e);
-        //    HealthComponent health = EntityManager.GetComponentData<HealthComponent>(e);
-        //    SkillTreeComponent skill = EntityManager.GetComponentData<SkillTreeComponent>(e);
-        //    DeadComponent dead = EntityManager.GetComponentData<DeadComponent>(e);
-        //    LevelCompleteComponent levelComplete = EntityManager.GetComponentData<LevelCompleteComponent>(e);
-        //    WinnerComponent win = EntityManager.GetComponentData<WinnerComponent>(e);
-
-        //    Translation ps = EntityManager.GetComponentData<Translation>(e);
-
-        //    var np = new SaveNpc
-        //    {
-        //        npcData = new NpcData
-        //        {
-        //            savedNpc = npc,
-        //            savedHealth = health,
-        //            skillTree = skill,
-        //            savedDead = dead,
-        //            savedLevelComplete = levelComplete,
-        //            savedWinner = win,
-        //            position =
-        //            {
-        //                [0] = ps.Value.x,
-        //                [1] = ps.Value.y,
-        //                [2] = ps.Value.z
-        //            }
-        //        }
-        //    };
-        //    SaveManager.instance.saveData.saveGames[slot].saveNpc.Add(np);
-        //}
-
+            var en = new SaveEnemies
+            {
+                enemyData = new EnemyData
+                {
+                    savedEnemy = enemy,
+                    savedHealth = health,
+                    position =
+                    {
+                        [0] = ps.Value.x,
+                        [1] = ps.Value.y,
+                        [2] = ps.Value.z
+                    }
+                }
+            };
+            SaveManager.instance.saveData.saveGames[slot].saveEnemies.Add(en);
+        }
         PlayerEntities.Dispose();
         EnemyEntities.Dispose();
-        NpcEntities.Dispose();
     }
 
 

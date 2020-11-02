@@ -69,7 +69,7 @@ public class CharacterEffectsSystem : SystemBase
 
                 AudioSource audioSource = effects.audioSource;
 
-                if (deadComponent.isDead)
+                if (deadComponent.justDead)
                 {
                     Debug.Log("dead");
 
@@ -81,14 +81,14 @@ public class CharacterEffectsSystem : SystemBase
                             Debug.Log("dead effect");
                         }
                     }
-                    if (audioSource.isPlaying == false)
-                    {
+                    //if (audioSource.isPlaying == false)
+                    //{
                         if (effects.actorDeadAudioClip)
                         {
                             audioSource.clip = effects.actorDeadAudioClip;
                             audioSource.Play();
                         }
-                    }
+                    //}
                 }
                 else
                 {

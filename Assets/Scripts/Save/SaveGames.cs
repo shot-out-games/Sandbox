@@ -7,39 +7,19 @@ using UnityEngine;
 [System.Serializable]
 public class SaveGames
 {
-    //public List<SaveEnemies> saveEnemies = new List<SaveEnemies>();
+    public List<SaveEnemies> saveEnemies = new List<SaveEnemies>();
     public List<SavePlayers> savePlayers = new List<SavePlayers>();
-    //public List<SaveNpc> saveNpc = new List<SaveNpc>();
     public List<LevelSettings> saveLevelData = new List<LevelSettings>();
-    //public List<WeaponItemComponent> saveWeapons = new List<WeaponItemComponent>();
-    //public List<PowerItemComponent> savePowerItems = new List<PowerItemComponent>();
-
     public List<float> scoreList = new List<float>();
 
 
 
     public int currentLevel;
-    //public LevelCompleteMenuComponent savedLevelWorld;
-    //public DeadMenuComponent savedDeadWorld;
-    //public WinnerMenuComponent savedWinnerWorld;
-    public int playersDead;
-    public int enemiesDead;
-    public int NpcDead;
-    public int playersSaved;
-    public int enemiesSaved;
-    public int NpcSaved;
 
 
     public SaveGames()
     {
-        //scoreList.Add(0);
+
     }
-
-    //this project only
-    //public List<HoleComponent> savedHoles = new List<HoleComponent>();
-
-
-
-
 
 }
