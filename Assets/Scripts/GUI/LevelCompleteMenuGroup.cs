@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -13,6 +14,7 @@ using UnityEngine.AI;
 public struct LevelCompleteMenuComponent : IComponentData
 {
     public bool hide;
+    public bool levelLoaded;
     public int levelTargetReachedCounter;
     public int endGameTargetReachedCounter;
 
@@ -38,6 +40,11 @@ public class LevelCompleteMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     private float showTimeLength = 1.0f;
     private float showTimer = 0f;
     private bool startShowTimer;
+
+    [SerializeField]
+    private TextMeshProUGUI message;
+
+    public static event Action LevelCompleteEvent;
 
 
 
@@ -84,16 +91,21 @@ public class LevelCompleteMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
   
 
 
-    public void ShowMenu()
+    public void ShowMenu(string _message)
     {
         startShowTimer = true;
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
+
         if (defaultButton)
         {
             defaultButton.Select();
         }
+
+        message.SetText(_message);
+        LevelCompleteEvent?.Invoke();
+
 
     }
 
@@ -123,7 +135,8 @@ public class LevelCompleteMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
         {
             hide = true,
             levelTargetReachedCounter = 0,
-            endGameTargetReachedCounter = 0
+            endGameTargetReachedCounter = 0,
+            levelLoaded = true
         });
     }
 }

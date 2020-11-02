@@ -17,16 +17,6 @@ using SphereCollider = Unity.Physics.SphereCollider;
 [UpdateAfter(typeof(Unity.Physics.Systems.EndFramePhysicsSystem))]
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
-//[UpdateAfter(typeof(BuildPhysicsWorld))]
-
-//[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-//[UpdateInGroup(typeof(SimulationSystemGroup))]
-//[UpdateAfter(typeof(EndFramePhysicsSystem))]
-//[UpdateAfter(typeof(CollisionSystem))]
-
-
-//[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-//[UpdateBefore(typeof(PlayerMoveSystem))]
 
 
 public class RaycastSystem : SystemBase
@@ -160,13 +150,11 @@ public class RaycastSystem : SystemBase
                 direction = new float3(0, 1f, 0);
                 distance = .19f;
                 end = start + direction * distance;
-                //end = start + pv.Linear * Time.DeltaTime;
 
                 RaycastInput inputUp = new RaycastInput()
                 {
                     Start = start,
                     End = end,
-                    //Filter = CollisionFilter.Default
                     Filter = new CollisionFilter()
                     {
                         BelongsTo = 1,
@@ -175,8 +163,6 @@ public class RaycastSystem : SystemBase
                     }
                 };
                 Debug.DrawRay(inputUp.Start, direction, Color.green, distance);
-                //Debug.Log("st " + inputUp.Start);
-                //Debug.Log("en " + inputUp.End);
 
                 Unity.Physics.RaycastHit hitUp = new Unity.Physics.RaycastHit();
 
@@ -186,116 +172,18 @@ public class RaycastSystem : SystemBase
 
                 if (hasPointHitUp)
                 {
-
                     Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hitUp.RigidBodyIndex].Entity; //grounded
-                    //Debug.Log("hu " + hitUp.Entity);
-                    //applyImpulse.Ceiling = true;
-
                 }
-
-
-
-                //start = translation.Value + new float3(.19f, .5f, 0);
-                //direction = new float3(.19f, 0, 0);
-                //distance = 1.0f;
-                //end = start + direction * distance;
-                //RaycastInput inputRight = new RaycastInput()
-                //{
-                //    Start = start,
-                //    End = end,
-                //    Filter = new CollisionFilter()
-                //    {
-                //        BelongsTo = 1,
-                //        CollidesWith = 2,
-                //        GroupIndex = 0
-                //    }
-                //};
-                //Debug.DrawRay(inputRight.Start, direction, Color.red, distance);
-
-                //Unity.Physics.RaycastHit hitRight = new Unity.Physics.RaycastHit();
-
-                //bool hasPointHitRight = collisionWorld.CastRay(inputRight, out hitRight);
-
-
-
-                //if (hasPointHitRight)
-                //{
-
-                //    Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hitUp.RigidBodyIndex].Entity;//grounded
-                //    //Debug.Log("hr " + hitRight.Entity);
-                //    //applyImpulse.BumpRight = true;
-
-                //}
-
-
-
-
-
-
-                //start = translation.Value + new float3(-.19f, .5f, 0);
-                //direction = new float3(-.19f, 0f, 0);
-                //distance = 1.0f;
-                //end = start + direction * distance;
-                ////end = start + pv.Linear * Time.DeltaTime;
-
-                //RaycastInput inputLeft = new RaycastInput()
-                //{
-                //    Start = start,
-                //    End = end,
-                //    //Filter = CollisionFilter.Default
-                //    Filter = new CollisionFilter()
-                //    {
-                //        BelongsTo = 1,
-                //        CollidesWith = 2,
-                //        GroupIndex = 0
-                //    }
-                //};
-                //Debug.DrawRay(inputLeft.Start, direction, Color.blue, distance);
-                //Unity.Physics.RaycastHit hitLeft = new Unity.Physics.RaycastHit();
-
-                //bool hasPointHitLeft = collisionWorld.CastRay(inputLeft, out hitLeft);
-
-
-
-                //if (hasPointHitLeft)
-                //{
-
-                //    Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hitLeft.RigidBodyIndex].Entity;//grounded
-                //    //Debug.Log("hl " + hitLeft.Entity);
-                //    //applyImpulse.BumpLeft = true;
-
-                //}
-
-
-
-
-
-                ////start = translation.Value + new float3(-.19f, .5f, 0);
-                ////direction = new float3(-1.0f, 0f, 0);
-                ////distance = 1.0f;
-                ////end = start + direction * distance;
-                ////SphereCast(ref collider, ref applyImpulse, start, end, direction, distance);
-
 
 
 
             }
 
 
-
-
-
-
-
-
-
         }).Run();
 
 
-
-
         bool key = false;
-
 
         Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity entity,
             ref LevelCompleteComponent levelComplete, ref WinnerComponent winnerComponent,
@@ -320,28 +208,13 @@ public class RaycastSystem : SystemBase
 
             bool haveHit = collisionWorld.CalculateDistance(input, out DistanceHit hit);
 
-
-
-            //RaycastInput input = new RaycastInput
-            //{
-            //    Start = translation.Value + new float3(-1, 5, 0),
-            //    End = translation.Value + new float3(1, 5, 0),
-            //    Filter = CollisionFilter.Default
-            //};
-
-
-            //Unity.Physics.RaycastHit hit = new Unity.Physics.RaycastHit();
-            //bool haveHit = collisionWorld.CalculateDistance(input, out hit);
             if (haveHit)
             {
-
-
                 Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hit.RigidBodyIndex].Entity;
-                //Debug.Log("e " + e);
                 if (EntityManager.HasComponent(e, typeof(TriggerComponent)))
                 {
                     if (EntityManager.GetComponentData<TriggerComponent>(e).Type == (int)TriggerType.Trigger
-                        && EntityManager.GetComponentData<TriggerComponent>(e).index == LevelManager.instance.currentLevel + 1
+                        && EntityManager.GetComponentData<TriggerComponent>(e).index == LevelManager.instance.currentLevelCompleted + 1
 
                     )
                     {
@@ -354,7 +227,6 @@ public class RaycastSystem : SystemBase
                     {
                         winnerComponent.keys += 1;
                         key = true;
-                        //                        EntityManager.DestroyEntity(e);
                         TriggerComponent trigger = EntityManager.GetComponentData<TriggerComponent>(e);
                         trigger.Hit = true;
                         EntityManager.SetComponentData(e, trigger);
@@ -363,12 +235,6 @@ public class RaycastSystem : SystemBase
                     }
 
                 }
-
-
-
-
-
-
 
 
 
@@ -417,59 +283,6 @@ public class RaycastSystem : SystemBase
             triggerComponent.Hit = false;
 
         }).Run();
-
-
-
-
-        bool showMessage = false;
-
-
-
-        Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity entity,
-
-            HudGroup hudGroup
-
-        ) =>
-        {
-
-            if (key == true)
-            {
-                key = false;
-                showMessage = true;
-                hudGroup.cubes -= 1;
-                string cubeLabel = "Cubes Remain ";
-                hudGroup.ShowLabelLevelTargets(cubeLabel, hudGroup.cubes);
-            }
-
-
-        }).Run();
-
-
-
-        //Entities.WithoutBurst().WithStructuralChanges().ForEach(
-        //    (in StartGameMenuComponent messageMenuComponent, in ShowMessageMenuGroup messageMenu) =>
-        //    {
-        //        if (showMessage == true)
-        //        {
-
-        //            messageMenu.messageString = "Soul Cube Triggered ... ";
-        //            messageMenu.ShowMenu();
-        //        }
-        //    }
-        //).Run();
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     }

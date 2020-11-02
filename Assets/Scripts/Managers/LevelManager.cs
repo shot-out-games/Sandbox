@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 
 public struct LevelComponent : IComponentData
 {
-    public int currentLevel;
-    public int maxLevels;
-    public int potentialGameTargets;//in some games max of something ie potential saved robots
+    //public int currentLevelCompleted;
+    //public int maxLevels;
+    //public int potentialGameTargets;//in some games max of something ie potential saved robots
 }
 
 public enum GameResult
@@ -22,16 +22,11 @@ public enum GameResult
 
 public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
 {
-    public bool mobile;
-    [HideInInspector]
     public bool endGame = false;
-
-    [HideInInspector] public GameResult gameResult = GameResult.None;
+    public GameResult gameResult = GameResult.None;
     [HideInInspector]
     public int potentialGameTargets;//in some games max of something ie potential saved robots
-    //[HideInInspector]
     public List<int> potentialCumulativeGameTargets = new List<int>();
-    [HideInInspector]
     public int totalLevels;
 
 
@@ -53,12 +48,14 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
     private AudioClip menuMusic;
 
     public static LevelManager instance = null;
-    public int currentLevel;
+    public int currentLevelCompleted;
+    //public bool justCompleted { get; set; }
     public List<LevelSettings> levelSettings = new List<LevelSettings>();
     public List<LevelMedia> levelMediaList = new List<LevelMedia>();
     void Awake()
     {
-        currentLevel = 0;
+
+    currentLevelCompleted = 0;
         //Check if there is already an instance of SoundManager
         if (instance == null)
             //if not, set it to this.
@@ -68,6 +65,7 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
             //Destroy this, this enforces our singleton pattern so there can only be one instance of SoundManager.
             Destroy(gameObject);
         totalLevels = levelSettings.Count;
+        if (totalLevels > maxLevels) totalLevels = maxLevels;
         DontDestroyOnLoad(gameObject);
     }
 
@@ -75,7 +73,7 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
     {
         endGame = false;
         gameResult = GameResult.None;
-        currentLevel = 0;
+        currentLevelCompleted = 0;
         playersDead = 0;
         enemiesDead = 0;
         NpcDead = 0;
@@ -92,7 +90,7 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
             levelSettings[i].enemiesSaved = 0;
             levelSettings[i].NpcSaved = 0;
             levelSettings[i].points = 0;
-            levelSettings[i].completed = false;
+            //levelSettings[i].completed = false;
         }
 
 
@@ -145,9 +143,9 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
         if (audioSourceGame.isPlaying) audioSourceGame.Stop();
 
 
-        AudioClip levelMusic = LevelManager.instance.levelMediaList[currentLevel].levelMusic;
+        AudioClip levelMusic = LevelManager.instance.levelMediaList[currentLevelCompleted].levelMusic;
 
-        //Debug.Log("Play " + currentLevel);
+        //Debug.Log("Play " + currentLevelCompleted);
 
         audioSourceGame.clip = levelMusic;
         audioSourceGame.Play();
@@ -159,9 +157,9 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
         //not used yet just use static level manager data instead
         dstManager.AddComponentData(entity, new LevelComponent()
         {
-            currentLevel = 0,
-            maxLevels = maxLevels,
-            potentialGameTargets = potentialGameTargets
+            //currentLevelCompleted = 1,
+            //maxLevels = maxLevels,
+            //potentialGameTargets = potentialGameTargets
         });
 
     }

@@ -32,7 +32,7 @@ public class LoadSystem : SystemBase
             {
                 loadEntity = e;
                 loaded = load.part1;
-                load.part1= false;
+                load.part1 = false;
             }
         ).Run();
 
@@ -57,12 +57,14 @@ public class LoadSystem : SystemBase
             SaveManager.instance.saveWorld.lastLoadedSlot = 1;
         }
 
-        int savedPlayers = SaveManager.instance.saveData.saveGames[slot].savePlayers.Count;
-        if (savedPlayers == 0) return;//new game so no need to fill data
+        if (SaveManager.instance.saveData.saveGames[slot].savePlayers == null) return;
+        if (SaveManager.instance.saveData.saveGames[slot].saveEnemies == null) return;
+
+
 
 
         var sg = SaveManager.instance.saveData.saveGames[slot];
-        LevelManager.instance.currentLevel = sg.currentLevel;
+        LevelManager.instance.currentLevelCompleted = sg.currentLevel;
 
         EntityQuery playerQuery = GetEntityQuery(ComponentType.ReadOnly<PlayerComponent>());
         NativeArray<Entity> PlayerEntities = playerQuery.ToEntityArray(Allocator.Persistent);
@@ -129,3 +131,34 @@ public class LoadSystem : SystemBase
 }
 
 
+public class LoadNextLevelSystem : SystemBase
+{
+
+    protected override void OnUpdate()
+    {
+        var ecb = new EntityCommandBuffer(Allocator.Temp);
+
+        bool levelLoaded = GetSingleton<LevelCompleteMenuComponent>().levelLoaded;
+        if(levelLoaded == true) return;
+
+
+        Entities.ForEach((ref ScoreComponent scoreComponent) =>
+            {
+
+            }
+        ).Run();
+
+
+
+
+
+
+        ecb.Playback(EntityManager);
+        ecb.Dispose();
+
+
+
+
+    }
+
+}

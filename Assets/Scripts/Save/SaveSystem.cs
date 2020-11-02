@@ -63,9 +63,10 @@ public class SaveSystem : SystemBase
         }
 
         SaveManager.instance.saveData.saveGames[slot].savePlayers.Clear();
+        SaveManager.instance.saveData.saveGames[slot].saveEnemies.Clear();
         SaveManager.instance.saveData.saveGames[slot].saveLevelData.Clear();
 
-        int level = LevelManager.instance.currentLevel;
+        int level = LevelManager.instance.currentLevelCompleted;
         for (int i = 0; i <= level; i++)
         {
             SaveManager.instance.saveData.saveGames[slot].saveLevelData.Add(new LevelSettings());

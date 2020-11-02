@@ -62,8 +62,8 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
         startShowTimer = true;
         //currentInstruction.text = "Please Find the Weapon";
         float fontSize = 25;
-        bool mobile = LevelManager.instance.mobile;
-        if (mobile == true) fontSize = 75;
+        //bool mobile = LevelManager.instance.mobile;
+        //if (mobile == true) fontSize = 75;
         currentInstruction.fontSize = fontSize;
 
         //currentInstruction.canvasRenderer.SetAlpha(1);
@@ -77,13 +77,13 @@ public class InstructionsMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 
         if (startShowTimer)
         {
-            bool mobile = LevelManager.instance.mobile;
+            //bool mobile = LevelManager.instance.mobile;
             showTimer += Time.deltaTime;
             if (showTimer > showTimeLength)
             {
                 instructionCount = instructionCount + 1;
                 float fontSize = 25;
-                if (mobile == true) fontSize = 75;
+                //if (mobile == true) fontSize = 75;
                 if (instructionCount == 2)
                 {
                     currentInstruction.fontSize = fontSize;

@@ -154,7 +154,7 @@ public class SlashSystem : SystemBase
             }
             ).Run();
 
-
+        hk.Dispose();
 
 
     }

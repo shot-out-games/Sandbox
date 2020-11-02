@@ -123,7 +123,7 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
             message.SetText("SCORE: " + score + " RANK:  " + rank);
         }
 
-      
+
 
     }
 

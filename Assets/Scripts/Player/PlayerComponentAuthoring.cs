@@ -115,8 +115,6 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
             new LevelCompleteComponent
             {
                 active = true,
-                goalCounter = 0,
-                goalCounterTarget = 0,//ie how many players you have to save - usually zero
                 targetReached = false,
                 checkWinCondition = checkWinCondition
             }

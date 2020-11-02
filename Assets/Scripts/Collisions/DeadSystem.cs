@@ -14,6 +14,7 @@ public struct DeadComponent : IComponentData
 {
     public bool isDead;
     public bool justDead;
+    public int dieLevel;
     public int tag;
     public bool checkLossCondition;
 }
@@ -29,15 +30,15 @@ public class DeadSystem : SystemBase //really game over system currently
 
         EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
 
-        int currentLevel = LevelManager.instance.currentLevel;
-        bool levelComplete = LevelManager.instance.levelSettings[currentLevel].completed;
+        int currentLevel = LevelManager.instance.currentLevelCompleted;
+        //bool levelComplete = LevelManager.instance.levelSettings[currentLevel].completed;
 
         Entities.WithoutBurst().ForEach
         (
             (ref DeadComponent deadComponent, in Entity entity, in Animator animator) =>
             {
                 if (deadComponent.isDead
-                    && deadComponent.tag == 1 && deadComponent.justDead == true)//player
+                    && deadComponent.tag == 1 && deadComponent.justDead)//player
                 {
                     deadComponent.justDead = false;
                     animator.SetInteger("Dead", 1);
@@ -51,23 +52,6 @@ public class DeadSystem : SystemBase //really game over system currently
 
 
 
-        Entities.WithoutBurst().ForEach
-        (
-            (ref DeadComponent deadComponent, in Entity entity, in Animator animator, in NavMeshAgent agent) =>
-            {
-                if (deadComponent.isDead
-                    && deadComponent.tag == 3 && deadComponent.justDead == true)//npc 
-                {
-                    deadComponent.justDead = false;
-                    agent.enabled = false;
-                    animator.SetInteger("Zone", 4);
-                    animator.SetInteger("Dead", 1);
-                    LevelManager.instance.levelSettings[currentLevel].NpcDead += 1;
-                }
-            }
-        ).Run();
-
-
         bool enemyJustDead = false;
 
         Entities.WithoutBurst().ForEach
@@ -76,7 +60,7 @@ public class DeadSystem : SystemBase //really game over system currently
             {
 
                 if (deadComponent.isDead
-                    && deadComponent.tag == 2 && deadComponent.justDead == true)//enemy
+                    && deadComponent.tag == 2 && deadComponent.justDead)//enemy
                 {
                     //ecb.DestroyEntity(entity);//for now 
                     if (winnerComponent.checkWinCondition == true)//this  (and all with this true) enemy must be defeated to win the game
@@ -118,7 +102,7 @@ public class DeadSystem : SystemBase //really game over system currently
             Entities.WithoutBurst().WithStructuralChanges().ForEach(
                 (in ShowMessageMenuComponent messageMenuComponent, in ShowMessageMenuGroup messageMenu) =>
                 {
-                    messageMenu.messageString = "Lurker destroyed ... ";
+                    messageMenu.messageString = "... Destroyed ... ";
                     messageMenu.ShowMenu();
                 }
             ).Run();

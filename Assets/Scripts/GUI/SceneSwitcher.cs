@@ -51,23 +51,23 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     {
         PauseMenuGroup.SaveExitClickedEvent += OnButtonSaveAndExitClicked;
         PauseMenuGroup.ExitClickedEvent += OnButtonExitClicked;
+        LevelCompleteMenuGroup.LevelCompleteEvent += SetupAndLoadNextScene;
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
+
     }
+
 
     void OnDisable()
     {
         PauseMenuGroup.SaveExitClickedEvent -= OnButtonSaveAndExitClicked;
         PauseMenuGroup.ExitClickedEvent -= OnButtonExitClicked;
+        LevelCompleteMenuGroup.LevelCompleteEvent -= SetupAndLoadNextScene;
         SceneManager.sceneLoaded -= OnLevelFinishedLoading;
     }
 
 
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
-        //StartCoroutine(Pause(scene.buildIndex, 2.0f));
-        //manager.SetComponentData(e, new LoadComponent { value = true });
-        //sceneLoaded = true;
-
 
     }
 
@@ -155,10 +155,16 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     }
 
+    private void SetupAndLoadNextScene()
+    {
+        DestroyAllEntitiesInScene();
+        LoadNextScene();
+    }
 
 
     public void LoadNextScene()
     {
+        Debug.Log("load next");
         var sceneCount = SceneManager.sceneCountInBuildSettings;
         var nextIndex = CurrentSceneIndex + 1;
         if (nextIndex >= sceneCount)
