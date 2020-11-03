@@ -257,7 +257,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.terrain-tools": {
-      "version": "3.0.1-preview",
+      "version": "3.0.2-preview.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {},

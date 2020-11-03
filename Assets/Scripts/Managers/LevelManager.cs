@@ -28,7 +28,7 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
     public int potentialGameTargets;//in some games max of something ie potential saved robots
     public List<int> potentialCumulativeGameTargets = new List<int>();
     public int totalLevels;
-
+    public bool resetLevel;
 
     public int playersDead;
     public int enemiesDead;

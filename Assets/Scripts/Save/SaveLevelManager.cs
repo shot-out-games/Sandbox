@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using Unity.Entities;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -12,7 +7,11 @@ using UnityEngine;
 public class SaveLevelManager : MonoBehaviour
 {
 
-    public List<SavePlayers> savePlayers = new List<SavePlayers>();
+    public bool saveScene = false;
+    public bool loadNextScene = false;
+    public bool levelMenuShown = false;
+
+    public List<SaveLevelPlayers> saveLevelPlayers = new List<SaveLevelPlayers>();
 
 
     public static SaveLevelManager instance = null;

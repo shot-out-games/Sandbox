@@ -16,6 +16,7 @@ namespace Michsky.UI.ModernUIPack
 
         protected static bool showAnimatedIcon = false;
         protected static bool showButton = false;
+        protected static bool showContext = false;
         protected static bool showDropdown = false;
         protected static bool showHorSelector = false;
         protected static bool showInputField = false;
@@ -45,7 +46,7 @@ namespace Michsky.UI.ModernUIPack
                 customSkin = (GUISkin)Resources.Load("Editor\\Custom Skin Dark");
             else
                 customSkin = (GUISkin)Resources.Load("Editor\\Custom Skin Light");
-       
+
             // Foldout style
             GUIStyle foldoutStyle = new GUIStyle(EditorStyles.foldout);
             foldoutStyle.font = customSkin.font;
@@ -60,7 +61,6 @@ namespace Michsky.UI.ModernUIPack
             // Top header
             GUILayout.Label(muipLogo, GUILayout.Width(250), GUILayout.Height(40));
 
-            GUILayout.Space(6);
             GUILayout.BeginVertical(EditorStyles.helpBox);
 
             // Animated Icon
@@ -106,13 +106,8 @@ namespace Michsky.UI.ModernUIPack
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                 EditorGUILayout.LabelField(new GUIContent("Font"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                EditorGUILayout.PropertyField(buttonFontSize, new GUIContent(""), GUILayout.Width(40));
                 EditorGUILayout.PropertyField(buttonFont, new GUIContent(""));
-
-                GUILayout.EndHorizontal();
-                GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                EditorGUILayout.LabelField(new GUIContent("Font Size"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                EditorGUILayout.PropertyField(buttonFontSize, new GUIContent(""));
 
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
@@ -140,13 +135,8 @@ namespace Michsky.UI.ModernUIPack
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                 EditorGUILayout.LabelField(new GUIContent("Font"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                EditorGUILayout.PropertyField(buttonFontSize, new GUIContent(""), GUILayout.Width(40));
                 EditorGUILayout.PropertyField(buttonFont, new GUIContent(""));
-
-                GUILayout.EndHorizontal();
-                GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                EditorGUILayout.LabelField(new GUIContent("Font Size"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                EditorGUILayout.PropertyField(buttonFontSize, new GUIContent(""));
 
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
@@ -203,6 +193,25 @@ namespace Michsky.UI.ModernUIPack
             GUILayout.Space(2);
             GUILayout.BeginVertical(EditorStyles.helpBox);
 
+            // Context Menu
+            var contextBackgroundColor = serializedObject.FindProperty("contextBackgroundColor");
+            showContext = EditorGUILayout.Foldout(showContext, "Context Menu", foldoutStyle);
+
+            if (showContext)
+            {
+                GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                EditorGUILayout.LabelField(new GUIContent("Background Color"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                EditorGUILayout.PropertyField(contextBackgroundColor, new GUIContent(""));
+
+                GUILayout.EndHorizontal();
+                EditorGUILayout.HelpBox("Context Menu is currently in beta, expect major changes in future releases.", MessageType.Info);
+            }
+
+            GUILayout.EndVertical();
+            GUILayout.Space(2);
+            GUILayout.BeginVertical(EditorStyles.helpBox);
+
             // Dropdown
             var dropdownTheme = serializedObject.FindProperty("dropdownThemeType");
             var dropdownAnimationType = serializedObject.FindProperty("dropdownAnimationType");
@@ -235,13 +244,8 @@ namespace Michsky.UI.ModernUIPack
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                 EditorGUILayout.LabelField(new GUIContent("Font"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                EditorGUILayout.PropertyField(dropdownFontSize, new GUIContent(""), GUILayout.Width(40));
                 EditorGUILayout.PropertyField(dropdownFont, new GUIContent(""));
-
-                GUILayout.EndHorizontal();
-                GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                EditorGUILayout.LabelField(new GUIContent("Font Size"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                EditorGUILayout.PropertyField(dropdownFontSize, new GUIContent(""));
 
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
@@ -282,25 +286,15 @@ namespace Michsky.UI.ModernUIPack
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                 EditorGUILayout.LabelField(new GUIContent("Font"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                EditorGUILayout.PropertyField(dropdownFontSize, new GUIContent(""), GUILayout.Width(40));
                 EditorGUILayout.PropertyField(dropdownFont, new GUIContent(""));
 
-                GUILayout.EndHorizontal();
-                GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                EditorGUILayout.LabelField(new GUIContent("Font Size"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                EditorGUILayout.PropertyField(dropdownFontSize, new GUIContent(""));
-
-                GUILayout.EndHorizontal();
+                GUILayout.EndHorizontal();;
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                 EditorGUILayout.LabelField(new GUIContent("Item Font"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                EditorGUILayout.PropertyField(dropdownItemFontSize, new GUIContent(""), GUILayout.Width(40));
                 EditorGUILayout.PropertyField(dropdownItemFont, new GUIContent(""));
-
-                GUILayout.EndHorizontal();
-                GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                EditorGUILayout.LabelField(new GUIContent("Item Font Size"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                EditorGUILayout.PropertyField(dropdownItemFontSize, new GUIContent(""));
 
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
@@ -345,7 +339,7 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.EndVertical();
             GUILayout.Space(2);
-                                    GUILayout.BeginVertical(EditorStyles.helpBox);
+            GUILayout.BeginVertical(EditorStyles.helpBox);
 
             // Horizontal Selector
             var selectorFont = serializedObject.FindProperty("selectorFont");
@@ -361,13 +355,8 @@ namespace Michsky.UI.ModernUIPack
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                 EditorGUILayout.LabelField(new GUIContent("Font"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                EditorGUILayout.PropertyField(hSelectorFontSize, new GUIContent(""), GUILayout.Width(40));
                 EditorGUILayout.PropertyField(selectorFont, new GUIContent(""));
-
-                GUILayout.EndHorizontal();
-                GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                EditorGUILayout.LabelField(new GUIContent("Font Size"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                EditorGUILayout.PropertyField(hSelectorFontSize, new GUIContent(""));
 
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
@@ -400,7 +389,7 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.EndVertical();
             GUILayout.Space(2);
-                                    GUILayout.BeginVertical(EditorStyles.helpBox);
+            GUILayout.BeginVertical(EditorStyles.helpBox);
 
             // Input Field
             var inputFieldFont = serializedObject.FindProperty("inputFieldFont");
@@ -413,13 +402,8 @@ namespace Michsky.UI.ModernUIPack
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                 EditorGUILayout.LabelField(new GUIContent("Font"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                EditorGUILayout.PropertyField(inputFieldFontSize, new GUIContent(""), GUILayout.Width(40));
                 EditorGUILayout.PropertyField(inputFieldFont, new GUIContent(""));
-
-                GUILayout.EndHorizontal();
-                GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                EditorGUILayout.LabelField(new GUIContent("Font Size"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                EditorGUILayout.PropertyField(inputFieldFontSize, new GUIContent(""));
 
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
@@ -432,7 +416,7 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.EndVertical();
             GUILayout.Space(2);
-                                    GUILayout.BeginVertical(EditorStyles.helpBox);
+            GUILayout.BeginVertical(EditorStyles.helpBox);
 
             // Modal Window
             var modalWindowTitleFont = serializedObject.FindProperty("modalWindowTitleFont");
@@ -493,7 +477,7 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.EndVertical();
             GUILayout.Space(2);
-                                    GUILayout.BeginVertical(EditorStyles.helpBox);
+            GUILayout.BeginVertical(EditorStyles.helpBox);
 
             // Notification
             var notificationTitleFont = serializedObject.FindProperty("notificationTitleFont");
@@ -511,25 +495,15 @@ namespace Michsky.UI.ModernUIPack
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                 EditorGUILayout.LabelField(new GUIContent("Title Font"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                EditorGUILayout.PropertyField(notificationTitleFontSize, new GUIContent(""), GUILayout.Width(40));
                 EditorGUILayout.PropertyField(notificationTitleFont, new GUIContent(""));
 
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
-                EditorGUILayout.LabelField(new GUIContent("Title Size"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                EditorGUILayout.PropertyField(notificationTitleFontSize, new GUIContent(""));
-
-                GUILayout.EndHorizontal();
-                GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
                 EditorGUILayout.LabelField(new GUIContent("Description Font"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                EditorGUILayout.PropertyField(notificationDescriptionFontSize, new GUIContent(""), GUILayout.Width(40));
                 EditorGUILayout.PropertyField(notificationDescriptionFont, new GUIContent(""));
-
-                GUILayout.EndHorizontal();
-                GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                EditorGUILayout.LabelField(new GUIContent("Description Size"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                EditorGUILayout.PropertyField(notificationDescriptionFontSize, new GUIContent(""));
 
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
@@ -560,7 +534,7 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.EndVertical();
             GUILayout.Space(2);
-                                    GUILayout.BeginVertical(EditorStyles.helpBox);
+            GUILayout.BeginVertical(EditorStyles.helpBox);
 
             // Progress Bar
             var progressBarLabelFont = serializedObject.FindProperty("progressBarLabelFont");
@@ -576,13 +550,8 @@ namespace Michsky.UI.ModernUIPack
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                 EditorGUILayout.LabelField(new GUIContent("Label Font"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                EditorGUILayout.PropertyField(progressBarLabelFontSize, new GUIContent(""), GUILayout.Width(40));
                 EditorGUILayout.PropertyField(progressBarLabelFont, new GUIContent(""));
-
-                GUILayout.EndHorizontal();
-                GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                EditorGUILayout.LabelField(new GUIContent("Label Font Size"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                EditorGUILayout.PropertyField(progressBarLabelFontSize, new GUIContent(""));
 
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
@@ -613,7 +582,7 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.EndVertical();
             GUILayout.Space(2);
-                                    GUILayout.BeginVertical(EditorStyles.helpBox);
+            GUILayout.BeginVertical(EditorStyles.helpBox);
 
             // Scrollbar
             var scrollbarColor = serializedObject.FindProperty("scrollbarColor");
@@ -638,7 +607,7 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.EndVertical();
             GUILayout.Space(2);
-                                    GUILayout.BeginVertical(EditorStyles.helpBox);
+            GUILayout.BeginVertical(EditorStyles.helpBox);
 
             // Slider
             var sliderThemeType = serializedObject.FindProperty("sliderThemeType");
@@ -662,13 +631,8 @@ namespace Michsky.UI.ModernUIPack
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                 EditorGUILayout.LabelField(new GUIContent("Label Font"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                EditorGUILayout.PropertyField(sliderLabelFontSize, new GUIContent(""), GUILayout.Width(40));
                 EditorGUILayout.PropertyField(sliderLabelFont, new GUIContent(""));
-
-                GUILayout.EndHorizontal();
-                GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                EditorGUILayout.LabelField(new GUIContent("Label Font Size"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                EditorGUILayout.PropertyField(sliderLabelFontSize, new GUIContent(""));
 
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
@@ -702,13 +666,8 @@ namespace Michsky.UI.ModernUIPack
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                 EditorGUILayout.LabelField(new GUIContent("Label Font"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                EditorGUILayout.PropertyField(sliderLabelFontSize, new GUIContent(""), GUILayout.Width(40));
                 EditorGUILayout.PropertyField(sliderLabelFont, new GUIContent(""));
-
-                GUILayout.EndHorizontal();
-                GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                EditorGUILayout.LabelField(new GUIContent("Label Font Size"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                EditorGUILayout.PropertyField(sliderLabelFontSize, new GUIContent(""));
 
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
@@ -745,7 +704,7 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.EndVertical();
             GUILayout.Space(2);
-                                    GUILayout.BeginVertical(EditorStyles.helpBox);
+            GUILayout.BeginVertical(EditorStyles.helpBox);
 
             // Switch
             var switchBorderColor = serializedObject.FindProperty("switchBorderColor");
@@ -784,7 +743,7 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.EndVertical();
             GUILayout.Space(2);
-                                    GUILayout.BeginVertical(EditorStyles.helpBox);
+            GUILayout.BeginVertical(EditorStyles.helpBox);
 
             // Toggle
             var toggleFont = serializedObject.FindProperty("toggleFont");
@@ -800,13 +759,8 @@ namespace Michsky.UI.ModernUIPack
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                 EditorGUILayout.LabelField(new GUIContent("Font"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                EditorGUILayout.PropertyField(toggleFontSize, new GUIContent(""), GUILayout.Width(40));
                 EditorGUILayout.PropertyField(toggleFont, new GUIContent(""));
-
-                GUILayout.EndHorizontal();
-                GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                EditorGUILayout.LabelField(new GUIContent("Font Size"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                EditorGUILayout.PropertyField(toggleFontSize, new GUIContent(""));
 
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
@@ -837,7 +791,7 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.EndVertical();
             GUILayout.Space(2);
-                                    GUILayout.BeginVertical(EditorStyles.helpBox);
+            GUILayout.BeginVertical(EditorStyles.helpBox);
 
             // Tooltip
             var tooltipFont = serializedObject.FindProperty("tooltipFont");
@@ -851,13 +805,8 @@ namespace Michsky.UI.ModernUIPack
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                 EditorGUILayout.LabelField(new GUIContent("Font"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                EditorGUILayout.PropertyField(tooltipFontSize, new GUIContent(""), GUILayout.Width(40));
                 EditorGUILayout.PropertyField(tooltipFont, new GUIContent(""));
-
-                GUILayout.EndHorizontal();
-                GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                EditorGUILayout.LabelField(new GUIContent("Font Size"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                EditorGUILayout.PropertyField(tooltipFontSize, new GUIContent(""));
 
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal(EditorStyles.helpBox);

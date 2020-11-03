@@ -836,6 +836,8 @@ MonoBehaviour:
   itemParent: {fileID: 224157277140640190}
   itemObject: {fileID: 1168081051609938, guid: a10f1ce858922584bbbcc45f2e1d1ab1, type: 3}
   scrollbar: {fileID: 1903346109764234}
+  itemList: {fileID: 0}
+  currentListParent: {fileID: 0}
   listParent: {fileID: 0}
   enableIcon: 1
   enableTrigger: 1
@@ -881,6 +883,8 @@ MonoBehaviour:
   isOn: 0
   index: 0
   siblingIndex: 0
+  setItemText: {fileID: 0}
+  setItemImage: {fileID: 0}
 --- !u!114 &114554273632073362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -969,7 +973,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 93fbe37370f09fe4a934819f103333ea, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 

@@ -59,6 +59,8 @@ public class LoadSystem : SystemBase
 
         if (SaveManager.instance.saveData.saveGames[slot].savePlayers == null) return;
         if (SaveManager.instance.saveData.saveGames[slot].saveEnemies == null) return;
+//        if (SaveManager.instance.saveData.saveGames[slot].savePlayers.Count == 0) return;
+   //     if (SaveManager.instance.saveData.saveGames[slot].saveEnemies.Count == 0) return;
 
 
 
@@ -136,19 +138,58 @@ public class LoadNextLevelSystem : SystemBase
 
     protected override void OnUpdate()
     {
+
+        //bool levelLoaded = GetSingleton<LevelCompleteMenuComponent>().levelLoaded;
+        //bool levelSetup = GetSingleton<SceneSwitcherComponent>().saveScene;
+        //if (levelLoaded == true || sceneSaved == true) return;//level loaded set to false when showing end level menu so now can load but only after setup is true
+
+
+        //bool saveScene = SaveLevelManager.instance.saveScene;
+        //if (saveScene == false) return;
+
+        bool saveScene = SaveLevelManager.instance.saveScene;
+        bool loadNextScene = SaveLevelManager.instance.loadNextScene;
+
+        if (loadNextScene == false) return;
+
+
+        SaveLevelManager.instance.saveScene = false;
+        SaveLevelManager.instance.loadNextScene = false;
+
+
+
+
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 
-        bool levelLoaded = GetSingleton<LevelCompleteMenuComponent>().levelLoaded;
-        if(levelLoaded == true) return;
 
-
-        Entities.ForEach((ref ScoreComponent scoreComponent) =>
+        int savedLevelPlayerIndex = 0;
+        Entities.WithoutBurst().WithAll<PlayerComponent>().ForEach((ref ScoreComponent scoreComponent, in Entity e) =>
             {
+                scoreComponent = SaveLevelManager.instance.saveLevelPlayers[savedLevelPlayerIndex].playerLevelData
+                 .savedLevelScores;
+                Debug.Log("load next level " + SaveLevelManager.instance.saveLevelPlayers.Count);
+
+                savedLevelPlayerIndex = savedLevelPlayerIndex + 1;
+            }
+        ).Run();
+
+        savedLevelPlayerIndex = 0;
+        Entities.WithoutBurst().WithAll<PlayerComponent>().ForEach((ref HealthComponent healthComponent, in Entity e) =>
+            {
+                healthComponent = SaveLevelManager.instance.saveLevelPlayers[savedLevelPlayerIndex].playerLevelData
+                 .savedLevelHealth;
+                //Debug.Log("id1  " + savedLevelPlayerIndex);
+
+
+                savedLevelPlayerIndex++;
 
             }
         ).Run();
 
 
+        //var sceneSwitcher = GetSingleton<SceneSwitcherComponent>();
+        var sceneEntity = GetSingletonEntity<SceneSwitcherComponent>();
+        ecb.DestroyEntity(sceneEntity);
 
 
 

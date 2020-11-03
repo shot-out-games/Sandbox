@@ -53,15 +53,16 @@ namespace Michsky.UI.ModernUIPack
 
         void LateUpdate()
         {
-            if (UIManagerAsset != null)
+            if (Application.isEditor == true && UIManagerAsset != null)
             {
                 if (UIManagerAsset.enableDynamicUpdate == true)
+                {
                     dynamicUpdateEnabled = true;
+                    UpdateSelector();
+                }
+
                 else
                     dynamicUpdateEnabled = false;
-
-                if (dynamicUpdateEnabled == true)
-                    UpdateSelector();
             }
         }
 

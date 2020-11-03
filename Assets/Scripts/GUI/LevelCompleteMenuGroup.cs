@@ -15,6 +15,7 @@ public struct LevelCompleteMenuComponent : IComponentData
 {
     public bool hide;
     public bool levelLoaded;
+    //public bool levelLoaded;
     public int levelTargetReachedCounter;
     public int endGameTargetReachedCounter;
 

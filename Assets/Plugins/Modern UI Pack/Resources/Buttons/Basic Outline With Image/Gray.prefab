@@ -429,11 +429,17 @@ MonoBehaviour:
   buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  useCustomContent: 0
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 0}
   normalIcon: {fileID: 114433519159942072}
   highlightedIcon: {fileID: 114419879718996458}
   normalText: {fileID: 114338957780414184}
   highlightedText: {fileID: 114743296973218418}
+  soundSource: {fileID: 0}
+  useCustomContent: 0
+  enableButtonSounds: 0
+  useHoverSound: 1
+  useClickSound: 1
 --- !u!114 &114459007137859578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -489,7 +495,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 2fa2e87466111d248a120d5382f354fc, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 

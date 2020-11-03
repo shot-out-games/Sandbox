@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 public struct SceneSwitcherComponent : IComponentData
 {
     public bool delete;
+    public bool saveScene;
 }
 
 public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
@@ -101,7 +102,7 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     public void OnButtonResetGameClicked()
     {
         LevelManager.instance.ClearGameData();
-        DestroyAllEntitiesInScene();
+        LevelManager.instance.resetLevel = true;
         StartCoroutine(LoadYourAsyncScene(CurrentSceneIndex));
     }
 
@@ -146,9 +147,13 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
         //var entities = entityManager.GetAllEntities();
         //entityManager.DestroyEntity(entities);
         //entities.Dispose();
-        var sceneSwitcher = manager.GetComponentData<SceneSwitcherComponent>(e);
-        sceneSwitcher.delete = true;
-        manager.SetComponentData<SceneSwitcherComponent>(e, sceneSwitcher);
+
+        //var sceneSwitcher = manager.GetComponentData<SceneSwitcherComponent>(e);
+        //sceneSwitcher.delete = true;//no setup scene field first - then delete in system
+        //sceneSwitcher.saveScene = true;
+        //manager.SetComponentData<SceneSwitcherComponent>(e, sceneSwitcher);
+
+        SaveLevelManager.instance.saveScene = true;
 
 
     }
@@ -209,7 +214,7 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
         //TimeUntilNextSwitch = GetSceneDuration(nextScene);
         CurrentSceneIndex = nextIndex;
         StartCoroutine(LoadYourAsyncScene(nextIndex));
-        Debug.Log("load next scene complete");
+        //Debug.Log("load next scene complete");
     }
 
 
@@ -238,35 +243,106 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
 
 
+public class ResetLevelSystem : SystemBase
+{
+    protected override void OnUpdate()
+    {
+
+        if(LevelManager.instance.resetLevel == false) return;
+        LevelManager.instance.resetLevel = false;
+
+        var ecb = new EntityCommandBuffer(Allocator.Temp);
+
+        Entities.ForEach((Entity e) =>
+        {
+            ecb.DestroyEntity(e);
+
+        }).Run();
+
+        ecb.Playback(EntityManager);
+        ecb.Dispose();
+
+    }
+}
+
+
+
+
+
 
 public class SetupNextLevelSystem : SystemBase
 {
+
+
+
+
 
     protected override void OnUpdate()
     {
         if (HasSingleton<SceneSwitcherComponent>() == false) return;
 
-        var sceneSwitcher = GetSingleton<SceneSwitcherComponent>();
-        bool setupNextScene = sceneSwitcher.delete;
-        Debug.Log("has single");
-        if (setupNextScene == false) return;
-        Entity e = GetSingletonEntity<SceneSwitcherComponent>();
-
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 
-        Debug.Log("deleting");
 
-        Entities.WithoutBurst().WithNone<SceneSwitcherComponent>().ForEach((Entity _e) =>
+        //var sceneSwitcher = GetSingleton<SceneSwitcherComponent>();
+        //bool setupNextScene = sceneSwitcher.saveScene;
+        //if (setupNextScene == false) return;
+        bool saveScene = SaveLevelManager.instance.saveScene;
+        if (saveScene == false) return;
+
+        SaveLevelManager.instance.saveScene = false;
+        SaveLevelManager.instance.loadNextScene = true;
+
+        var playerQuery = GetEntityQuery(ComponentType.ReadOnly<PlayerComponent>());
+        NativeArray<Entity> playerEntities = playerQuery.ToEntityArray(Allocator.Temp);
+
+        for (int i = 0; i < playerEntities.Length; i++)
+        {
+            Entity playerEntity = playerEntities[i];
+            var savedPlayer = GetComponent<PlayerComponent>(playerEntity);//required
+            var savedHealth = new HealthComponent();
+            if (HasComponent<HealthComponent>(playerEntity))
+                savedHealth = GetComponent<HealthComponent>(playerEntity);
+            var savedStats = new StatsComponent();
+            if (HasComponent<StatsComponent>(playerEntity))
+                savedStats = GetComponent<StatsComponent>(playerEntity);
+            var savedScores = new ScoreComponent();
+            if (HasComponent<ScoreComponent>(playerEntity))
+                savedScores = GetComponent<ScoreComponent>(playerEntity);
+
+
+            var levelPlayers = new SaveLevelPlayers()
+            {
+                playerLevelData = new PlayerLevelData()
+                {
+                    savedLevelHealth = savedHealth,
+                    savedLevelPlayer = savedPlayer,
+                    savedLevelStats = savedStats,
+                    savedLevelScores = savedScores
+
+
+                }
+            };
+
+            SaveLevelManager.instance.saveLevelPlayers.Add(levelPlayers);
+            Debug.Log("setup level  ");
+
+        }
+
+
+        //Debug.Log("deleting");
+
+        Entities.WithoutBurst().ForEach((Entity _e) =>
         {
             ecb.DestroyEntity(_e);
         }
         ).Run();
 
-        //sceneSwitcher.delete = false;
-
-
+        //Entity e = GetSingletonEntity<SceneSwitcherComponent>();
+        //sceneSwitcher.saveScene = false;
+        //sceneSwitcher.delete = true;
         //ecb.SetComponent<SceneSwitcherComponent>(e, sceneSwitcher);
-        ecb.DestroyEntity(e);
+        //ecb.DestroyEntity(e);
 
 
 

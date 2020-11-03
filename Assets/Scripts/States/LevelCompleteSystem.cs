@@ -99,7 +99,8 @@ public class LevelCompleteSystem : SystemBase
                     LevelCompleteMenuGroup LevelCompleteMenuGroup,
                     ref LevelCompleteMenuComponent LevelCompleteMenuComponent) =>
                 {
-                        LevelCompleteMenuComponent.levelLoaded = false;
+                        LevelCompleteMenuComponent.levelLoaded = false;//need?
+                        SaveLevelManager.instance.levelMenuShown = true;
                         LevelCompleteMenuGroup.ShowMenu(message);
                 }
             ).Run();

@@ -29,6 +29,7 @@ namespace Michsky.UI.ModernUIPack
             else
                 customSkin = (GUISkin)Resources.Load("Editor\\Custom Skin Light");
 
+            GUILayout.Space(-70);
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
 
@@ -46,6 +47,16 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
+            GUILayout.Space(60);
+
+            // Draw toolbar indicators
+            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
+
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            GUILayout.Space(50);
 
             // Draw toolbar tabs as a button
             if (GUILayout.Button(new GUIContent("Content", "Content"), customSkin.FindStyle("Toolbar Items")))
@@ -60,20 +71,12 @@ namespace Michsky.UI.ModernUIPack
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
 
-            GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-
-            // Draw toolbar indicators
-            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
-
-            GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
-
             // Property variables
             var icon = serializedObject.FindProperty("icon");
             var title = serializedObject.FindProperty("title");
             var description = serializedObject.FindProperty("description");
 
+            var notificationAnimator = serializedObject.FindProperty("notificationAnimator");
             var iconObj = serializedObject.FindProperty("iconObj");
             var titleObj = serializedObject.FindProperty("titleObj");
             var descriptionObj = serializedObject.FindProperty("descriptionObj");
@@ -82,13 +85,15 @@ namespace Michsky.UI.ModernUIPack
             var timer = serializedObject.FindProperty("timer");
             var notificationStyle = serializedObject.FindProperty("notificationStyle");
             var useCustomContent = serializedObject.FindProperty("useCustomContent");
+            var useStacking = serializedObject.FindProperty("useStacking");
 
             // Draw content depending on tab index
             switch (currentTab)
             {
                 case 0:
+                    GUILayout.Space(20);
                     GUILayout.Label("CONTENT", customSkin.FindStyle("Header"));
-
+                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Icon"), customSkin.FindStyle("Text"), GUILayout.Width(120));
@@ -153,7 +158,15 @@ namespace Michsky.UI.ModernUIPack
                     break;
 
                 case 1:
+                    GUILayout.Space(20);
                     GUILayout.Label("RESOURCES", customSkin.FindStyle("Header"));
+                    GUILayout.Space(2);
+                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                    EditorGUILayout.LabelField(new GUIContent("Animator"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                    EditorGUILayout.PropertyField(notificationAnimator, new GUIContent(""));
+
+                    GUILayout.EndHorizontal();
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Icon Object"), customSkin.FindStyle("Text"), GUILayout.Width(120));
@@ -172,11 +185,25 @@ namespace Michsky.UI.ModernUIPack
                     EditorGUILayout.PropertyField(descriptionObj, new GUIContent(""));
 
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(6);
+                    GUILayout.Space(4);
                     break;
 
                 case 2:
+                    GUILayout.Space(20);
                     GUILayout.Label("SETTINGS", customSkin.FindStyle("Header"));
+                    GUILayout.Space(2);
+                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                    useCustomContent.boolValue = GUILayout.Toggle(useCustomContent.boolValue, new GUIContent("Use Custom Content"), customSkin.FindStyle("Toggle"));
+                    useCustomContent.boolValue = GUILayout.Toggle(useCustomContent.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
+
+                    GUILayout.EndHorizontal();
+                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                    useStacking.boolValue = GUILayout.Toggle(useStacking.boolValue, new GUIContent("Use Stacking"), customSkin.FindStyle("Toggle"));
+                    useStacking.boolValue = GUILayout.Toggle(useStacking.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
+
+                    GUILayout.EndHorizontal();
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     enableTimer.boolValue = GUILayout.Toggle(enableTimer.boolValue, new GUIContent("Enable Timer"), customSkin.FindStyle("Toggle"));
@@ -196,17 +223,11 @@ namespace Michsky.UI.ModernUIPack
 
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
-                    EditorGUILayout.LabelField(new GUIContent("Use Custom Content"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                    EditorGUILayout.PropertyField(useCustomContent, new GUIContent(""));
-
-                    GUILayout.EndHorizontal();
-                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
                     EditorGUILayout.LabelField(new GUIContent("Notification Style"), customSkin.FindStyle("Text"), GUILayout.Width(120));
                     EditorGUILayout.PropertyField(notificationStyle, new GUIContent(""));
 
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(6);
+                    GUILayout.Space(4);
                     break;
             }
 
