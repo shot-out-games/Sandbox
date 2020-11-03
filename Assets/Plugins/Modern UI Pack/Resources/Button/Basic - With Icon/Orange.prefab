@@ -222,15 +222,9 @@ MonoBehaviour:
   buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
   normalImage: {fileID: 114151814858260712}
   normalText: {fileID: 114226352653717310}
-  soundSource: {fileID: 0}
   useCustomContent: 0
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
 --- !u!114 &114353261935195214
 MonoBehaviour:
   m_ObjectHideFlags: 0

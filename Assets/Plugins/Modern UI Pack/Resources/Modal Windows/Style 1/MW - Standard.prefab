@@ -1237,17 +1237,11 @@ MonoBehaviour:
   buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
+  useCustomContent: 0
   normalIcon: {fileID: 114812086506099354}
   highlightedIcon: {fileID: 114435760658226222}
   normalText: {fileID: 114898826336506840}
   highlightedText: {fileID: 114799832416714900}
-  soundSource: {fileID: 0}
-  useCustomContent: 0
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
 --- !u!114 &114318347353299932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1416,17 +1410,11 @@ MonoBehaviour:
   buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
+  useCustomContent: 0
   normalIcon: {fileID: 114795408583737330}
   highlightedIcon: {fileID: 114026648422823080}
   normalText: {fileID: 114209927334899942}
   highlightedText: {fileID: 114402342926101934}
-  soundSource: {fileID: 0}
-  useCustomContent: 0
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
 --- !u!114 &114281775808056484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1804,7 +1792,6 @@ MonoBehaviour:
   windowDescription: {fileID: 114110444556539240}
   confirmButton: {fileID: 114318347353299932}
   cancelButton: {fileID: 114281775808056484}
-  mwAnimator: {fileID: 95882339440285188}
   icon: {fileID: 21300000, guid: 9df0f4d8c02014347ad2d7de427e0ced, type: 3}
   titleText: STYLE 1
   descriptionText: 'Size of this window will change based on the size of its content.
@@ -1870,7 +1857,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 210f0314d76a2d5468eaa5985d803332, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 2
+  m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 

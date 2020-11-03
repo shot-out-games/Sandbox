@@ -413,8 +413,6 @@ MonoBehaviour:
   switchTag: Switch
   isOn: 0
   invokeAtStart: 0
-  switchAnimator: {fileID: 0}
-  switchButton: {fileID: 0}
 --- !u!114 &114062028496548062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,7 +485,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 6bb62cb4c18d9d64db0b1e04206d84de, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 2
+  m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 

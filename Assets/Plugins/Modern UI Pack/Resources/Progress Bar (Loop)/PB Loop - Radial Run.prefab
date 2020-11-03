@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 224675168710038502}
   - component: {fileID: 222448827015076552}
-  - component: {fileID: 114894162228693500}
   - component: {fileID: 95174338196602790}
+  - component: {fileID: 114894162228693500}
   m_Layer: 5
   m_Name: PB Loop - Radial Run
   m_TagString: Untagged
@@ -48,6 +48,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1269463891859804}
   m_CullTransparentMesh: 0
+--- !u!95 &95174338196602790
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269463891859804}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 94d0c59cb52bbde41b206759a8dbc4be, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114894162228693500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,25 +84,6 @@ MonoBehaviour:
   useRegularBackground: 0
   bar: {fileID: 114404230987006240}
   background: {fileID: 114384973275695492}
---- !u!95 &95174338196602790
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269463891859804}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 94d0c59cb52bbde41b206759a8dbc4be, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 2
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1646604312133862
 GameObject:
   m_ObjectHideFlags: 0

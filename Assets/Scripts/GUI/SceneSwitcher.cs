@@ -1,8 +1,16 @@
 ﻿using System;
 using System.Collections;
+using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+
+
+public struct SceneSwitcherComponent : IComponentData
+{
+    public bool delete;
+}
 
 public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 {
@@ -19,8 +27,20 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     private bool sceneLoaded;
 
+    void Start()
+    {
+        Debug.Log("scene start ");
+
+    }
+
     void Awake()
     {
+        Debug.Log("scene awake ");
+        //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+
+        //entityManager.AddComponentData(e, new SceneSwitcherComponent());
+
+
         // gets the curent screen
         CurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         Debug.Log("index " + CurrentSceneIndex);
@@ -68,6 +88,11 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log("level loaded");
+        //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        //var sceneSwitcher = entityManager.GetComponentData<SceneSwitcherComponent>(e);
+        //sceneSwitcher.delete = false;
+        //manager.SetComponentData<SceneSwitcherComponent>(e, sceneSwitcher);
 
     }
 
@@ -117,10 +142,15 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     private void DestroyAllEntitiesInScene()
     {
 
-        var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        var entities = entityManager.GetAllEntities();
-        entityManager.DestroyEntity(entities);
-        entities.Dispose();
+        //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        //var entities = entityManager.GetAllEntities();
+        //entityManager.DestroyEntity(entities);
+        //entities.Dispose();
+        var sceneSwitcher = manager.GetComponentData<SceneSwitcherComponent>(e);
+        sceneSwitcher.delete = true;
+        manager.SetComponentData<SceneSwitcherComponent>(e, sceneSwitcher);
+
+
     }
 
 
@@ -194,13 +224,59 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     {
         e = entity;
         manager = dstManager;
+        Debug.Log("add scene switcher component " + e);
         if (CurrentSceneIndex == 2)
         {
             sceneLoaded = true;
             manager.AddComponentData(e, new LoadComponent { e = entity, part1 = false, part2 = false });
         }
 
+        manager.AddComponentData(e, new SceneSwitcherComponent());
 
     }
+}
+
+
+
+
+public class SetupNextLevelSystem : SystemBase
+{
+
+    protected override void OnUpdate()
+    {
+        if (HasSingleton<SceneSwitcherComponent>() == false) return;
+
+        var sceneSwitcher = GetSingleton<SceneSwitcherComponent>();
+        bool setupNextScene = sceneSwitcher.delete;
+        Debug.Log("has single");
+        if (setupNextScene == false) return;
+        Entity e = GetSingletonEntity<SceneSwitcherComponent>();
+
+        var ecb = new EntityCommandBuffer(Allocator.Temp);
+
+        Debug.Log("deleting");
+
+        Entities.WithoutBurst().WithNone<SceneSwitcherComponent>().ForEach((Entity _e) =>
+        {
+            ecb.DestroyEntity(_e);
+        }
+        ).Run();
+
+        //sceneSwitcher.delete = false;
+
+
+        //ecb.SetComponent<SceneSwitcherComponent>(e, sceneSwitcher);
+        ecb.DestroyEntity(e);
+
+
+
+        ecb.Playback(EntityManager);
+        ecb.Dispose();
+
+
+
+
+    }
+
 }
 

@@ -30,7 +30,6 @@ namespace Michsky.UI.ModernUIPack
             else
                 customSkin = (GUISkin)Resources.Load("Editor\\Custom Skin Light");
 
-            GUILayout.Space(-70);
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
 
@@ -49,15 +48,6 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            GUILayout.Space(60);
-
-            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
-
-            GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            GUILayout.Space(50);
 
             // Draw toolbar tabs as a button
             if (GUILayout.Button(new GUIContent("Content", "Content"), customSkin.FindStyle("Toolbar Items")))
@@ -71,6 +61,15 @@ namespace Michsky.UI.ModernUIPack
 
             if (GUILayout.Button(new GUIContent("Settings", "Settings"), customSkin.FindStyle("Toolbar Settings")))
                 currentTab = 3;
+
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+
+            // Draw toolbar indicators
+            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
 
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
@@ -96,9 +95,8 @@ namespace Michsky.UI.ModernUIPack
             switch (currentTab)
             {
                 case 0:
-                    GUILayout.Space(20);
                     GUILayout.Label("CONTENT", customSkin.FindStyle("Header"));
-                    GUILayout.Space(2);
+
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Current Value"), customSkin.FindStyle("Text"), GUILayout.Width(120));
@@ -127,34 +125,33 @@ namespace Michsky.UI.ModernUIPack
                     break;
 
                 case 1:
-                    GUILayout.Space(20);
                     GUILayout.Label("RESOURCES", customSkin.FindStyle("Header"));
-                    GUILayout.Space(2);
+
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Slider Image"), customSkin.FindStyle("Text"), GUILayout.Width(120));
                     EditorGUILayout.PropertyField(sliderImage, new GUIContent(""));
 
                     GUILayout.EndHorizontal();
+
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Indicator Pivot"), customSkin.FindStyle("Text"), GUILayout.Width(120));
                     EditorGUILayout.PropertyField(indicatorPivot, new GUIContent(""));
 
                     GUILayout.EndHorizontal();
+
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Indicator Text"), customSkin.FindStyle("Text"), GUILayout.Width(120));
                     EditorGUILayout.PropertyField(valueText, new GUIContent(""));
 
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(4);
+                    GUILayout.Space(6);
                     break;
 
                 case 2:
-                    GUILayout.Space(20);
                     GUILayout.Label("SAVING", customSkin.FindStyle("Header"));
-                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     rememberValue.boolValue = GUILayout.Toggle(rememberValue.boolValue, new GUIContent("Save Value"), customSkin.FindStyle("Toggle"));
@@ -176,13 +173,12 @@ namespace Michsky.UI.ModernUIPack
                         EditorGUILayout.HelpBox("Each slider should has its own unique tag.", MessageType.Info);
                     }
 
-                    GUILayout.Space(4);
+                    GUILayout.Space(6);
                     break;
 
                 case 3:
-                    GUILayout.Space(20);
                     GUILayout.Label("SETTINGS", customSkin.FindStyle("Header"));
-                    GUILayout.Space(2);
+
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Max Value"), customSkin.FindStyle("Text"), GUILayout.Width(120));
@@ -203,7 +199,7 @@ namespace Michsky.UI.ModernUIPack
                     isPercent.boolValue = GUILayout.Toggle(isPercent.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
 
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(4);
+                    GUILayout.Space(6);
                     break;
             }
 

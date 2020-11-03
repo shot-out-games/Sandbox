@@ -8,20 +8,18 @@ using TMPro;
 
 namespace Michsky.UI.ModernUIPack
 {
-    public class CustomDropdown : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IPointerClickHandler
+    public class CustomDropdown : MonoBehaviour, IPointerExitHandler
     {
         // Resources
-        public Animator dropdownAnimator;
         public GameObject triggerObject;
         public TextMeshProUGUI selectedText;
         public Image selectedImage;
         public Transform itemParent;
         public GameObject itemObject;
         public GameObject scrollbar;
-        public VerticalLayoutGroup itemList;
-        [HideInInspector] public Transform currentListParent;
+        private VerticalLayoutGroup itemList;
+        private Transform currentListParent;
         public Transform listParent;
-        public AudioSource soundSource;
 
         // Settings
         public bool enableIcon = true;
@@ -33,9 +31,6 @@ namespace Michsky.UI.ModernUIPack
         public bool invokeAtStart = false;
         public AnimationType animationType;
         public int selectedItemIndex = 0;
-        public bool enableDropdownSounds = false;
-        public bool useHoverSound = true;
-        public bool useClickSound = true;
 
         // Saving
         public bool saveSelected = false;
@@ -48,18 +43,17 @@ namespace Michsky.UI.ModernUIPack
         public class DropdownEvent : UnityEvent<int> { }
         [Space(8)] public DropdownEvent dropdownEvent;
 
-        // Audio
-        public AudioClip hoverSound;
-        public AudioClip clickSound;
-
         // Hidden variables
+        [HideInInspector] public Animator dropdownAnimator;
         [HideInInspector] public bool isOn;
         [HideInInspector] public int index = 0;
         [HideInInspector] public int siblingIndex = 0;
-        [HideInInspector] public TextMeshProUGUI setItemText;
-        [HideInInspector] public Image setItemImage;
+        TextMeshProUGUI setItemText;
+        Image setItemImage;
         Sprite imageHelper;
         string textHelper;
+        string newItemTitle;
+        Sprite newItemIcon;
 
         public enum AnimationType
         {
@@ -82,10 +76,7 @@ namespace Michsky.UI.ModernUIPack
             {
                 dropdownAnimator = gameObject.GetComponent<Animator>();
                 itemList = itemParent.GetComponent<VerticalLayoutGroup>();
-
-                if (dropdownItems.Count != 0)
-                    SetupDropdown();
-
+                SetupDropdown();
                 currentListParent = transform.parent;
             }
 
@@ -165,9 +156,6 @@ namespace Michsky.UI.ModernUIPack
 
             if (selectedText != null)
                 selectedText.text = dropdownItems[itemIndex].itemName;
-
-            if (enableDropdownSounds == true && useClickSound == true)
-                soundSource.PlayOneShot(clickSound);
 
             selectedItemIndex = itemIndex;
         }
@@ -294,25 +282,23 @@ namespace Michsky.UI.ModernUIPack
                 selectedImage.gameObject.SetActive(true);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (enableDropdownSounds == true && useClickSound == true)
-                soundSource.PlayOneShot(clickSound);
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            if (enableDropdownSounds == true && useHoverSound == true)
-                soundSource.PlayOneShot(hoverSound);
-        }
-
-        public void CreateNewItem(string title, Sprite icon)
+        public void CreateNewItem()
         {
             Item item = new Item();
-            item.itemName = title;
-            item.itemIcon = icon;
+            item.itemName = newItemTitle;
+            item.itemIcon = newItemIcon;
             dropdownItems.Add(item);
             SetupDropdown();
+        }
+
+        public void SetItemTitle(string title)
+        {
+            newItemTitle = title;
+        }
+
+        public void SetItemIcon(Sprite icon)
+        {
+            newItemIcon = icon;
         }
 
         public void AddNewItem()

@@ -76,6 +76,18 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
     //    manager.SetComponentData(playerEntity, new Translation { Value = transform.position });
     //}
 
+    void Awake()
+    {
+        Debug.Log("player awake ");
+
+    }
+
+    void Start()
+    {
+        Debug.Log("player start ");
+
+    }
+
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
@@ -154,6 +166,9 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
         );
 
         dstManager.AddComponentData(entity, new CheckedComponent());
+
+
+        Debug.Log("player convert ");
 
 
 
