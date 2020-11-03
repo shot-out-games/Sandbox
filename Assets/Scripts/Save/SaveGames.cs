@@ -19,7 +19,12 @@ public class SaveGames
 
     public SaveGames()
     {
-
+        savePlayers.Add(new SavePlayers());
+        //savePlayers.Add(new SavePlayers());
+        //savePlayers.Add(new SavePlayers());
+        saveEnemies.Add(new SaveEnemies());
+        //saveEnemies.Add(new SaveEnemies());
+        //saveEnemies.Add(new SaveEnemies());
     }
 
 }

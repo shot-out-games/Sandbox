@@ -59,8 +59,8 @@ public class LoadSystem : SystemBase
 
         if (SaveManager.instance.saveData.saveGames[slot].savePlayers == null) return;
         if (SaveManager.instance.saveData.saveGames[slot].saveEnemies == null) return;
-//        if (SaveManager.instance.saveData.saveGames[slot].savePlayers.Count == 0) return;
-   //     if (SaveManager.instance.saveData.saveGames[slot].saveEnemies.Count == 0) return;
+        if (SaveManager.instance.saveData.saveGames[slot].savePlayers.Count == 0) return;
+        if (SaveManager.instance.saveData.saveGames[slot].saveEnemies.Count == 0) return;
 
 
 
