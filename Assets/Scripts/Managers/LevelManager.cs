@@ -56,7 +56,7 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
     void Awake()
     {
 
-    currentLevelCompleted = 0;
+        currentLevelCompleted = 0;
         //Check if there is already an instance of SoundManager
         if (instance == null)
             //if not, set it to this.
@@ -70,11 +70,15 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
         DontDestroyOnLoad(gameObject);
     }
 
-    public void ClearGameData()
+    public void ClearGameData(bool resetLevel)
     {
         endGame = false;
         gameResult = GameResult.None;
-        //currentLevelCompleted = 0;
+
+        if (resetLevel == true)
+        {
+            currentLevelCompleted = 0;
+        }
         playersDead = 0;
         enemiesDead = 0;
         NpcDead = 0;

@@ -95,7 +95,8 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     public void OnButtonResetGameClicked()
     {
-        LevelManager.instance.ClearGameData();
+        bool resetLevel = SaveManager.instance.saveWorld.isSlotSaved[1] == false;
+        LevelManager.instance.ClearGameData(resetLevel);
         LevelManager.instance.resetLevel = true;
         StartCoroutine(LoadYourAsyncScene(CurrentSceneIndex));
     }
@@ -116,8 +117,8 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     public void OnButtonSaveAndExitClicked()//called from game pause menu and end game menu - if new project will need to be added to those possibly
     {
-       
-        LevelManager.instance.ClearGameData();
+        bool resetLevel = SaveManager.instance.saveWorld.isSlotSaved[1] == false;
+        LevelManager.instance.ClearGameData(resetLevel);
         SaveManager.instance.saveMainGame = true;
         SaveManager.instance.SaveWorldSettings();
         SaveManager.instance.SaveGameData();
@@ -130,7 +131,8 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     public void OnButtonExitClicked()//called from game pause menu and end game menu - if new project will need to be added to those possibly
     {
-        LevelManager.instance.ClearGameData();
+        bool resetLevel = SaveManager.instance.saveWorld.isSlotSaved[1] == false;
+        LevelManager.instance.ClearGameData(resetLevel);
         LevelManager.instance.resetLevel = true;
         StartCoroutine(LoadYourAsyncScene(1));
     }
@@ -195,6 +197,7 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     public void LoadNextScene()
     {
         Debug.Log("load next");
+        CurrentSceneIndex = LevelManager.instance.currentLevelCompleted + 2;
         var sceneCount = SceneManager.sceneCountInBuildSettings;
         var nextIndex = CurrentSceneIndex + 1;
         if (nextIndex >= sceneCount)
