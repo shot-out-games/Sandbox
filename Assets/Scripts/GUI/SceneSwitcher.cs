@@ -185,7 +185,7 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     }
 
-    private void SetupAndLoadNextScene()
+    public void SetupAndLoadNextScene()
     {
         SaveLevelManager.instance.saveScene = true;
         LoadNextScene();
@@ -244,6 +244,8 @@ public class ResetLevelSystem : SystemBase
 
         if(LevelManager.instance.resetLevel == false) return;
         LevelManager.instance.resetLevel = false;
+
+        Debug.Log("reset level");
 
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 
@@ -324,7 +326,7 @@ public class SetupNextLevelSystem : SystemBase
         }
 
 
-        //Debug.Log("deleting");
+        Debug.Log("deleting");
 
         Entities.WithoutBurst().ForEach((Entity _e) =>
         {

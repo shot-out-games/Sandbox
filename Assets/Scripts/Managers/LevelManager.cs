@@ -74,7 +74,7 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
     {
         endGame = false;
         gameResult = GameResult.None;
-        currentLevelCompleted = 0;
+        //currentLevelCompleted = 0;
         playersDead = 0;
         enemiesDead = 0;
         NpcDead = 0;

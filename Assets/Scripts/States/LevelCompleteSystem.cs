@@ -106,6 +106,7 @@ public class LevelCompleteSystem : SystemBase
             ).Run();
 
             LevelManager.instance.currentLevelCompleted += 1;
+            Debug.Log("level complete " + LevelManager.instance.currentLevelCompleted);
 
 
 

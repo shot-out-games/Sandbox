@@ -1045,21 +1045,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: Exit
-  clickEvent:
+  buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  hoverEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
   normalText: {fileID: 148874318}
   highlightedText: {fileID: 0}
-  soundSource: {fileID: 0}
   useCustomContent: 1
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
 --- !u!222 &179122740
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1218,21 +1209,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: Delete
-  clickEvent:
+  buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  hoverEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
   normalText: {fileID: 21501247}
   highlightedText: {fileID: 1078047237}
-  soundSource: {fileID: 0}
   useCustomContent: 0
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
 --- !u!222 &184590874
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2406,8 +2388,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1434165424}
   m_HandleRect: {fileID: 1434165423}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.8754256
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3148,21 +3130,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: Start
-  clickEvent:
+  buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  hoverEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
   normalText: {fileID: 916586056}
   highlightedText: {fileID: 1009744865}
-  soundSource: {fileID: 0}
   useCustomContent: 0
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
 --- !u!222 &584566292
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3447,21 +3420,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: Instructions
-  clickEvent:
+  buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  hoverEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
   normalText: {fileID: 1974475791}
   highlightedText: {fileID: 1047262875}
-  soundSource: {fileID: 0}
   useCustomContent: 0
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
 --- !u!222 &599125380
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3650,21 +3614,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: Exit
-  clickEvent:
+  buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  hoverEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
   normalText: {fileID: 897480071}
   highlightedText: {fileID: 423243819}
-  soundSource: {fileID: 0}
   useCustomContent: 0
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
 --- !u!222 &623091072
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4621,21 +4576,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: Options
-  clickEvent:
+  buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  hoverEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
   normalText: {fileID: 2084684503}
   highlightedText: {fileID: 1197741204}
-  soundSource: {fileID: 0}
   useCustomContent: 0
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
 --- !u!222 &839452928
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6328,7 +6274,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 97.9
+  m_fontSize: 81.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -6549,21 +6495,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: Play
-  clickEvent:
+  buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  hoverEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
   normalText: {fileID: 485877375}
   highlightedText: {fileID: 1766120278}
-  soundSource: {fileID: 0}
   useCustomContent: 0
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
 --- !u!222 &1146058923
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7104,7 +7041,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 97.9
+  m_fontSize: 81.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9079,33 +9016,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: New Game
-  clickEvent:
+  buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  hoverEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7128647238940719420}
-        m_TargetAssemblyTypeName: LoadMenuGroup, Assembly-CSharp
-        m_MethodName: UpdateButtons
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
   normalText: {fileID: 1807006910}
   highlightedText: {fileID: 701620171}
-  soundSource: {fileID: 0}
   useCustomContent: 0
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
 --- !u!222 &1797289342
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9473,21 +9389,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: Exit
-  clickEvent:
+  buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  hoverEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
   normalText: {fileID: 1134407533}
   highlightedText: {fileID: 1281895368}
-  soundSource: {fileID: 0}
   useCustomContent: 0
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
 --- !u!222 &1848250068
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10744,6 +10651,7 @@ MonoBehaviour:
     lastLoadedSlot: 0
     isSlotSaved: 00000000
   updateScore: 0
+  saveMainGame: 0
 --- !u!4 &793173385536291049
 Transform:
   m_ObjectHideFlags: 0
@@ -10765,6 +10673,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6265239057108782675, guid: e005c907876cd5e449e043d236d1c3cb,
+        type: 3}
+      propertyPath: maxLevels
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7615472913726301467, guid: e005c907876cd5e449e043d236d1c3cb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11979,8 +11892,6 @@ MonoBehaviour:
   sliderEvent:
     m_PersistentCalls:
       m_Calls: []
-  sliderAnimator: {fileID: 0}
-  saveValue: 0
 --- !u!224 &7773029549212691043
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13170,8 +13081,6 @@ MonoBehaviour:
   sliderEvent:
     m_PersistentCalls:
       m_Calls: []
-  sliderAnimator: {fileID: 0}
-  saveValue: 0
 --- !u!224 &7773029549972164211
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13658,21 +13567,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: Exit
-  clickEvent:
+  buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  hoverEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
   normalText: {fileID: 7773029550468963452}
   highlightedText: {fileID: 7773029549325061329}
-  soundSource: {fileID: 0}
   useCustomContent: 1
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
 --- !u!222 &7773029550351308194
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14140,21 +14040,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonText: Settings
-  clickEvent:
+  buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  hoverEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
   normalText: {fileID: 7773029550980637662}
   highlightedText: {fileID: 7773029550230943655}
-  soundSource: {fileID: 0}
   useCustomContent: 0
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
 --- !u!114 &7773029550474843966
 MonoBehaviour:
   m_ObjectHideFlags: 0
