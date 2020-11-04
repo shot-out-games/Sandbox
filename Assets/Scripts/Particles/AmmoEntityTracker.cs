@@ -82,7 +82,7 @@ public class AmmoEntityTracker : MonoBehaviour, IConvertGameObjectToEntity
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        Debug.Log("convert aet ");
+        //Debug.Log("convert aet ");
         manager = dstManager;
         ammoEntity = entity;
         manager.AddComponentData<AmmoComponent>(ammoEntity,

@@ -48,7 +48,7 @@ public class ScoreSystem : SystemBase
                         }
                         fling.lastShotConnected = true;
                         flingGroup[e] = fling;
-                        Debug.Log("combo " + score.combo);
+                        //Debug.Log("combo " + score.combo);
 
                     }
 
@@ -62,7 +62,7 @@ public class ScoreSystem : SystemBase
                     float streakBonus = math.pow(score.streak * defaultScore, 2) / 100;
 
                     float comboBonus = math.pow(score.combo * defaultScore, 2) / 100;
-                    Debug.Log("combo Bonus " + comboBonus);
+                    //Debug.Log("combo Bonus " + comboBonus);
 
                     score.score = score.score + score.defaultPointsScored + (int)timeBonus + (int)streakBonus + (int)comboBonus;
 
@@ -95,7 +95,7 @@ public class ScoreSystem : SystemBase
             SaveManager.instance.updateScore = false;
             int slot = SaveManager.instance.saveWorld.lastLoadedSlot - 1;
             List<float> scores = SaveManager.instance.saveData.saveGames[slot].scoreList;
-            Debug.Log("cs " + currentScore);
+            //Debug.Log("cs " + currentScore);
             if (updateScoreForMenu == false)
             {
                 scores.Add(currentScore);

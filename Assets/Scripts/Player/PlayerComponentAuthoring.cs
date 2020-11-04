@@ -78,13 +78,13 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
 
     void Awake()
     {
-        Debug.Log("player awake ");
+        //Debug.Log("player awake ");
 
     }
 
     void Start()
     {
-        Debug.Log("player start ");
+        //Debug.Log("player start ");
 
     }
 
@@ -168,7 +168,7 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
         dstManager.AddComponentData(entity, new CheckedComponent());
 
 
-        Debug.Log("player convert ");
+        //Debug.Log("player convert ");
 
 
 

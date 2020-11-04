@@ -101,11 +101,11 @@ public class CharacterEffectsSystem : SystemBase
                         if (effects.actorHurtEffectInstance)
                         {
                             effects.actorHurtEffectInstance.Play(true);
-                            Debug.Log("hurt effect");
+                            //Debug.Log("hurt effect");
                         }
                         if (effects.actorHurtAudioClip)
                         {
-                            Debug.Log("sound");
+                            //Debug.Log("sound");
                             audioSource.clip = effects.actorHurtAudioClip;
                             audioSource.Play();
                         }

@@ -9,13 +9,13 @@ namespace Michsky.UI.ModernUIPack
     public class SwitchManagerEditor : Editor
     {
         // Variables
+        // private SwitchManager switchTarget;
         private int currentTab;
-        private SwitchManager switchTarget;
 
         private void OnEnable()
         {
             // Set target
-            switchTarget = (SwitchManager)target;
+            // switchTarget = (SwitchManager)target;
         }
 
         public override void OnInspectorGUI()
@@ -29,7 +29,6 @@ namespace Michsky.UI.ModernUIPack
             else
                 customSkin = (GUISkin)Resources.Load("Editor\\Custom Skin Light");
 
-            GUILayout.Space(-70);
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
 
@@ -47,15 +46,6 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            GUILayout.Space(60);
-
-            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
-
-            GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            GUILayout.Space(50);
 
             // Draw toolbar tabs as a button
             if (GUILayout.Button(new GUIContent("Events", "Events"), customSkin.FindStyle("Toolbar Items")))
@@ -70,64 +60,40 @@ namespace Michsky.UI.ModernUIPack
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
 
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+
+            // Draw toolbar indicators
+            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
+
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
             // Property variables
             var OnEvents = serializedObject.FindProperty("OnEvents");
             var OffEvents = serializedObject.FindProperty("OffEvents");
+
             var saveValue = serializedObject.FindProperty("saveValue");
             var switchTag = serializedObject.FindProperty("switchTag");
+
             var invokeAtStart = serializedObject.FindProperty("invokeAtStart");
             var isOn = serializedObject.FindProperty("isOn");
-            var enableSwitchSounds = serializedObject.FindProperty("enableSwitchSounds");
-            var useHoverSound = serializedObject.FindProperty("useHoverSound");
-            var useClickSound = serializedObject.FindProperty("useClickSound");
-            var soundSource = serializedObject.FindProperty("soundSource");
-            var hoverSound = serializedObject.FindProperty("hoverSound");
-            var clickSound = serializedObject.FindProperty("clickSound");
 
             // Draw content depending on tab index
             switch (currentTab)
             {
                 case 0:
-                    GUILayout.Space(20);
                     GUILayout.Label("EVENTS", customSkin.FindStyle("Header"));
                     GUILayout.Space(2);
 
                     EditorGUILayout.PropertyField(OnEvents, new GUIContent("On Events"), true);
                     EditorGUILayout.PropertyField(OffEvents, new GUIContent("Off Events"), true);
 
-                    if (enableSwitchSounds.boolValue == true)
-                    {
-                        GUILayout.Space(18);
-                        GUILayout.Label("SOUNDS", customSkin.FindStyle("Header"));
-
-                        if (enableSwitchSounds.boolValue == true && useHoverSound.boolValue == true)
-                        {
-                            GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                            EditorGUILayout.LabelField(new GUIContent("Hover Sound"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                            EditorGUILayout.PropertyField(hoverSound, new GUIContent(""));
-
-                            GUILayout.EndHorizontal();
-                        }
-
-                        if (enableSwitchSounds.boolValue == true && useClickSound.boolValue == true)
-                        {
-                            GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                            EditorGUILayout.LabelField(new GUIContent("Click Sound"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                            EditorGUILayout.PropertyField(clickSound, new GUIContent(""));
-
-                            GUILayout.EndHorizontal();
-                        }
-                    }
-
                     GUILayout.Space(4);
                     break;
 
                 case 1:
-                    GUILayout.Space(20);
                     GUILayout.Label("SAVING", customSkin.FindStyle("Header"));
-                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     saveValue.boolValue = GUILayout.Toggle(saveValue.boolValue, new GUIContent("Save Value"), customSkin.FindStyle("Toggle"));
@@ -149,13 +115,12 @@ namespace Michsky.UI.ModernUIPack
                         EditorGUILayout.HelpBox("Each switch should has its own unique tag.", MessageType.Info);
                     }
 
-                    GUILayout.Space(4);
+                    GUILayout.Space(6);
                     break;
 
                 case 2:
-                    GUILayout.Space(20);
                     GUILayout.Label("SETTINGS", customSkin.FindStyle("Header"));
-                    GUILayout.Space(2);
+
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     invokeAtStart.boolValue = GUILayout.Toggle(invokeAtStart.boolValue, new GUIContent("Invoke At Start"), customSkin.FindStyle("Toggle"));
@@ -170,49 +135,12 @@ namespace Michsky.UI.ModernUIPack
                     GUILayout.EndHorizontal();
 
                     if (saveValue.boolValue == true)
-                        EditorGUILayout.HelpBox("Save Value is enabled. This option won't be used if there's a stored value.", MessageType.Info);
-
-                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                    enableSwitchSounds.boolValue = GUILayout.Toggle(enableSwitchSounds.boolValue, new GUIContent("Enable Dropdown Sounds"), customSkin.FindStyle("Toggle"));
-                    enableSwitchSounds.boolValue = GUILayout.Toggle(enableSwitchSounds.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
-
-                    GUILayout.EndHorizontal();
-
-                    if (enableSwitchSounds.boolValue == true)
                     {
-                        GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                        useHoverSound.boolValue = GUILayout.Toggle(useHoverSound.boolValue, new GUIContent("Enable Hover Sound"), customSkin.FindStyle("Toggle"));
-                        useHoverSound.boolValue = GUILayout.Toggle(useHoverSound.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
-
-                        GUILayout.EndHorizontal();
-                        GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                        useClickSound.boolValue = GUILayout.Toggle(useClickSound.boolValue, new GUIContent("Enable Click Sound"), customSkin.FindStyle("Toggle"));
-                        useClickSound.boolValue = GUILayout.Toggle(useClickSound.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
-
-                        GUILayout.EndHorizontal();
-                        GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                        EditorGUILayout.LabelField(new GUIContent("Sound Source"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                        EditorGUILayout.PropertyField(soundSource, new GUIContent(""));
-
-                        GUILayout.EndHorizontal();
-
-                        if (switchTarget.soundSource == null)
-                        {
-                            EditorGUILayout.HelpBox("'Sound Source' is not assigned. Go to Resources tab or click the button to create a new audio source.", MessageType.Info);
-
-                            if (GUILayout.Button("+ Create a new one", customSkin.button))
-                            {
-                                switchTarget.soundSource = switchTarget.gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
-                                currentTab = 2;
-                            }
-                        }
+                        GUILayout.Space(2);
+                        EditorGUILayout.HelpBox("Save Value is enabled. This option won't be used if there's a stored value.", MessageType.Info);
                     }
 
-                    GUILayout.Space(4);
+                    GUILayout.Space(6);
                     break;
             }
 

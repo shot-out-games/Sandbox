@@ -38,14 +38,9 @@ namespace Michsky.UI.ModernUIPack
 
         void Start()
         {
-            try
-            {
-                currentButton = windows[currentWindowIndex].buttonObject;
-                currentButtonAnimator = currentButton.GetComponent<Animator>();
-                currentButtonAnimator.Play(buttonFadeIn);
-            }
-
-            catch { }
+            currentButton = windows[currentWindowIndex].buttonObject;
+            currentButtonAnimator = currentButton.GetComponent<Animator>();
+            currentButtonAnimator.Play(buttonFadeIn);
 
             currentWindow = windows[currentWindowIndex].windowObject;
             currentWindowAnimator = currentWindow.GetComponent<Animator>();
@@ -60,14 +55,9 @@ namespace Michsky.UI.ModernUIPack
                 currentWindowAnimator = currentWindow.GetComponent<Animator>();
                 currentWindowAnimator.Play(windowFadeOut);
 
-                try
-                {
-                    currentButton = windows[currentWindowIndex].buttonObject;
-                    currentButtonAnimator = currentButton.GetComponent<Animator>();
-                    currentButtonAnimator.Play(buttonFadeOut);
-                }
-
-                catch { }
+                currentButton = windows[currentWindowIndex].buttonObject;
+                currentButtonAnimator = currentButton.GetComponent<Animator>();
+                currentButtonAnimator.Play(buttonFadeOut);
 
                 currentWindowIndex = 0;
                 currentButtonIndex = 0;
@@ -76,14 +66,9 @@ namespace Michsky.UI.ModernUIPack
                 currentWindowAnimator = currentWindow.GetComponent<Animator>();
                 currentWindowAnimator.Play(windowFadeIn);
 
-                try
-                {
-                    currentButton = windows[currentButtonIndex].buttonObject;
-                    currentButtonAnimator = currentButton.GetComponent<Animator>();
-                    currentButtonAnimator.Play(buttonFadeIn);
-                }
-
-                catch { }
+                currentButton = windows[currentButtonIndex].buttonObject;
+                currentButtonAnimator = currentButton.GetComponent<Animator>();
+                currentButtonAnimator.Play(buttonFadeIn);
             }
 
             else if (currentWindowIndex == 0)
@@ -92,14 +77,9 @@ namespace Michsky.UI.ModernUIPack
                 currentWindowAnimator = currentWindow.GetComponent<Animator>();
                 currentWindowAnimator.Play(windowFadeIn);
 
-                try
-                {
-                    currentButton = windows[currentButtonIndex].buttonObject;
-                    currentButtonAnimator = currentButton.GetComponent<Animator>();
-                    currentButtonAnimator.Play(buttonFadeIn);
-                }
-
-                catch { }
+                currentButton = windows[currentButtonIndex].buttonObject;
+                currentButtonAnimator = currentButton.GetComponent<Animator>();
+                currentButtonAnimator.Play(buttonFadeIn);
             }
         }
 
@@ -114,14 +94,7 @@ namespace Michsky.UI.ModernUIPack
             if (newWindowIndex != currentWindowIndex)
             {
                 currentWindow = windows[currentWindowIndex].windowObject;
-               
-                try
-                {
-                    currentButton = windows[currentWindowIndex].buttonObject;         
-                }
-
-                catch { }
-
+                currentButton = windows[currentWindowIndex].buttonObject;
                 currentWindowIndex = newWindowIndex;
                 nextWindow = windows[currentWindowIndex].windowObject;
 
@@ -131,19 +104,14 @@ namespace Michsky.UI.ModernUIPack
                 currentWindowAnimator.Play(windowFadeOut);
                 nextWindowAnimator.Play(windowFadeIn);
 
-                try
-                {
-                    currentButtonIndex = newWindowIndex;
-                    nextButton = windows[currentButtonIndex].buttonObject;
+                currentButtonIndex = newWindowIndex;
+                nextButton = windows[currentButtonIndex].buttonObject;
 
-                    currentButtonAnimator = currentButton.GetComponent<Animator>();
-                    nextButtonAnimator = nextButton.GetComponent<Animator>();
+                currentButtonAnimator = currentButton.GetComponent<Animator>();
+                nextButtonAnimator = nextButton.GetComponent<Animator>();
 
-                    currentButtonAnimator.Play(buttonFadeOut);
-                    nextButtonAnimator.Play(buttonFadeIn);
-                }
-
-                catch { }
+                currentButtonAnimator.Play(buttonFadeOut);
+                nextButtonAnimator.Play(buttonFadeIn);
             }
         }
 
@@ -152,32 +120,23 @@ namespace Michsky.UI.ModernUIPack
             if (currentWindowIndex <= windows.Count - 2)
             {
                 currentWindow = windows[currentWindowIndex].windowObject;
-
-                try
-                {
-                    currentButton = windows[currentButtonIndex].buttonObject;
-                    nextButton = windows[currentButtonIndex + 1].buttonObject;
-                    currentButtonAnimator = currentButton.GetComponent<Animator>();
-                    currentButtonAnimator.Play(buttonFadeOut);
-                }
-
-                catch { }
+                currentButton = windows[currentButtonIndex].buttonObject;
+                nextButton = windows[currentButtonIndex + 1].buttonObject;
 
                 currentWindowAnimator = currentWindow.GetComponent<Animator>();
+                currentButtonAnimator = currentButton.GetComponent<Animator>();
+
+                currentButtonAnimator.Play(buttonFadeOut);
                 currentWindowAnimator.Play(windowFadeOut);
+
                 currentWindowIndex += 1;
                 currentButtonIndex += 1;
                 nextWindow = windows[currentWindowIndex].windowObject;
+
                 nextWindowAnimator = nextWindow.GetComponent<Animator>();
+                nextButtonAnimator = nextButton.GetComponent<Animator>();
                 nextWindowAnimator.Play(windowFadeIn);
-
-                try
-                {
-                    nextButtonAnimator = nextButton.GetComponent<Animator>();
-                    nextButtonAnimator.Play(buttonFadeIn);
-                }
-
-                catch { }
+                nextButtonAnimator.Play(buttonFadeIn);
             }
         }
 
@@ -186,33 +145,23 @@ namespace Michsky.UI.ModernUIPack
             if (currentWindowIndex >= 1)
             {
                 currentWindow = windows[currentWindowIndex].windowObject;
-
-                try
-                {
-                    currentButton = windows[currentButtonIndex].buttonObject;
-                    nextButton = windows[currentButtonIndex - 1].buttonObject;
-                    currentButtonAnimator = currentButton.GetComponent<Animator>();
-                    currentButtonAnimator.Play(buttonFadeOut);
-                }
-
-                catch { }
+                currentButton = windows[currentButtonIndex].buttonObject;
+                nextButton = windows[currentButtonIndex - 1].buttonObject;
 
                 currentWindowAnimator = currentWindow.GetComponent<Animator>();
+                currentButtonAnimator = currentButton.GetComponent<Animator>();
+
+                currentButtonAnimator.Play(buttonFadeOut);
                 currentWindowAnimator.Play(windowFadeOut);
+
                 currentWindowIndex -= 1;
                 currentButtonIndex -= 1;
                 nextWindow = windows[currentWindowIndex].windowObject;
 
                 nextWindowAnimator = nextWindow.GetComponent<Animator>();
+                nextButtonAnimator = nextButton.GetComponent<Animator>();
                 nextWindowAnimator.Play(windowFadeIn);
-
-                try
-                {
-                    nextButtonAnimator = nextButton.GetComponent<Animator>();
-                    nextButtonAnimator.Play(buttonFadeIn);
-                }
-
-                catch { }
+                nextButtonAnimator.Play(buttonFadeIn);
             }
         }
 

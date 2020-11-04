@@ -29,21 +29,11 @@ public class SaveSystem : SystemBase
 
     protected override void OnUpdate()
     {
-        bool saving = false;
-
-        Entities.WithoutBurst().ForEach
-        (
-            (
-                ref SaveComponent save
-            ) =>
-            {
-                saving = save.value;
-                save.value = false;
-            }
-        ).Run();
 
 
-        if (saving == false) return;
+        if (SaveManager.instance.saveMainGame == false) return;
+        SaveManager.instance.saveMainGame = false;
+        Debug.Log("saving main");
 
         playerQuery = GetEntityQuery(ComponentType.ReadOnly<PlayerComponent>());
         enemyQuery = GetEntityQuery(ComponentType.ReadOnly<EnemyComponent>());

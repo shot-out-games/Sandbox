@@ -30,7 +30,7 @@ public class AmmoData : MonoBehaviour, IConvertGameObjectToEntity
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
 
-        Debug.Log("convert ad ");
+        //Debug.Log("convert ad ");
 
         dstManager.AddComponentData<AmmoDataComponent>(entity, new AmmoDataComponent()
             {

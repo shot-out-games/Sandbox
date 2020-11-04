@@ -26,17 +26,15 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     private EntityManager manager;
     private Entity e;
 
-    private bool sceneLoaded;
-
     void Start()
     {
-        Debug.Log("scene start ");
+        //Debug.Log("scene start ");
 
     }
 
     void Awake()
     {
-        Debug.Log("scene awake ");
+        //Debug.Log("scene awake ");
         //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         //entityManager.AddComponentData(e, new SceneSwitcherComponent());
@@ -60,12 +58,8 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     void Update()
     {
-        if (sceneLoaded == true)
-        {
-            manager.SetComponentData(e, new LoadComponent { part1 = true, part2 = true });
-            sceneLoaded = false;
-        }
 
+    
     }
 
     void OnEnable()
@@ -122,10 +116,12 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     public void OnButtonSaveAndExitClicked()//called from game pause menu and end game menu - if new project will need to be added to those possibly
     {
+       
         LevelManager.instance.ClearGameData();
+        SaveManager.instance.saveMainGame = true;
         SaveManager.instance.SaveWorldSettings();
         SaveManager.instance.SaveGameData();
-        DestroyAllEntitiesInScene();
+        SaveLevelManager.instance.saveScene = true;
         StartCoroutine(LoadYourAsyncScene(1));
 
 
@@ -135,13 +131,13 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     public void OnButtonExitClicked()//called from game pause menu and end game menu - if new project will need to be added to those possibly
     {
         LevelManager.instance.ClearGameData();
-        DestroyAllEntitiesInScene();
+        LevelManager.instance.resetLevel = true;
         StartCoroutine(LoadYourAsyncScene(1));
     }
 
 
-    private void DestroyAllEntitiesInScene()
-    {
+    //private void DestroyAllEntitiesInScene()
+    //{
 
         //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         //var entities = entityManager.GetAllEntities();
@@ -153,10 +149,9 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
         //sceneSwitcher.saveScene = true;
         //manager.SetComponentData<SceneSwitcherComponent>(e, sceneSwitcher);
 
-        SaveLevelManager.instance.saveScene = true;
 
 
-    }
+    //}
 
 
 
@@ -192,7 +187,7 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     private void SetupAndLoadNextScene()
     {
-        DestroyAllEntitiesInScene();
+        SaveLevelManager.instance.saveScene = true;
         LoadNextScene();
     }
 
@@ -229,11 +224,10 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     {
         e = entity;
         manager = dstManager;
-        Debug.Log("add scene switcher component " + e);
-        if (CurrentSceneIndex == 2)
+            
+        if(CurrentSceneIndex == 2)
         {
-            sceneLoaded = true;
-            manager.AddComponentData(e, new LoadComponent { e = entity, part1 = false, part2 = false });
+            LevelManager.instance.loadGame = true;
         }
 
         manager.AddComponentData(e, new SceneSwitcherComponent());

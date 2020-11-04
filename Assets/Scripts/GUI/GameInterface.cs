@@ -130,7 +130,7 @@ public class GameInterfaceSystem : SystemBase
                     if (selectPressed && deadMenuDisplayed == false && winnerMenuDisplayed == false)
                     {
                         gameInterface.SelectClicked();
-                        Debug.Log("select " + selectPressed);
+                        //Debug.Log("select " + selectPressed);
                     }
                     paused = gameInterface.paused;//should probably be component
 
@@ -149,12 +149,12 @@ public class GameInterfaceSystem : SystemBase
 
                 if (paused)
                 {
-                    Debug.Log("add");
+                    //Debug.Log("add");
                     EntityManager.AddComponent<Pause>(entity);
                 }
                 else
                 {
-                    Debug.Log("remove");
+                    //Debug.Log("remove");
                     EntityManager.RemoveComponent<Pause>(entity);
                 }
             }

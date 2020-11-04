@@ -171,8 +171,8 @@ GameObject:
   m_Component:
   - component: {fileID: 224681363656727084}
   - component: {fileID: 222605969877357492}
-  - component: {fileID: 114838032127423126}
   - component: {fileID: 95066821710810290}
+  - component: {fileID: 114838032127423126}
   m_Layer: 5
   m_Name: PB Loop - Standard Run
   m_TagString: Untagged
@@ -209,6 +209,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1308012282115178}
   m_CullTransparentMesh: 0
+--- !u!95 &95066821710810290
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308012282115178}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8ba75ce7454aace438ddb66b8f8c9953, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114838032127423126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,25 +245,6 @@ MonoBehaviour:
   useRegularBackground: 1
   bar: {fileID: 114048910829737646}
   background: {fileID: 114338104998616262}
---- !u!95 &95066821710810290
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1308012282115178}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8ba75ce7454aace438ddb66b8f8c9953, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 2
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1645086057862728
 GameObject:
   m_ObjectHideFlags: 0

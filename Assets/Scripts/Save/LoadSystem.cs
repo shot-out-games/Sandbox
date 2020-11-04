@@ -6,38 +6,18 @@ using Unity.Jobs;
 using Unity.Transforms;
 using UnityEngine;
 
-[System.Serializable]
-public struct LoadComponent : IComponentData
-{
-    public Entity e;
-    public bool part1;
-    public bool part2;
-}
 [UpdateInGroup((typeof(PresentationSystemGroup)))]
 public class LoadSystem : SystemBase
 {
 
     protected override void OnUpdate()
     {
-        //return;
 
-        bool loaded = false;
-        Entity loadEntity = Entity.Null;
+      
 
-        Entities.ForEach
-        (
-            (
-                ref LoadComponent load, in Entity e
-            ) =>
-            {
-                loadEntity = e;
-                loaded = load.part1;
-                load.part1 = false;
-            }
-        ).Run();
-
-
-        if (loaded == false) return;
+        if (LevelManager.instance.loadGame == false) return;
+        LevelManager.instance.loadGame = false;
+        Debug.Log("load main scene");
         EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
         if (SaveManager.instance.saveWorld == null) return;
         int savedGames = SaveManager.instance.saveData.saveGames.Count;
@@ -139,14 +119,6 @@ public class LoadNextLevelSystem : SystemBase
     protected override void OnUpdate()
     {
 
-        //bool levelLoaded = GetSingleton<LevelCompleteMenuComponent>().levelLoaded;
-        //bool levelSetup = GetSingleton<SceneSwitcherComponent>().saveScene;
-        //if (levelLoaded == true || sceneSaved == true) return;//level loaded set to false when showing end level menu so now can load but only after setup is true
-
-
-        //bool saveScene = SaveLevelManager.instance.saveScene;
-        //if (saveScene == false) return;
-
         bool saveScene = SaveLevelManager.instance.saveScene;
         bool loadNextScene = SaveLevelManager.instance.loadNextScene;
 
@@ -155,9 +127,6 @@ public class LoadNextLevelSystem : SystemBase
 
         SaveLevelManager.instance.saveScene = false;
         SaveLevelManager.instance.loadNextScene = false;
-
-
-
 
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 
@@ -188,8 +157,8 @@ public class LoadNextLevelSystem : SystemBase
 
 
         //var sceneSwitcher = GetSingleton<SceneSwitcherComponent>();
-        var sceneEntity = GetSingletonEntity<SceneSwitcherComponent>();
-        ecb.DestroyEntity(sceneEntity);
+        //var sceneEntity = GetSingletonEntity<SceneSwitcherComponent>();
+        //ecb.DestroyEntity(sceneEntity);
 
 
 

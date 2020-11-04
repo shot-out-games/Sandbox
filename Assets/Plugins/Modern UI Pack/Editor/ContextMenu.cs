@@ -16,13 +16,11 @@ namespace Michsky.UI.ModernUIPack
                 if (Selection.activeGameObject == null)
                 {
                     var canvas = (Canvas)GameObject.FindObjectsOfType(typeof(Canvas))[0];
-                    Undo.RegisterCreatedObjectUndo(clone, "Created an object");
                     clone.transform.SetParent(canvas.transform, false);
                 }
 
                 else
                 {
-                    Undo.RegisterCreatedObjectUndo(clone, "Created an object");
                     clone.transform.SetParent(Selection.activeGameObject.transform, false);
                 }
 
@@ -31,15 +29,13 @@ namespace Michsky.UI.ModernUIPack
 
             catch
             {
-                Undo.RegisterCreatedObjectUndo(clone, "Created an object");
                 CreateCanvas();
                 var canvas = (Canvas)GameObject.FindObjectsOfType(typeof(Canvas))[0];
                 clone.transform.SetParent(canvas.transform, false);
                 clone.name = clone.name.Replace("(Clone)", "").Trim();
             }
 
-            if (Application.isPlaying == false)
-                EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }
 
         static void CreateButton(string resourcePath)
@@ -51,13 +47,11 @@ namespace Michsky.UI.ModernUIPack
                 if (Selection.activeGameObject == null)
                 {
                     var canvas = (Canvas)GameObject.FindObjectsOfType(typeof(Canvas))[0];
-                    Undo.RegisterCreatedObjectUndo(clone, "Created an object");
                     clone.transform.SetParent(canvas.transform, false);
                 }
 
                 else
                 {
-                    Undo.RegisterCreatedObjectUndo(clone, "Created an object");
                     clone.transform.SetParent(Selection.activeGameObject.transform, false);
                 }
 
@@ -66,15 +60,13 @@ namespace Michsky.UI.ModernUIPack
 
             catch
             {
-                Undo.RegisterCreatedObjectUndo(clone, "Created an object");
                 CreateCanvas();
                 var canvas = (Canvas)GameObject.FindObjectsOfType(typeof(Canvas))[0];
                 clone.transform.SetParent(canvas.transform, false);
                 clone.name = "Button";
             }
 
-            if (Application.isPlaying == false)
-                EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }
 
         [MenuItem("Tools/Modern UI Pack/Show UI Manager %#M")]
@@ -90,14 +82,11 @@ namespace Michsky.UI.ModernUIPack
         static void CreateCanvas()
         {
             GameObject clone = Instantiate(Resources.Load<GameObject>("Other/Canvas"), Vector3.zero, Quaternion.identity) as GameObject;
-            Undo.RegisterCreatedObjectUndo(clone, "Created an object");
             clone.name = clone.name.Replace("(Clone)", "").Trim();
-
-            if (Application.isPlaying == false)
-                EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
         }
 
-        [MenuItem("GameObject/Modern UI Pack/Animated Icon/Hamburger Menu", true, 0)]
+        [MenuItem("GameObject/Modern UI Pack/Animated Icon/Hamburger Menu", false, 0)]
         static void AIHTE()
         {
             CreateObject("Animated Icon/Hamburger Menu");
@@ -1063,12 +1052,6 @@ namespace Michsky.UI.ModernUIPack
             CreateButton("Button/Rounded - Outline Gradient/Red");
         }
 
-        [MenuItem("GameObject/Modern UI Pack/Context Menu/Standard", false, 0)]
-        static void CTXM()
-        {
-            CreateObject("Context Menu/Context Menu");
-        }
-
         [MenuItem("GameObject/Modern UI Pack/Dropdown/Standard", false, 0)]
         static void DSD()
         {
@@ -1085,12 +1068,6 @@ namespace Michsky.UI.ModernUIPack
         static void HSS()
         {
             CreateObject("Horizontal Selector/Horizontal Selector");
-        }
-
-        // [MenuItem("GameObject/Modern UI Pack/Hamburger Menu/Standard", false, 0)]
-        static void HMST()
-        {
-            CreateObject("Hamburger Menu/Hamburger Menu");
         }
 
         [MenuItem("GameObject/Modern UI Pack/Input Field/Multi-Line", false, 0)]

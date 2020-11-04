@@ -29,6 +29,7 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
     public List<int> potentialCumulativeGameTargets = new List<int>();
     public int totalLevels;
     public bool resetLevel;
+    public bool loadGame;
 
     public int playersDead;
     public int enemiesDead;

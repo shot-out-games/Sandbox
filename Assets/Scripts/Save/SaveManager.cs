@@ -18,6 +18,7 @@ public class SaveManager : MonoBehaviour
     public SaveWorld saveWorld = new SaveWorld();
 
     public bool updateScore = false;
+    public bool saveMainGame = false;
 
 
     private void Awake()

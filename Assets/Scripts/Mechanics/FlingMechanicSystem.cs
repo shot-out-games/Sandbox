@@ -83,10 +83,10 @@ namespace SandBox.Player
                     forward = math.normalize(forward);
                     //Debug.Log("fw " + forward);
 
-                    if (inputController.leftTriggerPressed == true)
-                    {
-                        Debug.Log("press");
-                    }
+                    //if (inputController.leftTriggerPressed == true)
+                    //{
+                        //Debug.Log("press");
+                    //}
 
                     flingMechanic.timeSinceCausingDamage += Time.DeltaTime;
 

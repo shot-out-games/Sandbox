@@ -535,8 +535,6 @@ MonoBehaviour:
   sliderEvent:
     m_PersistentCalls:
       m_Calls: []
-  sliderAnimator: {fileID: 0}
-  saveValue: 0
 --- !u!114 &114088700782461480
 MonoBehaviour:
   m_ObjectHideFlags: 0

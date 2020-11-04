@@ -12,7 +12,7 @@ public class ParticleConversionSystem : GameObjectConversionSystem
 {
     protected override void OnUpdate()
     {
-        Debug.Log("conversion");
+        //Debug.Log("conversion");
 
 
         Entities.ForEach((ParticleSystem particleSystem, ParticleSystemRenderer particleSystemRenderer) =>

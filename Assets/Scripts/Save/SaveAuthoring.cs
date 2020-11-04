@@ -24,7 +24,7 @@ public struct SaveComponent : IComponentData
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-           dstManager.AddComponentData(entity, new SaveComponent() { saveGame = saveGame, saveScore = saveScore});
+           //dstManager.AddComponentData(entity, new SaveComponent() { saveGame = saveGame, saveScore = saveScore});
         
         
     }
