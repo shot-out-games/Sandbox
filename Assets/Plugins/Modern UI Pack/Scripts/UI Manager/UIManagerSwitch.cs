@@ -38,7 +38,7 @@ namespace Michsky.UI.ModernUIPack
             if (dynamicUpdateEnabled == false)
             {
                 this.enabled = true;
-                UpdateDropdown();
+                UpdateSwitch();
             }
         }
 
@@ -46,17 +46,18 @@ namespace Michsky.UI.ModernUIPack
         {
             if (UIManagerAsset != null)
             {
-                if (UIManagerAsset.enableDynamicUpdate == true)
+                if (Application.isEditor == true && UIManagerAsset != null)
+                {
                     dynamicUpdateEnabled = true;
+                    UpdateSwitch();
+                }
+
                 else
                     dynamicUpdateEnabled = false;
-
-                if (dynamicUpdateEnabled == true)
-                    UpdateDropdown();
             }
         }
 
-        void UpdateDropdown()
+        void UpdateSwitch()
         {
             try
             {

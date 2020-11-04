@@ -36,7 +36,7 @@ namespace Michsky.UI.ModernUIPack
             if (dynamicUpdateEnabled == false)
             {
                 this.enabled = true;
-                UpdateDropdown();
+                UpdateScrollbar();
             }
         }
 
@@ -44,17 +44,18 @@ namespace Michsky.UI.ModernUIPack
         {
             if (UIManagerAsset != null)
             {
-                if (UIManagerAsset.enableDynamicUpdate == true)
+                if (Application.isEditor == true && UIManagerAsset != null)
+                {
                     dynamicUpdateEnabled = true;
+                    UpdateScrollbar();
+                }
+
                 else
                     dynamicUpdateEnabled = false;
-
-                if (dynamicUpdateEnabled == true)
-                    UpdateDropdown();
             }
         }
 
-        void UpdateDropdown()
+        void UpdateScrollbar()
         {
             try
             {

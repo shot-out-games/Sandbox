@@ -29,6 +29,7 @@ namespace Michsky.UI.ModernUIPack
             else
                 customSkin = (GUISkin)Resources.Load("Editor\\Custom Skin Light");
 
+            GUILayout.Space(-70);
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
 
@@ -47,6 +48,15 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
+            GUILayout.Space(60);
+
+            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
+
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            GUILayout.Space(50);
 
             // Draw toolbar tabs as a button
             if (GUILayout.Button(new GUIContent("Items", "Items"), customSkin.FindStyle("Toolbar Items")))
@@ -60,15 +70,6 @@ namespace Michsky.UI.ModernUIPack
 
             if (GUILayout.Button(new GUIContent("Settings", "Settings"), customSkin.FindStyle("Toolbar Settings")))
                 currentTab = 3;
-
-            GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-
-            // Draw toolbar indicators
-            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
 
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
@@ -95,8 +96,9 @@ namespace Michsky.UI.ModernUIPack
             switch (currentTab)
             {
                 case 0:
+                    GUILayout.Space(20);
                     GUILayout.Label("ITEMS", customSkin.FindStyle("Header"));
-
+                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
                     EditorGUI.indentLevel = 1;
 
@@ -113,7 +115,9 @@ namespace Michsky.UI.ModernUIPack
                     break;
 
                 case 1:
+                    GUILayout.Space(20);
                     GUILayout.Label("RESOURCES", customSkin.FindStyle("Header"));
+                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Trigger Object"), customSkin.FindStyle("Text"), GUILayout.Width(120));
@@ -144,24 +148,27 @@ namespace Michsky.UI.ModernUIPack
                     EditorGUILayout.PropertyField(listParent, new GUIContent(""));
 
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(6);
+                    GUILayout.Space(4);
                     break;
 
                 case 2:
+                    GUILayout.Space(20);
                     GUILayout.Label("SAVING", customSkin.FindStyle("Header"));
+                    GUILayout.Space(2);
                     EditorGUILayout.HelpBox("Work in progress, not functional at the moment.", MessageType.Info);
-                    GUILayout.Space(6);
+                    GUILayout.Space(4);
                     break;
 
                 case 3:
+                    GUILayout.Space(20);
                     GUILayout.Label("SETTINGS", customSkin.FindStyle("Header"));
+                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     enableIcon.boolValue = GUILayout.Toggle(enableIcon.boolValue, new GUIContent("Enable Icon"), customSkin.FindStyle("Toggle"));
                     enableIcon.boolValue = GUILayout.Toggle(enableIcon.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
 
                     GUILayout.EndHorizontal();
-
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     enableTrigger.boolValue = GUILayout.Toggle(enableTrigger.boolValue, new GUIContent("Enable Trigger"), customSkin.FindStyle("Toggle"));
@@ -240,7 +247,7 @@ namespace Michsky.UI.ModernUIPack
                     EditorGUILayout.PropertyField(animationType, new GUIContent(""));
 
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(6);
+                    GUILayout.Space(4);
                     break;
             }
 

@@ -70,15 +70,13 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
         DontDestroyOnLoad(gameObject);
     }
 
-    public void ClearGameData(bool resetLevel)
+    public void ClearGameData()
     {
         endGame = false;
         gameResult = GameResult.None;
 
-        if (resetLevel == true)
-        {
-            currentLevelCompleted = 0;
-        }
+        //currentLevelCompleted = 0;
+
         playersDead = 0;
         enemiesDead = 0;
         NpcDead = 0;
@@ -95,9 +93,7 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
             levelSettings[i].enemiesSaved = 0;
             levelSettings[i].NpcSaved = 0;
             levelSettings[i].points = 0;
-            //levelSettings[i].completed = false;
         }
-
 
 
     }

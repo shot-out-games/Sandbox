@@ -54,6 +54,22 @@ Preset:
     value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: contextBackgroundColor.r
+    value: 255
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: contextBackgroundColor.g
+    value: 255
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: contextBackgroundColor.b
+    value: 255
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: contextBackgroundColor.a
+    value: 255
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: buttonThemeType
     value: 0
     objectReference: {fileID: 0}

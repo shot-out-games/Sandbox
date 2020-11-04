@@ -59,7 +59,7 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     void Update()
     {
 
-    
+
     }
 
     void OnEnable()
@@ -83,7 +83,7 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("level loaded");
+        Debug.Log("level loaded " + SceneManager.GetActiveScene().buildIndex);
         //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         //var sceneSwitcher = entityManager.GetComponentData<SceneSwitcherComponent>(e);
         //sceneSwitcher.delete = false;
@@ -95,10 +95,11 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     public void OnButtonResetGameClicked()
     {
-        bool resetLevel = SaveManager.instance.saveWorld.isSlotSaved[1] == false;
-        LevelManager.instance.ClearGameData(resetLevel);
+        //bool resetLevel = SaveManager.instance.saveWorld.isSlotSaved[1] == false;
+        LevelManager.instance.ClearGameData();
         LevelManager.instance.resetLevel = true;
-        StartCoroutine(LoadYourAsyncScene(CurrentSceneIndex));
+        LevelManager.instance.currentLevelCompleted = 0;
+        StartCoroutine(LoadYourAsyncScene(2));
     }
 
 
@@ -117,8 +118,8 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     public void OnButtonSaveAndExitClicked()//called from game pause menu and end game menu - if new project will need to be added to those possibly
     {
-        bool resetLevel = SaveManager.instance.saveWorld.isSlotSaved[1] == false;
-        LevelManager.instance.ClearGameData(resetLevel);
+        //bool resetLevel = SaveManager.instance.saveWorld.isSlotSaved[1] == false;
+        LevelManager.instance.ClearGameData();
         SaveManager.instance.saveMainGame = true;
         SaveManager.instance.SaveWorldSettings();
         SaveManager.instance.SaveGameData();
@@ -131,8 +132,7 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     public void OnButtonExitClicked()//called from game pause menu and end game menu - if new project will need to be added to those possibly
     {
-        bool resetLevel = SaveManager.instance.saveWorld.isSlotSaved[1] == false;
-        LevelManager.instance.ClearGameData(resetLevel);
+        LevelManager.instance.ClearGameData();
         LevelManager.instance.resetLevel = true;
         StartCoroutine(LoadYourAsyncScene(1));
     }
@@ -141,15 +141,15 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     //private void DestroyAllEntitiesInScene()
     //{
 
-        //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        //var entities = entityManager.GetAllEntities();
-        //entityManager.DestroyEntity(entities);
-        //entities.Dispose();
+    //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+    //var entities = entityManager.GetAllEntities();
+    //entityManager.DestroyEntity(entities);
+    //entities.Dispose();
 
-        //var sceneSwitcher = manager.GetComponentData<SceneSwitcherComponent>(e);
-        //sceneSwitcher.delete = true;//no setup scene field first - then delete in system
-        //sceneSwitcher.saveScene = true;
-        //manager.SetComponentData<SceneSwitcherComponent>(e, sceneSwitcher);
+    //var sceneSwitcher = manager.GetComponentData<SceneSwitcherComponent>(e);
+    //sceneSwitcher.delete = true;//no setup scene field first - then delete in system
+    //sceneSwitcher.saveScene = true;
+    //manager.SetComponentData<SceneSwitcherComponent>(e, sceneSwitcher);
 
 
 
@@ -190,6 +190,8 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     public void SetupAndLoadNextScene()
     {
         SaveLevelManager.instance.saveScene = true;
+        LevelManager.instance.currentLevelCompleted += 1;
+        Debug.Log("setup and load next");
         LoadNextScene();
     }
 
@@ -197,22 +199,23 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     public void LoadNextScene()
     {
         Debug.Log("load next");
-        CurrentSceneIndex = LevelManager.instance.currentLevelCompleted + 2;
+        //CurrentSceneIndex = LevelManager.instance.currentLevelCompleted + 2;
         var sceneCount = SceneManager.sceneCountInBuildSettings;
-        var nextIndex = CurrentSceneIndex + 1;
-        if (nextIndex >= sceneCount)
+        //var nextIndex = CurrentSceneIndex + 1;
+        var nextSceneIndex = LevelManager.instance.currentLevelCompleted + 2;
+        if (nextSceneIndex < 2) nextSceneIndex = 2;//0 is loader 1 is menu
+
+        if (nextSceneIndex >= sceneCount)
         {
             Quit();
             return;
         }
 
-
-
-        var nextScene = SceneUtility.GetScenePathByBuildIndex(nextIndex);
+        //var nextScene = SceneUtility.GetScenePathByBuildIndex(nextIndex);
         //TimeUntilNextSwitch = GetSceneDuration(nextScene);
-        CurrentSceneIndex = nextIndex;
-        StartCoroutine(LoadYourAsyncScene(nextIndex));
-        //Debug.Log("load next scene complete");
+        //CurrentSceneIndex = nextIndex;
+        StartCoroutine(LoadYourAsyncScene(nextSceneIndex));
+        Debug.Log("load next scene complete " + nextSceneIndex);
     }
 
 
@@ -227,11 +230,11 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     {
         e = entity;
         manager = dstManager;
-            
-        if(CurrentSceneIndex == 2)
-        {
-            LevelManager.instance.loadGame = true;
-        }
+
+        //if (CurrentSceneIndex >= 2)
+        //{
+        //    LevelManager.instance.loadGame = true;
+        //}
 
         manager.AddComponentData(e, new SceneSwitcherComponent());
 
@@ -245,7 +248,7 @@ public class ResetLevelSystem : SystemBase
     protected override void OnUpdate()
     {
 
-        if(LevelManager.instance.resetLevel == false) return;
+        if (LevelManager.instance.resetLevel == false) return;
         LevelManager.instance.resetLevel = false;
 
         Debug.Log("reset level");

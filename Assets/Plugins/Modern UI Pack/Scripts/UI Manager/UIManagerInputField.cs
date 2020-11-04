@@ -38,7 +38,7 @@ namespace Michsky.UI.ModernUIPack
             if (dynamicUpdateEnabled == false)
             {
                 this.enabled = true;
-                UpdateDropdown();
+                UpdateInputField();
             }
         }
 
@@ -47,16 +47,17 @@ namespace Michsky.UI.ModernUIPack
             if (UIManagerAsset != null)
             {
                 if (UIManagerAsset.enableDynamicUpdate == true)
+                {
                     dynamicUpdateEnabled = true;
+                    UpdateInputField();
+                }
+
                 else
                     dynamicUpdateEnabled = false;
-
-                if (dynamicUpdateEnabled == true)
-                    UpdateDropdown();
             }
         }
 
-        void UpdateDropdown()
+        void UpdateInputField()
         {
             for (int i = 0; i < images.Count; ++i)
             {

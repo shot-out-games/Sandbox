@@ -9,14 +9,7 @@ namespace Michsky.UI.ModernUIPack
     public class TooltipManagerEditor : Editor
     {
         // Variables
-        // private TooltipManager tooltipTarget;
         private int currentTab;
-
-        private void OnEnable()
-        {
-            // Set target
-            // tooltipTarget = (TooltipManager)target;
-        }
 
         public override void OnInspectorGUI()
         {
@@ -29,6 +22,7 @@ namespace Michsky.UI.ModernUIPack
             else
                 customSkin = (GUISkin)Resources.Load("Editor\\Custom Skin Light");
 
+            GUILayout.Space(-70);
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
 
@@ -46,6 +40,15 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
+            GUILayout.Space(60);
+
+            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
+
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            GUILayout.Space(50);
 
             // Draw toolbar tabs as a button
             if (GUILayout.Button(new GUIContent("Content", "Content"), customSkin.FindStyle("Toolbar Items")))
@@ -60,32 +63,24 @@ namespace Michsky.UI.ModernUIPack
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
 
-            GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-
-            // Draw toolbar indicators
-            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
-
-            GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
-
             // Property variables
             var vBorderTop = serializedObject.FindProperty("vBorderTop");
             var vBorderBottom = serializedObject.FindProperty("vBorderBottom");
             var hBorderLeft = serializedObject.FindProperty("hBorderLeft");
             var hBorderRight = serializedObject.FindProperty("hBorderRight");
-
+            var mainCanvas = serializedObject.FindProperty("mainCanvas");
             var tooltipObject = serializedObject.FindProperty("tooltipObject");
             var tooltipContent = serializedObject.FindProperty("tooltipContent");
-
             var tooltipSmoothness = serializedObject.FindProperty("tooltipSmoothness");
+            var useAnimator = serializedObject.FindProperty("useAnimator");
 
             // Draw content depending on tab index
             switch (currentTab)
             {
                 case 0:
+                    GUILayout.Space(20);
                     GUILayout.Label("CONTENT", customSkin.FindStyle("Header"));
-
+                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Top Bound"), customSkin.FindStyle("Text"), GUILayout.Width(120));
@@ -110,12 +105,13 @@ namespace Michsky.UI.ModernUIPack
                     EditorGUILayout.PropertyField(hBorderRight, new GUIContent(""));
 
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(6);
+                    GUILayout.Space(4);
                     break;
 
                 case 1:
+                    GUILayout.Space(20);
                     GUILayout.Label("RESOURCES", customSkin.FindStyle("Header"));
-
+                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Tooltip Object"), customSkin.FindStyle("Text"), GUILayout.Width(120));
@@ -128,19 +124,26 @@ namespace Michsky.UI.ModernUIPack
                     EditorGUILayout.PropertyField(tooltipContent, new GUIContent(""));
 
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(6);
+                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                    EditorGUILayout.LabelField(new GUIContent("Main Canvas"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                    EditorGUILayout.PropertyField(mainCanvas, new GUIContent(""));
+
+                    GUILayout.EndHorizontal();
+                    GUILayout.Space(4);
                     break;
 
                 case 2:
+                    GUILayout.Space(20);
                     GUILayout.Label("SETTINGS", customSkin.FindStyle("Header"));
-
+                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Smoothness"), customSkin.FindStyle("Text"), GUILayout.Width(120));
                     EditorGUILayout.PropertyField(tooltipSmoothness, new GUIContent(""));
 
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(6);
+                    GUILayout.Space(4);
                     break;            
             }
 

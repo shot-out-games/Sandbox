@@ -29,6 +29,7 @@ namespace Michsky.UI.ModernUIPack
             else
                 customSkin = (GUISkin)Resources.Load("Editor\\Custom Skin Light");
 
+            GUILayout.Space(-70);
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
 
@@ -46,6 +47,16 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
+            GUILayout.Space(60);
+
+            // Draw toolbar indicators
+            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
+
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            GUILayout.Space(50);
 
             // Draw toolbar tabs as a button
             if (GUILayout.Button(new GUIContent("Content", "Content"), customSkin.FindStyle("Toolbar Items")))
@@ -56,15 +67,6 @@ namespace Michsky.UI.ModernUIPack
 
             if (GUILayout.Button(new GUIContent("Settings", "Settings"), customSkin.FindStyle("Toolbar Settings")))
                 currentTab = 2;
-
-            GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-
-            // Draw toolbar indicators
-            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
 
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
@@ -81,6 +83,7 @@ namespace Michsky.UI.ModernUIPack
             var windowDescription = serializedObject.FindProperty("windowDescription");
             var confirmButton = serializedObject.FindProperty("confirmButton");
             var cancelButton = serializedObject.FindProperty("cancelButton");
+            var mwAnimator = serializedObject.FindProperty("mwAnimator");
 
             var sharpAnimations = serializedObject.FindProperty("sharpAnimations");
             var useCustomValues = serializedObject.FindProperty("useCustomValues");
@@ -89,8 +92,9 @@ namespace Michsky.UI.ModernUIPack
             switch (currentTab)
             {
                 case 0:
+                    GUILayout.Space(20);
                     GUILayout.Label("CONTENT", customSkin.FindStyle("Header"));
-
+                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Icon"), customSkin.FindStyle("Text"), GUILayout.Width(120));
@@ -162,8 +166,9 @@ namespace Michsky.UI.ModernUIPack
                     break;
 
                 case 1:
+                    GUILayout.Space(20);
                     GUILayout.Label("RESOURCES", customSkin.FindStyle("Header"));
-
+                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Icon Object"), customSkin.FindStyle("Text"), GUILayout.Width(120));
@@ -194,12 +199,19 @@ namespace Michsky.UI.ModernUIPack
                     EditorGUILayout.PropertyField(cancelButton, new GUIContent(""));
 
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(6);
+                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                    EditorGUILayout.LabelField(new GUIContent("Animator"), customSkin.FindStyle("Text"), GUILayout.Width(120));
+                    EditorGUILayout.PropertyField(mwAnimator, new GUIContent(""));
+
+                    GUILayout.EndHorizontal();
+                    GUILayout.Space(4);
                     break;
 
                 case 2:
+                    GUILayout.Space(20);
                     GUILayout.Label("SETTINGS", customSkin.FindStyle("Header"));
-
+                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     sharpAnimations.boolValue = GUILayout.Toggle(sharpAnimations.boolValue, new GUIContent("Sharp Animations"), customSkin.FindStyle("Toggle"));
@@ -212,7 +224,7 @@ namespace Michsky.UI.ModernUIPack
                     useCustomValues.boolValue = GUILayout.Toggle(useCustomValues.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
 
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(6);
+                    GUILayout.Space(4);
                     break;
             }
 

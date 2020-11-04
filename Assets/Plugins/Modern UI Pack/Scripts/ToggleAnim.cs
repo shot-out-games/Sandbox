@@ -5,8 +5,8 @@ namespace Michsky.UI.ModernUIPack
 {
     public class ToggleAnim : MonoBehaviour
     {
-        Toggle toggleObject;
-        Animator toggleAnimator;
+        [HideInInspector] public Toggle toggleObject;
+        [HideInInspector] public Animator toggleAnimator;
 
         void Start()
         {
