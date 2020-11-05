@@ -1,7 +1,15 @@
-﻿using Unity.Entities;
+﻿using TMPro;
+using Unity.Entities;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+public enum ShowText3D
+{
+    none,
+    hitDamage,
+    hitScore
+}
 
 [System.Serializable]
 public struct HealthComponent : IComponentData
@@ -9,6 +17,9 @@ public struct HealthComponent : IComponentData
     public float TotalDamageLanded;
     public float TotalDamageReceived;
     public bool AlwaysDamage;//ignore hit weights and similar
+    public float ShowDamageMin;
+    public bool ShowDamage;
+    public ShowText3D ShowText3D;
     //Entity Entity;
 }
 
@@ -30,7 +41,48 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
     public Entity entity;
     private EntityManager entityManager;
     [SerializeField] private bool alwaysDamage;
-    public void HealthChange()
+
+    public TextMeshPro score3dText;
+    private TextMeshPro score3dTextInstance;
+
+
+    [SerializeField] private float showDamageMin = 50;
+    [SerializeField] private ShowText3D showText3D = ShowText3D.hitDamage;
+
+
+
+
+    void Start()
+    {
+        if (entity == Entity.Null) return;
+        if (score3dText)
+        {
+            var ps = Instantiate(score3dText);
+            ps.transform.parent = transform;
+            ps.transform.localPosition = new Vector3(0, ps.transform.localPosition.y, 0);
+            score3dTextInstance = ps;
+        }
+
+
+
+        HealthChange();
+    }
+
+
+
+
+
+
+    public void ShowText3dValue(int value)
+    {
+        score3dTextInstance.text = value.ToString();
+        Debug.Log("val " + value);
+
+    }
+
+
+
+public void HealthChange()
     {
 
         if (_healthBar == null || !entityManager.HasComponent<HealthComponent>(entity))
@@ -58,13 +110,7 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
-
-    void Update()
-    {
-        if (entity == Entity.Null) return;
-        HealthChange();
-    }
-
+  
 
     public void Convert(Entity _entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
@@ -73,7 +119,9 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
         entityManager.AddComponentData(entity, new HealthComponent
         {
             TotalDamageLanded = 0, TotalDamageReceived = 0,
-            AlwaysDamage = alwaysDamage
+            AlwaysDamage = alwaysDamage,
+            ShowDamageMin = showDamageMin,
+            ShowText3D = showText3D
         });
     }
 }
