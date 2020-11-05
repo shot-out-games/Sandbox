@@ -156,8 +156,8 @@ GameObject:
   m_Component:
   - component: {fileID: 224946172096812926}
   - component: {fileID: 222232635716350030}
-  - component: {fileID: 114037911109310262}
   - component: {fileID: 95629476649313184}
+  - component: {fileID: 114037911109310262}
   m_Layer: 5
   m_Name: PB Loop - Radial Pie
   m_TagString: Untagged
@@ -194,6 +194,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1878949618355294}
   m_CullTransparentMesh: 0
+--- !u!95 &95629476649313184
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1878949618355294}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 671d36c09c7e9d043bf995530c38c3c8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114037911109310262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,22 +230,3 @@ MonoBehaviour:
   useRegularBackground: 0
   bar: {fileID: 114761930297052848}
   background: {fileID: 114348432224798454}
---- !u!95 &95629476649313184
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1878949618355294}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 671d36c09c7e9d043bf995530c38c3c8, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 2
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0

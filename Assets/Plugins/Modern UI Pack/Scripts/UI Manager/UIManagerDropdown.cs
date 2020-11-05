@@ -61,16 +61,15 @@ namespace Michsky.UI.ModernUIPack
 
         void LateUpdate()
         {
-            if (Application.isEditor == true && UIManagerAsset != null)
+            if (UIManagerAsset != null)
             {
                 if (UIManagerAsset.enableDynamicUpdate == true)
-                {
                     dynamicUpdateEnabled = true;
-                    UpdateDropdown();
-                }
-
                 else
                     dynamicUpdateEnabled = false;
+
+                if (dynamicUpdateEnabled == true)
+                    UpdateDropdown();
             }
         }
 

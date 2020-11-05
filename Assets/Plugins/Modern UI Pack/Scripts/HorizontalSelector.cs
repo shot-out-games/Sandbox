@@ -71,57 +71,54 @@ namespace Michsky.UI.ModernUIPack
 
         public void SetupSelector()
         {
-            if (itemList.Count != 0)
+            if (saveValue == true)
             {
-                if (saveValue == true)
-                {
-                    if (PlayerPrefs.HasKey(selectorTag + "HSelectorValue") == true)
-                        defaultIndex = PlayerPrefs.GetInt(selectorTag + "HSelectorValue");
-
-                    else
-                        PlayerPrefs.SetInt(selectorTag + "HSelectorValue", defaultIndex);
-                }
-
-                label.text = itemList[defaultIndex].itemTitle;
-                labelHelper.text = label.text;
-                index = defaultIndex;
-
-                if (enableIndicators == true)
-                {
-                    foreach (Transform child in indicatorParent)
-                    {
-                        GameObject.Destroy(child.gameObject);
-                    }
-
-                    for (int i = 0; i < itemList.Count; ++i)
-                    {
-                        GameObject go = Instantiate(indicatorObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
-                        go.transform.SetParent(indicatorParent, false);
-                        go.name = itemList[i].itemTitle;
-
-                        Transform onObj;
-                        onObj = go.transform.Find("On");
-                        Transform offObj;
-                        offObj = go.transform.Find("Off");
-
-                        if (i == index)
-                        {
-                            onObj.gameObject.SetActive(true);
-                            offObj.gameObject.SetActive(false);
-                        }
-
-                        else
-                        {
-                            onObj.gameObject.SetActive(false);
-                            offObj.gameObject.SetActive(true);
-                        }
-                    }
-                }
+                if (PlayerPrefs.HasKey(selectorTag + "HSelectorValue") == true)
+                    defaultIndex = PlayerPrefs.GetInt(selectorTag + "HSelectorValue");
 
                 else
+                    PlayerPrefs.SetInt(selectorTag + "HSelectorValue", defaultIndex);
+            }
+
+            label.text = itemList[defaultIndex].itemTitle;
+            labelHelper.text = label.text;
+            index = defaultIndex;
+
+            if (enableIndicators == true)
+            {
+                foreach (Transform child in indicatorParent)
                 {
-                    Destroy(indicatorParent.gameObject);
+                    GameObject.Destroy(child.gameObject);
                 }
+
+                for (int i = 0; i < itemList.Count; ++i)
+                {
+                    GameObject go = Instantiate(indicatorObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+                    go.transform.SetParent(indicatorParent, false);
+                    go.name = itemList[i].itemTitle;
+
+                    Transform onObj;
+                    onObj = go.transform.Find("On");
+                    Transform offObj;
+                    offObj = go.transform.Find("Off");
+
+                    if (i == index)
+                    {
+                        onObj.gameObject.SetActive(true);
+                        offObj.gameObject.SetActive(false);
+                    }
+
+                    else
+                    {
+                        onObj.gameObject.SetActive(false);
+                        offObj.gameObject.SetActive(true);
+                    }
+                }
+            }
+
+            else
+            {
+                Destroy(indicatorParent.gameObject);
             }
         }
 
@@ -144,11 +141,10 @@ namespace Michsky.UI.ModernUIPack
                     try
                     {
                         itemList[index].onValueChanged.Invoke();
+                        selectorEvent.Invoke(index);
                     }
 
                     catch { }
-
-                    selectorEvent.Invoke(index);
 
                     selectorAnimator.Play(null);
                     selectorAnimator.StopPlayback();
@@ -178,11 +174,10 @@ namespace Michsky.UI.ModernUIPack
                 try
                 {
                     itemList[index].onValueChanged.Invoke();
+                    selectorEvent.Invoke(index);
                 }
 
                 catch { }
-
-                selectorEvent.Invoke(index);
 
                 selectorAnimator.Play(null);
                 selectorAnimator.StopPlayback();
@@ -244,11 +239,10 @@ namespace Michsky.UI.ModernUIPack
                     try
                     {
                         itemList[index].onValueChanged.Invoke();
+                        selectorEvent.Invoke(index);
                     }
 
                     catch { }
-
-                    selectorEvent.Invoke(index);
 
                     selectorAnimator.Play(null);
                     selectorAnimator.StopPlayback();
@@ -278,11 +272,10 @@ namespace Michsky.UI.ModernUIPack
                 try
                 {
                     itemList[index].onValueChanged.Invoke();
+                    selectorEvent.Invoke(index);
                 }
 
                 catch { }
-
-                selectorEvent.Invoke(index);
 
                 selectorAnimator.Play(null);
                 selectorAnimator.StopPlayback();

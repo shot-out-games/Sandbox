@@ -17,12 +17,13 @@ public class EnemyWeaponMovementSystem :  SystemBase
                 ref EnemyWeaponMovementComponent enemyMovementComponent,
                 ref EnemyStateComponent enemyState,
                 ref GunComponent gun,
-                in Entity entity, in EnemyMove enemyMove, in Animator animator, in EnemyWeaponAim ammo
+                in Entity entity, in DeadComponent dead,
+                in EnemyMove enemyMove, in Animator animator, in EnemyWeaponAim ammo
            ) =>
             {
 
                 //if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
-                if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
+                if (dead.isDead) return;
                 if (enemyMovementComponent.enabled == false) return;
 
 

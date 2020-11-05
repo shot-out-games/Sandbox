@@ -18,6 +18,8 @@ public class BasicLoserSystem : SystemBase
 
     protected override void OnUpdate()
     {
+        if (LevelManager.instance.gameResult == GameResult.Loser) return;
+
 
         bool loser = false;
 
@@ -29,6 +31,7 @@ public class BasicLoserSystem : SystemBase
                 if (dead.isDead == true)
                 {
                     loser = true;
+                    Debug.Log("loser");
                 }
             }
         ).Run();

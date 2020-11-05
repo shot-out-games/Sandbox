@@ -53,18 +53,14 @@ public class AttackerSystem : SystemBase
         (
             Animator animator,
             HealthBar healthBar,
+            in DeadComponent dead,
             in CollisionComponent collisionComponent,
             in Entity entity
 
 
         ) =>
         {
-            bool dead = false;
-            if (EntityManager.HasComponent<DeadComponent>(entity))
-            {
-                dead = EntityManager.GetComponentData<DeadComponent>(entity).isDead;
-            }
-            if (dead) return;
+            if (dead.isDead == true) return;
 
 
 

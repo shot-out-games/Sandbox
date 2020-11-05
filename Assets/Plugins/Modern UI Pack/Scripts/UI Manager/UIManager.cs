@@ -13,9 +13,6 @@ namespace Michsky.UI.ModernUIPack
         // [Header("ANIMATED ICON")]
         public Color animatedIconColor = new Color(255, 255, 255, 255);
 
-        // [Header("CONTEXT MENU")]
-        public Color contextBackgroundColor = new Color(255, 255, 255, 255);
-
         // [Header("BUTTON")]
         public ButtonThemeType buttonThemeType;
         public TMP_FontAsset buttonFont;

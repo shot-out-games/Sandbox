@@ -16,13 +16,14 @@ public class EnemyMeleeMovementSystem : SystemBase
             ref EnemyStateComponent enemyState,
             ref Translation translation,
             in Entity entity,
+            in DeadComponent dead,
             in Animator animator,
             in EnemyMove enemyMove
 
 
         ) =>
         {
-            if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
+            if (dead.isDead) return;
             if (enemyMovementComponent.enabled == false) return;
 
             if (enemyMove.target != null)

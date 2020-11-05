@@ -31,8 +31,8 @@ namespace Michsky.UI.ModernUIPack
         [Space(8)] public SliderEvent sliderEvent;
 
         // Other Variables
-        [HideInInspector] public Animator sliderAnimator;
-        [HideInInspector] public float saveValue;
+        Animator sliderAnimator;
+        float saveValue;
 
         void Start()
         {

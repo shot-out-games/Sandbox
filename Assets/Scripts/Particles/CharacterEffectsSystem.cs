@@ -57,8 +57,8 @@ public class CharacterEffectsSystem : SystemBase
         Entities.WithoutBurst().WithNone<Pause>().ForEach(
             (
                 Entity e,
+                ref DeadComponent deadComponent,
                 in EffectsComponent effectsComponent,
-                in DeadComponent deadComponent,
                 in Animator animator,
                 in EffectsManager effects) =>
             {
@@ -69,9 +69,11 @@ public class CharacterEffectsSystem : SystemBase
 
                 AudioSource audioSource = effects.audioSource;
 
-                if (deadComponent.justDead)
+                if (deadComponent.playDeadEffects)
                 {
+                    deadComponent.playDeadEffects = false;
                     Debug.Log("dead");
+                    //deadComponent.justDead = false;
 
                     if (effects.actorDeadEffectInstance)
                     {

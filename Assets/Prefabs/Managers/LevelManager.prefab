@@ -306,13 +306,15 @@ MonoBehaviour:
   potentialGameTargets: 36
   potentialCumulativeGameTargets: 
   totalLevels: 0
+  resetLevel: 0
+  loadGame: 0
   playersDead: 0
   enemiesDead: 0
   NpcDead: 0
   playersSaved: 0
   enemiesSaved: 0
   NpcSaved: 0
-  maxLevels: 1
+  maxLevels: 2
   worldName: World
   audioSourceMenu: {fileID: 171436231}
   audioSourceGame: {fileID: 1182716200}
@@ -363,19 +365,12 @@ MonoBehaviour:
     playersSaved: 0
     enemiesSaved: 0
     NpcSaved: 0
-  - levelName: Area V
-    levelCompleteScenario: 0
-    potentialLevelTargets: 10
-    lives: 1
-    points: 0
-    playersDead: 0
-    enemiesDead: 0
-    NpcDead: 0
-    playersSaved: 0
-    enemiesSaved: 0
-    NpcSaved: 0
   levelMediaList:
   - levelMusic: {fileID: 8300000, guid: 9843c519367ee9448b8f381ecb2f9906, type: 3}
+    levelVolume: 1
   - levelMusic: {fileID: 8300000, guid: 42436fad55521ad4fa5735a9a3b8a9c1, type: 3}
+    levelVolume: 0.1
   - levelMusic: {fileID: 8300000, guid: 1a70bfcf32ff2a54ebf829bd8641dcbf, type: 3}
+    levelVolume: 1
   - levelMusic: {fileID: 8300000, guid: ae7cdbe372db05e489f3949f6edd571a, type: 3}
+    levelVolume: 1

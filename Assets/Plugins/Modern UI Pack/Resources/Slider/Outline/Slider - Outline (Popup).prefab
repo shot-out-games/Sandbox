@@ -226,8 +226,6 @@ MonoBehaviour:
   sliderEvent:
     m_PersistentCalls:
       m_Calls: []
-  sliderAnimator: {fileID: 0}
-  saveValue: 0
 --- !u!114 &114567343267121874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,7 +288,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: c149d8d7e6ebd27449cdc50e0fe309f5, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 2
+  m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 

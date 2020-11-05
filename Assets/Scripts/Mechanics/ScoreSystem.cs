@@ -79,6 +79,7 @@ public class ScoreSystem : SystemBase
                 scoreComponentAuthoring.ShowLabelScore(score.score);
                 scoreComponentAuthoring.ShowLabelStreak(score.streak);
                 scoreComponentAuthoring.ShowLabelCombo(score.combo);
+                scoreComponentAuthoring.ShowLabelLevel(LevelManager.instance.currentLevelCompleted + 1);
 
             }
         ).Run();

@@ -1169,17 +1169,11 @@ MonoBehaviour:
   buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
+  useCustomContent: 0
   normalIcon: {fileID: 114434003696981600}
   highlightedIcon: {fileID: 114604531632435880}
   normalText: {fileID: 114692695739354114}
   highlightedText: {fileID: 114686504533206434}
-  soundSource: {fileID: 0}
-  useCustomContent: 0
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
 --- !u!114 &114982092876322890
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1790,7 +1784,6 @@ MonoBehaviour:
   windowDescription: {fileID: 114508260263843194}
   confirmButton: {fileID: 114982092876322890}
   cancelButton: {fileID: 114061772761514570}
-  mwAnimator: {fileID: 95934309410621270}
   icon: {fileID: 21300000, guid: 9df0f4d8c02014347ad2d7de427e0ced, type: 3}
   titleText: STYLE 2
   descriptionText: 'Content here. You can re-align the text.
@@ -1829,7 +1822,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 0659078b92ce3aa4b93c2525d8d8c0c4, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 2
+  m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -2529,17 +2522,11 @@ MonoBehaviour:
   buttonEvent:
     m_PersistentCalls:
       m_Calls: []
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
+  useCustomContent: 0
   normalIcon: {fileID: 114010512861185538}
   highlightedIcon: {fileID: 114507850156362696}
   normalText: {fileID: 114907774013978860}
   highlightedText: {fileID: 114778462652432140}
-  soundSource: {fileID: 0}
-  useCustomContent: 0
-  enableButtonSounds: 0
-  useHoverSound: 1
-  useClickSound: 1
 --- !u!114 &114061772761514570
 MonoBehaviour:
   m_ObjectHideFlags: 0

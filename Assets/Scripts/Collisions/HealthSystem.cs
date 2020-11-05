@@ -38,11 +38,12 @@ public class HealthSystem : SystemBase
                 healthComponent.TotalDamageReceived += damageComponent.DamageReceived;
                 ecb.RemoveComponent<DamageComponent>(entity);
                 var dead = EntityManager.GetComponentData<DeadComponent>(entity);
-                if (healthComponent.TotalDamageReceived >= ratingsComponent.maxHealth && dead.isDead == false && dead.justDead == false)
+                if (healthComponent.TotalDamageReceived >= ratingsComponent.maxHealth && dead.isDead == false)
                 {
                     dead.dieLevel = LevelManager.instance.currentLevelCompleted;
+                    dead.isDying = true;
                     dead.isDead = true;
-                    dead.justDead= true;
+                    dead.playDeadEffects= true;
                     ecb.SetComponent(entity, dead);
                 }
 

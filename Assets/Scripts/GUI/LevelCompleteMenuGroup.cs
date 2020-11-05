@@ -28,6 +28,7 @@ public class LevelCompleteMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     public Entity entity;
 
     AudioSource audioSource;
+
     private List<Button> buttons;
     public AudioClip clickSound;
     public EventSystem eventSystem;
@@ -72,6 +73,7 @@ public class LevelCompleteMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
                 showTimer = 0;
                 startShowTimer = false;
                 HideMenu();
+                LevelCompleteEvent?.Invoke();
             }
         }
     }
@@ -105,7 +107,7 @@ public class LevelCompleteMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
         }
 
         message.SetText(_message);
-        LevelCompleteEvent?.Invoke();
+
 
 
     }

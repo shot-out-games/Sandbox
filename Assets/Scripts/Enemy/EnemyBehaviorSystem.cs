@@ -30,13 +30,14 @@ public class EnemyBehaviorSystem : SystemBase
             ref EnemyMovementComponent enemyBasicMovementComponent,
             ref EnemyWeaponMovementComponent enemyWeaponMovementComponent,
             ref EnemyMeleeMovementComponent enemyMeleeMovementComponent,
+            in DeadComponent dead,
             in Entity entity
 
         ) =>
         {
 
             //if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
-            if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
+            if (dead.isDead) return;
 
             if (enemyMeleeMovementComponent.switchUp == false || enemyWeaponMovementComponent.switchUp == false) return;
 

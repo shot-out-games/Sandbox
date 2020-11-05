@@ -110,6 +110,7 @@ public class ShowMenuSystem : SystemBase
                 {
                     if (deadMenuComponent.hide == true)
                     {
+                        Debug.Log("show loser");
                         deadMenuGroup.ShowMenu(showScoresOnMenu, score, rank);
                         deadMenuComponent.hide = false;
                     }

@@ -31,6 +31,8 @@ public class ScoreComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     private TextMeshProUGUI labelStreak;
     [SerializeField]
     private TextMeshProUGUI labelCombo;
+    [SerializeField]
+    private TextMeshProUGUI labelLevel;
 
     [SerializeField] private int defaultPointsScored = 100;
 
@@ -48,6 +50,11 @@ public class ScoreComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     public void ShowLabelCombo(int combo)
     {
         labelCombo.text = combo.ToString();
+    }
+
+    public void ShowLabelLevel(int level)
+    {
+        labelLevel.text= level.ToString();
     }
 
 

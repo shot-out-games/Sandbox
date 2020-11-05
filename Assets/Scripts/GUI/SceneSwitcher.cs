@@ -84,6 +84,8 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("level loaded " + SceneManager.GetActiveScene().buildIndex);
+        LevelManager.instance.InitGameData();
+
         //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
         //var sceneSwitcher = entityManager.GetComponentData<SceneSwitcherComponent>(e);
         //sceneSwitcher.delete = false;

@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using UnityEngine.EventSystems;
 
 namespace Michsky.UI.ModernUIPack
 {
-    public class SwitchManager : MonoBehaviour, IPointerEnterHandler
+    public class SwitchManager : MonoBehaviour
     {
         // Events
         public UnityEvent OnEvents;
@@ -18,39 +17,17 @@ namespace Michsky.UI.ModernUIPack
         // Settings
         public bool isOn = true;
         public bool invokeAtStart = true;
-        public bool enableSwitchSounds = false;
-        public bool useHoverSound = true;
-        public bool useClickSound = true;
 
-        // Resources
-        public Animator switchAnimator;
-        public Button switchButton;
-        public AudioSource soundSource;
-
-        // Audio
-        public AudioClip hoverSound;
-        public AudioClip clickSound;
+        Animator switchAnimator;
+        Button switchButton;
 
         void Start()
         {
             try
             {
-                if (switchAnimator == null)
-                    switchAnimator = gameObject.GetComponent<Animator>();
-
-                if (switchButton == null)
-                {
-                    switchButton = gameObject.GetComponent<Button>();
-                    switchButton.onClick.AddListener(AnimateSwitch);
-
-                    if (enableSwitchSounds == true && useClickSound == true)
-                    {
-                        switchButton.onClick.AddListener(delegate
-                        {
-                            soundSource.PlayOneShot(clickSound);
-                        });
-                    }
-                }
+                switchAnimator = gameObject.GetComponent<Animator>();
+                switchButton = gameObject.GetComponent<Button>();
+                switchButton.onClick.AddListener(AnimateSwitch);
             }
 
             catch
@@ -185,12 +162,6 @@ namespace Michsky.UI.ModernUIPack
                 if (saveValue == true)
                     PlayerPrefs.SetString(switchTag + "Switch", "true");
             }
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            if (enableSwitchSounds == true && useHoverSound == true && switchButton.interactable == true)
-                soundSource.PlayOneShot(hoverSound);
         }
     }
 }

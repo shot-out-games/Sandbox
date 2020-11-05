@@ -70,10 +70,16 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
         DontDestroyOnLoad(gameObject);
     }
 
-    public void ClearGameData()
+    public void InitGameData()
     {
         endGame = false;
         gameResult = GameResult.None;
+
+    }
+
+
+    public void ClearGameData()
+    {
 
         //currentLevelCompleted = 0;
 
@@ -145,10 +151,13 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
 
 
         AudioClip levelMusic = LevelManager.instance.levelMediaList[currentLevelCompleted].levelMusic;
+        float levelVolume = LevelManager.instance.levelMediaList[currentLevelCompleted].levelVolume;
+
 
         //Debug.Log("Play " + currentLevelCompleted);
 
         audioSourceGame.clip = levelMusic;
+        audioSourceGame.volume = levelVolume;
         audioSourceGame.Play();
     }
 

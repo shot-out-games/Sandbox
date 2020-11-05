@@ -29,7 +29,6 @@ namespace Michsky.UI.ModernUIPack
             else
                 customSkin = (GUISkin)Resources.Load("Editor\\Custom Skin Light");
 
-            GUILayout.Space(-70);
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
 
@@ -48,15 +47,6 @@ namespace Michsky.UI.ModernUIPack
 
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            GUILayout.Space(60);
-
-            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
-
-            GUILayout.FlexibleSpace();
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            GUILayout.Space(50);
 
             // Draw toolbar tabs as a button
             if (GUILayout.Button(new GUIContent("Items", "Items"), customSkin.FindStyle("Toolbar Items")))
@@ -70,6 +60,15 @@ namespace Michsky.UI.ModernUIPack
 
             if (GUILayout.Button(new GUIContent("Settings", "Settings"), customSkin.FindStyle("Toolbar Settings")))
                 currentTab = 3;
+
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+
+            // Draw toolbar indicators
+            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
 
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
@@ -96,9 +95,8 @@ namespace Michsky.UI.ModernUIPack
             switch (currentTab)
             {
                 case 0:
-                    GUILayout.Space(20);
                     GUILayout.Label("ITEMS", customSkin.FindStyle("Header"));
-                    GUILayout.Space(2);
+
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
                     EditorGUI.indentLevel = 1;
 
@@ -121,9 +119,8 @@ namespace Michsky.UI.ModernUIPack
                     break;
 
                 case 1:
-                    GUILayout.Space(20);
                     GUILayout.Label("RESOURCES", customSkin.FindStyle("Header"));
-                    GUILayout.Space(2);
+
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Label"), customSkin.FindStyle("Text"), GUILayout.Width(120));
@@ -148,13 +145,11 @@ namespace Michsky.UI.ModernUIPack
                     EditorGUILayout.PropertyField(indicatorObject, new GUIContent(""));
 
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(4);
+                    GUILayout.Space(6);
                     break;
 
                 case 2:
-                    GUILayout.Space(20);
                     GUILayout.Label("SAVING", customSkin.FindStyle("Header"));
-                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     saveValue.boolValue = GUILayout.Toggle(saveValue.boolValue, new GUIContent("Save Selection"), customSkin.FindStyle("Toggle"));
@@ -172,16 +167,15 @@ namespace Michsky.UI.ModernUIPack
 
                         GUILayout.EndHorizontal();
                         EditorGUI.indentLevel = 0;
+                        GUILayout.Space(2);
                         EditorGUILayout.HelpBox("Each selector should has its own unique tag.", MessageType.Info);
                     }
 
-                    GUILayout.Space(4);
+                    GUILayout.Space(6);
                     break;
 
                 case 3:
-                    GUILayout.Space(20);
                     GUILayout.Label("SETTINGS", customSkin.FindStyle("Header"));
-                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     enableIndicators.boolValue = GUILayout.Toggle(enableIndicators.boolValue, new GUIContent("Enable Indicators"), customSkin.FindStyle("Toggle"));
@@ -244,7 +238,7 @@ namespace Michsky.UI.ModernUIPack
                         EditorGUILayout.HelpBox("Save Selection is enabled. This option won't be used if there's a stored value.", MessageType.Info);
                     }
 
-                    GUILayout.Space(4);
+                    GUILayout.Space(6);
                     break;
             }
 

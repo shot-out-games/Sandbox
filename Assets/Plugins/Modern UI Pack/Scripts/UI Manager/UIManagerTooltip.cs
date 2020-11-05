@@ -37,7 +37,7 @@ namespace Michsky.UI.ModernUIPack
             if (dynamicUpdateEnabled == false)
             {
                 this.enabled = true;
-                UpdateTooltip();
+                UpdateDropdown();
             }
         }
 
@@ -45,18 +45,17 @@ namespace Michsky.UI.ModernUIPack
         {
             if (UIManagerAsset != null)
             {
-                if (Application.isEditor == true && UIManagerAsset != null)
-                {
+                if (UIManagerAsset.enableDynamicUpdate == true)
                     dynamicUpdateEnabled = true;
-                    UpdateTooltip();
-                }
-
                 else
                     dynamicUpdateEnabled = false;
+
+                if (dynamicUpdateEnabled == true)
+                    UpdateDropdown();
             }
         }
 
-        void UpdateTooltip()
+        void UpdateDropdown()
         {
             try
             {

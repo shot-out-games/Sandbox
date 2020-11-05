@@ -37,7 +37,8 @@ public class GunAmmoHandlerSystem : SystemBase
                 ref Rotation gunRotation,
                 in RatingsComponent ratingsComponent,
                 in BulletManager bulletManager,
-                in Entity entity, in AttachWeaponComponent attachWeapon) =>
+                in Entity entity, in DeadComponent dead,
+                in AttachWeaponComponent attachWeapon) =>
             {
 
 
@@ -54,7 +55,7 @@ public class GunAmmoHandlerSystem : SystemBase
 
 
                 //if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
-                if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
+                if (dead.isDead) return;
                 bool isEnemy = EntityManager.HasComponent<EnemyComponent>(entity);
 
                 if (isEnemy)

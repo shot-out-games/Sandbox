@@ -13,7 +13,9 @@ using UnityEngine.AI;
 public struct DeadComponent : IComponentData
 {
     public bool isDead;
-    public bool justDead;
+    public bool isDying;
+    public bool playDeadEffects;
+    //public bool justDead;
     public int dieLevel;
     public int tag;
     public bool checkLossCondition;
@@ -37,10 +39,11 @@ public class DeadSystem : SystemBase //really game over system currently
         (
             (ref DeadComponent deadComponent, in Entity entity, in Animator animator) =>
             {
-                if (deadComponent.isDead
-                    && deadComponent.tag == 1 && deadComponent.justDead)//player
+                if (deadComponent.isDying
+                    && deadComponent.tag == 1)//player
                 {
-                    deadComponent.justDead = false;
+                    deadComponent.isDying = false;
+                    deadComponent.playDeadEffects = true;
                     animator.SetInteger("Dead", 1);
                     LevelManager.instance.levelSettings[currentLevel].playersDead += 1;
                 }
@@ -56,28 +59,34 @@ public class DeadSystem : SystemBase //really game over system currently
 
         Entities.WithoutBurst().ForEach
         (
-            (ref DeadComponent deadComponent, ref WinnerComponent winnerComponent, ref PhysicsVelocity pv, in Entity entity) =>
+            (ref DeadComponent deadComponent, ref WinnerComponent winnerComponent, ref PhysicsVelocity pv, ref Translation translation,
+            in Entity entity) =>
             {
 
-                if (deadComponent.isDead
-                    && deadComponent.tag == 2 && deadComponent.justDead)//enemy
+
+                if (HasComponent<FlingMechanicComponent>(entity) && deadComponent.isDead == true)
                 {
+                    translation.Value.y = 4f;
+                }
+
+
+                if (deadComponent.isDying
+                    && deadComponent.tag == 2)//enemy
+                {
+                    Debug.Log("set dead");
+                    deadComponent.isDying = false;
+                    deadComponent.playDeadEffects = true;
                     //ecb.DestroyEntity(entity);//for now 
                     if (winnerComponent.checkWinCondition == true)//this  (and all with this true) enemy must be defeated to win the game
                     {
                         winnerComponent.endGameReached = true;
                     }
-                    else
-                    {
-                        deadComponent.justDead = false;
-                        enemyJustDead = true;
-                        LevelManager.instance.levelSettings[currentLevel].enemiesDead += 1;
-                        if (HasComponent<FlingMechanicComponent>(entity))
-                        {
-                            pv.Linear = Vector3.zero;
-                            //pv.Linear.y = 12f;
-                        }
-                    }
+                    //else
+                    //{
+                    //deadComponent.justDead = false;
+                    enemyJustDead = true;
+                    LevelManager.instance.levelSettings[currentLevel].enemiesDead += 1;
+                    //}
                 }
             }
         ).Run();
