@@ -81,7 +81,6 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
     {
         Color color = score3dTextInstance.color;
         color.a = alphaValue;
-        Debug.Log("alpha " + alphaValue);
         score3dTextInstance.color = color;
     }
 

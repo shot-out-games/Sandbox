@@ -125,6 +125,7 @@ public class SaveManager : MonoBehaviour
     public void DeleteGameData(int slot)
     {
         saveWorld.isSlotSaved[slot] = false;
+     
         int count = saveData.saveGames.Count;
         if (slot == 1 && count == 0)
         {
