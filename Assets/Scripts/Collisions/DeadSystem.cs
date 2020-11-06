@@ -64,10 +64,6 @@ public class DeadSystem : SystemBase //really game over system currently
             {
 
 
-                if (HasComponent<FlingMechanicComponent>(entity) && deadComponent.isDead == true)
-                {
-                    translation.Value.y = 4f;
-                }
 
 
                 if (deadComponent.isDying
@@ -86,6 +82,8 @@ public class DeadSystem : SystemBase //really game over system currently
                     //deadComponent.justDead = false;
                     enemyJustDead = true;
                     LevelManager.instance.levelSettings[currentLevel].enemiesDead += 1;
+                    pv.Linear = new float3(0, -1, 0);
+
                     //}
                 }
             }

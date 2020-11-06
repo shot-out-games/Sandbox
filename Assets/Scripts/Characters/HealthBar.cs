@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using Unity.Entities;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,6 +30,7 @@ public struct DamageComponent : IComponentData
 {
     public float DamageLanded;
     public float DamageReceived;
+    public float ScorePointsReceived;//to track if hit and points scored by player how many and what enemy
     public float StunLanded;
 
 }
@@ -48,8 +50,12 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
 
     [SerializeField] private float showDamageMin = 50;
     [SerializeField] private ShowText3D showText3D = ShowText3D.hitDamage;
+    [SerializeField] float showTime = 3;
+    float alphaTime = 0;
 
 
+    //MeshRenderer renderer;
+    //Material material;
 
 
     void Start()
@@ -61,28 +67,59 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
             ps.transform.parent = transform;
             ps.transform.localPosition = new Vector3(0, ps.transform.localPosition.y, 0);
             score3dTextInstance = ps;
+            //renderer = score3dTextInstance.GetComponent<MeshRenderer>();
+            //material = renderer.sharedMaterial;
+            SetAlpha(0);
         }
-
-
-
         HealthChange();
+
+
     }
 
 
+    void SetAlpha(float alphaValue)
+    {
+        Color color = score3dTextInstance.color;
+        color.a = alphaValue;
+        Debug.Log("alpha " + alphaValue);
+        score3dTextInstance.color = color;
+    }
 
 
+    void Update()
+    {
+
+        if(alphaTime > 0)
+        {
+            alphaTime += Time.deltaTime;
+            if(alphaTime > showTime)
+            {
+                alphaTime = 0;
+                SetAlpha(0);
+            }
+            else
+            {
+                SetAlpha((showTime - alphaTime) / showTime);
+            }
+        }
+    }
 
 
     public void ShowText3dValue(int value)
     {
         score3dTextInstance.text = value.ToString();
         Debug.Log("val " + value);
+        SetAlpha(1);
+        alphaTime += Time.deltaTime; 
+        //StartCoroutine(Wait(showTime));
+        //SetAlpha(1);
+
 
     }
 
 
 
-public void HealthChange()
+    public void HealthChange()
     {
 
         if (_healthBar == null || !entityManager.HasComponent<HealthComponent>(entity))
@@ -110,7 +147,17 @@ public void HealthChange()
     }
 
 
-  
+
+    //IEnumerator Wait(float time)
+    //{
+    //    yield return new WaitForSeconds(time);
+    //    SetAlpha(0);
+    //    Debug.Log("val ");
+
+    //}
+
+
+
 
     public void Convert(Entity _entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
@@ -124,4 +171,5 @@ public void HealthChange()
             ShowText3D = showText3D
         });
     }
+
 }

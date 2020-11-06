@@ -161,6 +161,7 @@ public class AttackerSystem : SystemBase
                         {
                             var scoreComponent = EntityManager.GetComponentData<ScoreComponent>(entityB);
                             scoreComponent.pointsScored = true;
+                            scoreComponent.scoredAgainstEntity = entityA;
                             EntityManager.SetComponentData(entityB, scoreComponent);
                         }
 
@@ -176,6 +177,7 @@ public class AttackerSystem : SystemBase
                         {
                             var scoreComponent = EntityManager.GetComponentData<ScoreComponent>(entityA);
                             scoreComponent.pointsScored = true;
+                            scoreComponent.scoredAgainstEntity = entityB;
                             EntityManager.SetComponentData(entityA, scoreComponent);
                         }
 

@@ -12,11 +12,13 @@ public struct ScoreComponent : IComponentData
     public int score;
     public int rank;
     public bool pointsScored;
+    public int lastPointValue;
     public int defaultPointsScored;
     public int scoreChecked;
     public float timeSinceLastScore;
     public int streak;
     public int combo;
+    public Entity scoredAgainstEntity;
 
 
 }

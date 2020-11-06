@@ -17,6 +17,7 @@ public class ScoreSystem : SystemBase
     {
 
         var flingGroup = GetComponentDataFromEntity<FlingMechanicComponent>(false);
+        var damageGroup = GetComponentDataFromEntity<DamageComponent>(false);
         EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
 
 
@@ -64,7 +65,16 @@ public class ScoreSystem : SystemBase
                     float comboBonus = math.pow(score.combo * defaultScore, 2) / 100;
                     //Debug.Log("combo Bonus " + comboBonus);
 
-                    score.score = score.score + score.defaultPointsScored + (int)timeBonus + (int)streakBonus + (int)comboBonus;
+                    score.lastPointValue = score.defaultPointsScored + (int)timeBonus + (int)streakBonus + (int)comboBonus;
+                    score.score = score.score + score.lastPointValue;
+
+                    if(HasComponent<DamageComponent>(score.scoredAgainstEntity))
+                    {
+                        Debug.Log("against " + score.scoredAgainstEntity);
+                        var damage = damageGroup[score.scoredAgainstEntity];
+                        damage.ScorePointsReceived = score.lastPointValue;
+                        damageGroup[score.scoredAgainstEntity] = damage;
+                    }
 
                     score.pointsScored = false;
                     score.timeSinceLastScore = 0;
