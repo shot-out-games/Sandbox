@@ -60,17 +60,17 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
 
     void Start()
     {
-        if (entity == Entity.Null) return;
         if (score3dText)
         {
             var ps = Instantiate(score3dText);
             ps.transform.parent = transform;
-            ps.transform.localPosition = new Vector3(0, ps.transform.localPosition.y, 0);
+            ps.transform.localPosition = new Vector3(0, 5, 0);
             score3dTextInstance = ps;
             //renderer = score3dTextInstance.GetComponent<MeshRenderer>();
             //material = renderer.sharedMaterial;
             SetAlpha(0);
         }
+        if (entity == Entity.Null) return;
         HealthChange();
 
 
