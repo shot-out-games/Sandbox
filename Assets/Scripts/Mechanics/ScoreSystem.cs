@@ -104,7 +104,8 @@ public class ScoreSystem : SystemBase
         if (LevelManager.instance.endGame == true && scoreChecked == 0 || updateScoreForMenu == true)//update score if clicked from menu
         {
             SaveManager.instance.updateScore = false;
-            int slot = SaveManager.instance.saveWorld.lastLoadedSlot - 1;
+            //int slot = SaveManager.instance.saveWorld.lastLoadedSlot - 1;
+            int slot = 0;
             List<float> scores = SaveManager.instance.saveData.saveGames[slot].scoreList;
             //Debug.Log("cs " + currentScore);
             if (updateScoreForMenu == false)

@@ -13,7 +13,8 @@ public class LoadSystem : SystemBase
     protected override void OnUpdate()
     {
 
-      
+        if (SaveManager.instance.saveWorld.isSlotSaved[0] == false) return;
+        Debug.Log("slot true");
 
         if (LevelManager.instance.loadGame == false) return;
         LevelManager.instance.loadGame = false;
@@ -30,13 +31,7 @@ public class LoadSystem : SystemBase
             return;
         }
 
-        int slot = SaveManager.instance.saveWorld.lastLoadedSlot - 1;
-        if (slot == -1)//new file
-        {
-            slot = 0;
-            SaveManager.instance.saveWorld.lastLoadedSlot = 1;
-        }
-
+        int slot = 0;
         if (SaveManager.instance.saveData.saveGames[slot].savePlayers == null) return;
         if (SaveManager.instance.saveData.saveGames[slot].saveEnemies == null) return;
         if (SaveManager.instance.saveData.saveGames[slot].savePlayers.Count == 0) return;

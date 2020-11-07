@@ -40,6 +40,7 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
 {
 
     public Image _healthBar = null;
+    bool showHealth = true;
     public Entity entity;
     private EntityManager entityManager;
     [SerializeField] private bool alwaysDamage;
@@ -63,15 +64,15 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
         if (score3dText)
         {
             var ps = Instantiate(score3dText);
-            ps.transform.parent = transform;
+            ps.transform.SetParent( transform, false);
             ps.transform.localPosition = new Vector3(0, 5, 0);
             score3dTextInstance = ps;
             //renderer = score3dTextInstance.GetComponent<MeshRenderer>();
             //material = renderer.sharedMaterial;
             SetAlpha(0);
         }
-        if (entity == Entity.Null) return;
-        HealthChange();
+       // if (entity == Entity.Null) return;
+        //HealthChange();
 
 
     }
@@ -87,8 +88,14 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
 
     void Update()
     {
+        if (showHealth == true && entity != Entity.Null)
+        {
+            showHealth = false;
+            HealthChange();
+        }
 
-        if(alphaTime > 0)
+
+        if (alphaTime > 0)
         {
             alphaTime += Time.deltaTime;
             if(alphaTime > showTime)

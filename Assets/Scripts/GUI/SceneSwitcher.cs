@@ -102,6 +102,7 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
         LevelManager.instance.resetLevel = true;
         LevelManager.instance.currentLevelCompleted = 0;
         StartCoroutine(LoadYourAsyncScene(2));
+
     }
 
 
@@ -123,6 +124,7 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
         //bool resetLevel = SaveManager.instance.saveWorld.isSlotSaved[1] == false;
         LevelManager.instance.ClearGameData();
         SaveManager.instance.saveMainGame = true;
+        SaveManager.instance.saveWorld.isSlotSaved[0] = true;
         SaveManager.instance.SaveWorldSettings();
         SaveManager.instance.SaveGameData();
         SaveLevelManager.instance.saveScene = true;
@@ -328,6 +330,7 @@ public class SetupNextLevelSystem : SystemBase
                 }
             };
 
+            SaveLevelManager.instance.saveLevelPlayers.Clear();
             SaveLevelManager.instance.saveLevelPlayers.Add(levelPlayers);
             Debug.Log("setup level  ");
 

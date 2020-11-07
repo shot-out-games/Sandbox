@@ -34,8 +34,8 @@ public class LoadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     {
         if (SaveManager.instance.saveData.saveGames.Count == 0) return;
         SaveWorld sw = SaveManager.instance.saveWorld;
-        slotText.text = sw.isSlotSaved[1] ? "CONTINUE " : "New Game";
-        slotTextHighlighted.text = sw.isSlotSaved[1] ? "CONTINUE " : "New Game";
+        slotText.text = sw.isSlotSaved[0] ? "CONTINUE " : "New Game";
+        slotTextHighlighted.text = sw.isSlotSaved[0] ? "CONTINUE " : "New Game";
     }
 
     public void OnLoadSlotClicked(int slot)
@@ -50,8 +50,13 @@ public class LoadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
         LevelManager.instance.resetLevel = true;
         Debug.Log("load option clicked");
         SaveManager.instance.LoadSaveWorld();
-        SaveManager.instance.saveWorld.lastLoadedSlot = selectedSlot;
+        //SaveManager.instance.saveWorld.lastLoadedSlot = selectedSlot;
+        //SaveManager.instance.saveWorld.lastLoadedSlot = 0;
         SaveManager.instance.LoadSaveData();
+        if(SaveManager.instance.saveWorld.isSlotSaved[0] == false)
+        {
+            LevelManager.instance.currentLevelCompleted = 0;
+        }
     }
 
 

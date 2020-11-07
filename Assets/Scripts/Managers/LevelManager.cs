@@ -72,6 +72,7 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
 
     public void InitGameData()
     {
+        loadGame = true;
         endGame = false;
         gameResult = GameResult.None;
 

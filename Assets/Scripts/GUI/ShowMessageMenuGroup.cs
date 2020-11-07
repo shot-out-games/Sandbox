@@ -89,18 +89,6 @@ public class ShowMessageMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
-    public void Quit()
-    {
-        SaveManager.instance.SaveWorldSettings();
-
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
-
-    }
-
 
 
     public void ShowMenu()

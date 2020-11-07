@@ -45,18 +45,6 @@ public class DeadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
-    public void Quit()
-    {
-        SaveManager.instance.SaveWorldSettings();
-
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
-
-    }
-
    
 
     public void ShowMenu(bool showScoreboard, int score, int rank)

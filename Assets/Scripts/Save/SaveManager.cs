@@ -21,6 +21,7 @@ public class SaveManager : MonoBehaviour
     public bool saveMainGame = false;
 
 
+
     private void Awake()
     {
         if (instance == null)
@@ -46,17 +47,17 @@ public class SaveManager : MonoBehaviour
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(path, FileMode.Open);
             sw = bf.Deserialize(file) as SaveWorld;
-            if (sw.lastLoadedSlot == 0)
-            {
-                sw.lastLoadedSlot = 1;
-            }
+            //if (sw.lastLoadedSlot == 0)
+            //{
+               // sw.lastLoadedSlot = 1;
+            //}
             file.Close();
         }
         else
         {
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Create(path);
-            sw = new SaveWorld { lastLoadedSlot = 1 };
+            sw = new SaveWorld {  };
             bf.Serialize(file, sw);
             file.Close();
         }
@@ -67,25 +68,12 @@ public class SaveManager : MonoBehaviour
 
     }
 
-
-    public void SaveWorldSettings()
-    {
-        Debug.Log("save world");
-        int slot = saveWorld.lastLoadedSlot;
-        saveWorld.isSlotSaved[slot] = true && slot > 0; 
-        string path = Application.persistentDataPath + "/game.wor";
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(path);
-        bf.Serialize(file, saveWorld);
-        file.Close();
-
-    }
-
     
 
     public SaveData LoadSaveData()
     {
-        int slot = saveWorld.lastLoadedSlot;
+        //int slot = saveWorld.lastLoadedSlot;
+        int slot = 0;
         //string path = Application.persistentDataPath + "/savedGames" + slot.ToString() + ".sog";
         string path = Application.persistentDataPath + "/savedGames" + ".sog";
         if (File.Exists(path))
@@ -122,9 +110,26 @@ public class SaveManager : MonoBehaviour
         file.Close();
     }
 
+
+    public void SaveWorldSettings()
+    {
+        Debug.Log("save world");
+        //int slot = saveWorld.lastLoadedSlot;
+        //saveWorld.isSlotSaved[slot] = true && slot > 0; 
+        string path = Application.persistentDataPath + "/game.wor";
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(path);
+        bf.Serialize(file, saveWorld);
+        file.Close();
+
+    }
+
+
+
+
     public void DeleteGameData(int slot)
     {
-        saveWorld.isSlotSaved[slot] = false;
+        saveWorld.isSlotSaved[slot-1] = false;
      
         int count = saveData.saveGames.Count;
         if (slot == 1 && count == 0)
@@ -198,7 +203,8 @@ public class SaveManager : MonoBehaviour
 
     public void DeleteHighScoreData()
     {
-        int slot = saveWorld.lastLoadedSlot - 1;
+        //int slot = saveWorld.lastLoadedSlot - 1;
+        int slot = 0;
         saveData.saveGames[slot].scoreList.Clear();
         Debug.Log("clear");
         SaveGameData();

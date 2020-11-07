@@ -42,7 +42,8 @@ public class SaveSystem : SystemBase
         EnemyEntities = enemyQuery.ToEntityArray(Allocator.Persistent);
 
         //setup manager
-        int slot = SaveManager.instance.saveWorld.lastLoadedSlot - 1;
+        //int slot = SaveManager.instance.saveWorld.lastLoadedSlot - 1;
+        int slot = 0;
         int savedGames = SaveManager.instance.saveData.saveGames.Count;
         if (savedGames == 0)
         {

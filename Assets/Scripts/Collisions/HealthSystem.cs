@@ -14,8 +14,7 @@ public class HealthSystem : SystemBase
     private EndSimulationEntityCommandBufferSystem ecbSystem;
 
 
-
-
+    
 
     protected override void OnUpdate()
     {

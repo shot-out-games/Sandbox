@@ -26,7 +26,7 @@ public class LoadDeleteMenuGroup : MonoBehaviour
     {
         if (!deleteButton) return;
         selectedSlot = slot;
-        bool isSlotSaved = SaveManager.instance.saveWorld.isSlotSaved[slot];
+        bool isSlotSaved = SaveManager.instance.saveWorld.isSlotSaved[slot-1];//slot always 0
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;
         deleteButton.Select();
@@ -44,7 +44,8 @@ public class LoadDeleteMenuGroup : MonoBehaviour
 
         //just using zero scarpping multi game saves - just 0 slot
         SaveManager.instance.saveData.saveGames[0].currentLevel = 0;
-        SaveManager.instance.saveWorld.lastLoadedSlot = 0;
+        //SaveManager.instance.saveWorld.lastLoadedSlot = 0;
+        SaveManager.instance.saveWorld.isSlotSaved = new bool[] { false, false, false, false } ;
         //}
 
         OnLoadSlot(selectedSlot);
