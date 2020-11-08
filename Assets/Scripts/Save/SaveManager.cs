@@ -38,6 +38,12 @@ public class SaveManager : MonoBehaviour
 
     }
 
+
+    public void SaveCurrentLevelCompleted(int level)
+    {
+        saveData.saveGames[0].currentLevel = level;
+    }
+
     public SaveWorld LoadSaveWorld()
     {
         Debug.Log("load Save world");

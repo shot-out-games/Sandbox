@@ -13,7 +13,7 @@ public class LoadSystem : SystemBase
     protected override void OnUpdate()
     {
 
-        if (SaveManager.instance.saveWorld.isSlotSaved[0] == false) return;
+        if (SaveManager.instance.saveWorld.isSlotSaved[0] == false) return;//deleted / cleared slot
         Debug.Log("slot true");
 
         if (LevelManager.instance.loadGame == false) return;
@@ -36,9 +36,6 @@ public class LoadSystem : SystemBase
         if (SaveManager.instance.saveData.saveGames[slot].saveEnemies == null) return;
         if (SaveManager.instance.saveData.saveGames[slot].savePlayers.Count == 0) return;
         if (SaveManager.instance.saveData.saveGames[slot].saveEnemies.Count == 0) return;
-
-
-
 
         var sg = SaveManager.instance.saveData.saveGames[slot];
         LevelManager.instance.currentLevelCompleted = sg.currentLevel;

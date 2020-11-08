@@ -50,6 +50,8 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
 
     public static LevelManager instance = null;
     public int currentLevelCompleted;
+
+    public bool skipLoad = false;
     //public bool justCompleted { get; set; }
     public List<LevelSettings> levelSettings = new List<LevelSettings>();
     public List<LevelMedia> levelMediaList = new List<LevelMedia>();
@@ -72,7 +74,12 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
 
     public void InitGameData()
     {
-        loadGame = true;
+        //loadGame = true;
+        //if (skipLoad == true)//skipLoad when just resetting level - level is reset then loaded and Initgamedata() run  so we check here
+        //{
+           // loadGame = false;
+            //skipLoad = false;
+        //}
         endGame = false;
         gameResult = GameResult.None;
 

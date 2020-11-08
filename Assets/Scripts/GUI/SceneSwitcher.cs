@@ -105,9 +105,10 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
         SaveLevelManager.instance.saveScene = false;
         SaveManager.instance.saveMainGame = false;
         LevelManager.instance.loadGame = false;
-        SaveManager.instance.saveData.saveGames[0].currentLevel = 0;
+        //LevelManager.instance.skipLoad = true;
+        SaveManager.instance.SaveCurrentLevelCompleted(0);
 
-        SaveManager.instance.SaveGameData();
+        //SaveManager.instance.SaveGameData();
 
         StartCoroutine(LoadYourAsyncScene(2));
 
@@ -134,6 +135,8 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
         SaveManager.instance.saveMainGame = true;
         SaveManager.instance.saveWorld.isSlotSaved[0] = true;
         SaveManager.instance.SaveWorldSettings();
+        SaveManager.instance.SaveCurrentLevelCompleted(LevelManager.instance.currentLevelCompleted);
+        Debug.Log("save and exit " + LevelManager.instance.currentLevelCompleted);
         //SaveManager.instance.SaveGameData();
         SaveLevelManager.instance.saveScene = true;
         StartCoroutine(LoadYourAsyncScene(1));
@@ -199,10 +202,16 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     }
 
+    public void EnableLoadGame()//called only by load slot from load menu
+    {
+        LevelManager.instance.loadGame = true;
+    }
+
     public void SetupAndLoadNextScene()
     {
         SaveLevelManager.instance.saveScene = true;
         LevelManager.instance.currentLevelCompleted += 1;
+        SaveManager.instance.SaveCurrentLevelCompleted(LevelManager.instance.currentLevelCompleted);
         Debug.Log("setup and load next");
         LoadNextScene();
     }
@@ -211,21 +220,16 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     public void LoadNextScene()
     {
         Debug.Log("load next scene");
-        //CurrentSceneIndex = LevelManager.instance.currentLevelCompleted + 2;
         var sceneCount = SceneManager.sceneCountInBuildSettings;
-        //var nextIndex = CurrentSceneIndex + 1;
-        var nextSceneIndex = LevelManager.instance.currentLevelCompleted + 2;
+        int level = LevelManager.instance.currentLevelCompleted;
+        SaveManager.instance.SaveCurrentLevelCompleted(level);//need to save  because enableload called after then loadsystem will load to entities created when loading next level
+        var nextSceneIndex = level + 2;
         if (nextSceneIndex < 2) nextSceneIndex = 2;//0 is loader 1 is menu
-
         if (nextSceneIndex >= sceneCount)
         {
             Quit();
             return;
         }
-
-        //var nextScene = SceneUtility.GetScenePathByBuildIndex(nextIndex);
-        //TimeUntilNextSwitch = GetSceneDuration(nextScene);
-        //CurrentSceneIndex = nextIndex;
         StartCoroutine(LoadYourAsyncScene(nextSceneIndex));
         Debug.Log("load next scene complete " + nextSceneIndex);
     }

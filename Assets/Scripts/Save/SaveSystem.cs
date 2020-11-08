@@ -63,7 +63,7 @@ public class SaveSystem : SystemBase
             SaveManager.instance.saveData.saveGames[slot].saveLevelData.Add(new LevelSettings());
         }
 
-        SaveManager.instance.saveData.saveGames[slot].currentLevel = level;
+        SaveManager.instance.SaveCurrentLevelCompleted(level);
         Debug.Log("save current level " + level);
 
         for (int i = 0; i < PlayerEntities.Length; i++)

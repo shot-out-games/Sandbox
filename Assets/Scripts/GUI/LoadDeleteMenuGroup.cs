@@ -36,6 +36,13 @@ public class LoadDeleteMenuGroup : MonoBehaviour
         //Debug.Log("slot " + isSlotSaved);
     }
 
+    public void OnQuickButtonDelete()
+    {
+        SaveManager.instance.DeleteGameData(1);
+        SaveManager.instance.SaveCurrentLevelCompleted(0);
+        SaveManager.instance.saveWorld.isSlotSaved = new bool[] { false, false, false, false };
+    }
+
     public void OnButtonDelete()
     {
         //if deleted slot is last loaded slot then reset
@@ -43,9 +50,10 @@ public class LoadDeleteMenuGroup : MonoBehaviour
         //{
 
         //just using zero scarpping multi game saves - just 0 slot
-        SaveManager.instance.saveData.saveGames[0].currentLevel = 0;
+        //SaveManager.instance.saveData.saveGames[0].currentLevel = 0;
         //SaveManager.instance.saveWorld.lastLoadedSlot = 0;
-        SaveManager.instance.saveWorld.isSlotSaved = new bool[] { false, false, false, false } ;
+        SaveManager.instance.SaveCurrentLevelCompleted(0);
+        SaveManager.instance.saveWorld.isSlotSaved = new bool[] { false, false, false, false };
         //}
 
         OnLoadSlot(selectedSlot);
