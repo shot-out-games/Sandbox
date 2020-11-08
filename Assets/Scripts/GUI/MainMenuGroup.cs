@@ -117,7 +117,7 @@ public class MainMenuGroup : MonoBehaviour
     void PlayMenuClickSound(AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
-        Debug.Log("clip " + clip);
+        //Debug.Log("clip " + clip);
 
 
     }

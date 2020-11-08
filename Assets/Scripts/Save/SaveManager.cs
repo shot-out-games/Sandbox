@@ -40,6 +40,7 @@ public class SaveManager : MonoBehaviour
 
     public SaveWorld LoadSaveWorld()
     {
+        Debug.Log("load Save world");
         SaveWorld sw;
         string path = Application.persistentDataPath + "/game.wor";
         if (File.Exists(path))
@@ -78,7 +79,7 @@ public class SaveManager : MonoBehaviour
         string path = Application.persistentDataPath + "/savedGames" + ".sog";
         if (File.Exists(path))
         {
-            Debug.Log(path + " exists");
+            //Debug.Log(path + " exists");
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(path, FileMode.Open);
             SaveData sd = bf.Deserialize(file) as SaveData;

@@ -1192,8 +1192,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 7128647238940719420}
+        m_TargetAssemblyTypeName: LoadMenuGroup, Assembly-CSharp
+        m_MethodName: ShowMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
       - m_Target: {fileID: 1710977324}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: MainMenuGroup, Assembly-CSharp
         m_MethodName: HideMenu
         m_Mode: 1
         m_Arguments:
@@ -11268,7 +11280,6 @@ MonoBehaviour:
   saveWorld:
     musicVolume: 0
     soundVolume: 0
-    lastLoadedSlot: 0
     isSlotSaved: 00000000
   updateScore: 0
   saveMainGame: 0

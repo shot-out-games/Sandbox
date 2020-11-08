@@ -48,7 +48,7 @@ public class LoadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     {
         loadButton.interactable = false;
         LevelManager.instance.resetLevel = true;
-        Debug.Log("load option clicked");
+        //Debug.Log("load option clicked");
         SaveManager.instance.LoadSaveWorld();
         //SaveManager.instance.saveWorld.lastLoadedSlot = selectedSlot;
         //SaveManager.instance.saveWorld.lastLoadedSlot = 0;

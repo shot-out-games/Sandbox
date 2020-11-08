@@ -12,13 +12,11 @@ public class SaveWorld
     public float soundVolume = 100;
     //public int lastLoadedSlot;
     public bool[] isSlotSaved = new bool[4];//0 unused 1-3 save slots
-    public bool newSave = false;
 
-
-    public int graphicsQuality { get; set; }
-    public int screenResWidth { get; set; }
-    public int screenResHeight { get; set; }
-    public bool isFullScreen { get; set; }
+//    public int graphicsQuality { get; set; }
+//    public int screenResWidth { get; set; }
+    //public int screenResHeight { get; set; }
+    //public bool isFullScreen { get; set; }
 
 
 }

@@ -62,8 +62,8 @@ public class OptionsMenuGroup : MonoBehaviour
         SaveWorld sw = SaveManager.instance.saveWorld;
         soundSlider.value = sw.soundVolume;
         musicSlider.value = sw.musicVolume;
-        int currentQualityIndex = sw.graphicsQuality - 1;
-        if (currentQualityIndex < 0) currentQualityIndex = 2;//default high
+        //int currentQualityIndex = sw.graphicsQuality - 1;
+        //if (currentQualityIndex < 0) currentQualityIndex = 2;//default high
         buttons = GetComponentsInChildren<Button>().ToList();
         buttons.ForEach((btn) => btn.onClick.AddListener(() =>
         PlayButtonClickSound(clickSound)));

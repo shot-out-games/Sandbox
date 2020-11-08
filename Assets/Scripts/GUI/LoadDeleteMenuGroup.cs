@@ -33,7 +33,7 @@ public class LoadDeleteMenuGroup : MonoBehaviour
         deleteButton.interactable = isSlotSaved;
         deleteButton.gameObject.SetActive(isSlotSaved);
 
-        Debug.Log("slot " + isSlotSaved);
+        //Debug.Log("slot " + isSlotSaved);
     }
 
     public void OnButtonDelete()
