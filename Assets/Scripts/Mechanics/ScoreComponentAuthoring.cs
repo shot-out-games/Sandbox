@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using System;
+using Rewired.Utils.Libraries.TinyJson;
+using TMPro;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
@@ -18,6 +20,7 @@ public struct ScoreComponent : IComponentData
     public float timeSinceLastScore;
     public int streak;
     public int combo;
+    [NonSerialized]
     public Entity scoredAgainstEntity;
 
 

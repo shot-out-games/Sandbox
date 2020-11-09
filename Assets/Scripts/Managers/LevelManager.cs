@@ -30,6 +30,7 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
     public int totalLevels;
     public bool resetLevel;
     public bool loadGame;
+    public bool loadMenuContinueClicked;
 
     public int playersDead;
     public int enemiesDead;
@@ -55,6 +56,8 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
     //public bool justCompleted { get; set; }
     public List<LevelSettings> levelSettings = new List<LevelSettings>();
     public List<LevelMedia> levelMediaList = new List<LevelMedia>();
+    public bool newGame = false;
+
     void Awake()
     {
 

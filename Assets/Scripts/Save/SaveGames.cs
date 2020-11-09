@@ -12,19 +12,8 @@ public class SaveGames
     public List<LevelSettings> saveLevelData = new List<LevelSettings>();
     public List<float> scoreList = new List<float>();
 
-
-
     public int currentLevel;
 
 
-    public SaveGames()
-    {
-        //savePlayers.Add(new SavePlayers());
-        //savePlayers.Add(new SavePlayers());
-        //savePlayers.Add(new SavePlayers());
-        //saveEnemies.Add(new SaveEnemies());
-        //saveEnemies.Add(new SaveEnemies());
-        //saveEnemies.Add(new SaveEnemies());
-    }
 
 }

@@ -98,7 +98,7 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     public void OnButtonResetGameClicked()
     {
         //bool resetLevel = SaveManager.instance.saveWorld.isSlotSaved[1] == false;
-        LevelManager.instance.ClearGameData(); 
+        LevelManager.instance.ClearGameData();
         LevelManager.instance.resetLevel = true;
         LevelManager.instance.currentLevelCompleted = 0;
 
@@ -114,18 +114,6 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     }
 
-
-    public void Quit()
-    {
-        SaveManager.instance.SaveWorldSettings();
-
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
-
-    }
 
 
     public void OnButtonSaveAndExitClicked()//called from game pause menu and end game menu - if new project will need to be added to those possibly
@@ -152,23 +140,6 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
         StartCoroutine(LoadYourAsyncScene(1));
     }
 
-
-    //private void DestroyAllEntitiesInScene()
-    //{
-
-    //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-    //var entities = entityManager.GetAllEntities();
-    //entityManager.DestroyEntity(entities);
-    //entities.Dispose();
-
-    //var sceneSwitcher = manager.GetComponentData<SceneSwitcherComponent>(e);
-    //sceneSwitcher.delete = true;//no setup scene field first - then delete in system
-    //sceneSwitcher.saveScene = true;
-    //manager.SetComponentData<SceneSwitcherComponent>(e, sceneSwitcher);
-
-
-
-    //}
 
 
 
@@ -204,25 +175,42 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
     public void EnableLoadGame()//called only by load slot from load menu
     {
-        LevelManager.instance.loadGame = true;
+        LevelManager.instance.loadMenuContinueClicked = true;
     }
 
     public void SetupAndLoadNextScene()
     {
         SaveLevelManager.instance.saveScene = true;
-        LevelManager.instance.currentLevelCompleted += 1;
         SaveManager.instance.SaveCurrentLevelCompleted(LevelManager.instance.currentLevelCompleted);
         Debug.Log("setup and load next");
         LoadNextScene();
     }
 
-
-    public void LoadNextScene()
+    public void LoadQuickPlayScene()
     {
-        Debug.Log("load next scene");
+        Debug.Log("load quick scene");
         var sceneCount = SceneManager.sceneCountInBuildSettings;
-        int level = LevelManager.instance.currentLevelCompleted;
-        SaveManager.instance.SaveCurrentLevelCompleted(level);//need to save  because enableload called after then loadsystem will load to entities created when loading next level
+        LevelManager.instance.currentLevelCompleted = 0;
+        SaveManager.instance.SaveCurrentLevelCompleted(0);
+        var nextSceneIndex = 2;
+        StartCoroutine(LoadYourAsyncScene(nextSceneIndex));
+        Debug.Log("load next scene complete " + nextSceneIndex);
+
+    }
+
+
+    public void LoadClickScene()
+    {
+        Debug.Log("load click scene");
+        var sceneCount = SceneManager.sceneCountInBuildSettings;
+        int level = SaveManager.instance.saveData.saveGames[0].currentLevel;
+        if (LevelManager.instance.newGame == true)
+        {
+            level = 0;
+            LevelManager.instance.newGame = false;
+            LevelManager.instance.currentLevelCompleted = level;
+            SaveManager.instance.SaveCurrentLevelCompleted(level);
+        }
         var nextSceneIndex = level + 2;
         if (nextSceneIndex < 2) nextSceneIndex = 2;//0 is loader 1 is menu
         if (nextSceneIndex >= sceneCount)
@@ -234,6 +222,39 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
         Debug.Log("load next scene complete " + nextSceneIndex);
     }
 
+    public void LoadNextScene()
+    {
+        Debug.Log("load next scene");
+        var sceneCount = SceneManager.sceneCountInBuildSettings;
+        int level = LevelManager.instance.currentLevelCompleted;
+        SaveManager.instance.SaveCurrentLevelCompleted(level);//need to save  because enableload called after then loadsystem will load to entities created when loading next level
+        var nextSceneIndex = level + 2;
+        if (nextSceneIndex < 2) nextSceneIndex = 2;//0 is loader 1 is menu
+        if (nextSceneIndex > sceneCount)
+        {
+            Quit();
+            return;
+        }
+        StartCoroutine(LoadYourAsyncScene(nextSceneIndex));
+        Debug.Log("load next scene complete " + nextSceneIndex);
+    }
+
+
+
+
+
+
+    public void Quit()
+    {
+        SaveManager.instance.SaveWorldSettings();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+
+    }
 
     private IEnumerator Pause(int buildIndex, float secs)
     {
@@ -247,10 +268,13 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
         e = entity;
         manager = dstManager;
 
-        //if (CurrentSceneIndex >= 2)
-        //{
-        //    LevelManager.instance.loadGame = true;
-        //}
+        if (LevelManager.instance.loadMenuContinueClicked == true)
+        {
+            LevelManager.instance.loadGame = true;
+            LevelManager.instance.loadMenuContinueClicked = false;
+        }
+
+
 
         manager.AddComponentData(e, new SceneSwitcherComponent());
 
@@ -297,7 +321,6 @@ public class SetupNextLevelSystem : SystemBase
 
     protected override void OnUpdate()
     {
-        if (HasSingleton<SceneSwitcherComponent>() == false) return;
 
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 
@@ -307,9 +330,13 @@ public class SetupNextLevelSystem : SystemBase
         //if (setupNextScene == false) return;
         bool saveScene = SaveLevelManager.instance.saveScene;
         if (saveScene == false) return;
+        //if (HasSingleton<SceneSwitcherComponent>() == false) return;
+
 
         SaveLevelManager.instance.saveScene = false;
         SaveLevelManager.instance.loadNextScene = true;
+
+
 
         var playerQuery = GetEntityQuery(ComponentType.ReadOnly<PlayerComponent>());
         NativeArray<Entity> playerEntities = playerQuery.ToEntityArray(Allocator.Temp);

@@ -30,6 +30,9 @@ public class SaveSystem : SystemBase
     protected override void OnUpdate()
     {
 
+        var ecb = new EntityCommandBuffer(Allocator.Temp);
+        var scoreGroup = GetComponentDataFromEntity<ScoreComponent>(false);
+
 
         if (SaveManager.instance.saveMainGame == false) return;
         SaveManager.instance.saveMainGame = false;
@@ -41,8 +44,6 @@ public class SaveSystem : SystemBase
         PlayerEntities = playerQuery.ToEntityArray(Allocator.Persistent);
         EnemyEntities = enemyQuery.ToEntityArray(Allocator.Persistent);
 
-        //setup manager
-        //int slot = SaveManager.instance.saveWorld.lastLoadedSlot - 1;
         int slot = 0;
         int savedGames = SaveManager.instance.saveData.saveGames.Count;
         if (savedGames == 0)
@@ -87,6 +88,12 @@ public class SaveSystem : SystemBase
                     }
                 }
             };
+
+            if (HasComponent<ScoreComponent>(e))
+            {
+                pl.playerData.savedScore = scoreGroup[e];
+            }
+
             SaveManager.instance.saveData.saveGames[slot].savePlayers.Add(pl);
         }
 
@@ -120,12 +127,17 @@ public class SaveSystem : SystemBase
 
         PlayerEntities.Dispose();
         EnemyEntities.Dispose();
+
+        ecb.Playback(EntityManager);
+        ecb.Dispose();
+
+
     }
 
 
 }
 
-public struct IndexComparer : IComparer<Entity>  
+public struct IndexComparer : IComparer<Entity>
 {
     public int Compare(Entity a, Entity b)
     {

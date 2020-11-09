@@ -30,7 +30,7 @@ public class LevelCompleteSystem : SystemBase
 
         int currentLevelCompleted = LevelManager.instance.currentLevelCompleted;
         int totalGameLevels = LevelManager.instance.totalLevels;
-        if(currentLevelCompleted  >= totalGameLevels - 1)  return;//all levels complete
+        if (currentLevelCompleted >= totalGameLevels) return;//all levels complete before even checking if level complete below than return since game over basically
 
         int levelCompleteCounter = 0;//# reached end that are required to complete the level
         bool levelComplete = false;
@@ -91,22 +91,26 @@ public class LevelCompleteSystem : SystemBase
 
         if (levelComplete == true)
         {
+            LevelManager.instance.currentLevelCompleted += 1;
             Debug.Log("LEVEL UP " + LevelManager.instance.currentLevelCompleted);
-            LevelManager.instance.PlayLevelMusic();
-            Entities.WithoutBurst().WithStructuralChanges().ForEach
-            (
+            if (LevelManager.instance.currentLevelCompleted < LevelManager.instance.totalLevels)
+            {
+
+                LevelManager.instance.PlayLevelMusic();
+                Entities.WithoutBurst().WithStructuralChanges().ForEach
                 (
-                    LevelCompleteMenuGroup LevelCompleteMenuGroup,
-                    ref LevelCompleteMenuComponent LevelCompleteMenuComponent) =>
-                {
-                        LevelCompleteMenuComponent.levelLoaded = false;//need?
+                    (
+                        LevelCompleteMenuGroup LevelCompleteMenuGroup,
+                        ref LevelCompleteMenuComponent LevelCompleteMenuComponent) =>
+                    {
+                        LevelCompleteMenuComponent.levelLoaded = false; //need?
                         SaveLevelManager.instance.levelMenuShown = true;
                         LevelCompleteMenuGroup.ShowMenu(message);
-                }
-            ).Run();
+                    }
+                ).Run();
 
-            Debug.Log("level complete menu " + LevelManager.instance.currentLevelCompleted);
-
+                Debug.Log("level complete menu " + LevelManager.instance.currentLevelCompleted);
+            }
 
 
         }

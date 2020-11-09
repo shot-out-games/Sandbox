@@ -14,7 +14,7 @@ public class BasicWinnerSystem : SystemBase
 
     protected override void OnUpdate()
     {
-        if(LevelManager.instance.currentLevelCompleted  < LevelManager.instance.totalLevels - 1) return;//not yet marked as completed
+        if(LevelManager.instance.currentLevelCompleted  < LevelManager.instance.totalLevels ) return;//not yet marked as completed
 
         bool winner = true;
 

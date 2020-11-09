@@ -57,6 +57,12 @@ public class LoadSystem : SystemBase
             var health = pl.playerData.savedHealth;
             ecb.SetComponent<PlayerComponent>(e, player);
             ecb.SetComponent<HealthComponent>(e, health);
+            if (HasComponent<ScoreComponent>(e) == true)
+            {
+                var score = pl.playerData.savedScore;
+                ecb.SetComponent<ScoreComponent>(e, score);
+            }
+
             Translation ps = new Translation
             {
                 Value =

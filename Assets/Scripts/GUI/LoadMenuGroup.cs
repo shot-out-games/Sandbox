@@ -34,7 +34,18 @@ public class LoadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     {
         if (SaveManager.instance.saveData.saveGames.Count == 0) return;
         SaveWorld sw = SaveManager.instance.saveWorld;
-        slotText.text = sw.isSlotSaved[0] ? "CONTINUE " : "New Game";
+
+        if (sw.isSlotSaved[0] == true)
+        {
+            slotText.text = "CONTINUE";
+            LevelManager.instance.newGame = false;
+        }
+        else
+        {
+            slotText.text = "New Game";
+            LevelManager.instance.newGame = true;
+        }
+
         slotTextHighlighted.text = sw.isSlotSaved[0] ? "CONTINUE " : "New Game";
     }
 
@@ -48,11 +59,11 @@ public class LoadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     {
         loadButton.interactable = false;
         LevelManager.instance.resetLevel = true;
-        //Debug.Log("load option clicked");
         SaveManager.instance.LoadSaveWorld();
-        //SaveManager.instance.saveWorld.lastLoadedSlot = selectedSlot;
-        //SaveManager.instance.saveWorld.lastLoadedSlot = 0;
-        SaveManager.instance.LoadSaveData();
+        SaveData sd = SaveManager.instance.LoadSaveData();
+        int level = sd.saveGames[0].currentLevel;
+        SaveManager.instance.SaveCurrentLevelCompleted(level);
+        LevelManager.instance.currentLevelCompleted = level;
         if(SaveManager.instance.saveWorld.isSlotSaved[0] == false)
         {
             LevelManager.instance.currentLevelCompleted = 0;
@@ -75,7 +86,6 @@ public class LoadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 
     public void OnButtonDelete()
     {
-        Debug.Log("s " + selectedSlot);
         SaveManager.instance.DeleteGameData(selectedSlot);
         UpdateButtons();
     }
