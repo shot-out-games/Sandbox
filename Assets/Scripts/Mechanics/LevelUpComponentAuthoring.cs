@@ -11,7 +11,6 @@ public struct LevelUpMechanicComponent : IComponentData
 }
 
 
-[RequiresEntityConversion]
 public class LevelUpComponentAuthoring: MonoBehaviour, IConvertGameObjectToEntity
 {
     public bool active = true;

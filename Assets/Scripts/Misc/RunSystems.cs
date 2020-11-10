@@ -12,7 +12,7 @@ public class RunSystems : MonoBehaviour
     {
 
         entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-        if (entityManager == null) return;
+        if (entityManager == default) return;
 
         playerJump.World.GetOrCreateSystem<PlayerJumpSystem2D>();
         //playerJump.Update();
@@ -22,7 +22,7 @@ public class RunSystems : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (entityManager == null) return;
+        if (entityManager == default) return;
         //playerJump.Update();
     }
 }

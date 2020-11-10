@@ -11,7 +11,6 @@ public struct NdeMechanicComponent : IComponentData
 }
 
 
-[RequiresEntityConversion]
 public class NdeComponentAuthoring: MonoBehaviour, IConvertGameObjectToEntity
 {
     public bool active = true;

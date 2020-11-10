@@ -32,7 +32,7 @@ public class CharacterEffectsSystem : SystemBase
 
         Entities.WithoutBurst().ForEach(
             (
-                InputController input, ControlBarComponent controlBar,
+                in InputController input, in ControlBarComponent controlBar,
                 in Impulse impulse) =>
             {
                 //if (input.rightTriggerDown == true && controlBar.value < 25f) 

@@ -67,7 +67,7 @@ public class ShowMenuSystem : SystemBase
 
             //grab "last" player score if any
             Entities.WithoutBurst().WithAll<PlayerComponent>().ForEach
-            ((ScoreComponent scoreComponent) =>
+            ((in ScoreComponent scoreComponent) =>
             {
                 score = scoreComponent.score;
                 rank = scoreComponent.rank;

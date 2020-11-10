@@ -24,7 +24,6 @@ public struct FlingMechanicComponent : IComponentData
 }
 
 
-[RequiresEntityConversion]
 public class FlingMechanicComponentAuthoring: MonoBehaviour, IConvertGameObjectToEntity
 {
     public bool active = true;

@@ -59,7 +59,7 @@ public class SkillTreeMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     void Update()
     {
 
-        if (entity == Entity.Null || manager == null) return;
+        if (entity == Entity.Null || manager == default) return;
         bool hasComponent = manager.HasComponent(entity, typeof(SkillTreeMenuComponent));
         if (hasComponent == false) return;
 
@@ -265,8 +265,8 @@ public class SkillTreeSystem : SystemBase
         JobHandle inputDeps1 = Entities.ForEach
         (
             (
-                SkillTreeMenuComponent skillTreeMenuComponent,
-                Entity e
+                in SkillTreeMenuComponent skillTreeMenuComponent,
+                in Entity e
 
             ) =>
             {

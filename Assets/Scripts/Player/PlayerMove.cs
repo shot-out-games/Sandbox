@@ -23,8 +23,7 @@ public struct PlayerMoveComponent : IComponentData
 
 namespace SandBox.Player
 {
-    [RequiresEntityConversion]
-
+    
 
     public class PlayerMove : MonoBehaviour, IConvertGameObjectToEntity
     {

@@ -48,7 +48,6 @@ public struct PlayerComponent : IComponentData
 }
 
 
-[RequiresEntityConversion]
 
 
 public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity

@@ -38,7 +38,6 @@ public enum TriggerType
     Contact = 20
 }
 
-[RequiresEntityConversion]
 
 
 public class Tracker : MonoBehaviour, IConvertGameObjectToEntity
@@ -86,7 +85,7 @@ public class Tracker : MonoBehaviour, IConvertGameObjectToEntity
 
     void Update()
     {
-        if (manager == null) return;
+        if (manager == default) return;
 
         if (!manager.HasComponent(e, typeof(TrackerComponent))) return;
         if (track == null) return;

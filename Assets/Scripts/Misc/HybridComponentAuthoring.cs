@@ -3,7 +3,6 @@ using Unity.Mathematics;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-[RequiresEntityConversion]
 public class HybridComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 {
     // Add fields to your component here. Remember that:

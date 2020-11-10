@@ -2,7 +2,6 @@
 using Unity.Entities;
 
 
-[RequiresEntityConversion]
 
 public class EnemyRatings : MonoBehaviour, IConvertGameObjectToEntity
 {
