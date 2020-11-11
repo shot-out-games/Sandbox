@@ -8,8 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 29
-  projectContext: 2
+  version: 24
   mGraphInstanceData:
   - graphLabel: Stylized Wood Siding Panel
     prototypeName: Stylized Wood Siding Panel
@@ -22,14 +21,12 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
+      shaderKeywords: _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
+        _OCCLUSIONMAP _SPECGLOSSMAP
       lightmapFlags: 4
-      enableInstancingVariants: 0
-      doubleSidedGI: 0
-      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: 709813858300568924, guid: 065dc0a9f72384448acd898ba371dd89,
+        texture: {fileID: -7360756599866250070, guid: 065dc0a9f72384448acd898ba371dd89,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -43,7 +40,8 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {instanceID: 0}
+        texture: {fileID: -7360756599866250070, guid: 065dc0a9f72384448acd898ba371dd89,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -292,7 +290,7 @@ ScriptedImporter:
     material: {fileID: -1788005680602276130, guid: 065dc0a9f72384448acd898ba371dd89,
       type: 3}
     generatedTextures:
-    - {fileID: 709813858300568924, guid: 065dc0a9f72384448acd898ba371dd89, type: 3}
+    - {fileID: -7360756599866250070, guid: 065dc0a9f72384448acd898ba371dd89, type: 3}
     - {fileID: 3108108632172452356, guid: 065dc0a9f72384448acd898ba371dd89, type: 3}
     - {fileID: 8334705896234967278, guid: 065dc0a9f72384448acd898ba371dd89, type: 3}
     - {fileID: -541658301725564798, guid: 065dc0a9f72384448acd898ba371dd89, type: 3}

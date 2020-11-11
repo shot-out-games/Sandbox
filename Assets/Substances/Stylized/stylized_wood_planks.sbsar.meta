@@ -8,8 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 29
-  projectContext: 2
+  version: 24
   mGraphInstanceData:
   - graphLabel: Stylized Wood Planks
     prototypeName: Stylized Wood Planks
@@ -22,14 +21,12 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
+      shaderKeywords: _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
+        _OCCLUSIONMAP _SPECGLOSSMAP
       lightmapFlags: 4
-      enableInstancingVariants: 0
-      doubleSidedGI: 0
-      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: -1073512230691233543, guid: 3c56e6d819c6107409111088d350f0eb,
+        texture: {fileID: -2249652371484729711, guid: 3c56e6d819c6107409111088d350f0eb,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -43,7 +40,8 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {instanceID: 0}
+        texture: {fileID: -2249652371484729711, guid: 3c56e6d819c6107409111088d350f0eb,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -292,7 +290,7 @@ ScriptedImporter:
     material: {fileID: -6389543310652681721, guid: 3c56e6d819c6107409111088d350f0eb,
       type: 3}
     generatedTextures:
-    - {fileID: -1073512230691233543, guid: 3c56e6d819c6107409111088d350f0eb, type: 3}
+    - {fileID: -2249652371484729711, guid: 3c56e6d819c6107409111088d350f0eb, type: 3}
     - {fileID: 5798553295288208288, guid: 3c56e6d819c6107409111088d350f0eb, type: 3}
     - {fileID: 251986145504965715, guid: 3c56e6d819c6107409111088d350f0eb, type: 3}
     - {fileID: -7391643352182486423, guid: 3c56e6d819c6107409111088d350f0eb, type: 3}

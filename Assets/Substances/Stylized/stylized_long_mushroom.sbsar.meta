@@ -8,8 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 29
-  projectContext: 2
+  version: 24
   mGraphInstanceData:
   - graphLabel: Stylized Long Mushroom
     prototypeName: Stylized Long Mushroom
@@ -22,14 +21,12 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP
+      shaderKeywords: _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
+        _SPECGLOSSMAP
       lightmapFlags: 4
-      enableInstancingVariants: 0
-      doubleSidedGI: 0
-      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: -3547893796953090825, guid: be0e1dc0a1fc29643ada9ee26417b85f,
+        texture: {fileID: -7829884918136302901, guid: be0e1dc0a1fc29643ada9ee26417b85f,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -43,7 +40,8 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {instanceID: 0}
+        texture: {fileID: -7829884918136302901, guid: be0e1dc0a1fc29643ada9ee26417b85f,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -291,7 +289,7 @@ ScriptedImporter:
     material: {fileID: 6928824986649883132, guid: be0e1dc0a1fc29643ada9ee26417b85f,
       type: 3}
     generatedTextures:
-    - {fileID: -3547893796953090825, guid: be0e1dc0a1fc29643ada9ee26417b85f, type: 3}
+    - {fileID: -7829884918136302901, guid: be0e1dc0a1fc29643ada9ee26417b85f, type: 3}
     - {fileID: -6501090762507752870, guid: be0e1dc0a1fc29643ada9ee26417b85f, type: 3}
     - {fileID: -4513222379918916923, guid: be0e1dc0a1fc29643ada9ee26417b85f, type: 3}
     - {fileID: 6049391030362063459, guid: be0e1dc0a1fc29643ada9ee26417b85f, type: 3}

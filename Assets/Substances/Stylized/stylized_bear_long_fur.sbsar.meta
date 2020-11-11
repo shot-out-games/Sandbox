@@ -8,8 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 29
-  projectContext: 2
+  version: 24
   mGraphInstanceData:
   - graphLabel: Stylized Bear Long Fur
     prototypeName: Stylized Bear Long Fur
@@ -22,14 +21,12 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
+      shaderKeywords: _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
+        _OCCLUSIONMAP _SPECGLOSSMAP
       lightmapFlags: 4
-      enableInstancingVariants: 0
-      doubleSidedGI: 0
-      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: 3896028950922515270, guid: cd80e8dd4884a454f92c6ef392f2c88c,
+        texture: {fileID: 2877765289024935805, guid: cd80e8dd4884a454f92c6ef392f2c88c,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -43,7 +40,8 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {instanceID: 0}
+        texture: {fileID: 2877765289024935805, guid: cd80e8dd4884a454f92c6ef392f2c88c,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -292,7 +290,7 @@ ScriptedImporter:
     material: {fileID: 6925827365911068257, guid: cd80e8dd4884a454f92c6ef392f2c88c,
       type: 3}
     generatedTextures:
-    - {fileID: 3896028950922515270, guid: cd80e8dd4884a454f92c6ef392f2c88c, type: 3}
+    - {fileID: 2877765289024935805, guid: cd80e8dd4884a454f92c6ef392f2c88c, type: 3}
     - {fileID: 9077066886146503359, guid: cd80e8dd4884a454f92c6ef392f2c88c, type: 3}
     - {fileID: 9131999951432522417, guid: cd80e8dd4884a454f92c6ef392f2c88c, type: 3}
     - {fileID: 8852444395010722431, guid: cd80e8dd4884a454f92c6ef392f2c88c, type: 3}

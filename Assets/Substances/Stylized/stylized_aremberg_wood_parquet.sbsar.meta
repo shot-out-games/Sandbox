@@ -8,8 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 29
-  projectContext: 2
+  version: 24
   mGraphInstanceData:
   - graphLabel: Stylized Aremberg Wood Parquet
     prototypeName: Stylized Aremberg Wood Parquet
@@ -22,14 +21,12 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
+      shaderKeywords: _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
+        _OCCLUSIONMAP _SPECGLOSSMAP
       lightmapFlags: 4
-      enableInstancingVariants: 0
-      doubleSidedGI: 0
-      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: -6603442355468104416, guid: 2ab77181ce45fa34db083eb1d78fe096,
+        texture: {fileID: -8079804959679857808, guid: 2ab77181ce45fa34db083eb1d78fe096,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -43,7 +40,8 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {instanceID: 0}
+        texture: {fileID: -8079804959679857808, guid: 2ab77181ce45fa34db083eb1d78fe096,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -292,7 +290,7 @@ ScriptedImporter:
     material: {fileID: 8121500932321094934, guid: 2ab77181ce45fa34db083eb1d78fe096,
       type: 3}
     generatedTextures:
-    - {fileID: -6603442355468104416, guid: 2ab77181ce45fa34db083eb1d78fe096, type: 3}
+    - {fileID: -8079804959679857808, guid: 2ab77181ce45fa34db083eb1d78fe096, type: 3}
     - {fileID: -4101896936653978985, guid: 2ab77181ce45fa34db083eb1d78fe096, type: 3}
     - {fileID: 4952384518696146173, guid: 2ab77181ce45fa34db083eb1d78fe096, type: 3}
     - {fileID: -5401919981761121997, guid: 2ab77181ce45fa34db083eb1d78fe096, type: 3}

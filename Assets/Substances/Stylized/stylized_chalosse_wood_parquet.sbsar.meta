@@ -8,8 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 29
-  projectContext: 2
+  version: 24
   mGraphInstanceData:
   - graphLabel: Stylized Chalosse Wood Parquet
     prototypeName: Stylized Chalosse Wood Parquet
@@ -22,14 +21,12 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
+      shaderKeywords: _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
+        _OCCLUSIONMAP _SPECGLOSSMAP
       lightmapFlags: 4
-      enableInstancingVariants: 0
-      doubleSidedGI: 0
-      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: -6995371099779025862, guid: 9db3060a5616a1343ac223b6c28debca,
+        texture: {fileID: 8171949342031135309, guid: 9db3060a5616a1343ac223b6c28debca,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -43,7 +40,8 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {instanceID: 0}
+        texture: {fileID: 8171949342031135309, guid: 9db3060a5616a1343ac223b6c28debca,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -292,7 +290,7 @@ ScriptedImporter:
     material: {fileID: -190784052353289915, guid: 9db3060a5616a1343ac223b6c28debca,
       type: 3}
     generatedTextures:
-    - {fileID: -6995371099779025862, guid: 9db3060a5616a1343ac223b6c28debca, type: 3}
+    - {fileID: 8171949342031135309, guid: 9db3060a5616a1343ac223b6c28debca, type: 3}
     - {fileID: 6453494232209741022, guid: 9db3060a5616a1343ac223b6c28debca, type: 3}
     - {fileID: 6373732383029742120, guid: 9db3060a5616a1343ac223b6c28debca, type: 3}
     - {fileID: -4158458581409063751, guid: 9db3060a5616a1343ac223b6c28debca, type: 3}

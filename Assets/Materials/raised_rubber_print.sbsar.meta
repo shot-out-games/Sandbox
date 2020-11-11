@@ -8,8 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 29
-  projectContext: 2
+  version: 24
   mGraphInstanceData:
   - graphLabel: Raised Rubber Print
     prototypeName: Raised Rubber Print
@@ -24,15 +23,12 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _BASEMAP _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
+      shaderKeywords: _BASEMAP _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
         _OCCLUSIONMAP _SPECGLOSSMAP
       lightmapFlags: 4
-      enableInstancingVariants: 0
-      doubleSidedGI: 0
-      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: 1937508790006254295, guid: 1b6dc1295233de647a392ef1f8202d27,
+        texture: {fileID: 1305620330695064281, guid: 1b6dc1295233de647a392ef1f8202d27,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -46,7 +42,8 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {instanceID: 0}
+        texture: {fileID: 1305620330695064281, guid: 1b6dc1295233de647a392ef1f8202d27,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -313,7 +310,7 @@ ScriptedImporter:
     material: {fileID: -3505766766880881862, guid: 1b6dc1295233de647a392ef1f8202d27,
       type: 3}
     generatedTextures:
-    - {fileID: 1937508790006254295, guid: 1b6dc1295233de647a392ef1f8202d27, type: 3}
+    - {fileID: 1305620330695064281, guid: 1b6dc1295233de647a392ef1f8202d27, type: 3}
     - {fileID: 6828518134409152885, guid: 1b6dc1295233de647a392ef1f8202d27, type: 3}
     - {fileID: 4586295315840976093, guid: 1b6dc1295233de647a392ef1f8202d27, type: 3}
     - {fileID: -9101261440978378009, guid: 1b6dc1295233de647a392ef1f8202d27, type: 3}

@@ -8,8 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 29
-  projectContext: 2
+  version: 24
   mGraphInstanceData:
   - graphLabel: Stylized Slate Metal Wall Panel
     prototypeName: Stylized Slate Metal Wall Panel
@@ -22,14 +21,12 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
+      shaderKeywords: _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
+        _OCCLUSIONMAP _SPECGLOSSMAP
       lightmapFlags: 4
-      enableInstancingVariants: 0
-      doubleSidedGI: 0
-      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: 5835869204501603022, guid: e781f6e3cba57154286e4811d560c89e,
+        texture: {fileID: 8763191396875041241, guid: e781f6e3cba57154286e4811d560c89e,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -43,7 +40,8 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {instanceID: 0}
+        texture: {fileID: 8763191396875041241, guid: e781f6e3cba57154286e4811d560c89e,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -292,7 +290,7 @@ ScriptedImporter:
     material: {fileID: 4948692864186611932, guid: e781f6e3cba57154286e4811d560c89e,
       type: 3}
     generatedTextures:
-    - {fileID: 5835869204501603022, guid: e781f6e3cba57154286e4811d560c89e, type: 3}
+    - {fileID: 8763191396875041241, guid: e781f6e3cba57154286e4811d560c89e, type: 3}
     - {fileID: -5799155280308652867, guid: e781f6e3cba57154286e4811d560c89e, type: 3}
     - {fileID: -6264400745094944506, guid: e781f6e3cba57154286e4811d560c89e, type: 3}
     - {fileID: 9218096293334432601, guid: e781f6e3cba57154286e4811d560c89e, type: 3}

@@ -8,8 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 29
-  projectContext: 2
+  version: 24
   mGraphInstanceData:
   - graphLabel: Stylized Cracked Willow
     prototypeName: Stylized Cracked Willow
@@ -22,14 +21,12 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP
+      shaderKeywords: _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
+        _SPECGLOSSMAP
       lightmapFlags: 4
-      enableInstancingVariants: 0
-      doubleSidedGI: 0
-      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: -4053237574559025372, guid: 7017e91d0ef86554d828c1e3f622b75e,
+        texture: {fileID: -7335433382593679055, guid: 7017e91d0ef86554d828c1e3f622b75e,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -43,7 +40,8 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {instanceID: 0}
+        texture: {fileID: -7335433382593679055, guid: 7017e91d0ef86554d828c1e3f622b75e,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -291,7 +289,7 @@ ScriptedImporter:
     material: {fileID: 2059155708150958597, guid: 7017e91d0ef86554d828c1e3f622b75e,
       type: 3}
     generatedTextures:
-    - {fileID: -4053237574559025372, guid: 7017e91d0ef86554d828c1e3f622b75e, type: 3}
+    - {fileID: -7335433382593679055, guid: 7017e91d0ef86554d828c1e3f622b75e, type: 3}
     - {fileID: -7499178100284952072, guid: 7017e91d0ef86554d828c1e3f622b75e, type: 3}
     - {fileID: 3584449245433163239, guid: 7017e91d0ef86554d828c1e3f622b75e, type: 3}
     - {fileID: -7963261378819680435, guid: 7017e91d0ef86554d828c1e3f622b75e, type: 3}

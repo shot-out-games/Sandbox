@@ -117,12 +117,12 @@ public class GameInterfaceSystem : SystemBase
 
 
 
-        Entities.WithoutBurst().WithStructuralChanges().ForEach
+        Entities.WithoutBurst().ForEach
             (
                 (
                     Entity entity,
-                    InputControllerComponent inputController,
-                    GameInterface gameInterface
+                    GameInterface gameInterface,
+                    in InputControllerComponent inputController
 
                 ) =>
                 {

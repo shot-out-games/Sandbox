@@ -8,8 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 29
-  projectContext: 2
+  version: 24
   mGraphInstanceData:
   - graphLabel: Stylized Fallen Pine Needles
     prototypeName: Stylized Fallen Pine Needles
@@ -22,14 +21,12 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
+      shaderKeywords: _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
+        _OCCLUSIONMAP _SPECGLOSSMAP
       lightmapFlags: 4
-      enableInstancingVariants: 0
-      doubleSidedGI: 0
-      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: 4073594413515610330, guid: 0b2884d00e0517c449a05e4718b7e5ff,
+        texture: {fileID: -6292766628352417703, guid: 0b2884d00e0517c449a05e4718b7e5ff,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -43,7 +40,8 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {instanceID: 0}
+        texture: {fileID: -6292766628352417703, guid: 0b2884d00e0517c449a05e4718b7e5ff,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -292,7 +290,7 @@ ScriptedImporter:
     material: {fileID: -9134553634460880676, guid: 0b2884d00e0517c449a05e4718b7e5ff,
       type: 3}
     generatedTextures:
-    - {fileID: 4073594413515610330, guid: 0b2884d00e0517c449a05e4718b7e5ff, type: 3}
+    - {fileID: -6292766628352417703, guid: 0b2884d00e0517c449a05e4718b7e5ff, type: 3}
     - {fileID: 7659502658521590121, guid: 0b2884d00e0517c449a05e4718b7e5ff, type: 3}
     - {fileID: -5965288681414923308, guid: 0b2884d00e0517c449a05e4718b7e5ff, type: 3}
     - {fileID: -4228919058529040605, guid: 0b2884d00e0517c449a05e4718b7e5ff, type: 3}

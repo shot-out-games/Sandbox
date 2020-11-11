@@ -8,8 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 29
-  projectContext: 2
+  version: 24
   mGraphInstanceData:
   - graphLabel: Stylized Ice Impact
     prototypeName: Stylized Ice Impact
@@ -22,14 +21,12 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
+      shaderKeywords: _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
+        _OCCLUSIONMAP _SPECGLOSSMAP
       lightmapFlags: 4
-      enableInstancingVariants: 0
-      doubleSidedGI: 0
-      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: -39133716046370127, guid: e4679f0d26b2c4240b71dded57daf6f7,
+        texture: {fileID: -5244263017591946374, guid: e4679f0d26b2c4240b71dded57daf6f7,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -43,7 +40,8 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {instanceID: 0}
+        texture: {fileID: -5244263017591946374, guid: e4679f0d26b2c4240b71dded57daf6f7,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -292,7 +290,7 @@ ScriptedImporter:
     material: {fileID: 4789971500021031547, guid: e4679f0d26b2c4240b71dded57daf6f7,
       type: 3}
     generatedTextures:
-    - {fileID: -39133716046370127, guid: e4679f0d26b2c4240b71dded57daf6f7, type: 3}
+    - {fileID: -5244263017591946374, guid: e4679f0d26b2c4240b71dded57daf6f7, type: 3}
     - {fileID: -7033832204393775740, guid: e4679f0d26b2c4240b71dded57daf6f7, type: 3}
     - {fileID: 2504529569287229161, guid: e4679f0d26b2c4240b71dded57daf6f7, type: 3}
     - {fileID: 305360382666488911, guid: e4679f0d26b2c4240b71dded57daf6f7, type: 3}

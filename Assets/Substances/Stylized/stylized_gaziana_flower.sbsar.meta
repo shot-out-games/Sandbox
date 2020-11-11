@@ -8,8 +8,7 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 29
-  projectContext: 2
+  version: 24
   mGraphInstanceData:
   - graphLabel: Stylized Gaziana Flower
     prototypeName: Stylized Gaziana Flower
@@ -22,14 +21,12 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP
+      shaderKeywords: _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
+        _SPECGLOSSMAP
       lightmapFlags: 4
-      enableInstancingVariants: 0
-      doubleSidedGI: 0
-      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: -2157458708764094625, guid: 694a078a6ab4a7f4d942a3cc8aa2165d,
+        texture: {fileID: 8862639341560457533, guid: 694a078a6ab4a7f4d942a3cc8aa2165d,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -43,7 +40,8 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {instanceID: 0}
+        texture: {fileID: 8862639341560457533, guid: 694a078a6ab4a7f4d942a3cc8aa2165d,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -291,7 +289,7 @@ ScriptedImporter:
     material: {fileID: 3752834576842287662, guid: 694a078a6ab4a7f4d942a3cc8aa2165d,
       type: 3}
     generatedTextures:
-    - {fileID: -2157458708764094625, guid: 694a078a6ab4a7f4d942a3cc8aa2165d, type: 3}
+    - {fileID: 8862639341560457533, guid: 694a078a6ab4a7f4d942a3cc8aa2165d, type: 3}
     - {fileID: 3843824466985244925, guid: 694a078a6ab4a7f4d942a3cc8aa2165d, type: 3}
     - {fileID: -1552461686657525266, guid: 694a078a6ab4a7f4d942a3cc8aa2165d, type: 3}
     - {fileID: -6220044957701490618, guid: 694a078a6ab4a7f4d942a3cc8aa2165d, type: 3}
