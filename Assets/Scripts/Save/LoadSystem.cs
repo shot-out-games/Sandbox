@@ -14,8 +14,6 @@ public class LoadSystem : SystemBase
     {
 
         if (SaveManager.instance.saveWorld.isSlotSaved[0] == false) return;//deleted / cleared slot
-        Debug.Log("slot true");
-
         if (LevelManager.instance.loadGame == false) return;
         LevelManager.instance.loadGame = false;
         Debug.Log("load main scene");

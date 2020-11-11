@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,7 +9,7 @@ using UnityEngine.AI;
 
 public struct EnemyMoveGenericComponent : IComponentData
 {
-
+    public float3 startVelocity;
 
 }
 
@@ -19,6 +21,8 @@ public class EnemyMoveGeneric : MonoBehaviour, IConvertGameObjectToEntity
     [HideInInspector]
     public NavMeshAgent agent;
     public float chaseRange;
+    [SerializeField]
+    Vector3 startVelocity = Vector3.zero;
 
 
     public float moveSpeed;
@@ -28,7 +32,7 @@ public class EnemyMoveGeneric : MonoBehaviour, IConvertGameObjectToEntity
     public Entity entity;
     private EntityManager manager;
     private EnemyRatings enemyRatings;
-
+    
     
 
     
@@ -111,7 +115,7 @@ public class EnemyMoveGeneric : MonoBehaviour, IConvertGameObjectToEntity
     public void Convert(Entity _entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         entity = _entity;
-        dstManager.AddComponentData(entity, new EnemyMoveGenericComponent());
+        dstManager.AddComponentData(entity, new EnemyMoveGenericComponent() { startVelocity = startVelocity } );
         manager = dstManager;
         Init();
     }
@@ -129,15 +133,20 @@ public class EnemyMoveGenericSystem : SystemBase
     {
 
 
-        Entities.WithoutBurst().WithNone<Pause>().WithStructuralChanges().WithAll<EnemyMoveGenericComponent, EnemyComponent>().ForEach((Entity e, EnemyMoveGeneric move,
-            ref Translation translation,
-            in DeadComponent dead
-            //in Pause pause
+        Entities.WithoutBurst().WithNone<Pause>().WithStructuralChanges().WithAll<EnemyComponent>().ForEach((Entity e, EnemyMoveGeneric move, 
+            ref Translation translation, ref PhysicsVelocity pv,
+            in DeadComponent dead,
+            in EnemyMoveGenericComponent enemyMoveGenericComponent
         ) =>
         {
             //if (pause.value == 1) return;
             if (dead.isDead) return;
             move.SetDestination();
+            if(Vector3.SqrMagnitude(pv.Linear) < .0001f)
+            {
+                pv.Linear = enemyMoveGenericComponent.startVelocity;
+            }
+
             translation.Value.y = 0;//no jump for 1d jam
             //Debug.Log("en");
 
