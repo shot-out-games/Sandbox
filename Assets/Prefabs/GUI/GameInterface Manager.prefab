@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8209779254761420444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8209779254761420515}
+  - component: {fileID: 8209779254761420445}
+  - component: {fileID: 8209779254761420513}
+  - component: {fileID: 8209779254761420447}
+  m_Layer: 0
+  m_Name: GameInterface Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8209779254761420515
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8209779254761420444}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 286, y: 229.37189, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8209779254761420445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8209779254761420444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4757ca7e4088bff439970c0493968902, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paused: 0
+--- !u!114 &8209779254761420513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8209779254761420444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea7d7495833204790ba1d3a8755397f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConversionMode: 1
+--- !u!114 &8209779254761420447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8209779254761420444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc2b7bb09a0d02b4794979014461df38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouse: 0
+  rotating: 0
+  playerId: 0
+  leftStickX: 0
+  leftStickXreleased: 0
+  leftStickY: 0
+  leftStickYreleased: 0
+  dpadX: 0
+  dpadXreleased: 0
+  dpadY: 0
+  dpadYreleased: 0
+  leftTriggerLast: 0
+  rightTriggerLast: 0
+  leftTriggerPressed: 0
+  rightTriggerPressed: 0
+  leftTriggerChange: 0
+  rightTriggerChange: 0
+  leftTriggerValue: 0
+  rightTriggerValue: 0
+  leftTriggerDown: 0
+  rightTriggerDown: 0
+  leftTriggerUp: 0
+  rightTriggerUp: 0
+  leftBumperPressed: 0
+  leftBumperReleased: 0
+  leftBumperValue: 0
+  rightBumperPressed: 0
+  rightBumperReleased: 0
+  rightBumperValue: 0
+  buttonA_Pressed: 0
+  buttonA_held: 0
+  buttonA_Released: 0
+  buttonB_Pressed: 0
+  buttonB_held: 0
+  buttonB_Released: 0
+  buttonX_Pressed: 0
+  buttonX_held: 0
+  buttonX_Released: 0
+  buttonX_Value: 0
+  buttonY_Pressed: 0
+  buttonY_held: 0
+  buttonY_Released: 0
+  buttonSelect_Pressed: 0
+  buttonSelect_held: 0
+  buttonSelect_Released: 0

@@ -63,9 +63,7 @@ public class CharacterEffectsSystem : SystemBase
                 in EffectsManager effects) =>
             {
 
-                var damageGroup = GetComponentDataFromEntity<DamageComponent>(true);
-
-                animator.SetInteger("HitReact", 1);
+                //var damageGroup = GetComponentDataFromEntity<DamageComponent>(true);
 
                 AudioSource audioSource = effects.audioSource;
 
@@ -97,8 +95,11 @@ public class CharacterEffectsSystem : SystemBase
                     bool hasDamage = HasComponent<DamageComponent>(e);
                     if (hasDamage == true)
                     {
-                        var damageComponent = damageGroup[e];
+                        var damageComponent = GetComponent<DamageComponent>(e);
                         if (damageComponent.DamageReceived <= .0001) return;
+                        animator.SetInteger("HitReact", 1);
+                        Debug.Log("hit react");
+
 
                         if (effects.actorHurtEffectInstance)
                         {
