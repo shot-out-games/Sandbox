@@ -36,8 +36,6 @@ namespace SandBox.Player
 
         [SerializeField]
         float rotateSpeed = 9;
-        //[SerializeField]
-        //private float desiredRotationAngle = ;
 
         [HideInInspector]
         public Camera mainCam;
@@ -50,17 +48,8 @@ namespace SandBox.Player
         [SerializeField]
         float negativeForce = -9.81f;
         private Animator animator;
-        //private Rigidbody rigidbody;
-        private bool jumpEnabled;
-
-        //public Quaternion rotation { get; set; }
-        //public float slerpDampTime { get; set; }
         public int targetFrameRate = -1;
-        //public bool threeD;
 
-
-
-        // Start is called before the first frame update
         void Start()
         {
             if (targetFrameRate >= 10)
@@ -69,27 +58,10 @@ namespace SandBox.Player
             }
 
             animator = GetComponent<Animator>();
-            jumpEnabled = GetComponent<PlayerJump>() || GetComponent<PlayerJump2D>();
             mainCam = Camera.main;
 
         }
 
-        //if (!_entityManager.HasComponent(_entity, typeof(ApplyImpulseComponent))) return;
-        //if (!_entityManager.HasComponent(_entity, typeof(PlayerMoveComponent))) return;
-
-        //ApplyImpulseComponent applyImpulseComponent =
-        //    _entityManager.GetComponentData<ApplyImpulseComponent>(_entity);
-        //currentSpeed = _entityManager.GetComponentData<PlayerMoveComponent>(_entity).currentSpeed;
-        //Vector3 velocity = animator.deltaPosition / Time.deltaTime * currentSpeed;
-        ////applyImpulseComponent.Velocity = new float3(velocity.x, velocity.y, velocity.z);
-        //applyImpulseComponent.Velocity = new float3(velocity.x, 0, velocity.z);
-
-        //_entityManager.SetComponentData(_entity, applyImpulseComponent);
-        //if (!jumpEnabled)
-
-        //{
-        //    animator.SetBool("Grounded", true);
-        //}
 
 
         //private void OnAnimatorMove()
@@ -97,30 +69,7 @@ namespace SandBox.Player
         {
             if (_entity == Entity.Null) return;
             //changing so we need root animation here only
-
-            if (!_entityManager.HasComponent(_entity, typeof(ApplyImpulseComponent))) return;
-            if (!_entityManager.HasComponent(_entity, typeof(RatingsComponent))) return;
-            if (!_entityManager.HasComponent(_entity, typeof(PlayerComponent))) return;
             if (!ReInput.isReady) return;
-
-            //ApplyImpulseComponent applyImpulseComponent =
-            //    _entityManager.GetComponentData<ApplyImpulseComponent>(_entity);
-
-
-
-            ////_entityManager.SetComponentData(_entity, applyImpulseComponent);
-
-
-            //bool grounded = applyImpulseComponent.Grounded;
-
-
-            ////if (!jumpEnabled && animator != null)
-
-            //if (animator != null)
-            //{
-            //    //Debug.Log("v " + velocity);
-            //    animator.SetBool("Grounded", grounded);
-            //}
 
 
         }

@@ -129,7 +129,6 @@ public class InputController : MonoBehaviour, IConvertGameObjectToEntity
     public bool buttonX_Pressed;
     public bool buttonX_held;
     public bool buttonX_Released;
-    public float buttonX_Value;
 
     public bool buttonY_Pressed;
     public bool buttonY_held;
@@ -201,7 +200,7 @@ public class InputController : MonoBehaviour, IConvertGameObjectToEntity
         buttonB_Released = player.GetButtonUp("FireB");
 
 
-        buttonX_Value = player.GetAxis("FireX");
+        //buttonX_Value = player.GetAxis("FireX");
         buttonX_Pressed = player.GetButtonDown("FireX");
         buttonX_held = player.GetButton("FireX");
         buttonX_Released = player.GetButtonUp("FireX");

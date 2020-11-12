@@ -47,7 +47,7 @@ namespace SandBox.Player
                 ) =>
                 {
 
-                    translation.Value.y = 0;//change for jump use
+                    //translation.Value.y = 0;//change for jump use
 
 
                     bool hasFling = HasComponent<FlingMechanicComponent>(e);
