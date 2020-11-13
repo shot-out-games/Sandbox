@@ -17,7 +17,7 @@ namespace SandBox.Player
 
 
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-    [UpdateAfter(typeof(ExportPhysicsWorld)), UpdateBefore(typeof(EndFramePhysicsSystem))]
+    //[UpdateAfter(typeof(ExportPhysicsWorld)), UpdateBefore(typeof(EndFramePhysicsSystem))]
 
 
     public class PlayerMoveSystem : SystemBase
@@ -47,13 +47,17 @@ namespace SandBox.Player
                 ) =>
                 {
 
-                    //translation.Value.y = 0;//change for jump use
+
+                    if (HasComponent<PlayerJumpComponent>(e) == false)
+                    {
+                        translation.Value.y = 0; //change for jump use
+                    }
 
 
                     bool hasFling = HasComponent<FlingMechanicComponent>(e);
-                    if(hasFling)
+                    if (hasFling)
                     {
-                       if(EntityManager.GetComponentData<FlingMechanicComponent>(e).inFling == true)
+                        if (GetComponent<FlingMechanicComponent>(e).inFling == true)
                         {
                             return;
                         }
@@ -66,6 +70,7 @@ namespace SandBox.Player
 
 
                     float currentSpeed = ratingsComponent.gameSpeed;
+                    pv.Linear = float3.zero;
                     //Vector3 velocity = animator.deltaPosition / Time.DeltaTime * currentSpeed;
 
                     float leftStickX = inputController.leftStickX;
@@ -144,7 +149,7 @@ namespace SandBox.Player
 
 
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-    [UpdateAfter(typeof(ExportPhysicsWorld)), UpdateBefore(typeof(EndFramePhysicsSystem))]
+    //[UpdateAfter(typeof(ExportPhysicsWorld)), UpdateBefore(typeof(EndFramePhysicsSystem))]
     [UpdateAfter(typeof(PlayerMoveSystem))]
 
 
@@ -152,7 +157,7 @@ namespace SandBox.Player
     {
 
         //public float desiredRotationAngle;
-        public float CurrentRotationAngle;
+        //public float CurrentRotationAngle;
 
 
 
@@ -170,7 +175,7 @@ namespace SandBox.Player
                  in DeadComponent deadComponent,
                  in PlayerMoveComponent playerMoveComponent,
                  in RatingsComponent ratingsComponent,
-                     in InputController inputController
+                 in InputControllerComponent inputController
 
              ) =>
              {
@@ -181,22 +186,24 @@ namespace SandBox.Player
                  {
                      float slerpDampTime = playerMoveComponent.rotateSpeed;
                      var up = math.up();
-                    
+
 
                      bool haveInput = (math.abs(leftStickX) > float.Epsilon) || (math.abs(leftStickY) > float.Epsilon);
 
 
-                 if (haveInput)
+                     if (haveInput)
                      {
+                      
 
                          Vector3 forward = playerMove.mainCam.transform.forward;
                          forward = playerMove.transform.forward;
-                         forward = Vector3.forward;
+                         //forward = Vector3.forward;
                          forward.y = 0;
                          Vector3 right = playerMove.mainCam.transform.right;
                          right = playerMove.transform.right;
-                         right = Vector3.right;
-                         //Vector3 right = Quaternion.Euler(0, 90, 0) * forward;
+                         //right = Vector3.right;
+                         //right = Quaternion.Euler(0, 60, 0) * forward;
+                         
 
                          Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
                          targetDirection.Normalize();
@@ -204,25 +211,9 @@ namespace SandBox.Player
 
                          quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
 
-                         //rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime * Time.DeltaTime);
 
-                         rotation.Value = targetRotation;
+                         rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime * Time.DeltaTime);
 
-                         //rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime);
-
-                         //desiredRotationAngle = Vector3.Angle(playerMove.transform.forward, targetRotation);
-                         //var crossProduct = Vector3.Cross(playerMove.transform.forward, forward).y;
-                         //if (crossProduct < 0)
-                         //{
-                         //    desiredRotationAngle *= -1;
-                         //}
-
-
-                         //if (desiredRotationAngle > 10 || desiredRotationAngle < -10)
-                         //{
-                         //    rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime);
-                         //   // transform.Rotate(Vector3.up * desiredRotationAngle * rotationSpeed * Time.deltaTime);
-                         //}
                      }
 
                  }

@@ -144,8 +144,6 @@ namespace SandBox.Player
 
                     bool button_x = inputController.buttonX_Pressed;
                     bool button_x_held = inputController.buttonX_held;
-                    //pv.Linear = applyImpulseComponent.Velocity;
-                    //pv.Linear = new float3(0, -9.81f, 0);
 
                     float airForceAdd = 0;
                     float3 velocity = pv.Linear;
@@ -169,7 +167,6 @@ namespace SandBox.Player
                         frames = 0;
                         airFrames = 0;
                         playerJump.JumpStage = JumpStages.Ground;
-                        //cancelVariableJump = false;
                         applyImpulseComponent.hiJump = false;
 
 
@@ -177,6 +174,7 @@ namespace SandBox.Player
 
                     if (applyImpulseComponent.Falling)
                     {
+                        pv.Linear.y += applyImpulseComponent.NegativeForce;
                         return;
                     }
 
@@ -202,24 +200,19 @@ namespace SandBox.Player
                              applyImpulseComponent.Grounded == false && applyImpulseComponent.Falling == false)
                     {
                         frames = frames + 1;
-                        //Debug.Log(" jump up fr " + frames);
-                        if (frames == originalJumpFrames - 2 && button_x_held == true && variableJump == false
-                        ) //make sure number here less than jump up frames at some point
+                        if (frames == originalJumpFrames - 2 && button_x_held == true && variableJump == false) //make sure number here less than jump up frames at some point
                         {
-                            // Debug.Log("start high jump");
                             buttonHeldFrames = 1;
                         }
                         else if (frames == originalJumpFrames - 1 && button_x_held == true && variableJump == false
                         ) //make sure number here less than jump up frames at some point
                         {
-                            // Debug.Log("start high jump");
                             buttonHeldFrames = 2;
                         }
                         else if (frames == originalJumpFrames && button_x_held == true &&
                                  (buttonHeldFrames == 2 || variableJump == true)
                         ) //make sure number here less than jump up frames at some point
                         {
-                            //Debug.Log("bhf " + buttonHeldFrames);
                             applyImpulseComponent.hiJump = true;
                             buttonHeldFrames = 0;
                         }
@@ -228,25 +221,17 @@ namespace SandBox.Player
                             buttonHeldFrames = 0;
                         }
 
-
                         velocity = new float3(pv.Linear.x, originalJumpPower, leftStickY);
-                        //pv.Linear = vel;
                     }
                     else if (applyImpulseComponent.hiJump == true &&
                              (frames > 1 && airFrames < hiJumpAirFramesMax && variableJump == false)
                              ||
                              (frames > 1 && airFrames < hiJumpAirFramesMax && variableJump == true &&
-                              button_x_held == true && button_x == false)
-
-
-                    ) //6 on higher jump after 6th frame held - very static could problem like if game has quick jump with low jump frames it will go up after jumpframes peak
+                              button_x_held == true && button_x == false)) //6 on higher jump after 6th frame held - very static could problem like if game has quick jump with low jump frames it will go up after jumpframes peak
                     {
 
                         frames++;
                         airFrames++;
-                        //Debug.Log(" air frames " + airFrames);
-                        //float3 vel = new float3(pv.Linear.x, pv.Linear.y, pv.Linear.z);
-                        //pv.Linear.y = jumpPower * hiJumpMultiplier;
                         velocity.y = jumpPower * hiJumpMultiplier;
 
                     }
@@ -261,28 +246,28 @@ namespace SandBox.Player
                     {
 
                         frames++;
-                        //Debug.Log(" fr start-up " + frames);
                         playerJump.JumpStage = JumpStages.JumpUp;
                         airForceAdd = leftStickX * playerJumpComponent.airForce;
                         velocity = new float3(pv.Linear.x, pv.Linear.y, pv.Linear.z);
-                        //pv.Linear = vel;
                         velocity.x += airForceAdd;
                     }
                     else if (playerJump.JumpStage == JumpStages.JumpUp)
                     {
                         frames++;
-                        //Debug.Log(" fr up " + frames);
-
                         airForceAdd = leftStickX * playerJumpComponent.airForce;
                         velocity = new float3(pv.Linear.x, pv.Linear.y, pv.Linear.z);
-                        //float3 vel = new float3(pv.Linear.x, pv.Linear.y, leftStickY);
-                        //pv.Linear = vel;
-                        //pv.Linear.y = vel.y * expDownAdj;
-                        //Debug.Log("vy " + vel.y);
                         velocity.x += airForceAdd;
                     }
 
-                    pv.Linear = new float3(velocity.x, velocity.y += applyImpulseComponent.NegativeForce, velocity.z);
+
+                    pv.Linear = new float3(velocity.x, velocity.y, velocity.z);
+                    if (playerJump.JumpStage != JumpStages.Ground)
+                    {
+                        pv.Linear.y += applyImpulseComponent.NegativeForce;
+                    }
+
+
+
 
 
                     if (button_x == true && frames == 1)

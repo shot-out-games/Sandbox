@@ -61067,7 +61067,7 @@ MonoBehaviour:
   audioSource: {fileID: 217754654}
   clip: {fileID: 8300000, guid: 25eaee46a08c7964b905867baff18715, type: 3}
   ps: {fileID: 198571610588514832}
-  rotateSpeed: 1
+  rotateSpeed: 90
   mainCam: {fileID: 0}
   startSpeed: 4
   currentSpeed: 4
@@ -61114,6 +61114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallingFramesMax: 19
+  negativeForce: -9.81
 --- !u!114 &8829560766490598214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61419,7 +61420,6 @@ MonoBehaviour:
   buttonX_Pressed: 0
   buttonX_held: 0
   buttonX_Released: 0
-  buttonX_Value: 0
   buttonY_Pressed: 0
   buttonY_held: 0
   buttonY_Released: 0
