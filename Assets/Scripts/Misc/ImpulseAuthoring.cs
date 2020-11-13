@@ -11,10 +11,11 @@ public class ImpulseAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 
 
     public float fallingFramesMax;
+    public float negativeForce = -9.81f;
 
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        dstManager.AddComponentData(entity, new ApplyImpulseComponent { Force = 0, Direction = Vector3.zero, Grounded = false, fallingFramesMaximuim =  fallingFramesMax});
+        dstManager.AddComponentData(entity, new ApplyImpulseComponent { Force = 0, Direction = Vector3.zero, Grounded = false, fallingFramesMaximuim =  fallingFramesMax, NegativeForce = negativeForce});
     }
 }

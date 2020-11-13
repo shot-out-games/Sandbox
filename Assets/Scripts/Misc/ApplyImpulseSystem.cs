@@ -28,7 +28,7 @@ public struct ApplyImpulseComponent : IComponentData
     public float Force;
     public float3 Direction;
     public float3 Velocity;
-    public float3 NegativeForce;
+    public float NegativeForce;
     public Translation Translation;
     public Rotation Rotation;
     public float3 LastPositionLand;

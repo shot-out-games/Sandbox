@@ -8,7 +8,8 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 24
+  version: 29
+  projectContext: 2
   mGraphInstanceData:
   - graphLabel: Stylized Autumnal Fallen Leaves
     prototypeName: Stylized Autumnal Fallen Leaves
@@ -21,12 +22,14 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
-        _OCCLUSIONMAP _SPECGLOSSMAP
+      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
       lightmapFlags: 4
+      enableInstancingVariants: 0
+      doubleSidedGI: 0
+      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: 4091202790558655537, guid: 0b437f96b4e77eb40a29b6c31712bab0,
+        texture: {fileID: 4587522346521490697, guid: 0b437f96b4e77eb40a29b6c31712bab0,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -40,8 +43,7 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {fileID: 4091202790558655537, guid: 0b437f96b4e77eb40a29b6c31712bab0,
-          type: 3}
+        texture: {instanceID: 0}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -290,7 +292,7 @@ ScriptedImporter:
     material: {fileID: 8602834119326739574, guid: 0b437f96b4e77eb40a29b6c31712bab0,
       type: 3}
     generatedTextures:
-    - {fileID: 4091202790558655537, guid: 0b437f96b4e77eb40a29b6c31712bab0, type: 3}
+    - {fileID: 4587522346521490697, guid: 0b437f96b4e77eb40a29b6c31712bab0, type: 3}
     - {fileID: 1123026374456152326, guid: 0b437f96b4e77eb40a29b6c31712bab0, type: 3}
     - {fileID: -3225270010595469802, guid: 0b437f96b4e77eb40a29b6c31712bab0, type: 3}
     - {fileID: 582595232656176162, guid: 0b437f96b4e77eb40a29b6c31712bab0, type: 3}

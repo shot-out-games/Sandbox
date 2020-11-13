@@ -8,7 +8,8 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 24
+  version: 29
+  projectContext: 2
   mGraphInstanceData:
   - graphLabel: Stylized Versailles Wood Parquet
     prototypeName: Stylized Versailles Wood Parquet
@@ -21,12 +22,14 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
-        _OCCLUSIONMAP _SPECGLOSSMAP
+      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
       lightmapFlags: 4
+      enableInstancingVariants: 0
+      doubleSidedGI: 0
+      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: -4423271752507594205, guid: 1557865f12695464497435a20ace5683,
+        texture: {fileID: 5123127078262444865, guid: 1557865f12695464497435a20ace5683,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -40,8 +43,7 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {fileID: -4423271752507594205, guid: 1557865f12695464497435a20ace5683,
-          type: 3}
+        texture: {instanceID: 0}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -290,7 +292,7 @@ ScriptedImporter:
     material: {fileID: -2391006469758662837, guid: 1557865f12695464497435a20ace5683,
       type: 3}
     generatedTextures:
-    - {fileID: -4423271752507594205, guid: 1557865f12695464497435a20ace5683, type: 3}
+    - {fileID: 5123127078262444865, guid: 1557865f12695464497435a20ace5683, type: 3}
     - {fileID: -3740222609913201276, guid: 1557865f12695464497435a20ace5683, type: 3}
     - {fileID: -8265801103262639392, guid: 1557865f12695464497435a20ace5683, type: 3}
     - {fileID: 7201028333234075637, guid: 1557865f12695464497435a20ace5683, type: 3}

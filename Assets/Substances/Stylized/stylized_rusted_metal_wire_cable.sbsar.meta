@@ -8,7 +8,8 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 24
+  version: 29
+  projectContext: 2
   mGraphInstanceData:
   - graphLabel: Stylized Rusted Metal Wire Cable
     prototypeName: Stylized Rusted Metal Wire Cable
@@ -21,12 +22,14 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
-        _OCCLUSIONMAP _SPECGLOSSMAP
+      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP _OCCLUSIONMAP
       lightmapFlags: 4
+      enableInstancingVariants: 0
+      doubleSidedGI: 0
+      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: -684129953329507859, guid: 620ccb1e129408848a605128110ecbed,
+        texture: {fileID: -1161220636462878096, guid: 620ccb1e129408848a605128110ecbed,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -40,8 +43,7 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {fileID: -684129953329507859, guid: 620ccb1e129408848a605128110ecbed,
-          type: 3}
+        texture: {instanceID: 0}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -290,7 +292,7 @@ ScriptedImporter:
     material: {fileID: -3975588582942488984, guid: 620ccb1e129408848a605128110ecbed,
       type: 3}
     generatedTextures:
-    - {fileID: -684129953329507859, guid: 620ccb1e129408848a605128110ecbed, type: 3}
+    - {fileID: -1161220636462878096, guid: 620ccb1e129408848a605128110ecbed, type: 3}
     - {fileID: -1653268688097532784, guid: 620ccb1e129408848a605128110ecbed, type: 3}
     - {fileID: 6347717174730055101, guid: 620ccb1e129408848a605128110ecbed, type: 3}
     - {fileID: 3641202976491513259, guid: 620ccb1e129408848a605128110ecbed, type: 3}

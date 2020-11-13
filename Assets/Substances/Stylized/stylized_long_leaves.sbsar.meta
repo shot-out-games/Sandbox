@@ -8,7 +8,8 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 24
+  version: 29
+  projectContext: 2
   mGraphInstanceData:
   - graphLabel: Stylized Long Leaves
     prototypeName: Stylized Long Leaves
@@ -21,12 +22,14 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
-        _SPECGLOSSMAP
+      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP
       lightmapFlags: 4
+      enableInstancingVariants: 0
+      doubleSidedGI: 0
+      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: -509569728643845395, guid: ae1aee4ea952088438825a93874b6558,
+        texture: {fileID: 7018686959400771239, guid: ae1aee4ea952088438825a93874b6558,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -40,8 +43,7 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {fileID: -509569728643845395, guid: ae1aee4ea952088438825a93874b6558,
-          type: 3}
+        texture: {instanceID: 0}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -289,7 +291,7 @@ ScriptedImporter:
     material: {fileID: 1171271381697884721, guid: ae1aee4ea952088438825a93874b6558,
       type: 3}
     generatedTextures:
-    - {fileID: -509569728643845395, guid: ae1aee4ea952088438825a93874b6558, type: 3}
+    - {fileID: 7018686959400771239, guid: ae1aee4ea952088438825a93874b6558, type: 3}
     - {fileID: 6972228492309604793, guid: ae1aee4ea952088438825a93874b6558, type: 3}
     - {fileID: -308484975595811259, guid: ae1aee4ea952088438825a93874b6558, type: 3}
     - {fileID: -3065165042165650562, guid: ae1aee4ea952088438825a93874b6558, type: 3}

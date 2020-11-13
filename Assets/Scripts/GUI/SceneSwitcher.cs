@@ -26,13 +26,13 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
     private EntityManager manager;
     private Entity e;
 
+    //void Start()
+    //{
+    //    //Debug.Log("scene start ");
+
+    //}
+
     void Start()
-    {
-        //Debug.Log("scene start ");
-
-    }
-
-    void Awake()
     {
         //Debug.Log("scene awake ");
         //var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
@@ -42,6 +42,7 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
         // gets the curent screen
         CurrentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
         //Debug.Log("index " + CurrentSceneIndex);
 
         if (CurrentSceneIndex > 1)

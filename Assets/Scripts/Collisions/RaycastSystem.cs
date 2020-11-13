@@ -31,7 +31,7 @@ public class RaycastSystem : SystemBase
 
 
 
-        Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity entity, ref ApplyImpulseComponent applyImpulse,
+        Entities.WithoutBurst().ForEach((Entity entity, ref ApplyImpulseComponent applyImpulse,
             ref Translation translation, ref PhysicsVelocity pv, ref PhysicsCollider collider, ref Rotation rotation, in PlayerComponent playerComponent) =>
         {
 
@@ -42,9 +42,9 @@ public class RaycastSystem : SystemBase
             applyImpulse.BumpLeft = false;
             applyImpulse.BumpRight = false;
 
-            float3 start = translation.Value + new float3(0f, .38f, 0);
+            float3 start = translation.Value + new float3(0f, .4f, 0);
             float3 direction = new float3(0, 0, 0);
-            float distance = .38f;
+            float distance = .4f;
             float3 end = start + direction * distance;
 
 
@@ -61,7 +61,7 @@ public class RaycastSystem : SystemBase
                 }
             };
 
-            bool hasPointHit = collisionWorld.CalculateDistance(pointDistanceInput, out DistanceHit pointHit);
+            bool hasPointHit = collisionWorld.CalculateDistance(pointDistanceInput, out DistanceHit pointHit);//bump left / right n/a
 
             hasPointHit = false;
 
@@ -69,23 +69,18 @@ public class RaycastSystem : SystemBase
             if (hasPointHit && applyImpulse.InJump == true)
             {
                 Entity e = physicsWorldSystem.PhysicsWorld.Bodies[pointHit.RigidBodyIndex].Entity;
-                //Debug.Log("ve " + applyImpulse.Velocity.x);
                 if (applyImpulse.Velocity.x < 0)
                 {
                     applyImpulse.Grounded = false;
                     applyImpulse.BumpLeft = true;
-                    Debug.Log("bump left ");
                 }
                 else if (applyImpulse.Velocity.x > 0)
                 {
                     applyImpulse.Grounded = false;
                     applyImpulse.BumpRight = true;
-                    Debug.Log("bump right ");
                 }
 
-                //Debug.Log("pt pos " + pointHit.Position + " pt fraction " + pointHit.Fraction + " pt e " + e);
             }
-
             else
             {
 
@@ -115,7 +110,6 @@ public class RaycastSystem : SystemBase
 
                 if (hasPointHitDown)
                 {
-                    //Debug.Log("start " + start +  "end " + end + " fraction " + hitDown.Fraction);
                     Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hitDown.RigidBodyIndex].Entity; //grounded
                     if (applyImpulse.InJump == true)
                     {
@@ -148,7 +142,7 @@ public class RaycastSystem : SystemBase
 
                 start = translation.Value + new float3(0, 1f, 0);
                 direction = new float3(0, 1f, 0);
-                distance = .19f;
+                distance = .20f;
                 end = start + direction * distance;
 
                 RaycastInput inputUp = new RaycastInput()
@@ -162,7 +156,6 @@ public class RaycastSystem : SystemBase
                         GroupIndex = 0
                     }
                 };
-                Debug.DrawRay(inputUp.Start, direction, Color.green, distance);
 
                 Unity.Physics.RaycastHit hitUp = new Unity.Physics.RaycastHit();
 
@@ -172,7 +165,7 @@ public class RaycastSystem : SystemBase
 
                 if (hasPointHitUp)
                 {
-                    Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hitUp.RigidBodyIndex].Entity; //grounded
+                    Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hitUp.RigidBodyIndex].Entity; //ceiling n/a
                 }
 
 
@@ -185,7 +178,7 @@ public class RaycastSystem : SystemBase
 
         bool key = false;
 
-        Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity entity,
+        Entities.WithoutBurst().ForEach((Entity entity,
             ref LevelCompleteComponent levelComplete, ref WinnerComponent winnerComponent,
             ref Translation translation, ref PhysicsVelocity pv, ref Rotation rotation, in PlayerComponent playerComponent) =>
         {
@@ -206,30 +199,30 @@ public class RaycastSystem : SystemBase
                 }
             };
 
-            bool haveHit = collisionWorld.CalculateDistance(input, out DistanceHit hit);
+            bool haveHit = collisionWorld.CalculateDistance(input, out DistanceHit hit);//trigger hit
 
             if (haveHit)
             {
                 Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hit.RigidBodyIndex].Entity;
-                if (EntityManager.HasComponent(e, typeof(TriggerComponent)))
+                if (HasComponent<TriggerComponent>(e))
                 {
-                    if (EntityManager.GetComponentData<TriggerComponent>(e).Type == (int)TriggerType.Trigger
-                        && EntityManager.GetComponentData<TriggerComponent>(e).index == LevelManager.instance.currentLevelCompleted + 1
+                    if (GetComponent<TriggerComponent>(e).Type == (int)TriggerType.Trigger
+                        && GetComponent<TriggerComponent>(e).index == LevelManager.instance.currentLevelCompleted + 1
 
                     )
                     {
                         levelComplete.targetReached = true;
                     }
 
-                    if (EntityManager.GetComponentData<TriggerComponent>(e).Type == (int)TriggerType.Key &&
-                    EntityManager.GetComponentData<TriggerComponent>(e).Active == true
+                    if (GetComponent<TriggerComponent>(e).Type == (int)TriggerType.Key &&
+                    GetComponent<TriggerComponent>(e).Active == true
                     )
                     {
                         winnerComponent.keys += 1;
                         key = true;
-                        TriggerComponent trigger = EntityManager.GetComponentData<TriggerComponent>(e);
+                        TriggerComponent trigger = GetComponent<TriggerComponent>(e);
                         trigger.Hit = true;
-                        EntityManager.SetComponentData(e, trigger);
+                        SetComponent<TriggerComponent>(e, trigger);
                         LevelManager.instance.audioSourceGame.Stop();
 
                     }

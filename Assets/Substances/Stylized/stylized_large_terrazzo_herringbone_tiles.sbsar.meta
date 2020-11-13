@@ -8,7 +8,8 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 232528478, guid: 43a8bbf65be290d44ba52b94476242b9, type: 3}
-  version: 24
+  version: 29
+  projectContext: 2
   mGraphInstanceData:
   - graphLabel: Stylized Large Terrazzo Herringbone Tiles
     prototypeName: Stylized Large Terrazzo Herringbone Tiles
@@ -22,12 +23,14 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _MAINTEX _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NORMALMAP
-        _SPECGLOSSMAP
+      shaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP
       lightmapFlags: 4
+      enableInstancingVariants: 0
+      doubleSidedGI: 0
+      customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: -7913935581445422140, guid: d9322c7857fb98248ab64bdd7a0b8587,
+        texture: {fileID: 5146959257061448426, guid: d9322c7857fb98248ab64bdd7a0b8587,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
@@ -41,8 +44,7 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {fileID: -7913935581445422140, guid: d9322c7857fb98248ab64bdd7a0b8587,
-          type: 3}
+        texture: {instanceID: 0}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
@@ -272,7 +274,7 @@ ScriptedImporter:
     material: {fileID: -6116401131470700980, guid: d9322c7857fb98248ab64bdd7a0b8587,
       type: 3}
     generatedTextures:
-    - {fileID: -7913935581445422140, guid: d9322c7857fb98248ab64bdd7a0b8587, type: 3}
+    - {fileID: 5146959257061448426, guid: d9322c7857fb98248ab64bdd7a0b8587, type: 3}
     - {fileID: -8279465253240279268, guid: d9322c7857fb98248ab64bdd7a0b8587, type: 3}
     - {fileID: -5366679889551207223, guid: d9322c7857fb98248ab64bdd7a0b8587, type: 3}
     - {fileID: -6487178590830732342, guid: d9322c7857fb98248ab64bdd7a0b8587, type: 3}

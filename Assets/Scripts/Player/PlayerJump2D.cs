@@ -282,7 +282,7 @@ namespace SandBox.Player
                         velocity.x += airForceAdd;
                     }
 
-                    pv.Linear = new float3(velocity.x, velocity.y += -9.81f, velocity.z);
+                    pv.Linear = new float3(velocity.x, velocity.y += applyImpulseComponent.NegativeForce, velocity.z);
 
 
                     if (button_x == true && frames == 1)
