@@ -83,9 +83,13 @@ namespace SandBox.Player
 
 
                     stickSpeed = stickInput.sqrMagnitude;
-                    animator.SetFloat("Vertical", stickSpeed, .03f, Time.DeltaTime);
+                    animator.SetFloat("Vertical", stickSpeed);
                     float3 fwd = cam.transform.forward;
                     float3 right = cam.transform.right;
+                    fwd = Vector3.forward;
+                    right = Vector3.right;
+                    fwd = playerMove.transform.forward;
+                    right = playerMove.transform.right;
                     fwd.y = 0;
                     right.y = 0;
                     fwd = math.normalize(fwd);
@@ -93,7 +97,8 @@ namespace SandBox.Player
 
                     if (math.abs(stickSpeed) > .01f)
                     {
-                        pv.Linear = right * leftStickX * currentSpeed + fwd * leftStickY * currentSpeed;
+                        //pv.Linear = right * leftStickX * currentSpeed + fwd * leftStickY * currentSpeed;
+                        pv.Linear =  fwd * stickSpeed * currentSpeed;
                         pv.Linear.y = 0;
                     }
 
@@ -160,7 +165,6 @@ namespace SandBox.Player
         //public float CurrentRotationAngle;
 
 
-
         protected override void OnUpdate()
         {
 
@@ -199,6 +203,7 @@ namespace SandBox.Player
                              Vector3 forward = Vector3.forward;
                              forward.y = 0;
                              Vector3 right = Vector3.right;
+                             //Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
                              Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
                              targetDirection.Normalize();
                              quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
@@ -223,7 +228,9 @@ namespace SandBox.Player
                              Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
                              targetDirection.Normalize();
                              quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
+                             
                              rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime * Time.DeltaTime);
+                             if (math.abs(rotation.Value.value.y) > 90) rotation.Value.value.y = 90 * math.sign(rotation.Value.value.y);
                              //rotation.Value = targetRotation;
                          }
 
