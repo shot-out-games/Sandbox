@@ -17,6 +17,7 @@ public struct PlayerMoveComponent : IComponentData
     public float currentSpeed;
     public float negativeForce;
     public float rotateSpeed;
+    public bool snapRotation;
 }
 
 
@@ -36,6 +37,8 @@ namespace SandBox.Player
 
         [SerializeField]
         float rotateSpeed = 9;
+        [SerializeField]
+        bool snapRotation = true;
 
         [HideInInspector]
         public Camera mainCam;
@@ -106,6 +109,7 @@ namespace SandBox.Player
             dstManager.AddComponentData(entity, new PlayerMoveComponent()
             {
                 negativeForce = negativeForce, currentSpeed = startSpeed, rotateSpeed = rotateSpeed,
+                snapRotation = snapRotation
                 
 
             });

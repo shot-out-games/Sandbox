@@ -191,30 +191,45 @@ namespace SandBox.Player
                      bool haveInput = (math.abs(leftStickX) > float.Epsilon) || (math.abs(leftStickY) > float.Epsilon);
 
 
-                     if (haveInput)
+                     if (playerMoveComponent.snapRotation == true)
                      {
-                      
 
-                         Vector3 forward = playerMove.mainCam.transform.forward;
-                         forward = playerMove.transform.forward;
-                         //forward = Vector3.forward;
-                         forward.y = 0;
-                         Vector3 right = playerMove.mainCam.transform.right;
-                         right = playerMove.transform.right;
-                         //right = Vector3.right;
-                         //right = Quaternion.Euler(0, 60, 0) * forward;
-                         
-
-                         Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
-                         targetDirection.Normalize();
-
-
-                         quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
-
-
-                         rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime * Time.DeltaTime);
+                         if (haveInput == true)
+                         {
+                             Vector3 forward = Vector3.forward;
+                             forward.y = 0;
+                             Vector3 right = Vector3.right;
+                             Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
+                             targetDirection.Normalize();
+                             quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
+                             rotation.Value = targetRotation;
+                         }
 
                      }
+                     else
+                     {
+
+                         if (haveInput == true)
+                         {
+
+                             //Vector3 forward = playerMove.mainCam.transform.forward;
+                             Vector3 forward = playerMove.transform.forward;
+                             //forward = Vector3.forward;
+                             forward.y = 0;
+                             //Vector3 right = playerMove.mainCam.transform.right;
+                             Vector3 right = playerMove.transform.right;
+                             //right = Vector3.right;
+                             //right = Quaternion.Euler(0, 60, 0) * forward;
+                             Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
+                             targetDirection.Normalize();
+                             quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
+                             rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime * Time.DeltaTime);
+                             //rotation.Value = targetRotation;
+                         }
+
+                     }
+
+
 
                  }
              }
