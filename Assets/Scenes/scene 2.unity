@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17277822, g: 0.2159046, b: 0.29784012, a: 1}
+  m_IndirectSpecularColor: {r: 0.18154658, g: 0.22718711, b: 0.30740505, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -60180,6 +60180,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9ea293979ba3da74cb58291e3efc1697, type: 2}
+    - target: {fileID: 6243593429254635919, guid: 9c119a7c3c2498f40906225a199c275b,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6243593429254635919, guid: 9c119a7c3c2498f40906225a199c275b,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 6243593429545704358, guid: 9c119a7c3c2498f40906225a199c275b,
         type: 3}
       propertyPath: m_Material.m_BelongsToCategories.m_Value.Category00
@@ -60653,10 +60663,10 @@ MonoBehaviour:
   vcam: {fileID: 2002095379}
   freeLook: {fileID: 0}
   freeLookCombat: {fileID: 0}
-  fov: 25
+  fov: 30
   maxFov: 80
-  minFov: 10
-  multiplier: 30
+  minFov: 8
+  multiplier: 40
   combatZoomFactor: 0.8
   active: 1
 --- !u!114 &8174467502243387368
