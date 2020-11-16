@@ -1334,7 +1334,7 @@ MonoBehaviour:
       - _actionCategoryId: 0
         _actionId: 5
         _elementType: 1
-        _elementIdentifierId: 3
+        _elementIdentifierId: 4
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
@@ -1345,7 +1345,7 @@ MonoBehaviour:
       - _actionCategoryId: 0
         _actionId: 10
         _elementType: 1
-        _elementIdentifierId: 4
+        _elementIdentifierId: 3
         _axisRange: 0
         _invert: 0
         _axisContribution: 0
@@ -1748,7 +1748,7 @@ MonoBehaviour:
     playerIdCounter: 6
     actionIdCounter: 40
     actionCategoryIdCounter: 3
-    inputBehaviorIdCounter: 1
+    inputBehaviorIdCounter: 2
     mapCategoryIdCounter: 3
     joystickLayoutIdCounter: 2
     keyboardLayoutIdCounter: 2

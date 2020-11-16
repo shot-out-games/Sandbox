@@ -21,7 +21,7 @@ public class MatchupSystem :  SystemBase
 
 
 
-        Entities.WithAll<EnemyComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
+        Entities.WithAll<EnemyComponent>().WithNone<SkipMatchupComponent, CubeComponent>().WithoutBurst().ForEach
         (
             (
                 Transform enemyTransform,//traverse enemies
@@ -73,7 +73,7 @@ public class MatchupSystem :  SystemBase
 
 
 
-        Entities.WithAll<PlayerComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
+        Entities.WithAll<PlayerComponent>().WithNone<SkipMatchupComponent, CubeComponent>().WithoutBurst().ForEach
         (
             (
                 Transform playerTransform,//traverse enemies
@@ -88,7 +88,7 @@ public class MatchupSystem :  SystemBase
                 bool playerDead = EntityManager.GetComponentData<DeadComponent>(playerEntity).isDead;
 
 
-                Entities.WithAll<EnemyComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
+                Entities.WithAll<EnemyComponent>().WithNone<SkipMatchupComponent, CubeComponent>().WithoutBurst().ForEach
                 (
                     (
                         Transform enemyTransform,//find closest enemy

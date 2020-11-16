@@ -19,7 +19,7 @@ public class BasicWinnerSystem : SystemBase
         bool winner = true;
 
 
-        Entities.WithAll<EnemyComponent>().WithoutBurst().ForEach
+        Entities.WithAll<EnemyComponent>().WithNone<CubeComponent>().WithoutBurst().ForEach
         (
             (in DeadComponent dead) =>
             {

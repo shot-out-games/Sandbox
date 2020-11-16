@@ -308,6 +308,7 @@ MonoBehaviour:
   totalLevels: 0
   resetLevel: 0
   loadGame: 0
+  loadMenuContinueClicked: 0
   playersDead: 0
   enemiesDead: 0
   NpcDead: 0
@@ -320,6 +321,7 @@ MonoBehaviour:
   audioSourceGame: {fileID: 1182716200}
   menuMusic: {fileID: 8300000, guid: d29b9926613789f4ab0f51020650a4db, type: 3}
   currentLevelCompleted: 0
+  skipLoad: 0
   levelSettings:
   - levelName: Area I
     levelCompleteScenario: 0
@@ -368,9 +370,6 @@ MonoBehaviour:
   levelMediaList:
   - levelMusic: {fileID: 8300000, guid: 9843c519367ee9448b8f381ecb2f9906, type: 3}
     levelVolume: 1
-  - levelMusic: {fileID: 8300000, guid: 42436fad55521ad4fa5735a9a3b8a9c1, type: 3}
-    levelVolume: 0.1
   - levelMusic: {fileID: 8300000, guid: 1a70bfcf32ff2a54ebf829bd8641dcbf, type: 3}
-    levelVolume: 1
-  - levelMusic: {fileID: 8300000, guid: ae7cdbe372db05e489f3949f6edd571a, type: 3}
-    levelVolume: 1
+    levelVolume: 0.2
+  newGame: 0

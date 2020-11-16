@@ -29854,7 +29854,6 @@ GameObject:
   - component: {fileID: 3466703481568296786}
   - component: {fileID: 3466703481568296787}
   - component: {fileID: 3466703481568296774}
-  - component: {fileID: 3466703481568296773}
   m_Layer: 12
   m_Name: enemy CUBE 1
   m_TagString: Enemy
@@ -30200,7 +30199,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
   chaseRange: 0
-  startVelocity: {x: 0, y: 0, z: 15}
+  randomize: 0
+  startVelocity: {x: 0, y: 0, z: 25}
   moveSpeed: 0
   rotateSpeed: 1
   target: {fileID: 0}
@@ -30271,20 +30271,6 @@ MonoBehaviour:
   actorHurtAudioClip: {fileID: 8300000, guid: e8efd79df237282419ce357531ad10dd, type: 3}
   playerLevelCompleteClip: {fileID: 0}
   audioSource: {fileID: 3466703480229468468}
---- !u!114 &3466703481568296773
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3466703481568296788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa6faf88c3f320d4786a242e1230e826, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyStartLocation: []
-  enemyPrefab: {fileID: 0}
 --- !u!1 &3466703481672008646
 GameObject:
   m_ObjectHideFlags: 0

@@ -1700,7 +1700,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &383255148
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1716,10 +1716,10 @@ RectTransform:
   m_Father: {fileID: 689282939}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 100}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 659, y: -280}
+  m_SizeDelta: {x: 1298, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &383255149
 MonoBehaviour:
@@ -2275,7 +2275,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Goal 1
+  m_text: Coming Soon
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1ca2a657d10d8a04c90b136837422597, type: 2}
   m_sharedMaterial: {fileID: 5492435546947484485, guid: 1ca2a657d10d8a04c90b136837422597,
@@ -2945,7 +2945,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &524050835
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2961,10 +2961,10 @@ RectTransform:
   m_Father: {fileID: 689282939}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 100}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 659, y: -390}
+  m_SizeDelta: {x: 1298, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &524050836
 MonoBehaviour:
@@ -5006,7 +5006,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &869804316
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5022,10 +5022,10 @@ RectTransform:
   m_Father: {fileID: 689282939}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 100}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 659, y: -500}
+  m_SizeDelta: {x: 1298, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &869804317
 MonoBehaviour:
@@ -6684,7 +6684,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1146058917
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6701,10 +6701,10 @@ RectTransform:
   m_Father: {fileID: 458632769}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 576, y: -89.6001}
+  m_SizeDelta: {x: 1152, y: 179.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1146058918
 Animator:
@@ -9025,15 +9025,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'CONTROLS (Gamepad Combatible)
+  m_text: 'CONTROLS
 
     MOVE : WASD
 
-    STRIKE :  Left Mouse
-    Click / Space (X Button XBOX One)
+    BOOST :  Space Bar
 
-    ZOOM CAMERA : Mouse Scroll / Up and Down
-    Arrow / Right Stick'
+    DESTROY CUBES :
+    Left Click
+
+    ZOOM CAMERA : Mouse Scroll / Up and Down Arrow'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1ca2a657d10d8a04c90b136837422597, type: 2}
   m_sharedMaterial: {fileID: 5492435546947484485, guid: 1ca2a657d10d8a04c90b136837422597,
@@ -10700,7 +10701,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2044624453
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10716,10 +10717,10 @@ RectTransform:
   m_Father: {fileID: 689282939}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 300}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 659, y: -1020}
+  m_SizeDelta: {x: 1298, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2044624454
 MonoBehaviour:
@@ -11333,6 +11334,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelManager
       objectReference: {fileID: 0}
+    - target: {fileID: 6265239057108782675, guid: e005c907876cd5e449e043d236d1c3cb,
+        type: 3}
+      propertyPath: levelMediaList.Array.data[1].levelMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 1a70bfcf32ff2a54ebf829bd8641dcbf, type: 3}
     - target: {fileID: 7615472913726301467, guid: e005c907876cd5e449e043d236d1c3cb,
         type: 3}
       propertyPath: m_LocalPosition.x

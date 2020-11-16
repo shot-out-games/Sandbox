@@ -80,7 +80,7 @@ namespace SandBox.Player
                     //moveDir.Normalize();
 
                     stickInput = new Vector3(leftStickX, 0, leftStickY);//x is controlled by rotation
-
+                    stickInput.Normalize();
 
                     stickSpeed = stickInput.sqrMagnitude;
                     animator.SetFloat("Vertical", stickSpeed);
@@ -94,7 +94,7 @@ namespace SandBox.Player
                     right.y = 0;
                     fwd = math.normalize(fwd);
                     right = math.normalize(right);
-
+                    
                     if (math.abs(stickSpeed) > .01f)
                     {
                         //pv.Linear = right * leftStickX * currentSpeed + fwd * leftStickY * currentSpeed;

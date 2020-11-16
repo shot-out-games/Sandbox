@@ -105,17 +105,18 @@ namespace SandBox.Player
                         else
                         {
                             flingMechanic.lastShotConnected = false;
-                            flingMechanic.vulnerableMaxTimeGame = flingMechanic.vulnerableMaxTime;//reset after streak broken
+                            flingMechanic.vulnerableMaxTimeGame = flingMechanic.
+                                vulnerableMaxTime;//reset after streak broken
                         }
 
                         if (hasScore)
                         {
                             var score = scoreGroup[e];
-                            score.combo = 0;
-                            if(flingMechanic.lastShotConnected == false)
+                            if(flingMechanic.lastShotConnected == false && score.combo == 0)
                             {
                                 score.streak = 0;
                             }
+                            score.combo = 0;
                             scoreGroup[e] = score;
                         }
 

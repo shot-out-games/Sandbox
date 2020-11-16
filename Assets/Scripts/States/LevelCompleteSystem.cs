@@ -74,7 +74,7 @@ public class LevelCompleteSystem : SystemBase
             levelComplete = true;
             message = "Eliminated all ...";
 
-            Entities.WithAll<EnemyComponent>().WithoutBurst().ForEach
+            Entities.WithAll<EnemyComponent>().WithNone<CubeComponent>(). WithoutBurst().ForEach
             (
                 (in DeadComponent dead) =>
                 {

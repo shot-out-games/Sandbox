@@ -5,6 +5,7 @@ using Unity.Physics;
 using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = Unity.Mathematics.Random;
 
 
 public struct EnemyMoveGenericComponent : IComponentData
@@ -21,6 +22,7 @@ public class EnemyMoveGeneric : MonoBehaviour, IConvertGameObjectToEntity
     [HideInInspector]
     public NavMeshAgent agent;
     public float chaseRange;
+    [SerializeField] private bool randomize = false;
     [SerializeField]
     Vector3 startVelocity = Vector3.zero;
 
@@ -40,6 +42,17 @@ public class EnemyMoveGeneric : MonoBehaviour, IConvertGameObjectToEntity
     public AudioClip clip;
     public ParticleSystem ps;
 
+    void Awake()
+    {
+        if (randomize)
+        {
+            float max = startVelocity.z;
+            startVelocity = float3.zero;
+            startVelocity.z = UnityEngine.Random.Range(-max, max);
+            startVelocity.x = UnityEngine.Random.Range(-max, max);
+        }
+
+    }
 
 
     void Init()
