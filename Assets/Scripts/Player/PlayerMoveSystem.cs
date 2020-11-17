@@ -203,13 +203,11 @@ namespace SandBox.Player
                              Vector3 forward = Vector3.forward;
                              forward.y = 0;
                              Vector3 right = Vector3.right;
-                             //Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
                              Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
                              targetDirection.Normalize();
                              quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
                              rotation.Value = targetRotation;
                          }
-
                      }
                      else
                      {
@@ -217,21 +215,16 @@ namespace SandBox.Player
                          if (haveInput == true)
                          {
 
-                             //Vector3 forward = playerMove.mainCam.transform.forward;
-                             Vector3 forward = playerMove.transform.forward;
-                             //forward = Vector3.forward;
+                             var forward = playerMove.mainCam.transform.TransformDirection(Vector3.forward);
+                             var right = playerMove.mainCam.transform.TransformDirection(Vector3.right);
                              forward.y = 0;
-                             //Vector3 right = playerMove.mainCam.transform.right;
-                             Vector3 right = playerMove.transform.right;
-                             //right = Vector3.right;
-                             //right = Quaternion.Euler(0, 60, 0) * forward;
                              Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
-                             targetDirection.Normalize();
-                             quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
-                             
-                             rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime * Time.DeltaTime);
-                             if (math.abs(rotation.Value.value.y) > 90) rotation.Value.value.y = 90 * math.sign(rotation.Value.value.y);
-                             //rotation.Value = targetRotation;
+                             if (targetDirection.magnitude > .1)
+                             {
+                                 targetDirection.Normalize();
+                                 quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
+                                 rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime * Time.DeltaTime);
+                             }
                          }
 
                      }
