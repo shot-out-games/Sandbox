@@ -1,11 +1,29 @@
 fileFormatVersion: 2
-guid: 13007fb868cc50245802a417144b8d07
+guid: bfeb51f4ba410784da35b1935bd31b7e
 ModelImporter:
   serializedVersion: 20101
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      21: 2100000
+    second: WeaponMaterial.024
+  - first:
+      23: 2300000
+    second: //RootNode
+  - first:
+      33: 3300000
+    second: //RootNode
+  - first:
+      43: 4300000
+    second: Spiked Hammer
   externalObjects: {}
   materials:
-    materialImportMode: 1
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -34,7 +52,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 100
+    globalScale: 0.05
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -43,7 +61,7 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
-    fileIdsGeneration: 2
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -69,7 +87,7 @@ ModelImporter:
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
-    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
@@ -85,14 +103,14 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 100
+    globalScale: 0.0005
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   avatarSetup: 0
   additionalBone: 0

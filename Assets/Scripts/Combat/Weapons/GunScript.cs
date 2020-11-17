@@ -37,21 +37,21 @@ public class GunScript : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameO
 {
     private EntityManager manager;
     private Entity entity;
-    [SerializeField]
-    private AudioSource audioSource;
+    //[SerializeField]
+    //private AudioSource audioSource;
     [HideInInspector]
     public List<GameObject> BulletInstances = new List<GameObject>();
-    public Transform AmmoStartLocation;
+    //public Transform AmmoStartLocation;
     public GameObject BulletPrefab;
     public GameObject WeaponPrefab;
     public AudioClip weaponAudioClip;
 
-    [Header("Weapon Ratings")]
-    [SerializeField] bool randomize;
-    public float AmmoTime;
-    public float Strength;
-    public float Damage;
-    public float Rate;
+    //[Header("Weapon Ratings")]
+    //[SerializeField] bool randomize;
+    //public float AmmoTime;
+    //public float Strength;
+    //public float Damage;
+    //public float Rate;
 
     //[Header("Misc")]
     //public bool Disable;
@@ -72,21 +72,21 @@ public class GunScript : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameO
         gameObjects.Add(WeaponPrefab);
     }
 
-    void Generate()
-    {
-        float multiplier = .7f;
-        Strength = UnityEngine.Random.Range(Strength * multiplier, Strength * (2 - multiplier));
-        Damage = UnityEngine.Random.Range(Damage * multiplier, Damage * (2 - multiplier));
-        Rate = UnityEngine.Random.Range(Rate * multiplier, Rate * (2 - multiplier));
-    }
+    //void Generate()
+    //{
+    //    float multiplier = .7f;
+    //    Strength = UnityEngine.Random.Range(Strength * multiplier, Strength * (2 - multiplier));
+    //    Damage = UnityEngine.Random.Range(Damage * multiplier, Damage * (2 - multiplier));
+    //    Rate = UnityEngine.Random.Range(Rate * multiplier, Rate * (2 - multiplier));
+    //}
 
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        if (randomize == true)
-        {
-            Generate();
-        }
+        //if (randomize == true)
+        //{
+        //    Generate();
+        //}
 
         //dstManager.AddComponentData<GunComponent>(
         //    entity,
@@ -130,21 +130,21 @@ public class GunScript : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameO
 
     }
 
-    public void CreateBulletInstance(Entity e)
-    {
-        UpdateSystem();
-        GameObject go = Instantiate(BulletPrefab, AmmoStartLocation.position, AmmoStartLocation.rotation);
-        //GameObject go = Instantiate(BulletPrefab, AmmoStartLocation.position, Quaternion.identity);
-        BulletInstances.Add(go);
-        go.GetComponent<AmmoEntityTracker>().ammoEntity = e;
-        go.GetComponent<AmmoEntityTracker>().ownerAmmoEntity = entity;
-        go.GetComponent<AmmoEntityTracker>().ammoTime = AmmoTime;
-        if (audioSource != null)
-        {
-            audioSource.PlayOneShot(
-                weaponAudioClip); //to do - change to ecs - EffectsManager - Effects Componnent - add start clip field = 1 then switch to 0
-        }
-    }
+    //public void CreateBulletInstance(Entity e)
+    //{
+    //    UpdateSystem();
+    //    GameObject go = Instantiate(BulletPrefab, AmmoStartLocation.position, AmmoStartLocation.rotation);
+    //    //GameObject go = Instantiate(BulletPrefab, AmmoStartLocation.position, Quaternion.identity);
+    //    BulletInstances.Add(go);
+    //    go.GetComponent<AmmoEntityTracker>().ammoEntity = e;
+    //    go.GetComponent<AmmoEntityTracker>().ownerAmmoEntity = entity;
+    //    go.GetComponent<AmmoEntityTracker>().ammoTime = AmmoTime;
+    //    if (audioSource != null)
+    //    {
+    //        audioSource.PlayOneShot(
+    //            weaponAudioClip); //to do - change to ecs - EffectsManager - Effects Componnent - add start clip field = 1 then switch to 0
+    //    }
+    //}
 }
 
 

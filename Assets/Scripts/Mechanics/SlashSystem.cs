@@ -130,7 +130,7 @@ public class SlashSystem : SystemBase
                     {
                         Debug.Log("hk on");
                         playerCombat.SelectMove(3);
-                        playerCombat.haraKiri = true;//kill yourself
+                        //playerCombat.haraKiri = true;//kill yourself
                         playerCombat.StartMove(3);
                         //animator.SetInteger("SlashState", 2);
                         hk[0] = false;

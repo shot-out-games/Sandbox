@@ -28,8 +28,8 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     private float hitPower = 100;
 
     [SerializeField] private float fbbIKUseDistance = 8;
-    public bool haraKiri = false;
-    public Transform haraKiriTarget;
+    //public bool haraKiri = false;
+    //public Transform haraKiriTarget;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -102,6 +102,8 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
     public void StartMove(int combatAction)
     {
+        if (moveList.Count < combatAction) return;
+
         animator.SetInteger("CombatAction", combatAction);
         StartIKPlayer();
     }
@@ -122,14 +124,18 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     public void StopIKPlayer()
     {
         animator.SetFloat("HitWeight", 0);
-        ik.solver.GetEffector(moveUsing.effector).positionWeight =  0;
-        //        ik.solver.Update();
+
+        if (moveUsing.usingFbb)
+        {
+            ik.solver.GetEffector(moveUsing.effector).positionWeight = 0;
+        }
+
         if(moveUsing.moveParticleSystem)
         {
             moveUsing.moveParticleSystem.Stop(true);
         }
 
-        haraKiri = false;
+        //haraKiri = false;
         if (moveUsing.usingAim)
         {
             aim.enabled = false;
@@ -168,11 +174,11 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
             aim.solver.transform.LookAt(moveUsing.pin.position);
             aim.solver.IKPosition = moveUsing.target.position;
             aim.solver.IKPositionWeight = hitWeight * moveUsing.weight;
-            if (haraKiri == true)
-            {
-                aim.solver.IKPosition = haraKiriTarget.position;
-                //aim.solver.IKPositionWeight = 1;
-            }
+            //if (haraKiri == true)
+            //{
+               // aim.solver.IKPosition = haraKiriTarget.position;
+            //    //aim.solver.IKPositionWeight = 1;
+            //}
 
             aim.solver.Update();
         }
@@ -185,12 +191,12 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
             //Debug.Log("ik " + " hw " + hitWeight + " move weight " + moveUsing.weight);
             ik.solver.GetEffector(moveUsing.effector).position = moveUsing.target.position;
             ik.solver.GetEffector(moveUsing.effector).positionWeight = adjHitWeight * moveUsing.weight;
-
-            if (haraKiri == true)
-            {
-                ik.solver.GetEffector(moveUsing.effector).position = haraKiriTarget.position;
-                ik.solver.GetEffector(moveUsing.effector).positionWeight = hitWeight * moveUsing.weight;
-            }
+             
+            //if (haraKiri == true)
+            //{
+            //    ik.solver.GetEffector(moveUsing.effector).position = haraKiriTarget.position;
+            //    ik.solver.GetEffector(moveUsing.effector).positionWeight = hitWeight * moveUsing.weight;
+            //}
 
 
             ik.solver.Update();

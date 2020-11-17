@@ -25,9 +25,7 @@ public class WeaponManager : MonoBehaviour, IConvertGameObjectToEntity
     private int weaponIndex = 0;//index of weapons list to start with
     private EntityManager manager;
     public Entity e;
-    [HideInInspector]
     public bool primaryAttached = false;
-
     private bool attachedWeapon;
 
     void Start()
@@ -36,6 +34,7 @@ public class WeaponManager : MonoBehaviour, IConvertGameObjectToEntity
         {
             if (primaryWeapon.isAttachedAtStart)
             {
+
                 AttachPrimaryWeapon();
             }
         }
@@ -62,9 +61,10 @@ public class WeaponManager : MonoBehaviour, IConvertGameObjectToEntity
     public void AttachPrimaryWeapon()
     {
         primaryAttached = true;
-        primaryWeapon.weaponGameObject.transform.SetParent(primaryWeapon.weaponLocation);
-        primaryWeapon.weaponGameObject.transform.localPosition = Vector3.zero;
-        primaryWeapon.weaponGameObject.transform.localRotation = Quaternion.identity;
+        var weaponInstance = Instantiate(primaryWeapon.weaponGameObject);
+        weaponInstance.transform.SetParent(primaryWeapon.weaponLocation);
+        weaponInstance.transform.localPosition = Vector3.zero;
+        weaponInstance.transform.localRotation = Quaternion.identity;
 
 
     }
@@ -78,9 +78,6 @@ public class WeaponManager : MonoBehaviour, IConvertGameObjectToEntity
             Debug.Log("pr " + primaryWeapon.weaponGameObject);
             primaryWeapon.weaponGameObject.transform.SetParent(null);
         }
-        //primaryWeapon.weaponGameObject.transform.localPosition = Vector3.zero;
-        //primaryWeapon.weaponGameObject.transform.localRotation = Quaternion.identity;
-
 
     }
 
@@ -91,55 +88,6 @@ public class WeaponManager : MonoBehaviour, IConvertGameObjectToEntity
         secondaryWeapon.weaponGameObject.transform.localRotation = Quaternion.identity;
 
 
-    }
-
-    public void AttachAvailableWeapons(int _weaponIndex)
-    {
-        //if (weaponsList.Count == 0) return; //
-        //for (int i = 0; i < weaponsList.Count; i++)
-        //{
-        //    Weapons weapon = weaponsList[i];
-        //    if (i == weaponIndex)
-        //    {
-        //        var attached = manager.GetComponentData<AttachWeaponComponent>(e);
-        //        attached.attachedWeaponSlot = i;
-        //        attached.attachWeaponType = (int) weaponsList[i].weaponType;
-        //        manager.SetComponentData<AttachWeaponComponent>(e, attached);
-        //    }
-
-        //    if (weaponsList[i].secondaryWeapon == true)
-        //    {
-        //        var attached = manager.GetComponentData<AttachWeaponComponent>(e);
-        //        attached.attachSecondaryWeaponType = (int) weaponsList[i].weaponType;
-        //        manager.SetComponentData<AttachWeaponComponent>(e, attached);
-        //    }
-        //}
-
-        //weaponIndex = _weaponIndex;
-    }
-
-    public void AttachPickWeapons(int _weaponIndex)
-    {
-        //if (weaponsList.Count == 0) return; //
-        //Weapons weapon = weaponsList[_weaponIndex];
-        //weaponsList[_weaponIndex].isAttached = true;
-        //var attached = manager.GetComponentData<AttachWeaponComponent>(e);
-        //attached.attachedWeaponSlot = _weaponIndex;
-        //attached.attachWeaponType = (int) weaponsList[_weaponIndex].weaponType;
-        //manager.SetComponentData<AttachWeaponComponent>(e, attached);
-
-
-        ////weaponsList[_weaponIndex].weaponGameObject.SetActive(true);
-        ////weaponsList[_weaponIndex].weaponLocation.transform.position = Vector3.zero;
-        ////weaponsList[_weaponIndex].weaponLocation.transform.rotation = Quaternion.identity;
-        //weaponsList[_weaponIndex].weaponGameObject.transform.SetParent(weaponsList[_weaponIndex].weaponLocation);
-        //weaponsList[_weaponIndex].weaponGameObject.transform.localPosition = Vector3.zero;
-        //weaponsList[_weaponIndex].weaponGameObject.transform.localRotation = Quaternion.identity;
-
-
-
-        //weaponIndex = _weaponIndex;
-        //AttachAvailableWeapons(weaponIndex);
     }
 
 
@@ -162,84 +110,3 @@ public class WeaponManager : MonoBehaviour, IConvertGameObjectToEntity
 
 
 }
-
-
-public class AttachWeaponSystem : SystemBase
-{
-    protected override void  OnUpdate()
-    {
-
-
-        var bufferFromEntity = GetBufferFromEntity<WeaponItemComponent>();
-
-
-        Entities.WithoutBurst().WithStructuralChanges().ForEach
-        (
-            (
-                //ref WeaponItemComponent AttachWeaponComponent,
-                in Entity e,
-                in  WeaponManager attachWeapon,
-                in PlayerComponent player
-            ) =>
-            {
-
-                //var AttachWeaponComponent = bufferFromEntity[e];
-
-
-                //int currentSlot = AttachWeaponComponent.attachedWeaponSlot;
-                //int weaponCount = attachWeapon.weaponsList.Count;
-                //if (inputController.leftBumperPressed && currentSlot >= 0)
-                //if (currentSlot >= 0)
-                //{
-                //    for (int i = 0; i < weaponCount; i++)
-                //    {
-                //        Weapons weapon = attachWeapon.weaponsList[i];
-                //        currentSlot++;
-                //        if (currentSlot >= weaponCount) currentSlot = 0;
-                //        if (weapon.isAttached == true)
-                //        {
-                //            attachWeapon.AttachPickWeapons(currentSlot);
-                //            break;
-                //        }
-
-                //    }
-                //}
-
-            }
-        ).Run();
-
-
-
-
-        Entities.WithoutBurst().WithStructuralChanges().ForEach
-        (
-            (
-                ref AttachWeaponComponent AttachWeaponComponent,
-                in WeaponManager attachWeapon, in EnemyComponent enemyComponent
-            ) =>
-            {
-                int currentSlot = AttachWeaponComponent.attachedWeaponSlot;
-                int weaponCount = attachWeapon.weaponsList.Count;
-                for (int i = 0; i < weaponCount; i++)
-                {
-                    Weapons weapon = attachWeapon.weaponsList[i];
-                    currentSlot++;
-                    if (currentSlot >= weaponCount) currentSlot = 0;
-                    if (weapon.isAttachedAtStart == true)
-                    {
-                        attachWeapon.AttachPickWeapons(currentSlot);
-                        break;
-                    }
-
-                }
-
-            }
-        ).Run();
-
-
-
-        //return default;
-    }
-
-}
-

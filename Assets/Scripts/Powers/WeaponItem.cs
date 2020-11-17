@@ -15,7 +15,7 @@ using Unity.Transforms;
 //}
 
 [System.Serializable]
-public struct WeaponItemComponent : IBufferElementData
+public struct WeaponItemComponent : IBufferElementData //Used in PICKUP RAYCAST SYSTEM
 {
     public Entity e;
     public bool active;

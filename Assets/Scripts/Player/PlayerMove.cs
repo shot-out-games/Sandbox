@@ -48,8 +48,8 @@ namespace SandBox.Player
         private EntityManager _entityManager;
         private Entity _entity;
 
-        [SerializeField]
-        float negativeForce = -9.81f;
+        //[SerializeField]
+        //float negativeForce = -9.81f;
         private Animator animator;
         public int targetFrameRate = -1;
 
@@ -108,7 +108,8 @@ namespace SandBox.Player
             startSpeed = GetComponent<PlayerRatings>() ? GetComponent<PlayerRatings>().Ratings.speed : 4f;
             dstManager.AddComponentData(entity, new PlayerMoveComponent()
             {
-                negativeForce = negativeForce, currentSpeed = startSpeed, rotateSpeed = rotateSpeed,
+                //negativeForce = negativeForce,
+                currentSpeed = startSpeed, rotateSpeed = rotateSpeed,
                 snapRotation = snapRotation
                 
 
