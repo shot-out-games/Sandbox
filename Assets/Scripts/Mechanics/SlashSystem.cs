@@ -25,7 +25,7 @@ public class SlashSystem : SystemBase
 
             if (slashComponent.slashActive == false) return;
             slashComponent.slashState = (int)SlashStates.None;
-            if ((input.leftTriggerPressed == true) && slashComponent.slashState == (int)SlashStates.None)//why are triggers backward?
+            if ((input.buttonX_Pressed == true) && slashComponent.slashState == (int)SlashStates.None)//why are triggers backward?
             {
                 slashComponent.slashState = (int)SlashStates.Started;
                 if (slashComponent.animate == false)

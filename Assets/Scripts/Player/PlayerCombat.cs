@@ -78,14 +78,6 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
         if (animationIndex <= 0) return;//0 is none on enum
 
-        bool kickInAir = false;
-        if(_manager.HasComponent<ApplyImpulseComponent>(_entity) == true)
-        {
-            kickInAir = ! _manager.GetComponentData<ApplyImpulseComponent>(_entity).Grounded;
-        }
-
-        if (animationIndex == (int)AnimationType.Kick && animator.GetFloat("Vertical") >= .1f && kickInAir == false) return;//cant kick while moving - add kick check while moving too from playermove ??
-
 
         aim = moveUsing.aimIk;
         AimTransform = moveUsing.aimTransform;

@@ -38,11 +38,7 @@ public struct ApplyImpulseComponent : IComponentData
 
 
 }
-/// <summary> Our simple system. </summary>
-//[UpdateAfter(typeof(Unity.Transforms.CompositeRotationSystem,))]
-//[UpdateAfter(typeof(Unity.Physics.Systems.EndFramePhysicsSystem))]
 
-//[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
 public class ApplyImpulseSystem : SystemBase
 {

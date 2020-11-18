@@ -34,16 +34,16 @@ namespace SandBox.Player
 
 
 
-            Entities.WithoutBurst().WithAll<PlayerComponent>().WithNone<Pause>().ForEach(
+            Entities.WithoutBurst().WithNone<Pause>().ForEach(
                 (
                     Entity e,
                     PlayerMove playerMove,
-                    Animator animator,
                     ref PhysicsVelocity pv,
                     ref Translation translation,
                     in ApplyImpulseComponent applyImpulseComponent,
                     in InputControllerComponent inputController,
-                    in RatingsComponent ratingsComponent
+                    in RatingsComponent ratingsComponent,
+                    in PlayerMoveComponent playerMoveComponent
                 ) =>
                 {
 
@@ -66,6 +66,7 @@ namespace SandBox.Player
 
 
                     Camera cam = playerMove.mainCam;
+                    Animator animator = playerMove.GetComponent<Animator>();
 
 
 
@@ -76,14 +77,12 @@ namespace SandBox.Player
                     float leftStickX = inputController.leftStickX;
                     float leftStickY = inputController.leftStickY;
 
-                    //Vector3 moveDir = cam.transform.forward * leftStickY + cam.transform.right * leftStickX;
-                    //moveDir.Normalize();
 
                     stickInput = new Vector3(leftStickX, 0, leftStickY);//x is controlled by rotation
                     stickInput.Normalize();
 
                     stickSpeed = stickInput.sqrMagnitude;
-                    animator.SetFloat("Vertical", stickSpeed);
+                    animator.SetFloat("Vertical", stickSpeed, playerMoveComponent.dampTime, Time.DeltaTime);
                     float3 fwd = cam.transform.forward;
                     float3 right = cam.transform.right;
                     fwd = Vector3.forward;
@@ -97,7 +96,6 @@ namespace SandBox.Player
                     
                     if (math.abs(stickSpeed) > .01f)
                     {
-                        //pv.Linear = right * leftStickX * currentSpeed + fwd * leftStickY * currentSpeed;
                         pv.Linear =  fwd * stickSpeed * currentSpeed;
                         pv.Linear.y = 0;
                     }

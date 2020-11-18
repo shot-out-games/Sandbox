@@ -83,9 +83,10 @@ public class WeaponManager : MonoBehaviour, IConvertGameObjectToEntity
 
     public void AttachSecondaryWeapon()
     {
-        secondaryWeapon.weaponGameObject.transform.SetParent(secondaryWeapon.weaponLocation);
-        secondaryWeapon.weaponGameObject.transform.localPosition = Vector3.zero;
-        secondaryWeapon.weaponGameObject.transform.localRotation = Quaternion.identity;
+        var weaponInstance = Instantiate(secondaryWeapon.weaponGameObject);
+        weaponInstance.transform.SetParent(secondaryWeapon.weaponLocation);
+        weaponInstance.transform.localPosition = Vector3.zero;
+        weaponInstance.transform.localRotation = Quaternion.identity;
 
 
     }

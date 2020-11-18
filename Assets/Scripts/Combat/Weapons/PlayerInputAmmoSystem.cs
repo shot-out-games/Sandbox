@@ -13,32 +13,28 @@ public class PlayerInputAmmoSystem : SystemBase
     protected override void OnUpdate()
     {
 
-        EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
+        //EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
         //bool lt_released = false;
 
         Entities.WithoutBurst().ForEach
         (
             (
+                Animator animator,
                 ref GunComponent gunComponent,
                 ref PlayerWeaponAimComponent playerWeaponAimComponent,
                 in Entity entity,
                 in InputControllerComponent inputController,
-                in Animator animator,
                     in AttachWeaponComponent attachWeapon
             ) =>
             {
 
 
                 gunComponent.IsFiring = 0;
-                //float rt_value = inputController.rightTriggerValue;
                 float dpadY = inputController.dpadY;
 
 
                 bool ltPressed = inputController.leftTriggerPressed;
-                //bool ltReleased = inputController.leftTriggerUp;
-
                 bool rtPressed = inputController.rightTriggerPressed;
-                //bool rtReleased = inputController.rightTriggerUp;
 
 
 
@@ -56,16 +52,10 @@ public class PlayerInputAmmoSystem : SystemBase
                     SetAnimationLayerWeights(animator, true);
                 }
 
-                //if (attachWeapon.attachSecondaryWeaponType == (int)WeaponType.Gun && rtPressed == true)
-                //{
-                //    gunComponent.IsFiring = 1;
-                //    playerWeaponAimComponent.weaponUpTimer = 0;
-                //    playerWeaponAimComponent.weaponRaised = true;
-                //    SetAnimationLayerWeights(animator, true);
-                //}
+                
 
 
-                ecb.SetComponent(entity, gunComponent);
+                SetComponent(entity, gunComponent);
 
                 if (dpadY > .000001)
                 {
@@ -88,8 +78,8 @@ public class PlayerInputAmmoSystem : SystemBase
         ).Run();
 
 
-        ecb.Playback(EntityManager);
-        ecb.Dispose();
+        //ecb.Playback(EntityManager);
+        //ecb.Dispose();
 
         //return default;
 

@@ -200,7 +200,6 @@ public class InputController : MonoBehaviour, IConvertGameObjectToEntity
         buttonB_Released = player.GetButtonUp("FireB");
 
 
-        //buttonX_Value = player.GetAxis("FireX");
         buttonX_Pressed = player.GetButtonDown("FireX");
         buttonX_held = player.GetButton("FireX");
         buttonX_Released = player.GetButtonUp("FireX");

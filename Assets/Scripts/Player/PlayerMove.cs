@@ -18,6 +18,7 @@ public struct PlayerMoveComponent : IComponentData
     public float negativeForce;
     public float rotateSpeed;
     public bool snapRotation;
+    public float dampTime;
 }
 
 
@@ -37,6 +38,8 @@ namespace SandBox.Player
 
         [SerializeField]
         float rotateSpeed = 9;
+        [SerializeField]
+        float dampTime = .03f;
         [SerializeField]
         bool snapRotation = true;
 
@@ -110,7 +113,8 @@ namespace SandBox.Player
             {
                 //negativeForce = negativeForce,
                 currentSpeed = startSpeed, rotateSpeed = rotateSpeed,
-                snapRotation = snapRotation
+                snapRotation = snapRotation,
+                dampTime = dampTime
                 
 
             });
