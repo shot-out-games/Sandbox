@@ -26983,50 +26983,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Moves:
-  - playerMove: 1
-    enemyMove: 0
+  - usingFbb: 0
+    usingAim: 0
+    usingLimb: 0
+    effector: 0
+    aimIk: {fileID: 0}
+    limbIk: {fileID: 0}
+    animationType: 3
     target: {fileID: 0}
     pin: {fileID: 0}
     weight: 0
-    effector: 0
-    usingFbb: 0
-    usingAim: 0
-    usingLimb: 0
-    aimIk: {fileID: 0}
-    limbIk: {fileID: 0}
-    active: 1
     aimTransform: {fileID: 0}
     moveAudioSource: {fileID: 0}
     moveAudioClip: {fileID: 0}
     moveParticleSystem: {fileID: 0}
-  - playerMove: 1
-    enemyMove: 0
+  - usingFbb: 0
+    usingAim: 0
+    usingLimb: 0
+    effector: 0
+    aimIk: {fileID: 0}
+    limbIk: {fileID: 0}
+    animationType: 1
     target: {fileID: 0}
     pin: {fileID: 0}
     weight: 0
-    effector: 0
-    usingFbb: 0
-    usingAim: 0
-    usingLimb: 0
-    aimIk: {fileID: 0}
-    limbIk: {fileID: 0}
-    active: 1
     aimTransform: {fileID: 0}
     moveAudioSource: {fileID: 0}
     moveAudioClip: {fileID: 0}
     moveParticleSystem: {fileID: 0}
-  - playerMove: 1
-    enemyMove: 0
+  - usingFbb: 0
+    usingAim: 0
+    usingLimb: 0
+    effector: 0
+    aimIk: {fileID: 0}
+    limbIk: {fileID: 0}
+    animationType: 2
     target: {fileID: 0}
     pin: {fileID: 0}
     weight: 0
-    effector: 0
-    usingFbb: 0
-    usingAim: 0
-    usingLimb: 0
-    aimIk: {fileID: 0}
-    limbIk: {fileID: 0}
-    active: 1
     aimTransform: {fileID: 0}
     moveAudioSource: {fileID: 0}
     moveAudioClip: {fileID: 0}
@@ -47984,7 +47978,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807666547}
-  m_LocalRotation: {x: 0.3007817, y: -0.000000016409606, z: 0.0000000051753632, w: 0.95369303}
+  m_LocalRotation: {x: 0.3007817, y: 0.000000016409606, z: -0.0000000051753632, w: 0.95369303}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -85144,7 +85138,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6741819120784291202}
-  m_LocalRotation: {x: 0.30078173, y: -0.000000032819212, z: 0.000000010350731, w: 0.95369303}
+  m_LocalRotation: {x: 0.30078173, y: 0.000000032819212, z: -0.000000010350731, w: 0.95369303}
   m_LocalPosition: {x: 0, y: 2.5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -88818,18 +88812,16 @@ MonoBehaviour:
   movesInspector: {fileID: 545708894}
   AimTransform: {fileID: 0}
   moveUsing:
-    playerMove: 0
-    enemyMove: 0
-    target: {fileID: 0}
-    pin: {fileID: 0}
-    weight: 0
-    effector: 0
     usingFbb: 1
     usingAim: 1
     usingLimb: 1
+    effector: 0
     aimIk: {fileID: 0}
     limbIk: {fileID: 0}
-    active: 1
+    animationType: 2
+    target: {fileID: 0}
+    pin: {fileID: 0}
+    weight: 0
     aimTransform: {fileID: 0}
     moveAudioSource: {fileID: 0}
     moveAudioClip: {fileID: 0}

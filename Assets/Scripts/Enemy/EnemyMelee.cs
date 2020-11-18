@@ -22,7 +22,7 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     //[HideInInspector]
     public FABRIK limb;
     public Moves moveUsing = new Moves();
-    public float  currentStrikeDistanceZoneBegin;
+    public float currentStrikeDistanceZoneBegin;
     public float currentStrikeDistanceAdjustment;
 
 
@@ -54,19 +54,15 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
         for (int i = 0; i < movesInspector.Moves.Count; i++)
         {
             Moves move = movesInspector.Moves[i];
-            if (move.enemyMove && move.active)
+            if (move.aimIk != null)
             {
-                if (move.aimIk != null)
+                aim = move.aimIk;
+                AimTransform = move.aimTransform;
+                if (AimTransform == null)
                 {
-                    aim = move.aimIk;
-                    AimTransform = move.aimTransform;
-                    if (AimTransform == null)
-                    {
-                        Debug.Log("aim ik auto bone ENEMY ");
-                        int boneCount = aim.solver.bones.Length;
-                        AimTransform = aim.solver.bones[boneCount - 1].transform;
-                    }
-
+                    Debug.Log("aim ik auto bone ENEMY ");
+                    int boneCount = aim.solver.bones.Length;
+                    AimTransform = aim.solver.bones[boneCount - 1].transform;
                 }
 
                 if (move.limbIk)
@@ -113,7 +109,8 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
     public void StartMove()
     {
-        animator.SetInteger("CombatAction", combatAction);
+        int animationIndex = (int)moveUsing.animationType;
+        animator.SetInteger("CombatAction", animationIndex);
     }
 
     public void StartAgent()
@@ -239,7 +236,10 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
         meleeEntity = entity;
         entityManager.AddComponentData(meleeEntity, new MeleeComponent
         {
-            Available = active, hitPower = hitPower, gameHitPower = hitPower, anyTouchDamage = anyTouchDamage
+            Available = active,
+            hitPower = hitPower,
+            gameHitPower = hitPower,
+            anyTouchDamage = anyTouchDamage
 
         });
         entityManager.AddComponentData(entity, new EnemyAttackComponent());
@@ -306,7 +306,7 @@ public class EnemyMeleeSystem : SystemBase
 
                         if (hitLanded && dist < adjStrikeDistance && dist > adjStrikeDistance / 1.02f)
                         {
-                            enemyCombat.currentStrikeDistanceAdjustment  =   1.02f;//reset to 1.02f
+                            enemyCombat.currentStrikeDistanceAdjustment = 1.02f;//reset to 1.02f
                         }
                         else if (!hitLanded && strikeDistanceAdjustment > strikeDistance * .8f) // strike distance is the calculated strike distance in Moves class table
                         {

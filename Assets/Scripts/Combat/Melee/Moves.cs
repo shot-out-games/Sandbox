@@ -1,32 +1,38 @@
 ﻿using RootMotion.FinalIK;
 using UnityEngine;
 
+public enum AnimationType
+{
+    None,
+    Punch,
+    Kick,
+    Swing,
+    Aim
+}
 
 [System.Serializable]
-
 public class Moves
 {
-    public bool playerMove;
-    public bool enemyMove;
-    public Transform target = null;
-    public Transform pin = null;
-    public float weight;
-    public FullBodyBipedEffector effector;
-    //public float calculatedStrikeDistanceZoneBegin;
+    [Header("IK")]
     public bool usingFbb = true;
     public bool usingAim = true;
     public bool usingLimb = true;
+    public FullBodyBipedEffector effector;
     public AimIK aimIk;
     public FABRIK limbIk;
-    public bool active = true;
+
+    [Header("TARGETING")]
+    public AnimationType animationType;
+    public Transform target = null;
+    public Transform pin = null;
+    public float weight;
     public Transform aimTransform = null;
+
+
+    [Header("EFFECTS")]
     public AudioSource moveAudioSource;
     public AudioClip moveAudioClip;
     public ParticleSystem moveParticleSystem;
-
-
-
-    //   { get; set; } = 1.0f;
 
     public float CalculateStrikeDistanceFromPinPosition(Transform _transform)
     {

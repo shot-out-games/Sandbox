@@ -39,36 +39,34 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
         for (int i = 0; i < movesInspector.Moves.Count; i++)
         {
             Moves move = movesInspector.Moves[i];
-            if (move.playerMove && move.active)
+            if (move.aimIk != null)
             {
-                if (move.aimIk != null)
+                aim = move.aimIk;
+                AimTransform = move.aimTransform;
+                if (AimTransform == null)
                 {
-                    aim = move.aimIk;
-                    AimTransform = move.aimTransform;
-                    if (AimTransform == null)
-                    {
-                        int boneCount = aim.solver.bones.Length;
-                        AimTransform = aim.solver.bones[boneCount - 1].transform;
-                    }
-
+                    int boneCount = aim.solver.bones.Length;
+                    AimTransform = aim.solver.bones[boneCount - 1].transform;
                 }
-                move.target = moveUsing.target;//default target assigned in system
-                moveList.Add(move);
             }
+            move.target = moveUsing.target;//default target assigned in system
+            moveList.Add(move);
+
         }
 
 
 
-        if(aim != null) aim.enabled = false;
-        if(ik != null) ik.enabled = false;
+        if (aim != null) aim.enabled = false;
+        if (ik != null) ik.enabled = false;
 
     }
 
     public void SelectMove(int combatAction)
     {
-        if (moveList.Count < combatAction) return;
+        if (moveList.Count <= 0 || moveUsing == null) return;
 
-        moveUsing = moveList[combatAction - 1];
+
+
         aim = moveUsing.aimIk;
         AimTransform = moveUsing.aimTransform;
         if (aim != null)
@@ -85,15 +83,15 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
                 moveUsing.moveAudioSource.clip = moveUsing.moveAudioClip;
                 moveUsing.moveAudioSource.Play();
             }
-            if(moveUsing.moveParticleSystem)
+            if (moveUsing.moveParticleSystem)
             {
                 moveUsing.moveParticleSystem.Play(true);
             }
-          
+
 
             //if (combatAction == 3)
             //{
-               // moveUsing.target = transform;
+            // moveUsing.target = transform;
             //}
             //Debug.Log("at1 " + AimTransform);
         }
@@ -102,9 +100,22 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
     public void StartMove(int combatAction)
     {
-        if (moveList.Count < combatAction) return;
+        if (moveList.Count <= 0) return;
+        int animationIndex = -1;
 
-        animator.SetInteger("CombatAction", combatAction);
+        for (int i = 0; i < moveList.Count; i++)
+        {
+            if ((int)moveList[i].animationType == combatAction)
+            {
+                moveUsing = moveList[i];
+                animationIndex = (int)moveUsing.animationType;
+            }
+        }
+
+        if (animationIndex == -1) return;
+
+
+        animator.SetInteger("CombatAction", animationIndex);
         StartIKPlayer();
     }
 
@@ -130,7 +141,7 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
             ik.solver.GetEffector(moveUsing.effector).positionWeight = 0;
         }
 
-        if(moveUsing.moveParticleSystem)
+        if (moveUsing.moveParticleSystem)
         {
             moveUsing.moveParticleSystem.Stop(true);
         }
@@ -176,7 +187,7 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
             aim.solver.IKPositionWeight = hitWeight * moveUsing.weight;
             //if (haraKiri == true)
             //{
-               // aim.solver.IKPosition = haraKiriTarget.position;
+            // aim.solver.IKPosition = haraKiriTarget.position;
             //    //aim.solver.IKPositionWeight = 1;
             //}
 
@@ -191,7 +202,7 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
             //Debug.Log("ik " + " hw " + hitWeight + " move weight " + moveUsing.weight);
             ik.solver.GetEffector(moveUsing.effector).position = moveUsing.target.position;
             ik.solver.GetEffector(moveUsing.effector).positionWeight = adjHitWeight * moveUsing.weight;
-             
+
             //if (haraKiri == true)
             //{
             //    ik.solver.GetEffector(moveUsing.effector).position = haraKiriTarget.position;
@@ -215,7 +226,7 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     {
         Debug.Log("attack stage end");
         AttackStage = AttackStages.End;//
-        animator.SetInteger("CombatAction", 0);
+        //animator.SetInteger("CombatAction", 0);
         StopIKPlayer();
         if (_manager.HasComponent<CheckedComponent>(_entity))
         {
@@ -232,7 +243,8 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
         _manager.AddComponentData(_entity, new MeleeComponent
         {
-            Available = active, hitPower = hitPower,
+            Available = active,
+            hitPower = hitPower,
             gameHitPower = hitPower
         });
 
