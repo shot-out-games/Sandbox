@@ -30,12 +30,10 @@ namespace SandBox.Player
                     if (button_y)
                     {
                         playerCombat.SelectMove(1);
-                        playerCombat.StartMove(1);
                     }
                     else if (button_b)
                     {
                         playerCombat.SelectMove(2);
-                        playerCombat.StartMove(2);
                     }
 
 

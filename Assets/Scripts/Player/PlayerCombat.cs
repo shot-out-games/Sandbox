@@ -63,8 +63,28 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
     public void SelectMove(int combatAction)
     {
-        if (moveList.Count <= 0 || moveUsing == null) return;
+        if (moveList.Count <= 0) return;
 
+        int animationIndex = -1;
+
+        for (int i = 0; i < moveList.Count; i++)
+        {
+            if ((int)moveList[i].animationType == combatAction)
+            {
+                moveUsing = moveList[i];
+                animationIndex = (int)moveUsing.animationType;
+            }
+        }
+
+        if (animationIndex <= 0) return;//0 is none on enum
+
+        bool kickInAir = false;
+        if(_manager.HasComponent<ApplyImpulseComponent>(_entity) == true)
+        {
+            kickInAir = ! _manager.GetComponentData<ApplyImpulseComponent>(_entity).Grounded;
+        }
+
+        if (animationIndex == (int)AnimationType.Kick && animator.GetFloat("Vertical") >= .1f && kickInAir == false) return;//cant kick while moving - add kick check while moving too from playermove ??
 
 
         aim = moveUsing.aimIk;
@@ -78,41 +98,31 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
                 Debug.Log("aim ik auto bone ");
             }
             moveUsing.aimTransform = AimTransform;
-            if (moveUsing.moveAudioSource && moveUsing.moveAudioClip && moveUsing.moveAudioSource.isPlaying == false)
-            {
-                moveUsing.moveAudioSource.clip = moveUsing.moveAudioClip;
-                moveUsing.moveAudioSource.Play();
-            }
-            if (moveUsing.moveParticleSystem)
-            {
-                moveUsing.moveParticleSystem.Play(true);
-            }
-
-
-            //if (combatAction == 3)
-            //{
-            // moveUsing.target = transform;
-            //}
-            //Debug.Log("at1 " + AimTransform);
         }
+        if (moveUsing.moveAudioSource && moveUsing.moveAudioClip && moveUsing.moveAudioSource.isPlaying == false)
+        {
+            moveUsing.moveAudioSource.clip = moveUsing.moveAudioClip;
+            moveUsing.moveAudioSource.Play();
+        }
+        if (moveUsing.moveParticleSystem)
+        {
+            moveUsing.moveParticleSystem.Play(true);
+        }
+
+        StartMove(animationIndex);
+
+        //if (combatAction == 3)
+        //{
+        // moveUsing.target = transform;
+        //}
+        //Debug.Log("at1 " + AimTransform);
+
 
     }
 
-    public void StartMove(int combatAction)
+    public void StartMove(int animationIndex)
     {
         if (moveList.Count <= 0) return;
-        int animationIndex = -1;
-
-        for (int i = 0; i < moveList.Count; i++)
-        {
-            if ((int)moveList[i].animationType == combatAction)
-            {
-                moveUsing = moveList[i];
-                animationIndex = (int)moveUsing.animationType;
-            }
-        }
-
-        if (animationIndex == -1) return;
 
 
         animator.SetInteger("CombatAction", animationIndex);

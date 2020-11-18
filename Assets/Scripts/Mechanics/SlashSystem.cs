@@ -54,7 +54,6 @@ public class SlashSystem : SystemBase
                 if (slashComponent.animate == true && animator.GetInteger("SlashState") == 0)
                 {
                     playerCombat.SelectMove(3);
-                    playerCombat.StartMove(3);
                     Debug.Log("slash");
                     slashComponent.animate = false;
                 }
