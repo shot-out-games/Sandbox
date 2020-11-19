@@ -54,6 +54,8 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
 {
     public Entity playerEntity;
     public EntityManager manager;
+    private Animator animator;
+
 
     [SerializeField]
     private bool checkWinCondition = true;
@@ -78,6 +80,7 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
     void Awake()
     {
         //Debug.Log("player awake ");
+        animator = GetComponent<Animator>();
 
     }
 
@@ -92,6 +95,8 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
     {
         playerEntity = entity;
         manager = dstManager;
+
+        conversionSystem.AddHybridComponent(animator);
 
         dstManager.AddComponentData(entity, new PlayerComponent
         {

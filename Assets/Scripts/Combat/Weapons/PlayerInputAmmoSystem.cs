@@ -4,6 +4,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
+using UnityEditor.Rendering.Universal;
 using UnityEngine;
 
 
@@ -32,17 +33,16 @@ public class PlayerInputAmmoSystem : SystemBase
             ) =>
             {
 
-
                 gunComponent.IsFiring = 0;
                 float dpadY = inputController.dpadY;
 
+                WeaponMotion currentWeaponMotion =  (WeaponMotion)animator.GetInteger("WeaponRaised");
+                if (currentWeaponMotion == WeaponMotion.Raised)
+                {
+                    playerWeaponAimComponent.weaponRaised = currentWeaponMotion;
+                }
 
                 bool ltPressed = inputController.leftTriggerPressed;
-                bool rtPressed = inputController.rightTriggerPressed;
-
-
-
-
 
                 if (
                     attachWeapon.attachWeaponType == (int)WeaponType.Gun && ltPressed == true ||
@@ -52,29 +52,31 @@ public class PlayerInputAmmoSystem : SystemBase
 
                     gunComponent.IsFiring = 1;
                     playerWeaponAimComponent.weaponUpTimer = 0;
-                    playerWeaponAimComponent.weaponRaised = true;
-                    SetAnimationLayerWeights(animator, true);
+                    if (playerWeaponAimComponent.weaponRaised == WeaponMotion.None)
+                    {
+                        playerWeaponAimComponent.weaponRaised = WeaponMotion.Started;
+                        //if not currently raised up then start
+                    }
+
+                    SetAnimationLayerWeights(animator,  WeaponMotion.Started);
                 }
-
-                
-
 
                 SetComponent(entity, gunComponent);
 
-                if (dpadY > .000001)
+                if (dpadY > .000001 && playerWeaponAimComponent.weaponRaised == WeaponMotion.None)
                 {
-                    playerWeaponAimComponent.weaponRaised = true;
-                    SetAnimationLayerWeights(animator, true);
+                    playerWeaponAimComponent.weaponRaised = WeaponMotion.Started;
+                    SetAnimationLayerWeights(animator,  WeaponMotion.Started);
                 }
 
-                if (playerWeaponAimComponent.weaponRaised)
+                if (playerWeaponAimComponent.weaponRaised == WeaponMotion.Raised)
                 {
                     playerWeaponAimComponent.weaponUpTimer += Time.DeltaTime;
                     if (playerWeaponAimComponent.weaponUpTimer > 2)
                     {
                         playerWeaponAimComponent.weaponUpTimer = 0;
-                        playerWeaponAimComponent.weaponRaised = false;
-                        SetAnimationLayerWeights(animator, false);
+                        playerWeaponAimComponent.weaponRaised = WeaponMotion.None;
+                        SetAnimationLayerWeights(animator, WeaponMotion.None);
                     }
                 }
 
@@ -82,34 +84,21 @@ public class PlayerInputAmmoSystem : SystemBase
         ).Run();
 
 
-        //ecb.Playback(EntityManager);
-        //ecb.Dispose();
-
-        //return default;
-
     }
 
 
-    public void SetAnimationLayerWeights(Animator animator, bool weaponRaised)
+    public void SetAnimationLayerWeights(Animator animator, WeaponMotion weaponMotion)
     {
-        if (animator.GetComponent<PlayerWeaponAim>())
-        {
-            animator.GetComponent<PlayerWeaponAim>().weaponRaised = weaponRaised;
-        }
 
 
-        if (weaponRaised)
+        if (weaponMotion == WeaponMotion.Started)
         {
-            animator.SetLayerWeight(0, 0);
-            animator.SetLayerWeight(1, 1); //1 is weapon layer
-            animator.SetBool("Aim", true);
+            animator.SetInteger("WeaponRaised", 1);
 
         }
-        else if (!weaponRaised)
+        else if (weaponMotion == WeaponMotion.None)
         {
-            animator.SetLayerWeight(0, 1);
-            animator.SetLayerWeight(1, 0);
-            animator.SetBool("Aim", false);
+            animator.SetInteger("WeaponRaised", 0);
         }
     }
 

@@ -99,13 +99,18 @@ MonoBehaviour:
   - {fileID: 1966196141964474561}
   m_RendererFeatureMap: a3e33fb560919ea91fab5c6be4edbfe23a10c67387191414d8115f29f6bd0a440b3fce63a14b5bc095b898ed152cea2b07564891f6e4ff71c1388948f954491b
   postProcessData: {fileID: 11400000, guid: 965dc8fa9987fb24b8a967d82f854f13, type: 2}
+  xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   shaders:
     blitPS: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}
     copyDepthPS: {fileID: 4800000, guid: d6dae50ee9e1bfa4db75f19f99355220, type: 3}
     screenSpaceShadowPS: {fileID: 4800000, guid: 0f854b35a0cf61a429bd5dcfea30eddd,
       type: 3}
     samplingPS: {fileID: 4800000, guid: 04c410c9937594faa893a11dceb85f7e, type: 3}
+    tileDepthInfoPS: {fileID: 4800000, guid: f451c6bec16aa51408bdfd37f70aed12, type: 3}
+    tileDeferredPS: {fileID: 4800000, guid: 344787727e03649488a1022c09fa74b5, type: 3}
+    stencilDeferredPS: {fileID: 4800000, guid: e9155b26e1bc55942a41e518703fe304, type: 3}
     fallbackErrorPS: {fileID: 4800000, guid: e6e9a19c3678ded42a3bc431ebef7dbd, type: 3}
+    materialErrorPS: {fileID: 4800000, guid: 5fd9a8feb75a4b5894c241777f519d4e, type: 3}
   m_OpaqueLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -120,6 +125,8 @@ MonoBehaviour:
     failOperation: 0
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
+  m_RenderingMode: 0
+  m_AccurateGbufferNormals: 0
 --- !u!114 &1446809449846411322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,7 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804bf49869d3b4315a850958d8530433, type: 3}
   m_Name: ToonPosterize
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     Event: 300
     blitMaterial: {fileID: 2100000, guid: bb822321860d6af44a4abeb570b648d1, type: 2}

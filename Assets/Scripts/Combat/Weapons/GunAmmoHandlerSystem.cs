@@ -32,7 +32,9 @@ public class GunAmmoHandlerSystem : SystemBase
                 ref GunComponent gun, ref StatsComponent statsComponent,
                 in RatingsComponent ratingsComponent,
                 in Entity entity, in DeadComponent dead,
-                in AttachWeaponComponent attachWeapon) =>
+                in AttachWeaponComponent attachWeapon,
+                 in PlayerWeaponAimComponent playerWeaponAimComponent
+                 ) =>
             {
 
 
@@ -69,7 +71,7 @@ public class GunAmmoHandlerSystem : SystemBase
                 if ((gun.Duration > rate) && (gun.IsFiring == 1))
                 {
 
-                    if (gun.PrimaryAmmo != null)
+                    if (gun.PrimaryAmmo != null && playerWeaponAimComponent.weaponRaised == WeaponMotion.Raised)
                     {
                         gun.IsFiring = 0;
                         statsComponent.shotsFired += 1;

@@ -24,8 +24,6 @@ namespace SandBox.Player
                 ) =>
                 {
 
-                    
-
                     bool buttonB = inputController.buttonB_Pressed;//kick types
                     bool buttonY = inputController.buttonY_Pressed;//punch types
 

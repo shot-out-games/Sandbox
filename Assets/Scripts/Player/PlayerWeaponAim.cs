@@ -11,10 +11,16 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using  Unity.Physics.Authoring;
 
+public enum WeaponMotion
+{
+    None,
+    Started,
+    Raised
+}
 
 public struct PlayerWeaponAimComponent : IComponentData
 {
-    public bool weaponRaised;
+    public WeaponMotion weaponRaised;
     public float weaponUpTimer;
     public bool autoTarget;
     public bool dualMode;
@@ -241,7 +247,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         manager = dstManager;
 
         dstManager.AddComponentData(entity,
-            new PlayerWeaponAimComponent { weaponRaised = false, weaponUpTimer = 0, autoTarget = false, dualMode = dualMode });
+            new PlayerWeaponAimComponent { dualMode = dualMode });
     }
 }
 
