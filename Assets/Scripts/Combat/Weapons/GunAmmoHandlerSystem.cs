@@ -15,14 +15,18 @@ using UnityEngine;
 public class GunAmmoHandlerSystem : SystemBase
 {
 
+    
     protected override void OnUpdate()
     {
 
+        //EntityCommandBufferSystem barrier = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
-        EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
+        //var ecb = new EntityCommandBuffer(Allocator.Temp);
+        //var ecb = barrier.CreateCommandBuffer().AsParallelWriter();
+        //var ecb = barrier.CreateCommandBuffer();
         float dt = UnityEngine.Time.fixedDeltaTime;//gun duration
 
-        Entities.WithoutBurst().WithNone<Pause>().ForEach(
+        Entities.WithoutBurst().WithStructuralChanges().WithNone<Pause>().ForEach(
             (
                  BulletManager bulletManager,
                 ref GunComponent gun, ref StatsComponent statsComponent,
@@ -54,7 +58,6 @@ public class GunAmmoHandlerSystem : SystemBase
                     }
                 }
 
-
                 Entity primaryAmmoEntity = gun.PrimaryAmmo;
                 var ammoDataComponent = GetComponent<AmmoDataComponent>(primaryAmmoEntity);
                 float rate = ammoDataComponent.Rate;
@@ -70,20 +73,21 @@ public class GunAmmoHandlerSystem : SystemBase
                     {
                         gun.IsFiring = 0;
                         statsComponent.shotsFired += 1;
-                        Entity e = ecb.Instantiate(gun.PrimaryAmmo);
+                        Entity e = EntityManager.Instantiate(gun.PrimaryAmmo);
                         Translation translation = new Translation() { Value = bulletManager.AmmoStartLocation.position };
                         Rotation rotation = new Rotation() { Value = gun.AmmoStartRotation.Value };
-                        var playerVelocity = EntityManager.GetComponentData<PhysicsVelocity>(entity);
+                        //var playerVelocity = GetComponent<PhysicsVelocity>(entity);
                         var velocity = EntityManager.GetComponentData<PhysicsVelocity>(e);
-                       float3 forward = bulletManager.AmmoStartLocation.forward;
-                        velocity.Linear = forward * (strength + math.abs(playerVelocity.Linear.x));
+                        float3 forward = bulletManager.AmmoStartLocation.forward;
+                        //velocity.Linear = forward * (strength + math.abs(playerVelocity.Linear.x));
+                        velocity.Linear = forward * (strength);
 
-                        SetComponent(e, translation);
-                        SetComponent(e, rotation);
-                        SetComponent(e, velocity);
-                        var ammoComponent = GetComponent<AmmoComponent>(e);
+                        EntityManager.SetComponentData(e, translation);
+                        EntityManager.SetComponentData(e, rotation);
+                        EntityManager.SetComponentData(e, velocity);
+                        var ammoComponent = EntityManager.GetComponentData<AmmoComponent>(e);
                         ammoComponent.OwnerAmmoEntity = entity;
-                        SetComponent(e, ammoComponent);
+                        EntityManager.SetComponentData(e, ammoComponent);
                         if (bulletManager.weaponAudioClip && bulletManager.weaponAudioSource)
                         {
                             bulletManager.weaponAudioSource.PlayOneShot(bulletManager.weaponAudioClip);
@@ -95,8 +99,8 @@ public class GunAmmoHandlerSystem : SystemBase
             }
         ).Run();
 
-        ecb.Playback(EntityManager);
-        ecb.Dispose();
+        //ecb.Playback(EntityManager);
+        //ecb.Dispose();
 
 
     }

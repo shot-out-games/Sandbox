@@ -340,7 +340,7 @@ MonoBehaviour:
   AmmoTime: 1
   Strength: 13
   Damage: 5
-  Rate: 1
+  Rate: 0.05
 --- !u!1001 &1155093784678171370
 PrefabInstance:
   m_ObjectHideFlags: 0

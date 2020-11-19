@@ -23,7 +23,6 @@ public class ParticleConversionSystem : GameObjectConversionSystem
             AddHybridComponent(particleSystemRenderer);
             Debug.Log("ps " + particleSystem.name);
             Debug.Log("am ");
-
         });
 
 

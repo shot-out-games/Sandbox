@@ -7,6 +7,10 @@ using Unity.Mathematics;
 using UnityEngine;
 
 
+[UpdateBefore(typeof(GunAmmoHandlerSystem))]
+[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+
+
 public class PlayerInputAmmoSystem : SystemBase
 {
 
@@ -41,8 +45,8 @@ public class PlayerInputAmmoSystem : SystemBase
 
 
                 if (
-                    attachWeapon.attachWeaponType == (int)WeaponType.Gun && rtPressed == true ||
-                attachWeapon.attachSecondaryWeaponType == (int)WeaponType.Gun && rtPressed == true
+                    attachWeapon.attachWeaponType == (int)WeaponType.Gun && ltPressed == true ||
+                attachWeapon.attachSecondaryWeaponType == (int)WeaponType.Gun && ltPressed == true
                     )
                 {
 
