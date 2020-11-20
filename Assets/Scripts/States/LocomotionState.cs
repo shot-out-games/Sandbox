@@ -29,7 +29,10 @@ public class LocomotionState : StateMachineBehaviour
         if (animationType == AnimationType.Aim)
         {
             //animator.SetBool("Aim", false);
-            animator.SetInteger("WeaponRaised", (int)WeaponMotion.Raised);
+            if (animator.GetInteger("WeaponRaised") == (int)WeaponMotion.Started)
+            {
+                animator.SetInteger("WeaponRaised", (int)WeaponMotion.Raised);
+            }
             Debug.Log("event aim");
         }
     }

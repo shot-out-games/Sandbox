@@ -44,7 +44,6 @@ public class GunAmmoHandlerSystem : SystemBase
                     )
                 {
                     gun.Duration = 0;
-                    gun.WasFiring = 0;
                     return;
                 }
 
@@ -94,10 +93,9 @@ public class GunAmmoHandlerSystem : SystemBase
                         {
                             bulletManager.weaponAudioSource.PlayOneShot(bulletManager.weaponAudioClip);
                         }
+                        gun.Duration = 0;
                     }
-                    gun.Duration = 0;
                 }
-                gun.WasFiring = 1;
             }
         ).Run();
 

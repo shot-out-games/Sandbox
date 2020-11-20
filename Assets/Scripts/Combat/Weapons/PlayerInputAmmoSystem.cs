@@ -33,7 +33,7 @@ public class PlayerInputAmmoSystem : SystemBase
             ) =>
             {
 
-                gunComponent.IsFiring = 0;
+                //gunComponent.IsFiring = 0;
                 float dpadY = inputController.dpadY;
 
                 WeaponMotion currentWeaponMotion =  (WeaponMotion)animator.GetInteger("WeaponRaised");
@@ -56,9 +56,9 @@ public class PlayerInputAmmoSystem : SystemBase
                     {
                         playerWeaponAimComponent.weaponRaised = WeaponMotion.Started;
                         //if not currently raised up then start
+                        SetAnimationLayerWeights(animator, WeaponMotion.Started);
                     }
 
-                    SetAnimationLayerWeights(animator,  WeaponMotion.Started);
                 }
 
                 SetComponent(entity, gunComponent);

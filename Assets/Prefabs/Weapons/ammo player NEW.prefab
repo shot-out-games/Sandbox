@@ -338,9 +338,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomize: 0
   AmmoTime: 1
-  Strength: 13
+  Strength: 50
   Damage: 5
-  Rate: 0.05
+  Rate: 0.1
 --- !u!1001 &1155093784678171370
 PrefabInstance:
   m_ObjectHideFlags: 0
