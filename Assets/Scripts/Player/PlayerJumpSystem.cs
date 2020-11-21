@@ -48,7 +48,9 @@ namespace SandBox.Player
 
 
 
-                        bool variableJump = true;
+                        //bool variableJump = true;
+                        //bool simpleJump = playerJumpComponent.basicJump ;
+                        int jumpPoints = playerJumpComponent.jumpPoints;
 
                         float leftStickX = inputController.leftStickX;
                         float leftStickY = inputController.leftStickY;
@@ -112,18 +114,18 @@ namespace SandBox.Player
                                  applyImpulseComponent.Grounded == false && applyImpulseComponent.Falling == false)
                         {
                             frames = frames + 1;
-                            if (frames == originalJumpFrames - 2 && button_a_held == true && variableJump == false
+                            if (frames == originalJumpFrames - 2 && button_a_held == true && jumpPoints == 2//continue up for 1st frame is 2 height jump
                             ) //make sure number here less than jump up frames at some point
                             {
                                 buttonHeldFrames = 1;
                             }
-                            else if (frames == originalJumpFrames - 1 && button_a_held == true && variableJump == false
+                            else if (frames == originalJumpFrames - 1 && button_a_held == true && jumpPoints == 2//2nd frame for 2 jump height
                             ) //make sure number here less than jump up frames at some point
                             {
                                 buttonHeldFrames = 2;
                             }
-                            else if (frames == originalJumpFrames && button_a_held == true &&
-                                     (buttonHeldFrames == 2 || variableJump == true)
+                            else if (frames == originalJumpFrames && button_a_held == true &&//3rd frame but jump heights 3 then set high jump (3rd height)
+                                     (buttonHeldFrames == 2 || jumpPoints == 3)
                             ) //make sure number here less than jump up frames at some point
                             {
                                 applyImpulseComponent.hiJump = true;
@@ -137,9 +139,9 @@ namespace SandBox.Player
                             velocity = new float3(pv.Linear.x, originalJumpPower, leftStickY);
                         }
                         else if (applyImpulseComponent.hiJump == true &&
-                                 (frames > 1 && airFrames < hiJumpAirFramesMax && variableJump == false)
+                                 (frames > 1 && airFrames < hiJumpAirFramesMax && jumpPoints == 2)
                                  ||
-                                 (frames > 1 && airFrames < hiJumpAirFramesMax && variableJump == true &&
+                                 (frames > 1 && airFrames < hiJumpAirFramesMax && jumpPoints == 3 &&
                                   button_a_held == true &&
                                   button_a == false)
                         ) //6 on higher jump after 6th frame held - very static could problem like if game has quick jump with low jump frames it will go up after jumpframes peak
@@ -152,7 +154,7 @@ namespace SandBox.Player
                         }
                         else if (applyImpulseComponent.hiJump == true &&
                                  (airFrames >= hiJumpAirFramesMax
-                                  || variableJump == true && (button_a_held == false || button_a == false)))
+                                  || applyImpulseComponent.hiJump == true && (button_a_held == false || button_a == false)))//let go
                             //6 on higher jump after 6th frame held - very static could problem like if game has quick jump with low jump frames it will go up after jumpframes peak
                         {
                             applyImpulseComponent.hiJump = false;

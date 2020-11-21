@@ -80,7 +80,7 @@ public class CollisionSystem : JobComponentSystem
 
             Entity a = physicsWorld.Bodies[ev.BodyIndexA].Entity;
             Entity b = physicsWorld.Bodies[ev.BodyIndexB].Entity;
-            //Debug.Log("ena " + a + " enb " + b);
+            Debug.Log("ena " + a + " enb " + b);
 
             if (triggerGroup.HasComponent(a) == false || triggerGroup.HasComponent(b) == false) return;
             var triggerComponent_a = triggerGroup[a];
@@ -94,7 +94,7 @@ public class CollisionSystem : JobComponentSystem
             int type_a = triggerComponent_a.Type;
             int type_b = triggerComponent_b.Type;
 
-            //Debug.Log("cha " + ch_a + " chb  " + ch_b);
+            Debug.Log("tya " + type_a + " tyb  " + type_b);
 
 
             if (ch_a == ch_b) return;////?????

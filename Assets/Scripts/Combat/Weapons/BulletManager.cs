@@ -76,6 +76,7 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
     }
 
 
+
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         //if (randomize == true)
