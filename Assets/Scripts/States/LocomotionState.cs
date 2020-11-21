@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.Entities;
 using UnityEngine;
 
 
@@ -9,30 +10,34 @@ public class LocomotionState : StateMachineBehaviour
 {
     public AnimationType animationType;
 
-    
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
-    //    
-    //}
+    //    if (animationType == AnimationType.Aim)
+    //    {
+    //        animator.SetInteger("WeaponRaised", (int)WeaponMotion.None);
+    //    }
 
+    //}
+    
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
     //    
     //}
 
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+        // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (animationType == AnimationType.Aim)
         {
             //animator.SetBool("Aim", false);
-            if (animator.GetInteger("WeaponRaised") == (int)WeaponMotion.Started)
+            if (animator.GetInteger("WeaponRaised") == (int) WeaponMotion.Started)
             {
                 animator.SetInteger("WeaponRaised", (int)WeaponMotion.Raised);
             }
+
             Debug.Log("event aim");
         }
     }
@@ -52,4 +57,5 @@ public class LocomotionState : StateMachineBehaviour
     //{
     //    // Implement code that sets up animation IK (inverse kinematics)
     //}
+
 }

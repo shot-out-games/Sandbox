@@ -90,9 +90,9 @@ public class PlayerInputAmmoSystem : SystemBase
     public void SetAnimationLayerWeights(Animator animator, WeaponMotion weaponMotion)
     {
 
-
         if (weaponMotion == WeaponMotion.Started)
         {
+
             animator.SetInteger("WeaponRaised", 1);
 
         }
