@@ -19,6 +19,7 @@ public struct PlayerMoveComponent : IComponentData
     public float rotateSpeed;
     public bool snapRotation;
     public float dampTime;
+    public bool move2d;
 }
 
 
@@ -42,6 +43,8 @@ namespace SandBox.Player
         float dampTime = .03f;
         [SerializeField]
         bool snapRotation = true;
+        [SerializeField]
+        bool move2d = false;
 
         [HideInInspector]
         public Camera mainCam;
@@ -109,12 +112,20 @@ namespace SandBox.Player
             _entityManager = dstManager;
 
             startSpeed = GetComponent<PlayerRatings>() ? GetComponent<PlayerRatings>().Ratings.speed : 4f;
-            dstManager.AddComponentData(entity, new PlayerMoveComponent()
+            if (move2d)
+            {
+                snapRotation = true;
+                dampTime = 0;
+            }
+
+
+        dstManager.AddComponentData(entity, new PlayerMoveComponent()
             {
                 //negativeForce = negativeForce,
                 currentSpeed = startSpeed, rotateSpeed = rotateSpeed,
                 snapRotation = snapRotation,
-                dampTime = dampTime
+                dampTime = dampTime,
+                move2d = move2d
                 
 
             });

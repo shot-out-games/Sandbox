@@ -25,75 +25,49 @@ public struct PlayerWeaponAimComponent : IComponentData
     public bool autoTarget;
     public bool dualMode;
     public bool cursorTargeting;
+    public bool weapon2d;
 
 }
 
 public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
 {
+    private EntityManager manager;
+    private Entity e;
+
     [SerializeField] AimIK aim;
     [SerializeField] FullBodyBipedIK ik;
     [HideInInspector]
     public Transform target;
     public Transform aimTransform;
-    public bool weaponRaised = false;
     [Range(0.0f, 1.0f)] [SerializeField] private float aimWeight = 1.0f;
-    private EntityManager manager;
-    private Entity e;
-    //[SerializeField]
-    private bool dualMode;
-    //[SerializeField]
+    [HideInInspector]
     public Player player;
+    [HideInInspector]
     public int playerId; // The Rewired player id of this character
+    [SerializeField] private Transform crossHair;
     [SerializeField] private bool cursorTargeting = true;
-    [SerializeField] private GameObject crossHair;
-    //[SerializeField] private float crossHairRange = 18.0f;
     [Range(0.0f, 100.0f)]
     [SerializeField] private float cameraZ = 50f;
+    public bool weapon2d;
+
 
     private float aimAngle;
-
-    //[SerializeField] private TouchJoystick touchJoystick;
-
     private Animator animator;
     void Start()
     {
         if (!ReInput.isReady) return;
         player = ReInput.players.GetPlayer(playerId);
         animator = GetComponent<Animator>();
+        target = crossHair;//default target
     }
 
 
     public void SetAim()
     {
-        //float autoWeight = aimWeight;
-        //var playerWeaponAim = manager.GetComponentData<PlayerWeaponAimComponent>(e);
-        //if (playerWeaponAim.autoTarget == false)
-        //{
-        //    autoWeight = 0;
-        //}
-
-
-        //aim.solver.IKPositionWeight = weaponRaised ? autoWeight : 0;
-
-
-        //aim.solver.transform = aimTransform;
-
-        //if (cursorTargeting == true && crossHair != null)
-        //{
-        //    target = crossHair.transform;
-        //    target.position = crossHair.transform.position;
-        //}
-
-        //aim.solver.IKPosition = target.position;
-        //aim.solver.Update();
 
         aim.solver.IKPositionWeight = aimWeight;
         aim.solver.IKPosition = crossHair.transform.position;
-        //aim.solver.IKPosition = target.position;
-        //aim.solver.IKPosition = transform.forward;
         aim.solver.Update();
-
-
 
     }
 
@@ -107,34 +81,15 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     public void LateUpdateSystem()
     {
 
-        if (manager == default) return;
-        if (manager.HasComponent<PlayerWeaponAimComponent>(e) == false) return;
-        if (manager.HasComponent<ApplyImpulseComponent>(e) == false) return;
         if (aim == null || target == null) return;
         Crosshair();
         SetAim();
         SetIK();
-
-        //Crosshair();
-    }
-
-    public void UpdateSystem()
-    {
-
-        if (manager == default) return;
-        if (manager.HasComponent<PlayerWeaponAimComponent>(e) == false) return;
-        if (aim == null || target == null) return;
-
-        //Crosshair();
-
-        //crossHair.transform.position = new Vector3(crossHair.transform.position.x, crossHair.transform.position.y, 0);
-
     }
 
 
     void Crosshair()
     {
-        //Transform targetTransform = animator.GetBoneTransform(HumanBodyBones.Neck);
 
         if (cursorTargeting == false || crossHair == null) return;
 
@@ -144,19 +99,8 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         if (controller.type == ControllerType.Joystick)
         {
             crossHair.GetComponent<MeshRenderer>().enabled = true;
-
-            //Quaternion entityRotation = manager.GetComponentData<LocalToWorld>(e).Rotation;
-            //transform.rotation = entityRotation; 
-            var applyImpulse = manager.GetComponentData<ApplyImpulseComponent>(e);
-
-
-            //float x = player.GetAxis("Move Horizontal");
-            //float y = player.GetAxis("Move Vertical");
-            float x = applyImpulse.stickX;
-            float y = applyImpulse.stickY;
-            //Debug.Log("x " + Math.Ceiling(x * 10) + " y " + Math.Ceiling(y * 10));
-            //Debug.Log("x " + x + " y " + y);
-
+            float x = player.GetAxis("RightHorizontal");
+            float y = player.GetAxis("RightVertical");
             aimAngle = transform.rotation.eulerAngles.y;
 
             if (math.abs(aimAngle) > 22.5 && math.abs(aimAngle) <= 67.5)
@@ -200,38 +144,16 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
                 y = 1;
             }
 
-
-            //if (math.abs(aimAngle) < 22.5f || math.abs(aimAngle) > 315) x = 0;
-            //else if (math.abs(aimAngle) > 157.5 && math.abs(aimAngle) < 202.5) x = 0;
-            //else if (aimAngle > 180) x = -1;
-            //else if (aimAngle < 180) x = 1;
-
-            //x = math.sign(aimAngle);
-
-
-
             Vector3 aim = new Vector3(
                     x,
                     y,
-                    //y + .15f * math.sign(y),
                     0
                 );
 
-
-            //Debug.Log("x " + x + " y " + y);
-
-            //if (aim.sqrMagnitude > 0)
-            //{
-
                 crossHair.transform.position = transform.position + aim * 5f;
-            //}
         }
         else
         {
-            //Debug.Log("tr " + targetTransform.position);
-            //Debug.Log("tr");
-
-
             Vector3 mousePosition = player.controllers.Mouse.screenPosition;
             mousePosition.z = cameraZ;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
@@ -247,7 +169,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         manager = dstManager;
 
         dstManager.AddComponentData(entity,
-            new PlayerWeaponAimComponent { dualMode = dualMode });
+            new PlayerWeaponAimComponent {weapon2d = weapon2d});
     }
 }
 

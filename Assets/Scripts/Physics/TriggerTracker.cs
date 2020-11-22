@@ -11,6 +11,8 @@ using UnityEngine.Jobs;
 [UpdateInGroup(typeof(TransformSystemGroup))]
 [UpdateAfter(typeof(EndFrameLocalToParentSystem))]
 //[UpdateAfter(typeof(FollowTriggerComponent))]
+//[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+
 
 class SynchronizeGameObjectTransformsWithTriggerEntities : SystemBase
 {

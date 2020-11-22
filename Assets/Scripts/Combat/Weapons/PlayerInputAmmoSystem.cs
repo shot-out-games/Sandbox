@@ -8,8 +8,10 @@ using UnityEditor.Rendering.Universal;
 using UnityEngine;
 
 
-[UpdateBefore(typeof(GunAmmoHandlerSystem))]
-[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+//[UpdateBefore(typeof(GunAmmoHandlerSystem))]
+//[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+[UpdateInGroup(typeof(PresentationSystemGroup))]
+
 
 
 public class PlayerInputAmmoSystem : SystemBase

@@ -7,17 +7,17 @@ public class TargetZones : MonoBehaviour, IConvertGameObjectToEntity
 {
 
     public Transform headZone;
-    //[SerializeField]
-    //Transform deparentTriggers;
+    [SerializeField]
+    Transform deparentTriggers;
     public Entity TriggerEntity;
 
-    //void Awake()
-    //{
-       // if (deparentTriggers != null)
-        //{
-           // deparentTriggers.parent = null;
-        //}
-    //}
+    void Awake()
+    {
+        if (deparentTriggers != null)
+        {
+            deparentTriggers.parent = null;
+        }
+    }
 
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)

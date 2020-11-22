@@ -13,16 +13,24 @@ namespace SandBox.Player
     //[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     //[UpdateBefore(typeof(PlayerWeaponAimSystemLateUpdate))]
 
-    public class PlayerWeaponAimSystemUpdate : SystemBase
-    {
-        protected override void OnUpdate()
-        {
-            Entities.WithoutBurst().WithStructuralChanges().ForEach((PlayerWeaponAim mb) =>
-            {
-                mb.UpdateSystem();
-            }).Run();
-        }
-    }
+//    [UpdateInGroup(typeof(PresentationSystemGroup))]
+    //[UpdateInGroup(typeof(TransformSystemGroup))]
+
+    ////[UpdateBefore(typeof(PlayerInputAmmoSystem))]
+    ////[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+
+
+
+    //public class PlayerWeaponAimSystemUpdate : SystemBase
+    //{
+    //    protected override void OnUpdate()
+    //    {
+    //        Entities.WithoutBurst().WithStructuralChanges().ForEach((PlayerWeaponAim mb) =>
+    //        {
+    //            mb.UpdateSystem();
+    //        }).Run();
+    //    }
+    //}
 
 
     [UpdateInGroup(typeof(PresentationSystemGroup))]
@@ -32,7 +40,7 @@ namespace SandBox.Player
     {
         protected override void OnUpdate()
         {
-            Entities.WithoutBurst().WithStructuralChanges().ForEach((PlayerWeaponAim mb) =>
+            Entities.WithoutBurst().ForEach((in PlayerWeaponAim mb) =>
             {
                 mb.LateUpdateSystem();
             }).Run();

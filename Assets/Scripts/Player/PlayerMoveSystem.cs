@@ -77,6 +77,7 @@ namespace SandBox.Player
                     float leftStickX = inputController.leftStickX;
                     float leftStickY = inputController.leftStickY;
 
+                    if (playerMoveComponent.move2d) leftStickY = 0;
 
                     stickInput = new Vector3(leftStickX, 0, leftStickY);//x is controlled by rotation
                     stickInput.Normalize();
@@ -189,6 +190,7 @@ namespace SandBox.Player
                      float slerpDampTime = playerMoveComponent.rotateSpeed;
                      var up = math.up();
 
+                     if (playerMoveComponent.move2d) leftStickY = 0;
 
                      bool haveInput = (math.abs(leftStickX) > float.Epsilon) || (math.abs(leftStickY) > float.Epsilon);
 

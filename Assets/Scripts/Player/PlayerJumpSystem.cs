@@ -94,7 +94,7 @@ namespace SandBox.Player
 
                         //pv.Linear.z = leftStickY;
 
-                        if ((button_a == true || button_a_held == true) && applyImpulseComponent.InJump == false &&
+                        if ((button_a == true ) && applyImpulseComponent.InJump == false &&
                             frames == 0)
                         {
                             applyImpulseComponent.InJump = true;

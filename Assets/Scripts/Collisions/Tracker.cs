@@ -48,40 +48,8 @@ public class Tracker : MonoBehaviour, IConvertGameObjectToEntity
     public Entity parentEntity;
     public EntityManager manager;
     public TriggerType Type;
-    //[SerializeField] private Transform offset;//since we can't make child need position relative to tracked transform
-                                              //    private Vector3 offsetPosition = Vector3.zero;
-                                              // private Quaternion offsetRotation = Quaternion.identity;
 
 
-    //[SerializeField] private Vector3 transformPoint;//since we can't make child need position relative to tracked transform
-    //[SerializeField] private GameObject prefab;
-    //private GameObject go;
-
-    //void Start()
-    //{
-
-    //    if(offset != null)
-    //    {
-    //        offsetPosition = offset.localPosition;
-    //        offsetRotation = offset.localRotation;
-    //    }
-
-    //}
-
-    //void LateUpdate()
-    //{
-    //    if (manager == null) return;
-
-    //    if (!manager.HasComponent(e, typeof(Translation))) return;
-    //    if (track == null) return;
-
-    //    transform.position = track.transform.position + offsetPosition;
-    //    transform.rotation = track.transform.rotation * offsetRotation;
-
-    //    manager.SetComponentData(e, new Translation { Value = transform.position });
-    //    manager.SetComponentData(e, new Rotation { Value = transform.rotation });
-
-    //}
 
     void Update()
     {
