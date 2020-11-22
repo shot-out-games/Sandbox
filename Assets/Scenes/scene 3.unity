@@ -26019,7 +26019,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391757172}
-  m_LocalRotation: {x: 0.2611698, y: 0.0000000113150165, z: -0.000000003061392, w: 0.9652929}
+  m_LocalRotation: {x: -0.0000000052007474, y: 0.9652929, z: -0.2611698, w: -0.00000001922215}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -47901,7 +47901,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 768416159}
-  m_LocalRotation: {x: 0.34042525, y: -0.00000002288009, z: 0.000000008283735, w: 0.9402716}
+  m_LocalRotation: {x: -0, y: 0.9402716, z: -0.34042525, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -48092,7 +48092,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807666547}
-  m_LocalRotation: {x: 0.3007817, y: -0.000000016409606, z: 0.0000000051753632, w: 0.95369303}
+  m_LocalRotation: {x: 0.0000000051753646, y: 0.95369303, z: -0.3007817, w: 0.000000016409606}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -49174,7 +49174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5013856973b27429d937d256dc082f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fixTransforms: 1
+  fixTransforms: 0
   solver:
     executedInEditor: 0
     IKPosition: {x: -2.4955912, y: -2.1631396, z: -0.058069617}
@@ -49190,9 +49190,9 @@ MonoBehaviour:
     axis: {x: 0, y: 0, z: 1}
     poleAxis: {x: 0, y: 1, z: 0}
     polePosition: {x: -0.5793555, y: 0.14511563, z: 2.9419312}
-    poleWeight: 0
+    poleWeight: 1
     poleTarget: {fileID: 0}
-    clampWeight: 0
+    clampWeight: 0.1
     clampSmoothing: 2
 --- !u!1 &891754096
 GameObject:
@@ -51357,8 +51357,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171960155}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 13
@@ -57235,7 +57235,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2002095377}
-  m_LocalRotation: {x: 0.22975291, y: -0.0000000187227, z: 0.0000000044198294, w: 0.973249}
+  m_LocalRotation: {x: 0.22975291, y: 0.0000000187227, z: -0.0000000044198294, w: 0.973249}
   m_LocalPosition: {x: 0, y: 5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -82647,7 +82647,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2475002597443398674}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.5, z: -3}
+  m_LocalPosition: {x: 0, y: 2.5, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 768416160}
@@ -87190,6 +87190,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[0]._buttonDownBuffer
+      value: 0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 8468523140163583471, guid: 3764df9cde8d8314683850f5158ee0b5,
         type: 3}
       propertyPath: m_RootOrder
@@ -87304,21 +87309,20 @@ GameObject:
   - component: {fileID: 8829560766490598207}
   - component: {fileID: 8829560766490598208}
   - component: {fileID: 8829560766490598604}
-  - component: {fileID: 8829560766490598209}
   - component: {fileID: 8829560766490598210}
-  - component: {fileID: 8829560766490598213}
   - component: {fileID: 8829560766490598212}
   - component: {fileID: 8829560766490598206}
   - component: {fileID: 8829560766490598216}
-  - component: {fileID: 8829560766490598202}
   - component: {fileID: 8829560766490598211}
+  - component: {fileID: 8829560766490598204}
   - component: {fileID: 8829560766490598215}
   - component: {fileID: 8829560766490598217}
   - component: {fileID: 8829560766490598218}
   - component: {fileID: 8829560766490598219}
   - component: {fileID: 8829560766490598220}
-  - component: {fileID: 8829560766490598204}
   - component: {fileID: 8829560766490598214}
+  - component: {fileID: 8829560766490598202}
+  - component: {fileID: 8829560766490598209}
   - component: {fileID: 8829560766490598221}
   m_Layer: 11
   m_Name: READY PLAYER ONE
@@ -87575,8 +87579,10 @@ MonoBehaviour:
   audioSource: {fileID: 217754654}
   clip: {fileID: 8300000, guid: 25eaee46a08c7964b905867baff18715, type: 3}
   ps: {fileID: 0}
+  fallingFramesMax: 18
+  negativeForce: -9.81
   rotateSpeed: 12
-  dampTime: 0.01
+  dampTime: 0
   snapRotation: 0
   move2d: 1
   mainCam: {fileID: 0}
@@ -87661,20 +87667,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   impulseSourceHitReceived: {fileID: 934099195}
   impulseSourceHitLanded: {fileID: 1734388311}
---- !u!114 &8829560766490598213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8829560766490598201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8427fbd3d0823f49af5cf2dd3d538a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fallingFramesMax: 18
-  negativeForce: -9.81
 --- !u!114 &8829560766490598214
 MonoBehaviour:
   m_ObjectHideFlags: 0

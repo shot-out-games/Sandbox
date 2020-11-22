@@ -83,6 +83,7 @@ namespace SandBox.Player
                     stickInput.Normalize();
 
                     stickSpeed = stickInput.sqrMagnitude;
+                    //animator.SetFloat("Vertical", stickSpeed);
                     animator.SetFloat("Vertical", stickSpeed, playerMoveComponent.dampTime, Time.DeltaTime);
                     float3 fwd = cam.transform.forward;
                     float3 right = cam.transform.right;
@@ -174,6 +175,7 @@ namespace SandBox.Player
              (
                  PlayerMove playerMove,
                  ref Rotation rotation,
+                 ref Translation translation,
                  ref PhysicsVelocity pv,
                  in DeadComponent deadComponent,
                  in PlayerMoveComponent playerMoveComponent,
@@ -189,11 +191,7 @@ namespace SandBox.Player
                  {
                      float slerpDampTime = playerMoveComponent.rotateSpeed;
                      var up = math.up();
-
-                     if (playerMoveComponent.move2d) leftStickY = 0;
-
                      bool haveInput = (math.abs(leftStickX) > float.Epsilon) || (math.abs(leftStickY) > float.Epsilon);
-
 
                      if (playerMoveComponent.snapRotation == true)
                      {
@@ -228,6 +226,12 @@ namespace SandBox.Player
                          }
 
                      }
+
+                     if (playerMoveComponent.move2d)
+                     {
+                         translation.Value.z = playerMoveComponent.startPosition.z;
+                     }
+
 
 
 

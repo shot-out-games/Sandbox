@@ -103,46 +103,51 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
             float y = player.GetAxis("RightVertical");
             aimAngle = transform.rotation.eulerAngles.y;
 
-            if (math.abs(aimAngle) > 22.5 && math.abs(aimAngle) <= 67.5)
-            {
-                x = 1;
-                y = 1;
-            }
-            else if (math.abs(aimAngle) > 67.5 && math.abs(aimAngle) <= 112.5)
-            {
-                x = 1;
-                y = 0;
-            }
-            else if (math.abs(aimAngle) > 112.5 && math.abs(aimAngle) <= 157.5)
-            {
-                x = 1;
-                y = -1;
-            }
-            else if (math.abs(aimAngle) > 157.5 && math.abs(aimAngle) <= 202.5)
-            {
-                x = 0;
-                y = -1;
-            }
-            else if (math.abs(aimAngle) > 202.5 && math.abs(aimAngle) <= 247.5)
-            {
-                x = -1;
-                y = -1;
-            }
-            else if (math.abs(aimAngle) > 247.5 && math.abs(aimAngle) <= 292.5)
-            {
-                x = -1;
-                y = 0;
-            }
-            else if (math.abs(aimAngle) > 292.5 && math.abs(aimAngle) <= 337.5)
-            {
-                x = -1;
-                y = 1;
-            }
-            else if (math.abs(aimAngle) > 337.5 && math.abs(aimAngle) <= 22.5)
-            {
-                x = 0;
-                y = 1;
-            }
+            //if (math.abs(aimAngle) > 22.5 && math.abs(aimAngle) <= 67.5)
+            //{
+            //    x = 1;
+            //    y = 1;
+            //}
+            //else if (math.abs(aimAngle) > 67.5 && math.abs(aimAngle) <= 112.5)
+            //{
+            //    x = 1;
+            //    y = 0;
+            //}
+            //else if (math.abs(aimAngle) > 112.5 && math.abs(aimAngle) <= 157.5)
+            //{
+            //    x = 1;
+            //    y = -1;
+            //}
+            //else if (math.abs(aimAngle) > 157.5 && math.abs(aimAngle) <= 202.5)
+            //{
+            //    x = 0;
+            //    y = -1;
+            //}
+            //else if (math.abs(aimAngle) > 202.5 && math.abs(aimAngle) <= 247.5)
+            //{
+            //    x = -1;
+            //    y = -1;
+            //}
+            //else if (math.abs(aimAngle) > 247.5 && math.abs(aimAngle) <= 292.5)
+            //{
+            //    x = -1;
+            //    y = 0;
+            //}
+            //else if (math.abs(aimAngle) > 292.5 && math.abs(aimAngle) <= 337.5)
+            //{
+            //    x = -1;
+            //    y = 1;
+            //}
+            //else if (math.abs(aimAngle) > 337.5 && math.abs(aimAngle) <= 22.5)
+            //{
+            //    x = 0;
+            //    y = 1;
+            //}
+
+            Debug.Log("ang " + (int)aimAngle);
+
+            //x = math.sign(x);
+            //y = math.sign(y);
 
             Vector3 aim = new Vector3(
                     x,

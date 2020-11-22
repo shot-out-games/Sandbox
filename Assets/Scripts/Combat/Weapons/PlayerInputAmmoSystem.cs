@@ -8,7 +8,7 @@ using UnityEditor.Rendering.Universal;
 using UnityEngine;
 
 
-//[UpdateBefore(typeof(GunAmmoHandlerSystem))]
+[UpdateBefore(typeof(GunAmmoHandlerSystem))]
 //[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 [UpdateInGroup(typeof(PresentationSystemGroup))]
 

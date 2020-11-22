@@ -7,8 +7,9 @@ public class SlashActionState : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //animator.SetLayerWeight(0, 0);
-        //animator.SetLayerWeight(1, 1);
+        Debug.Log("slash  enter");
+        //animator.SetInteger("SlashState", 0);
+        //animator.SetInteger("CombatAction", 0);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -23,8 +24,6 @@ public class SlashActionState : StateMachineBehaviour
         Debug.Log("slash exit");
         animator.SetInteger("SlashState", 0);
         animator.SetInteger("CombatAction", 0);
-        //animator.SetLayerWeight(0, 1);
-        //animator.SetLayerWeight(1, 0);
 
     }
 

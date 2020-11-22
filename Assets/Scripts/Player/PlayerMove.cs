@@ -20,6 +20,8 @@ public struct PlayerMoveComponent : IComponentData
     public bool snapRotation;
     public float dampTime;
     public bool move2d;
+    public float3 startPosition;
+
 }
 
 
@@ -28,14 +30,19 @@ namespace SandBox.Player
 {
     
 
+
     public class PlayerMove : MonoBehaviour, IConvertGameObjectToEntity
     {
+
+
 
         public AudioSource audioSource;
         public AudioClip clip;
         public ParticleSystem ps;
 
 
+        public float fallingFramesMax;
+        public float negativeForce = -9.81f;
 
         [SerializeField]
         float rotateSpeed = 9;
@@ -112,11 +119,11 @@ namespace SandBox.Player
             _entityManager = dstManager;
 
             startSpeed = GetComponent<PlayerRatings>() ? GetComponent<PlayerRatings>().Ratings.speed : 4f;
-            if (move2d)
-            {
-                snapRotation = true;
-                dampTime = 0;
-            }
+            //if (move2d)
+            //{
+                //snapRotation = true;
+                //dampTime = 0;
+            //}
 
 
         dstManager.AddComponentData(entity, new PlayerMoveComponent()
@@ -125,10 +132,15 @@ namespace SandBox.Player
                 currentSpeed = startSpeed, rotateSpeed = rotateSpeed,
                 snapRotation = snapRotation,
                 dampTime = dampTime,
-                move2d = move2d
+                move2d = move2d,
+                startPosition = transform.position
                 
 
             });
+
+
+        dstManager.AddComponentData(entity, new ApplyImpulseComponent { Force = 0, Direction = Vector3.zero, Grounded = false, fallingFramesMaximuim = fallingFramesMax, NegativeForce = negativeForce });
+
 
         }
     }
