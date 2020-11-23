@@ -24,6 +24,7 @@ public class SlashActionState : StateMachineBehaviour
         Debug.Log("slash exit");
         animator.SetInteger("SlashState", 0);
         animator.SetInteger("CombatAction", 0);
+        animator.SetLayerWeight(1, 0);
 
     }
 

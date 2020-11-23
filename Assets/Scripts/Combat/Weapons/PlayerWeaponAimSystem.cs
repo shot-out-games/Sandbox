@@ -33,15 +33,20 @@ namespace SandBox.Player
     //}
 
 
-    [UpdateInGroup(typeof(PresentationSystemGroup))]
+    //[UpdateInGroup(typeof(PresentationSystemGroup))]
+    [UpdateBefore(typeof(GunAmmoHandlerSystem))]
+    [UpdateInGroup(typeof(TransformSystemGroup))]
+
+
 
 
     public class PlayerWeaponAimSystemLateUpdate : SystemBase
     {
         protected override void OnUpdate()
         {
-            Entities.WithoutBurst().ForEach((in PlayerWeaponAim mb) =>
+            Entities.WithoutBurst().ForEach((in PlayerWeaponAim mb, in PlayerWeaponAimComponent playerWeaponAimComponent) =>
             {
+                if (playerWeaponAimComponent.weaponRaised == WeaponMotion.None) return;
                 mb.LateUpdateSystem();
             }).Run();
         }

@@ -10,7 +10,8 @@ using Unity.Transforms;
 using UnityEngine;
 
 
-[UpdateInGroup(typeof(PresentationSystemGroup))]
+//[UpdateInGroup(typeof(PresentationSystemGroup))]
+[UpdateInGroup(typeof(TransformSystemGroup))]
 
 //[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 

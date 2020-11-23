@@ -118,6 +118,10 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
 
         animator.SetInteger("CombatAction", animationIndex);
+        animator.SetLayerWeight(0, 0);
+        animator.SetLayerWeight(1, 1);
+        animator.SetLayerWeight(2, 0);
+
         StartIKPlayer();
     }
 

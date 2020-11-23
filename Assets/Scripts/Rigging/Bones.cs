@@ -49,12 +49,14 @@ public class Bones : MonoBehaviour
 
         if (rootBone == BodyBones.LeftHand)
         {
+            aimIK.solver.AddBone(animator.GetBoneTransform(HumanBodyBones.LeftShoulder));
             aimIK.solver.AddBone(animator.GetBoneTransform(HumanBodyBones.LeftUpperArm));
             aimIK.solver.AddBone(animator.GetBoneTransform(HumanBodyBones.LeftLowerArm));
             aimIK.solver.AddBone(animator.GetBoneTransform(HumanBodyBones.LeftHand));
         }
         else if (rootBone == BodyBones.RightHand)
         {
+            aimIK.solver.AddBone(animator.GetBoneTransform(HumanBodyBones.RightShoulder));
             aimIK.solver.AddBone(animator.GetBoneTransform(HumanBodyBones.RightUpperArm));
             aimIK.solver.AddBone(animator.GetBoneTransform(HumanBodyBones.RightLowerArm));
             aimIK.solver.AddBone(animator.GetBoneTransform(HumanBodyBones.RightHand));

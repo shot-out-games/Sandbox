@@ -50,7 +50,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField] private float cameraZ = 50f;
     public bool weapon2d;
 
-
+    [SerializeField] bool simController = false;
     private float aimAngle;
     private Animator animator;
     void Start()
@@ -94,9 +94,9 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         if (cursorTargeting == false || crossHair == null) return;
 
         Controller controller = player.controllers.GetLastActiveController();
-        if (controller == null) return;
+        if (controller == null && simController == false) return;
 
-        if (controller.type == ControllerType.Joystick)
+        if (controller.type == ControllerType.Joystick || simController == true)
         {
             crossHair.GetComponent<MeshRenderer>().enabled = true;
             float x = player.GetAxis("RightHorizontal");
@@ -155,7 +155,8 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
                     0
                 );
 
-                crossHair.transform.position = transform.position + aim * 5f;
+            crossHair.transform.position += aim;
+            //crossHair.transform.position = transform.position + aim * 5f;
         }
         else
         {

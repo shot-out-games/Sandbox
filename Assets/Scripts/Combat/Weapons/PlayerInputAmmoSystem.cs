@@ -4,13 +4,15 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
+using Unity.Transforms;
 using UnityEditor.Rendering.Universal;
 using UnityEngine;
 
 
 [UpdateBefore(typeof(GunAmmoHandlerSystem))]
 //[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-[UpdateInGroup(typeof(PresentationSystemGroup))]
+//[UpdateInGroup(typeof(PresentationSystemGroup))]
+[UpdateInGroup(typeof(TransformSystemGroup))]
 
 
 
@@ -96,11 +98,18 @@ public class PlayerInputAmmoSystem : SystemBase
         {
 
             animator.SetInteger("WeaponRaised", 1);
+            animator.SetLayerWeight(0, 0);
+            animator.SetLayerWeight(1, 0);
+            animator.SetLayerWeight(2, 1);
 
         }
         else if (weaponMotion == WeaponMotion.None)
         {
             animator.SetInteger("WeaponRaised", 0);
+            animator.SetLayerWeight(0, 1);
+            animator.SetLayerWeight(1, 0);
+            animator.SetLayerWeight(2, 0);
+
         }
     }
 

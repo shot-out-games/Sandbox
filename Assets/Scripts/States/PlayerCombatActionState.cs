@@ -23,6 +23,8 @@ public class PlayerCombatActionState : StateMachineBehaviour
         Debug.Log("exit behaviour");
         //animator.GetComponent<ICombat>().AttackStage = AttackStages.End;//doesn't get called unexplained. Using animation event instead
         animator.SetInteger("CombatAction", 0);
+        animator.SetLayerWeight(1, 0);
+
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

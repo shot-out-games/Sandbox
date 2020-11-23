@@ -26019,7 +26019,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391757172}
-  m_LocalRotation: {x: -0.0000000052007474, y: 0.9652929, z: -0.2611698, w: -0.00000001922215}
+  m_LocalRotation: {x: -0.000000007783467, y: 0.9652929, z: -0.2611698, w: -0.000000028767971}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -48092,7 +48092,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807666547}
-  m_LocalRotation: {x: 0.0000000051753646, y: 0.95369303, z: -0.3007817, w: 0.000000016409606}
+  m_LocalRotation: {x: -0.000000005175364, y: 0.95369303, z: -0.3007817, w: -0.000000016409608}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -49169,12 +49169,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 872854893}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5013856973b27429d937d256dc082f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fixTransforms: 0
+  fixTransforms: 1
   solver:
     executedInEditor: 0
     IKPosition: {x: -2.4955912, y: -2.1631396, z: -0.058069617}
@@ -57235,7 +57235,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2002095377}
-  m_LocalRotation: {x: 0.22975291, y: 0.0000000187227, z: -0.0000000044198294, w: 0.973249}
+  m_LocalRotation: {x: 0.22975291, y: -0.0000000187227, z: 0.0000000044198294, w: 0.973249}
   m_LocalPosition: {x: 0, y: 5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -87192,8 +87192,103 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
         type: 3}
+      propertyPath: _userData.inputBehaviorIdCounter
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[1]._id
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.actions.Array.data[2]._behaviorId
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[1]._name
+      value: JumpButtonBufferExtend
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[1]._buttonDeadZone
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[1]._digitalAxisSnap
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
       propertyPath: _userData.inputBehaviors.Array.data[0]._buttonDownBuffer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[1]._buttonDownBuffer
       value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[1]._buttonRepeatRate
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[1]._digitalAxisGravity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[1]._buttonLongPressTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[1]._buttonShortPressTime
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[1]._digitalAxisSimulation
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[1]._buttonDoublePressSpeed
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[1]._digitalAxisSensitivity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[1]._mouseXYAxisSensitivity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[1]._joystickAxisSensitivity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[1]._mouseOtherAxisSensitivity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.inputBehaviors.Array.data[1]._customControllerAxisSensitivity
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8468523140163583471, guid: 3764df9cde8d8314683850f5158ee0b5,
         type: 3}
@@ -87710,6 +87805,7 @@ MonoBehaviour:
   cursorTargeting: 1
   cameraZ: 50
   weapon2d: 1
+  simController: 0
 --- !u!114 &8829560766490598216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87843,6 +87939,7 @@ MonoBehaviour:
   cursorTargeting: 1
   cameraZ: 10
   weapon2d: 1
+  simController: 1
 --- !u!114 &8829560766490598594
 MonoBehaviour:
   m_ObjectHideFlags: 0
