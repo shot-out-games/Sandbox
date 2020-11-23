@@ -9,7 +9,7 @@ using Rewired;
 using Rewired.ComponentControls;
 using Unity.Mathematics;
 using Unity.Transforms;
-using  Unity.Physics.Authoring;
+using Unity.Physics.Authoring;
 
 public enum WeaponMotion
 {
@@ -49,14 +49,22 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     [Range(0.0f, 100.0f)]
     [SerializeField] private float cameraZ = 50f;
     public bool weapon2d;
-
+    [SerializeField]
+    private Vector3 crossHairOffset;
     [SerializeField] bool simController = false;
+    [SerializeField]
+    [Range(1.0f, 20.0f)] private float sensitivity = 5;
     private float aimAngle;
     private Animator animator;
     void Start()
     {
         if (!ReInput.isReady) return;
         player = ReInput.players.GetPlayer(playerId);
+        if (crossHair != null)
+        {
+            crossHairOffset = crossHair.transform.position;
+        }
+        Debug.Log("cr " + crossHairOffset);
         animator = GetComponent<Animator>();
         target = crossHair;//default target
     }
@@ -64,10 +72,37 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
 
     public void SetAim()
     {
+        Vector3 aimTarget = crossHair.transform.position;
+        float xd = math.abs(transform.position.x - crossHair.transform.position.x);
+        float yd = math.abs(transform.position.y - crossHair.transform.position.y);
+        bool ik = true;
+        if (weapon2d)
+        {
+            if (xd < 5)
+            {
+                xd = math.sign(crossHair.transform.position.x) * 5;
+                ik = false;
+            }
+            if (yd < 5)
+            {
+                yd = math.sign(crossHair.transform.position.y) * 5;
+                ik = false;
+            }
+            Debug.Log("x " + xd + "y " + yd);
+            aimTarget = new Vector3( crossHair.transform.position.x + xd, crossHair.transform.position.y + yd, 
+                crossHair.transform.position.z);
+            //crossHair.transform.position = aimTarget;
 
-        aim.solver.IKPositionWeight = aimWeight;
-        aim.solver.IKPosition = crossHair.transform.position;
-        aim.solver.Update();
+        }
+
+
+
+        if (ik)
+        {
+            aim.solver.IKPositionWeight = aimWeight;
+            aim.solver.IKPosition = aimTarget;
+            aim.solver.Update();
+        }
 
     }
 
@@ -78,11 +113,12 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
-    public void LateUpdateSystem()
+    public void LateUpdateSystem(WeaponMotion weaponMotion)
     {
 
         if (aim == null || target == null) return;
         Crosshair();
+        if (weaponMotion == WeaponMotion.None) return;
         SetAim();
         SetIK();
     }
@@ -96,74 +132,67 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         Controller controller = player.controllers.GetLastActiveController();
         if (controller == null && simController == false) return;
 
+        Vector3 xHairPosition = new Vector3(transform.position.x + 0, transform.position.y + 2, transform.position.z);
+        float x = 0;
+        float y = 0;
+
         if (controller.type == ControllerType.Joystick || simController == true)
         {
             crossHair.GetComponent<MeshRenderer>().enabled = true;
-            float x = player.GetAxis("RightHorizontal");
-            float y = player.GetAxis("RightVertical");
+            x = player.GetAxis("RightHorizontal");
+            y = player.GetAxis("RightVertical");
             aimAngle = transform.rotation.eulerAngles.y;
 
-            //if (math.abs(aimAngle) > 22.5 && math.abs(aimAngle) <= 67.5)
-            //{
-            //    x = 1;
-            //    y = 1;
-            //}
-            //else if (math.abs(aimAngle) > 67.5 && math.abs(aimAngle) <= 112.5)
-            //{
-            //    x = 1;
-            //    y = 0;
-            //}
-            //else if (math.abs(aimAngle) > 112.5 && math.abs(aimAngle) <= 157.5)
-            //{
-            //    x = 1;
-            //    y = -1;
-            //}
-            //else if (math.abs(aimAngle) > 157.5 && math.abs(aimAngle) <= 202.5)
-            //{
-            //    x = 0;
-            //    y = -1;
-            //}
-            //else if (math.abs(aimAngle) > 202.5 && math.abs(aimAngle) <= 247.5)
-            //{
-            //    x = -1;
-            //    y = -1;
-            //}
-            //else if (math.abs(aimAngle) > 247.5 && math.abs(aimAngle) <= 292.5)
-            //{
-            //    x = -1;
-            //    y = 0;
-            //}
-            //else if (math.abs(aimAngle) > 292.5 && math.abs(aimAngle) <= 337.5)
-            //{
-            //    x = -1;
-            //    y = 1;
-            //}
-            //else if (math.abs(aimAngle) > 337.5 && math.abs(aimAngle) <= 22.5)
-            //{
-            //    x = 0;
-            //    y = 1;
-            //}
 
-            Debug.Log("ang " + (int)aimAngle);
-
-            //x = math.sign(x);
-            //y = math.sign(y);
 
             Vector3 aim = new Vector3(
-                    x,
-                    y,
-                    0
-                );
+                x * Time.deltaTime,
+                y * Time.deltaTime,
+                0
+            );
 
-            crossHair.transform.position += aim;
-            //crossHair.transform.position = transform.position + aim * 5f;
+
+
+            crossHairOffset += aim;
+
+            //if (math.abs(crossHairOffset.x) >=1 && math.abs(crossHairOffset.y) < 2 && weapon2d == true)
+            //{
+            //    crossHairOffset.x = math.sign(crossHairOffset.x);
+            //}
+            //else if (math.abs(crossHairOffset.y) >= 2 && math.abs(crossHairOffset.x) < 1 && weapon2d == true)
+            //{
+            //    crossHairOffset.y = math.sign(crossHairOffset.y);
+            //}
+            
+
+
+            crossHair.transform.position = xHairPosition + crossHairOffset * sensitivity;
         }
         else
         {
             Vector3 mousePosition = player.controllers.Mouse.screenPosition;
             mousePosition.z = cameraZ;
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            crossHair.transform.position = new Vector3(worldPosition.x, worldPosition.y, worldPosition.z);
+            Vector3 mouseDirection = worldPosition - transform.position;
+            x = mouseDirection.x;
+            y = mouseDirection.y;
+
+
+            //if (math.abs(x) < 1 && math.abs(y) < 2 && weapon2d == true)
+            //{
+            //    x = math.sign(x);
+            //}
+
+
+            crossHairOffset = new Vector3(
+                x,
+                y ,
+                0
+            );
+
+
+            crossHair.transform.position = transform.position + crossHairOffset * sensitivity;
+
         }
 
 
@@ -175,7 +204,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         manager = dstManager;
 
         dstManager.AddComponentData(entity,
-            new PlayerWeaponAimComponent {weapon2d = weapon2d});
+            new PlayerWeaponAimComponent { weapon2d = weapon2d });
     }
 }
 

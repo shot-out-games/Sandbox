@@ -46,8 +46,8 @@ namespace SandBox.Player
         {
             Entities.WithoutBurst().ForEach((in PlayerWeaponAim mb, in PlayerWeaponAimComponent playerWeaponAimComponent) =>
             {
-                if (playerWeaponAimComponent.weaponRaised == WeaponMotion.None) return;
-                mb.LateUpdateSystem();
+                //if (playerWeaponAimComponent.weaponRaised == WeaponMotion.None) return;
+                mb.LateUpdateSystem(playerWeaponAimComponent.weaponRaised);
             }).Run();
         }
     }
