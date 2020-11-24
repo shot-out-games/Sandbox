@@ -26019,7 +26019,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391757172}
-  m_LocalRotation: {x: 0.0000000044937862, y: 0.96529293, z: -0.26116973, w: 0.0000000166092}
+  m_LocalRotation: {x: -0.0000000044937862, y: 0.96529293, z: -0.26116973, w: -0.0000000166092}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -57236,7 +57236,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2002095377}
-  m_LocalRotation: {x: 0.22975291, y: 0.0000000187227, z: -0.0000000044198294, w: 0.973249}
+  m_LocalRotation: {x: 0.22975291, y: -0.0000000187227, z: 0.0000000044198294, w: 0.973249}
   m_LocalPosition: {x: 0, y: 5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -87917,7 +87917,7 @@ MonoBehaviour:
   cameraZ: 10
   weapon2d: 1
   crossHairOffset: {x: 0, y: 0, z: 0}
-  simController: 1
+  simController: 0
   sensitivity: 1
 --- !u!114 &8829560766490598594
 MonoBehaviour:

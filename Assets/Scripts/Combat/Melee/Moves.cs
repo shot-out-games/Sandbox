@@ -7,7 +7,9 @@ public enum AnimationType
     Punch,
     Kick,
     Swing,
-    Aim
+    Aim,
+    Locomotion,
+    Lowering
 }
 
 [System.Serializable]

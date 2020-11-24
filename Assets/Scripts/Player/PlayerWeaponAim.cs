@@ -15,7 +15,8 @@ public enum WeaponMotion
 {
     None,
     Started,
-    Raised
+    Raised,
+    Lowering
 }
 
 public struct PlayerWeaponAimComponent : IComponentData
@@ -79,7 +80,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         bool ik = true;
         if (weapon2d)
         {
-            Debug.Log("x " + xd + "y " + yd);
+         //   Debug.Log("x " + xd + "y " + yd);
 
             if (xd < 1 && yd < 2)
             {
@@ -103,7 +104,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
             //    ik = false;
             //}
 
-            Debug.Log("x0 " + xd + "y0 " + yd);
+            //Debug.Log("x0 " + xd + "y0 " + yd);
             aimTarget = new Vector3( crossHair.transform.position.x + xd, crossHair.transform.position.y + yd, 
                 crossHair.transform.position.z);
             //aimTarget.Normalize();

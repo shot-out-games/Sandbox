@@ -43,7 +43,7 @@ public class PlayerInputAmmoSystem : SystemBase
                 WeaponMotion currentWeaponMotion =  (WeaponMotion)animator.GetInteger("WeaponRaised");
                 if (currentWeaponMotion == WeaponMotion.Raised)
                 {
-                    playerWeaponAimComponent.weaponRaised = currentWeaponMotion;
+                    playerWeaponAimComponent.weaponRaised = WeaponMotion.Raised;
                 }
 
                 bool ltPressed = inputController.leftTriggerPressed;
@@ -70,17 +70,21 @@ public class PlayerInputAmmoSystem : SystemBase
                 if (dpadY > .000001 && playerWeaponAimComponent.weaponRaised == WeaponMotion.None)
                 {
                     playerWeaponAimComponent.weaponRaised = WeaponMotion.Started;
-                    SetAnimationLayerWeights(animator,  WeaponMotion.Started);
+                    SetAnimationLayerWeights(animator, WeaponMotion.Started);
                 }
-
-                if (playerWeaponAimComponent.weaponRaised == WeaponMotion.Raised)
+                else if (playerWeaponAimComponent.weaponRaised == WeaponMotion.None)
+                {
+                    SetAnimationLayerWeights(animator, WeaponMotion.None);
+                }
+                else if (playerWeaponAimComponent.weaponRaised == WeaponMotion.Raised)
                 {
                     playerWeaponAimComponent.weaponUpTimer += Time.DeltaTime;
                     if (playerWeaponAimComponent.weaponUpTimer > 2)
                     {
                         playerWeaponAimComponent.weaponUpTimer = 0;
-                        playerWeaponAimComponent.weaponRaised = WeaponMotion.None;
-                        SetAnimationLayerWeights(animator, WeaponMotion.None);
+                        playerWeaponAimComponent.weaponRaised = WeaponMotion.Lowering;
+                        SetAnimationLayerWeights(animator, WeaponMotion.Lowering);
+
                     }
                 }
 
@@ -110,6 +114,10 @@ public class PlayerInputAmmoSystem : SystemBase
             animator.SetLayerWeight(1, 0);
             animator.SetLayerWeight(2, 0);//temp test
 
+        }
+        else if (weaponMotion == WeaponMotion.Lowering)
+        {
+            animator.SetInteger("WeaponRaised", 3);
         }
     }
 
