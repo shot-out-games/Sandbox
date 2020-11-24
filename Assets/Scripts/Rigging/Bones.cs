@@ -29,6 +29,7 @@ public class Bones : MonoBehaviour
 {
 
     private AimIK aimIK;
+    [Range(0.0f, 1.0f)] [SerializeField] private float aimWeight = 1.0f;
     private Animator animator;
     [SerializeField] private BodyBones rootBone;
 

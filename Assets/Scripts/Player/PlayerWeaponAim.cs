@@ -40,6 +40,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     public Transform target;
     public Transform aimTransform;
     [Range(0.0f, 1.0f)] [SerializeField] private float aimWeight = 1.0f;
+    private float aimLerp = .03f;
     [HideInInspector]
     public Player player;
     [HideInInspector]
@@ -78,19 +79,34 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         bool ik = true;
         if (weapon2d)
         {
-            if (xd < 5)
-            {
-                xd = math.sign(crossHair.transform.position.x) * 5;
-                ik = false;
-            }
-            if (yd < 5)
-            {
-                yd = math.sign(crossHair.transform.position.y) * 5;
-                ik = false;
-            }
             Debug.Log("x " + xd + "y " + yd);
+
+            if (xd < 1 && yd < 2)
+            {
+                ik = false;
+            }
+
+
+            xd = math.sign(crossHair.transform.position.x) * 50;
+            yd = math.sign(crossHair.transform.position.y) * 50;
+
+
+
+            
+
+            //if (yd < 2)
+            //{
+            //    yd = math.sign(crossHair.transform.position.y) * 5;
+            //}
+            //if(xd < 2 && yd < 2)
+            //{
+            //    ik = false;
+            //}
+
+            Debug.Log("x0 " + xd + "y0 " + yd);
             aimTarget = new Vector3( crossHair.transform.position.x + xd, crossHair.transform.position.y + yd, 
                 crossHair.transform.position.z);
+            //aimTarget.Normalize();
             //crossHair.transform.position = aimTarget;
 
         }
@@ -118,7 +134,12 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
 
         if (aim == null || target == null) return;
         Crosshair();
-        if (weaponMotion == WeaponMotion.None) return;
+        aimWeight = 1;
+        if (weaponMotion == WeaponMotion.None)
+        {
+            aimWeight = 0;
+        }
+
         SetAim();
         SetIK();
     }
@@ -135,8 +156,14 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         Vector3 xHairPosition = new Vector3(transform.position.x + 0, transform.position.y + 2, transform.position.z);
         float x = 0;
         float y = 0;
+        bool gamePad = false;
+        if(controller != null)
+        {
+            if (controller.type == ControllerType.Joystick) gamePad = true;
+        }
+        if (simController) gamePad = true;
 
-        if (controller.type == ControllerType.Joystick || simController == true)
+        if (gamePad)
         {
             crossHair.GetComponent<MeshRenderer>().enabled = true;
             x = player.GetAxis("RightHorizontal");

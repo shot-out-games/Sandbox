@@ -947,7 +947,7 @@ MonoBehaviour:
   - {fileID: 2002095379}
   m_Instructions:
   - m_FullHash: 0
-    m_VirtualCamera: {fileID: 0}
+    m_VirtualCamera: {fileID: 1671430798}
     m_ActivateAfter: 0
     m_MinDuration: 0
   m_DefaultBlend:
@@ -48993,6 +48993,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a60af780feb8af2438b4f391864a7ed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aimWeight: 1
   rootBone: 0
 --- !u!4 &872854895
 Transform:
@@ -49029,14 +49030,14 @@ MonoBehaviour:
     target: {fileID: 1171960156}
     tolerance: 0
     maxIterations: 2
-    useRotationLimits: 1
+    useRotationLimits: 0
     XY: 0
     bones: []
     transform: {fileID: 380916546}
     axis: {x: 0, y: 0, z: 1}
     poleAxis: {x: 0, y: 1, z: 0}
     polePosition: {x: -0.5793555, y: 0.14511563, z: 2.9419312}
-    poleWeight: 1
+    poleWeight: 0
     poleTarget: {fileID: 0}
     clampWeight: 0.1
     clampSmoothing: 2
@@ -54880,7 +54881,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 80
+    FieldOfView: 40
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -83994,7 +83995,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 80
+  field of view: 40
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -87905,7 +87906,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f18670b96092d874688e75e88d02236b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aim: {fileID: 872854896}
+  aim: {fileID: 0}
   ik: {fileID: 0}
   target: {fileID: 0}
   aimTransform: {fileID: 0}
@@ -87916,7 +87917,7 @@ MonoBehaviour:
   cameraZ: 10
   weapon2d: 1
   crossHairOffset: {x: 0, y: 0, z: 0}
-  simController: 0
+  simController: 1
   sensitivity: 1
 --- !u!114 &8829560766490598594
 MonoBehaviour:

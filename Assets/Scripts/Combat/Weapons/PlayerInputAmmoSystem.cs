@@ -108,7 +108,7 @@ public class PlayerInputAmmoSystem : SystemBase
             animator.SetInteger("WeaponRaised", 0);
             animator.SetLayerWeight(0, 1);
             animator.SetLayerWeight(1, 0);
-            animator.SetLayerWeight(2, 0);
+            animator.SetLayerWeight(2, 0);//temp test
 
         }
     }
