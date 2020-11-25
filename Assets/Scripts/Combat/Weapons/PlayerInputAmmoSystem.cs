@@ -36,16 +36,10 @@ public class PlayerInputAmmoSystem : SystemBase
                     in AttachWeaponComponent attachWeapon
             ) =>
             {
-
-                //gunComponent.IsFiring = 0;
+                //lt mapped to 1 on keyboard when LT is not used for shooting - if not map to left mouse
                 float dpadY = inputController.dpadY;
-
                 WeaponMotion currentWeaponMotion =  (WeaponMotion)animator.GetInteger("WeaponRaised");
-                if (currentWeaponMotion == WeaponMotion.Raised)
-                {
-                    playerWeaponAimComponent.weaponRaised = WeaponMotion.Raised;
-                }
-
+                playerWeaponAimComponent.weaponRaised = currentWeaponMotion;
                 bool ltPressed = inputController.leftTriggerPressed;
 
                 if (
@@ -100,23 +94,23 @@ public class PlayerInputAmmoSystem : SystemBase
 
         if (weaponMotion == WeaponMotion.Started)
         {
-
+            Debug.Log("wr 1");
             animator.SetInteger("WeaponRaised", 1);
             animator.SetLayerWeight(0, 0);
-            animator.SetLayerWeight(1, 0);
             animator.SetLayerWeight(2, 1);
 
         }
         else if (weaponMotion == WeaponMotion.None)
         {
+            Debug.Log("wr 0");
             animator.SetInteger("WeaponRaised", 0);
             animator.SetLayerWeight(0, 1);
-            animator.SetLayerWeight(1, 0);
-            animator.SetLayerWeight(2, 0);//temp test
+            animator.SetLayerWeight(2, 0);
 
         }
         else if (weaponMotion == WeaponMotion.Lowering)
         {
+            Debug.Log("wr 3");
             animator.SetInteger("WeaponRaised", 3);
         }
     }

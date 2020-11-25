@@ -166,33 +166,32 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
 
         if (gamePad)
         {
+            Vector3 aim = Vector3.zero;
             crossHair.GetComponent<MeshRenderer>().enabled = true;
+
             x = player.GetAxis("RightHorizontal");
             y = player.GetAxis("RightVertical");
+
             aimAngle = transform.rotation.eulerAngles.y;
 
-
-
-            Vector3 aim = new Vector3(
+            aim = new Vector3(
                 x * Time.deltaTime,
                 y * Time.deltaTime,
                 0
-            );
+                );
 
-
+            if (weapon2d == false)
+            {
+                aim = new Vector3(
+                    x * Time.deltaTime,
+                    0,
+                    y * Time.deltaTime
+                    );
+            }
 
             crossHairOffset += aim;
 
-            //if (math.abs(crossHairOffset.x) >=1 && math.abs(crossHairOffset.y) < 2 && weapon2d == true)
-            //{
-            //    crossHairOffset.x = math.sign(crossHairOffset.x);
-            //}
-            //else if (math.abs(crossHairOffset.y) >= 2 && math.abs(crossHairOffset.x) < 1 && weapon2d == true)
-            //{
-            //    crossHairOffset.y = math.sign(crossHairOffset.y);
-            //}
-            
-
+        
 
             crossHair.transform.position = xHairPosition + crossHairOffset * sensitivity;
         }
@@ -206,11 +205,6 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
             y = mouseDirection.y;
 
 
-            //if (math.abs(x) < 1 && math.abs(y) < 2 && weapon2d == true)
-            //{
-            //    x = math.sign(x);
-            //}
-
 
             crossHairOffset = new Vector3(
                 x,
@@ -220,6 +214,14 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
 
 
             crossHair.transform.position = transform.position + crossHairOffset * sensitivity;
+
+            if (weapon2d == false)
+            {
+                //worldPosition.y = 1;
+                crossHair.transform.position = worldPosition;
+            }
+
+
 
         }
 

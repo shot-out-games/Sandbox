@@ -81,19 +81,18 @@ public class GunAmmoHandlerSystem : SystemBase
                         Entity e = EntityManager.Instantiate(gun.PrimaryAmmo);
                         Translation translation = new Translation() { Value = bulletManager.AmmoStartLocation.position };//use bone mb transform
                         Rotation rotation = new Rotation() { Value = gun.AmmoStartRotation.Value };
-                        //var playerVelocity = GetComponent<PhysicsVelocity>(entity);
+                        var playerVelocity = EntityManager.GetComponentData<PhysicsVelocity>(entity);
                         var velocity = EntityManager.GetComponentData<PhysicsVelocity>(e);
                         float3 forward = bulletManager.AmmoStartLocation.forward;
-                        if(playerWeaponAimComponent.weapon2d == false) forward.y = 0;
-                        //velocity.Linear = forward * (strength + math.abs(playerVelocity.Linear.x));
-                        velocity.Linear = forward * strength;
+                        velocity.Linear = forward * strength + playerVelocity.Linear;
+                        if (playerWeaponAimComponent.weapon2d == false) velocity.Linear.y = 0;
+                        //velocity.Linear = forward * strength;
 
 
-                        Matrix4x4 matrix4x4 = Matrix4x4.identity;
-                        matrix4x4.SetTRS(translation.Value, rotation.Value, Vector3.one);
-
-                        Vector3 localDirection = matrix4x4.inverse.MultiplyVector(forward);
-                        Vector3 worldDirection = matrix4x4.MultiplyVector(forward);
+                        //Matrix4x4 matrix4x4 = Matrix4x4.identity;
+                        //matrix4x4.SetTRS(translation.Value, rotation.Value, Vector3.one);
+                        //Vector3 localDirection = matrix4x4.inverse.MultiplyVector(forward);
+                        //Vector3 worldDirection = matrix4x4.MultiplyVector(forward);
                         //velocity.Linear = worldDirection * strength;
 
                         if (playerWeaponAimComponent.weapon2d) velocity.Linear.z = 0;
