@@ -45,12 +45,12 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
 
         //Debug.Log("index " + CurrentSceneIndex);
 
-        if (CurrentSceneIndex > 1)
+        if (CurrentSceneIndex > 1 && LevelManager.instance.audioSourceMenu)
         {
             LevelManager.instance.audioSourceMenu.Stop();
             LevelManager.instance.PlayLevelMusic();//scene 0 is loader and scene 1  is menu - has own play
         }
-        else if (CurrentSceneIndex == 1)
+        else if (CurrentSceneIndex == 1 && LevelManager.instance.audioSourceGame)
         {
             LevelManager.instance.audioSourceGame.Stop();
             LevelManager.instance.PlayMenuMusic();//scene 0 is loader and scene 1  is menu - has own play

@@ -213,9 +213,12 @@ namespace SandBox.Player
                          if (haveInput == true)
                          {
 
-                             var forward = playerMove.mainCam.transform.TransformDirection(Vector3.forward);
-                             var right = playerMove.mainCam.transform.TransformDirection(Vector3.right);
+                             //var forward = playerMove.mainCam.transform.TransformDirection(Vector3.forward);
+                             //var right = playerMove.mainCam.transform.TransformDirection(Vector3.right);
+                             var forward = playerMove.mainCam.transform.forward;
+                             var right = playerMove.mainCam.transform.right;
                              forward.y = 0;
+
                              Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
                              if (targetDirection.magnitude > .1)
                              {

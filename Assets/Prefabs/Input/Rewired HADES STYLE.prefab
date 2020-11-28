@@ -1075,7 +1075,7 @@ MonoBehaviour:
         _modifierKey2: 0
         _modifierKey3: 0
       - _actionCategoryId: 0
-        _actionId: 5
+        _actionId: 20
         _elementType: 1
         _elementIdentifierId: -1
         _axisRange: 0
@@ -1266,7 +1266,7 @@ MonoBehaviour:
         _modifierKey2: 0
         _modifierKey3: 0
       - _actionCategoryId: 0
-        _actionId: 20
+        _actionId: 5
         _elementType: 1
         _elementIdentifierId: 3
         _axisRange: 0

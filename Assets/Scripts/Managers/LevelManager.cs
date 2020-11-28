@@ -151,6 +151,7 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
 
     public void PlayMenuMusic()
     {
+        if (!audioSourceMenu) return;
         if (audioSourceMenu.isPlaying) audioSourceGame.Stop();
         audioSourceMenu.clip = menuMusic;
         audioSourceMenu.Play();
@@ -158,6 +159,8 @@ public class LevelManager : MonoBehaviour, IConvertGameObjectToEntity
 
     public void PlayLevelMusic()//called when switching levels either by scene or when switching levels even when same scene
     {
+        if (!audioSourceGame) return;
+
         if (audioSourceGame.isPlaying) audioSourceGame.Stop();
 
 

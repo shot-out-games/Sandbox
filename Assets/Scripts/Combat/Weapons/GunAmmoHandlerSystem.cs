@@ -85,7 +85,7 @@ public class GunAmmoHandlerSystem : SystemBase
                         var velocity = EntityManager.GetComponentData<PhysicsVelocity>(e);
                         float3 forward = bulletManager.AmmoStartLocation.forward;
                         velocity.Linear = forward * strength + playerVelocity.Linear;
-                        if (playerWeaponAimComponent.weapon2d == false) velocity.Linear.y = 0;
+                        //if (playerWeaponAimComponent.weapon2d == false) velocity.Linear.y = 0;
                         //velocity.Linear = forward * strength;
 
 
@@ -95,7 +95,7 @@ public class GunAmmoHandlerSystem : SystemBase
                         //Vector3 worldDirection = matrix4x4.MultiplyVector(forward);
                         //velocity.Linear = worldDirection * strength;
 
-                        if (playerWeaponAimComponent.weapon2d) velocity.Linear.z = 0;
+                        //if (playerWeaponAimComponent.weapon2d) velocity.Linear.z = 0;
 
                         EntityManager.SetComponentData(e, translation);
                         EntityManager.SetComponentData(e, rotation);
