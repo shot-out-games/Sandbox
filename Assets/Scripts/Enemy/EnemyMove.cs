@@ -121,8 +121,6 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     public EnemyRoles enemyRole;
     public float moveSpeed;
     public float rotateSpeed = 1;
-    [SerializeField] private float speed;
-    [SerializeField] private Vector3 lastPosition;
 
     public Transform target;//default chase target but if combat used gets replaced by combatsystem move target
     public Entity entity;
@@ -134,31 +132,19 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     [HideInInspector]
     public Vector3 originalPosition;
-    private Vector3 destinationBeforeRewind;
-    private bool currentRewind;
 
-    [SerializeField] private bool manualRootMotion = true;
 
     public AudioSource audioSource;
     public AudioClip clip;
     public ParticleSystem ps;
+    [HideInInspector]
+    public ParticleSystem stunEffect;//used by freeze system
 
-    public ParticleSystem stunEffect;
-
-
-
-
-    //[SerializeField]
-    //Vector3[] offsets;
-    [SerializeField]
-    Vector3 leapTarget;
     [SerializeField]
     float duration = 3.0f;
     float normalizedTime = 0.0f;
     Vector3 startPos;
     Vector3 endPos;
-
-    [SerializeField] private float remDistance;
 
     public AnimationCurve curve = new AnimationCurve();
 
@@ -187,8 +173,6 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         }
 
-
-
         originalPosition = transform.position;
         anim = GetComponent<Animator>();
 
@@ -198,7 +182,6 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             agent.autoBraking = false;
             agent.updateRotation = false;
             agent.autoTraverseOffMeshLink = false;
-            //agent.updatePosition = false;
         }
 
 
@@ -233,7 +216,6 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         float distance = isCurrentWayPointJump ? .0003f : .5f;
 
-        remDistance = agent.remainingDistance;
 
         if (agent.pathPending == false && agent.remainingDistance < distance)
         {
@@ -243,8 +225,6 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
             if (isCurrentWayPointJump)
             {
-                //StartCoroutine(Curve(agent, duration));
-                //Debug.Log("wp jump");
                 anim.SetInteger("JumpState", 1);
                 normalizedTime = 0.0f;
                 startPos = agent.transform.position;
@@ -256,8 +236,6 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
 
         }
-
-        //Debug.Log("ad patrol " + agent.destination);
 
 
         if (isCurrentWayPointJump == false)
@@ -271,7 +249,6 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     void Curve()
     {
-        //agent.updatePosition = false;
 
         if (normalizedTime < 1.0f)
         {
@@ -333,16 +310,12 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     public void SetBackup()
     {
-        if (agent == null || manager == default || entity == Entity.Null) return;
+        if (agent == null) return;
 
         if (agent.enabled)
         {
-            //agent.updatePosition = false;
-            //agent.ResetPath();
             Vector3 nextPosition = target.position;
             Vector3 offset = transform.forward * Time.deltaTime * moveSpeed * 2;
-
-
             agent.Move(-offset);
             AnimationMovement();
         }
@@ -350,7 +323,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     public void SetDestination()
     {
-        if (agent == null || manager == default || entity == Entity.Null) return;
+        if (agent == null) return;
 
         if (agent.enabled)
         {
@@ -391,12 +364,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             //float velx = 0;
             float velz = forward.normalized.z;
 
-            if (currentRewind == true)
-            {
-                agent.speed = moveSpeed * 2;
-                velz = velz * 2;
-            }
-            else if (state == MoveStates.Idle)
+            if (state == MoveStates.Idle)
             {
                 agent.speed = 0;
                 velz = 0;
@@ -408,17 +376,6 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             }
 
             velz = velz * speedMultiple;
-
-            //if (math.abs(agent.velocity.magnitude) < .000001f) velz = 0;
-
-            speed = Mathf.Lerp(speed, (transform.position - lastPosition).magnitude / Time.deltaTime, .19f);
-            //bool lastSpeed = speed > .000001f;
-            //speed = (transform.position - lastPosition).magnitude;
-            if (math.abs(speed) <= .000001f) velz = 0;
-            lastPosition = transform.position;
-
-            //Debug.Log("sp " + speed);
-            //anim.SetFloat("velx", velx);
             anim.SetFloat("velz", velz);
         }
 
@@ -432,22 +389,10 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         if (isCurrentWayPointJump == false)
         {
             agent.updatePosition = true;
-            //float speed = speedMultiple * 1.0f;
-            //Vector3 velocity = anim.deltaPosition / Time.deltaTime * speed;
-
-            //Vector3 forward =
-               // transform.InverseTransformDirection(Vector3.forward); //world to local so always local forward (0,0,1)
-
             transform.position = agent.nextPosition;
-
-
-
-            //transform.position = new Vector3(transform.position.x, transform.position.y, 0);//2d
-
         }
         else if (isCurrentWayPointJump)
         {
-            //Debug.Log("curve");
             Curve();
         }
 
