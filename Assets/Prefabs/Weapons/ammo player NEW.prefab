@@ -602,6 +602,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagicMissileBlue
       objectReference: {fileID: 0}
+    - target: {fileID: 119216, guid: e85f4a610ef9e5b4aa9cedce76136489, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 411734, guid: e85f4a610ef9e5b4aa9cedce76136489, type: 3}
       propertyPath: m_LocalScale.x
       value: 1

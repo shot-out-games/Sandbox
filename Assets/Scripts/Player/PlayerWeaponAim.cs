@@ -61,13 +61,11 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     [Range(0.0f, 100.0f)]
     [SerializeField] private float cameraZ = 50f;
     public CameraType weaponCamera;
-    //[SerializeField]
-    //private Vector3 crossHairOffset;
     [SerializeField] bool simController = false;
     [SerializeField]
     [Range(1.0f, 100.0f)] private float mouseSensitivity = 5;
     [SerializeField]
-    [Range(1.0f, 100.0f)] private float gamePadSensitivity = 5;
+    [Range(0.0f, 100.0f)] private float gamePadSensitivity = 5;
 
     [SerializeField] private float topDownY = 1;
     [Range(80f, 100.0f)]
@@ -77,7 +75,10 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
 
     private float aimAngle;
     private Animator animator;
-    [SerializeField] private float calc;
+    private float xMin;
+    private float xMax;
+    private float yMin;
+    private float yMax;
     void Start()
     {
         if (!ReInput.isReady) return;
@@ -87,14 +88,25 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         // crossHairOffset = crossHair.transform.position;
         //}
 
-        mousePosition = new Vector2(Screen.width / 2f, Screen.height / 2f);
 
         //Debug.Log("cr " + crossHairOffset);
         animator = GetComponent<Animator>();
         target = crossHair;//default target
 
         cam = Camera.main;
+        SetCursorBounds();
+
     }
+
+    void SetCursorBounds()
+    {
+        mousePosition = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        xMin = Screen.width * (1 - viewportPct / 100);
+        xMax = Screen.width * viewportPct / 100;
+        yMin = Screen.height * (1 - viewportPct / 100);
+        yMax = Screen.height * viewportPct / 100;
+    }
+
 
 
     public void SetAim()
@@ -162,6 +174,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         Controller controller = player.controllers.GetLastActiveController();
         if (controller == null && simController == false) return;
         Vector3 worldPosition = Vector3.zero;
+        Vector3 targetPosition = Vector3.zero;
         float x = 0;
         float y = 0;
         float z = 0;
@@ -172,15 +185,16 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         }
         if (simController) gamePad = true;
 
+
         if (gamePad)
         {
             Vector3 aim = Vector3.zero;
             //crossHair.GetComponent<MeshRenderer>().enabled = true;
 
             x = player.GetAxis("RightHorizontal");
-            if (math.abs(x) < .19) x = 0;
+            if (math.abs(x) < .15) x = 0;
             y = player.GetAxis("RightVertical");
-            if (math.abs(y) < .19) y = 0;
+            if (math.abs(y) < .15) y = 0;
 
             aim = new Vector3(
                 x * Time.deltaTime,
@@ -189,108 +203,74 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
             );
 
             aim.Normalize();
-
-            if (weaponCamera == CameraType.ThreeD)
-            {
-                aim = new Vector3(
-                    x * Time.deltaTime,
-                    y * Time.deltaTime,
-                    0
-                );
-
-
-                aim.Normalize();
-                mousePosition += new Vector3(aim.x * gamePadSensitivity, aim.y * gamePadSensitivity, 0);
-                mousePosition.z = cameraZ;
-
-            }
-            else if (weaponCamera == CameraType.ThirdPerson || weaponCamera == CameraType.TwoD)
-            {
-                aim = new Vector3(
-                    x * Time.deltaTime,
-                    y * Time.deltaTime,
-                    0
-                );
-
-                aim.Normalize();
-                mousePosition += new Vector3(aim.x * gamePadSensitivity, aim.y * gamePadSensitivity, 0);
-                mousePosition.z = cameraZ;
-
-
-            }
-
-
-            worldPosition = cam.ScreenToWorldPoint(mousePosition);
-            x = worldPosition.x;
-            y = worldPosition.y;
-            z = worldPosition.z;
-
-
-            Vector3 targetPosition = new Vector3(
-                x,
-                y,
-                z
-            );
-
-
-            crossHair.transform.position = targetPosition;
-            crosshairImage.transform.position = mousePosition;
-
-
-
-            //crossHair.transform.position = xHairPosition + crossHairOffset * gamePadSensitivity / 10;
-            //if (weaponCamera == CameraType.ThirdPerson)
-            //{
-
-            //crossHair.transform.position += cam.transform.forward * cameraZ;
-            //}
-
+            mousePosition += new Vector3(aim.x * gamePadSensitivity, aim.y * gamePadSensitivity, 0);
         }
         else
         {
             mousePosition = player.controllers.Mouse.screenPosition;
+        }
 
-            if (weaponCamera == CameraType.ThirdPerson)
-            {
+        if (weaponCamera == CameraType.TwoD)
+        {
+            mousePosition.z = cameraZ;
+            worldPosition = cam.ScreenToWorldPoint(mousePosition);
+            x = worldPosition.x;
+            y = worldPosition.y;
+            z = 0;
 
-
-                mousePosition.z = cameraZ;
-                worldPosition = cam.ScreenToWorldPoint(mousePosition);
-                x = worldPosition.x;
-                y = worldPosition.y;
-                z = worldPosition.z;
-            }
-
-            if (weaponCamera == CameraType.ThreeD)
-            {
-                mousePosition.z = cameraZ;
-                worldPosition = cam.ScreenToWorldPoint(mousePosition);
-                x = worldPosition.x;
-                z = worldPosition.z;
-                y = transform.position.y +  topDownY;
-                //mousePosition = cam.WorldToScreenPoint(new Vector3(x, z, mousePosition.z));
-            }
-
-
-
-            Vector3 targetPosition = new Vector3(
+            targetPosition = new Vector3(
                 x,
                 y,
                 z
             );
 
-            if (weaponCamera == CameraType.ThreeD)
+        }
+        if (weaponCamera == CameraType.ThirdPerson)
+        {
+            mousePosition.z = cameraZ;
+            worldPosition = cam.ScreenToWorldPoint(mousePosition);
+            x = worldPosition.x;
+            y = worldPosition.y;
+            z = worldPosition.z;
+            targetPosition = worldPosition;
+        }
+        if (weaponCamera == CameraType.ThreeD)
+        {
+            mousePosition.z = cameraZ;
+            worldPosition = cam.ScreenToWorldPoint(mousePosition);
+            x = worldPosition.x;
+            z = worldPosition.z;
+            y = transform.position.y + topDownY;
+
+
+            targetPosition = new Vector3(
+                x,
+                y,
+                z
+            );
+
+            if (gamePad == true)
             {
-                mousePosition = cam.WorldToScreenPoint(targetPosition);
+                targetPosition = new Vector3
+                (
+                    x = worldPosition.x,
+                    y = worldPosition.y,
+                    z = worldPosition.z
+                    );
             }
-
-
-            crossHair.transform.position = targetPosition;
-            crosshairImage.transform.position = mousePosition;
+            mousePosition = cam.WorldToScreenPoint(targetPosition);
         }
 
-        var position = crossHair.transform.position;
-        crossHair.transform.position = position;
+
+
+        if (mousePosition.x < xMin) mousePosition.x = xMin;
+        if (mousePosition.x > xMax) mousePosition.x = xMax;
+        if (mousePosition.y < yMin) mousePosition.y = yMin;
+        if (mousePosition.y > yMax) mousePosition.y = yMax;
+
+
+        crossHair.transform.position = targetPosition;
+        crosshairImage.transform.position = mousePosition;
 
 
     }

@@ -47824,7 +47824,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 768416159}
-  m_LocalRotation: {x: 0.6339889, y: 0.000000009979813, z: -0.00000000818149, w: 0.7733422}
+  m_LocalRotation: {x: 0.6339889, y: -0.000000009979813, z: 0.00000000818149, w: 0.7733422}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -48015,7 +48015,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807666547}
-  m_LocalRotation: {x: 0.6010733, y: 0.00000001944718, z: -0.000000014626216, w: 0.7991939}
+  m_LocalRotation: {x: 0.6010733, y: -0.000000019447187, z: 0.000000014626219, w: 0.7991939}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -57451,7 +57451,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2002095377}
-  m_LocalRotation: {x: 0.000000003195649, y: 0.973249, z: -0.22975294, w: 0.000000013536988}
+  m_LocalRotation: {x: 0.00000001004282, y: 0.973249, z: -0.22975291, w: 0.00000004254207}
   m_LocalPosition: {x: -0.0000008742278, y: 5, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -88070,15 +88070,14 @@ MonoBehaviour:
   crossHair: {fileID: 1171960156}
   crosshairImage: {fileID: 178128764}
   cursorTargeting: 1
-  cameraZ: 5
+  cameraZ: 25
   weaponCamera: 2
   simController: 0
   mouseSensitivity: 20
-  gamePadSensitivity: 25
-  minY: 0.5
-  viewportPct: 80
+  gamePadSensitivity: 10
+  topDownY: 1
+  viewportPct: 95
   mousePosition: {x: 0, y: 0, z: 0}
-  calc: 0
 --- !u!114 &8829560766490598594
 MonoBehaviour:
   m_ObjectHideFlags: 0

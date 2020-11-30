@@ -26019,7 +26019,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391757172}
-  m_LocalRotation: {x: 0.56758124, y: 0.0000000584092, z: -0.000000040266322, w: 0.8233174}
+  m_LocalRotation: {x: 0.56758124, y: 0.000000058518904, z: -0.000000040341952, w: 0.8233174}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -47747,7 +47747,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 768416159}
-  m_LocalRotation: {x: 0.6339889, y: -0.000000009979813, z: 0.00000000818149, w: 0.7733422}
+  m_LocalRotation: {x: 0.6339889, y: -0.000000009776657, z: 0.00000000801494, w: 0.7733422}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -47938,7 +47938,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807666547}
-  m_LocalRotation: {x: 0.60107327, y: 0.000000076582275, z: -0.000000057597482, w: 0.79919386}
+  m_LocalRotation: {x: 0.60107327, y: 0.0000001857419, z: -0.00000013969637, w: 0.79919386}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -57303,7 +57303,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2002095377}
-  m_LocalRotation: {x: 0.00000001004282, y: 0.973249, z: -0.22975291, w: 0.00000004254207}
+  m_LocalRotation: {x: 0.000000003195649, y: 0.973249, z: -0.22975294, w: 0.000000013536988}
   m_LocalPosition: {x: -0.0000008742278, y: 5, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -84087,7 +84087,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6741819120784291202}
-  m_LocalRotation: {x: 0.6010734, y: 0.0000001771803, z: -0.00000013325723, w: 0.79919386}
+  m_LocalRotation: {x: 0.6010734, y: 0.00000024500628, z: -0.00000018426913, w: 0.79919386}
   m_LocalPosition: {x: 0, y: 15, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -87886,7 +87886,7 @@ MonoBehaviour:
   weaponCamera: 0
   simController: 0
   mouseSensitivity: 5
-  gamePadSensitivity: 20
+  gamePadSensitivity: 15
   topDownY: 1
   viewportPct: 90
   mousePosition: {x: 0, y: 0, z: 0}
