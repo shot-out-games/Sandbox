@@ -10,6 +10,7 @@ using Rewired.ComponentControls;
 using Unity.Mathematics;
 using Unity.Transforms;
 using Unity.Physics.Authoring;
+using UnityEngine.UI;
 
 public enum WeaponMotion
 {
@@ -34,7 +35,7 @@ public struct PlayerWeaponAimComponent : IComponentData
     public bool dualMode;
     public bool cursorTargeting;
     public CameraType weaponCamera;
-    
+
 }
 
 public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
@@ -55,33 +56,40 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     [HideInInspector]
     public int playerId; // The Rewired player id of this character
     [SerializeField] private Transform crossHair;
+    [SerializeField] private Image crosshairImage;
     [SerializeField] private bool cursorTargeting = true;
     [Range(0.0f, 100.0f)]
     [SerializeField] private float cameraZ = 50f;
     public CameraType weaponCamera;
-    [SerializeField]
-    private Vector3 crossHairOffset;
+    //[SerializeField]
+    //private Vector3 crossHairOffset;
     [SerializeField] bool simController = false;
     [SerializeField]
-    [Range(1.0f, 20.0f)] private float mouseSensitivity = 5;
+    [Range(1.0f, 100.0f)] private float mouseSensitivity = 5;
     [SerializeField]
-    [Range(1.0f, 20.0f)] private float gamePadSensitivity = 5;
+    [Range(1.0f, 100.0f)] private float gamePadSensitivity = 5;
 
-    [SerializeField] private float minY = 1;
+    [SerializeField] private float topDownY = 1;
     [Range(80f, 100.0f)]
-    [SerializeField] private float viewportPct =  90;
+    [SerializeField] private float viewportPct = 90;
+    [SerializeField]
+    private Vector3 mousePosition;
 
     private float aimAngle;
     private Animator animator;
+    [SerializeField] private float calc;
     void Start()
     {
         if (!ReInput.isReady) return;
         player = ReInput.players.GetPlayer(playerId);
-        if (crossHair != null)
-        {
-            crossHairOffset = crossHair.transform.position;
-        }
-        Debug.Log("cr " + crossHairOffset);
+        //if (crossHair != null)
+        //{
+        // crossHairOffset = crossHair.transform.position;
+        //}
+
+        mousePosition = new Vector2(Screen.width / 2f, Screen.height / 2f);
+
+        //Debug.Log("cr " + crossHairOffset);
         animator = GetComponent<Animator>();
         target = crossHair;//default target
 
@@ -97,18 +105,17 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         bool ik = true;
         if (weaponCamera == CameraType.TwoD)
         {
-         //   Debug.Log("x " + xd + "y " + yd);
+            //   Debug.Log("x " + xd + "y " + yd);
 
             if (xd < 1 && yd < 2)
             {
                 ik = false;
             }
 
-
             xd = math.sign(crossHair.transform.position.x) * 50;
             yd = math.sign(crossHair.transform.position.y) * 50;
 
-            aimTarget = new Vector3( crossHair.transform.position.x + xd, crossHair.transform.position.y + yd, 
+            aimTarget = new Vector3(crossHair.transform.position.x + xd, crossHair.transform.position.y + yd,
                 crossHair.transform.position.z);
 
         }
@@ -154,14 +161,12 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
 
         Controller controller = player.controllers.GetLastActiveController();
         if (controller == null && simController == false) return;
-
-        Vector3 xHairPosition = new Vector3(cam.transform.position.x, cam.transform.position.y + 2, cam.transform.position.z);
-        Vector3 startCrossHairPosition = crossHair.position;
-        Vector3 startCrossHairOffset = crossHairOffset;
+        Vector3 worldPosition = Vector3.zero;
         float x = 0;
         float y = 0;
+        float z = 0;
         bool gamePad = false;
-        if(controller != null)
+        if (controller != null)
         {
             if (controller.type == ControllerType.Joystick) gamePad = true;
         }
@@ -170,137 +175,121 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         if (gamePad)
         {
             Vector3 aim = Vector3.zero;
-            crossHair.GetComponent<MeshRenderer>().enabled = true;
+            //crossHair.GetComponent<MeshRenderer>().enabled = true;
 
-            x = player.GetAxis("RightHorizontal") ;
+            x = player.GetAxis("RightHorizontal");
             if (math.abs(x) < .19) x = 0;
             y = player.GetAxis("RightVertical");
             if (math.abs(y) < .19) y = 0;
-
-
-            //aimAngle = transform.rotation.eulerAngles.y;
 
             aim = new Vector3(
                 x * Time.deltaTime,
                 y * Time.deltaTime,
                 0
-                );
+            );
+
+            aim.Normalize();
 
             if (weaponCamera == CameraType.ThreeD)
             {
                 aim = new Vector3(
                     x * Time.deltaTime,
-                    0,
-                    y * Time.deltaTime
-                );
-
-
-                
-                aim =  cam.transform.TransformDirection(aim);
-                aim.y = 0;
-
-            }
-            else if (weaponCamera == CameraType.ThirdPerson)
-            {
-                aim = new Vector3(
-                    x * Time.deltaTime,
                     y * Time.deltaTime,
-                    //x,
-                    //y,
                     0
                 );
 
 
-                //aim =  cam.transform.TransformDirection(aim);
-                aim.z = 0;
                 aim.Normalize();
+                mousePosition += new Vector3(aim.x * gamePadSensitivity, aim.y * gamePadSensitivity, 0);
+                mousePosition.z = cameraZ;
+
+            }
+            else if (weaponCamera == CameraType.ThirdPerson || weaponCamera == CameraType.TwoD)
+            {
+                aim = new Vector3(
+                    x * Time.deltaTime,
+                    y * Time.deltaTime,
+                    0
+                );
+
+                aim.Normalize();
+                mousePosition += new Vector3(aim.x * gamePadSensitivity, aim.y * gamePadSensitivity, 0);
+                mousePosition.z = cameraZ;
+
 
             }
 
-            crossHairOffset += aim;
 
-            //crossHairOffset = cam.transform.TransformDirection(crossHairOffset);
-            //crossHairOffset.z = 0;
+            worldPosition = cam.ScreenToWorldPoint(mousePosition);
+            x = worldPosition.x;
+            y = worldPosition.y;
+            z = worldPosition.z;
 
 
-            var right = cam.transform.right;
-            var up = cam.transform.up;
-            var fwd = cam.transform.forward;
+            Vector3 targetPosition = new Vector3(
+                x,
+                y,
+                z
+            );
 
-            Vector3 add = (crossHairOffset.x * right * gamePadSensitivity  + crossHairOffset.y * up * gamePadSensitivity  + fwd * cameraZ);
 
-            var camPos = cam.transform.position;
-            add = new Vector3(camPos.x + crossHairOffset.x, camPos.y + crossHairOffset.y, cameraZ);
-            crossHair.transform.position = add;
+            crossHair.transform.position = targetPosition;
+            crosshairImage.transform.position = mousePosition;
+
 
 
             //crossHair.transform.position = xHairPosition + crossHairOffset * gamePadSensitivity / 10;
-            if (weaponCamera == CameraType.ThirdPerson)
-            {
-                
-                //crossHair.transform.position += cam.transform.forward * cameraZ;
-            }
+            //if (weaponCamera == CameraType.ThirdPerson)
+            //{
+
+            //crossHair.transform.position += cam.transform.forward * cameraZ;
+            //}
 
         }
         else
         {
-            Vector3 mousePosition = player.controllers.Mouse.screenPosition;
-            mousePosition.z = cameraZ;
-            Vector3 worldPosition = cam.ScreenToWorldPoint(mousePosition);
-            //Vector3 mouseDirection = worldPosition - cam.transform.position;
-            //x = mouseDirection.x;
-            //y = mouseDirection.y;
-            x = worldPosition.x;
-            y = worldPosition.y;
+            mousePosition = player.controllers.Mouse.screenPosition;
+
+            if (weaponCamera == CameraType.ThirdPerson)
+            {
 
 
-            crossHairOffset = new Vector3(
+                mousePosition.z = cameraZ;
+                worldPosition = cam.ScreenToWorldPoint(mousePosition);
+                x = worldPosition.x;
+                y = worldPosition.y;
+                z = worldPosition.z;
+            }
+
+            if (weaponCamera == CameraType.ThreeD)
+            {
+                mousePosition.z = cameraZ;
+                worldPosition = cam.ScreenToWorldPoint(mousePosition);
+                x = worldPosition.x;
+                z = worldPosition.z;
+                y = transform.position.y +  topDownY;
+                //mousePosition = cam.WorldToScreenPoint(new Vector3(x, z, mousePosition.z));
+            }
+
+
+
+            Vector3 targetPosition = new Vector3(
                 x,
-                y ,
-                0
+                y,
+                z
             );
 
-
-            //crossHair.transform.position = cam.transform.position + crossHairOffset * mouseSensitivity;
-
-            var add = cam.transform.TransformDirection(Vector3.forward);
-            add.Normalize();
-            //Debug.Log("add " + add.z * cameraZ);
-            crossHairOffset.z = cam.transform.position.z + add.z * cameraZ;
-            crossHair.transform.position = crossHairOffset;
-            crossHair.transform.position += cam.transform.forward;
+            if (weaponCamera == CameraType.ThreeD)
+            {
+                mousePosition = cam.WorldToScreenPoint(targetPosition);
+            }
 
 
-            //if (weaponCamera != CameraType.TwoD)
-            //{
-            //worldPosition.y = 1;
-            // crossHair.transform.position = worldPosition;
-            //}
-
-
-
+            crossHair.transform.position = targetPosition;
+            crosshairImage.transform.position = mousePosition;
         }
 
         var position = crossHair.transform.position;
-
-        //Vector3 viewPos = cam.WorldToViewportPoint(position);
-        //Debug.Log("vp ");
-
-        //float f = viewportPct / 100;
-        //if (viewPos.y > f)
-        //{
-        //    position.y = startCrossHairPosition.y;
-        //}
-        //if (viewPos.x > f)
-        //{
-        //    position.x = startCrossHairPosition.x;
-        //}
-        //else if (viewPos.x < (1 - f))
-        //{
-        //    position.x = startCrossHairPosition.x;
-        //}
-
-        position.y = position.y < minY ? minY : position.y;
         crossHair.transform.position = position;
 
 
@@ -312,7 +301,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         manager = dstManager;
 
         dstManager.AddComponentData(entity,
-            new PlayerWeaponAimComponent { weaponCamera = weaponCamera});
+            new PlayerWeaponAimComponent { weaponCamera = weaponCamera });
     }
 }
 

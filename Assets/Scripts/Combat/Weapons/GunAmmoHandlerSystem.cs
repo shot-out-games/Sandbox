@@ -83,10 +83,9 @@ public class GunAmmoHandlerSystem : SystemBase
                         Rotation rotation = new Rotation() { Value = gun.AmmoStartRotation.Value };
                         var playerVelocity = EntityManager.GetComponentData<PhysicsVelocity>(entity);
                         var velocity = EntityManager.GetComponentData<PhysicsVelocity>(e);
-                        float3 forward = bulletManager.AmmoStartLocation.forward;
-                        velocity.Linear = forward * strength + playerVelocity.Linear;
-                        //if (playerWeaponAimComponent.weapon2d == false) velocity.Linear.y = 0;
-                        //velocity.Linear = forward * strength;
+                        float3 forward = bulletManager.AmmoStartLocation.transform.forward;
+                        //velocity.Linear = forward * strength + playerVelocity.Linear;
+                        velocity.Linear = forward * strength;
 
 
                         //Matrix4x4 matrix4x4 = Matrix4x4.identity;
