@@ -84,7 +84,7 @@ public class GunAmmoHandlerSystem : SystemBase
                         var playerVelocity = EntityManager.GetComponentData<PhysicsVelocity>(entity);
                         var velocity = EntityManager.GetComponentData<PhysicsVelocity>(e);
                         float3 forward = bulletManager.AmmoStartLocation.transform.forward;
-                        if (playerWeaponAimComponent.weaponCamera == CameraType.ThreeD)
+                        if (playerWeaponAimComponent.weaponCamera == CameraType.TopDown)
                         {
                             velocity.Linear = forward * strength + playerVelocity.Linear;
                         }

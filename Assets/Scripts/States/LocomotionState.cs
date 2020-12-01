@@ -35,18 +35,18 @@ public class LocomotionState : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("loco exit");
+        //Debug.Log("loco exit");
 
         if (animationType == AnimationType.Aim)
         {
             animator.SetInteger("WeaponRaised", (int)WeaponMotion.Raised);
-            Debug.Log("event aim");
+            //Debug.Log("event aim");
         }
 
         if (animationType == AnimationType.Lowering)
         {
             animator.SetInteger("WeaponRaised", (int)WeaponMotion.None);
-            Debug.Log("event lowered ");
+            //Debug.Log("event lowered ");
         }
     }
 

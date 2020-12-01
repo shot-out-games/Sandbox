@@ -94,7 +94,6 @@ public class PlayerInputAmmoSystem : SystemBase
 
         if (weaponMotion == WeaponMotion.Started)
         {
-            Debug.Log("wr 1");
             animator.SetInteger("WeaponRaised", 1);
             animator.SetLayerWeight(0, 0);
             animator.SetLayerWeight(2, 1);
@@ -102,7 +101,6 @@ public class PlayerInputAmmoSystem : SystemBase
         }
         else if (weaponMotion == WeaponMotion.None)
         {
-            Debug.Log("wr 0");
             animator.SetInteger("WeaponRaised", 0);
             animator.SetLayerWeight(0, 1);
             animator.SetLayerWeight(2, 0);
@@ -110,7 +108,6 @@ public class PlayerInputAmmoSystem : SystemBase
         }
         else if (weaponMotion == WeaponMotion.Lowering)
         {
-            Debug.Log("wr 3");
             animator.SetInteger("WeaponRaised", 3);
         }
     }

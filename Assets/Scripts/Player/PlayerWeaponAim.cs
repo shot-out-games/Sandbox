@@ -22,7 +22,7 @@ public enum WeaponMotion
 
 public enum CameraType
 {
-    ThreeD,
+    TopDown,
     TwoD,
     ThirdPerson
 }
@@ -43,6 +43,8 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     private EntityManager manager;
     private Entity e;
     private Camera cam;
+
+
 
     [SerializeField] AimIK aim;
     [SerializeField] FullBodyBipedIK ik;
@@ -72,7 +74,6 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField] private float viewportPct = 90;
     [SerializeField]
     private Vector3 mousePosition;
-
     private float aimAngle;
     private Animator animator;
     private float xMin;
@@ -166,6 +167,52 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
+    Vector3 GetMousePositionTopDownPlane()
+    {
+        //Plane plane = new Plane();
+        Plane plane = new Plane(Vector3.down, transform.position);
+        Ray r = cam.ScreenPointToRay(mousePosition);
+        float d = 0;
+        if (plane.Raycast(r, out d))
+        {
+            Vector3 v = r.GetPoint(d);
+            return v;
+        }
+
+        throw new UnityException("Mouse position ray not intersecting launcher plane");
+    }
+
+    Vector3 GetMousePositionThirdPersonPlane()
+    {
+        //Plane plane = new Plane();
+        //Vector3 _distanceFromCamera = new Vector3(cam.transform.position.x, cam.transform.position.y, cam.transform.position.z - cameraZ);
+
+        Plane plane = new Plane(transform.forward, transform.forward * cameraZ);
+        Ray r = cam.ScreenPointToRay(mousePosition);
+        float d = 0;
+        if (plane.Raycast(r, out d))
+        {
+            Vector3 v = r.GetPoint(d);
+            return v;
+        }
+
+        plane = new Plane(transform.right, transform.right * cameraZ);
+        if (plane.Raycast(r, out d))
+        {
+            Vector3 v = r.GetPoint(d);
+            return v;
+        }
+
+        //plane = new Plane(-transform.right, -transform.right * cameraZ);
+        //if (plane.Raycast(r, out d))
+        //{
+        //    Vector3 v = r.GetPoint(d);
+        //    return v;
+        //}
+
+        throw new UnityException("Mouse position ray not intersecting launcher plane");
+    }
+
     void Crosshair()
     {
 
@@ -229,18 +276,28 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         {
             mousePosition.z = cameraZ;
             worldPosition = cam.ScreenToWorldPoint(mousePosition);
+            //worldPosition = GetMousePositionThirdPersonPlane();
             x = worldPosition.x;
             y = worldPosition.y;
             z = worldPosition.z;
-            targetPosition = worldPosition;
+
+            targetPosition = new Vector3(
+                x,
+                y,
+                z
+            );
+
+
         }
-        if (weaponCamera == CameraType.ThreeD)
+        if (weaponCamera == CameraType.TopDown)
         {
             mousePosition.z = cameraZ;
-            worldPosition = cam.ScreenToWorldPoint(mousePosition);
+            //worldPosition = cam.ScreenToWorldPoint(mousePosition);
+            worldPosition = GetMousePositionTopDownPlane();
             x = worldPosition.x;
-            z = worldPosition.z;
+            //y = worldPosition.y;
             y = transform.position.y + topDownY;
+            z = worldPosition.z;
 
 
             targetPosition = new Vector3(

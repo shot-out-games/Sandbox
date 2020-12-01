@@ -21,7 +21,7 @@ public class ParticleConversionSystem : GameObjectConversionSystem
             //AddHybridComponent(animator);
             AddHybridComponent(particleSystem);
             AddHybridComponent(particleSystemRenderer);
-            Debug.Log("ps " + particleSystem.name);
+           // Debug.Log("ps " + particleSystem.name);
         });
 
 
