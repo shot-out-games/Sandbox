@@ -48,10 +48,16 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
 
     [SerializeField] AimIK aim;
     [SerializeField] FullBodyBipedIK ik;
+    [SerializeField] private LookAtIK lookAtIk;
     [HideInInspector]
     public Transform target;
     public Transform aimTransform;
     [Range(0.0f, 1.0f)] [SerializeField] private float aimWeight = 1.0f;
+    [Range(0.0f, 1.0f)] [SerializeField] private float clampWeight = 0.1f;
+    [Range(0.0f, 1.0f)] [SerializeField] private float lookWeight = 1f;
+    private float startAimWeight;
+    float startClampWeight;
+    private float startLookWeight;
     private float aimLerp = .03f;
     [HideInInspector]
     public Player player;
@@ -80,6 +86,10 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     private float xMax;
     private float yMin;
     private float yMax;
+    Vector3 targetPosition = Vector3.zero;
+    Vector3 worldPosition = Vector3.zero;
+
+
     void Start()
     {
         if (!ReInput.isReady) return;
@@ -95,6 +105,10 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         target = crossHair;//default target
 
         cam = Camera.main;
+        startAimWeight = aimWeight;
+        startClampWeight = clampWeight;
+        startLookWeight = lookWeight;
+
         SetCursorBounds();
 
     }
@@ -133,10 +147,17 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
 
         }
 
+        if (lookAtIk)
+        {
+            lookAtIk.solver.IKPosition = aimTarget;
+            lookAtIk.solver.IKPositionWeight = lookWeight;
+            lookAtIk.solver.Update();
+        }
 
 
         if (ik)
         {
+            aim.solver.clampWeight = clampWeight;
             aim.solver.IKPositionWeight = aimWeight;
             aim.solver.IKPosition = aimTarget;
             aim.solver.Update();
@@ -156,11 +177,28 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
 
         if (aim == null || target == null) return;
         Crosshair();
-        aimWeight = 1;
+        aimWeight = startAimWeight;
+        clampWeight = startClampWeight;
+        lookWeight = startLookWeight;
         if (weaponMotion == WeaponMotion.None)
         {
             aimWeight = 0;
+            clampWeight = 1;
+            lookWeight = 0;
         }
+
+        Vector3 targetDir = crossHair.position - transform.position;
+        float distance = targetDir.magnitude;
+        float angle = Vector3.Angle(targetDir, transform.forward);
+        if (angle > (180 - clampWeight * 360))
+        {
+            aimWeight = 0;
+            clampWeight = 1;
+            lookWeight = 0;
+            //return;
+        }
+
+
 
         SetAim();
         SetIK();
@@ -220,8 +258,6 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
 
         Controller controller = player.controllers.GetLastActiveController();
         if (controller == null && simController == false) return;
-        Vector3 worldPosition = Vector3.zero;
-        Vector3 targetPosition = Vector3.zero;
         float x = 0;
         float y = 0;
         float z = 0;
@@ -315,6 +351,10 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
                     z = worldPosition.z
                     );
             }
+
+
+
+
             mousePosition = cam.WorldToScreenPoint(targetPosition);
         }
 
@@ -330,6 +370,19 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         crosshairImage.transform.position = mousePosition;
 
 
+    }
+
+
+    public void Move(float degrees, float distance)
+    {
+        // local coordinate rotation around the Y axis to the given angle
+        Quaternion rotation = Quaternion.AngleAxis(degrees, Vector3.up);
+        // add the desired distance to the direction
+        Vector3 addDistanceToDirection = rotation * transform.forward * distance;
+        // add the distance and direction to the current position to get the final destination
+        targetPosition = transform.position + addDistanceToDirection;
+        Debug.DrawRay(transform.position, addDistanceToDirection, Color.red, 10.0f);
+        //transform.LookAt(this.destination);
     }
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
