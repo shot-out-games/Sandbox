@@ -29731,6 +29731,7 @@ GameObject:
   - component: {fileID: 3466703481568296787}
   - component: {fileID: 3466703481568296774}
   - component: {fileID: 6712310231623695260}
+  - component: {fileID: -8547866303032342079}
   m_Layer: 12
   m_Name: enemy BASIC
   m_TagString: Enemy
@@ -30152,8 +30153,6 @@ MonoBehaviour:
   enemyRole: 0
   moveSpeed: 0
   rotateSpeed: 1
-  speed: 0
-  lastPosition: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   speedMultiple: 0
   backup: 0
@@ -30187,6 +30186,28 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!195 &-8547866303032342079
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3466703481568296788}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &3466703481672008646
 GameObject:
   m_ObjectHideFlags: 0

@@ -55,7 +55,13 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     [Range(0.0f, 1.0f)] [SerializeField] private float aimWeight = 1.0f;
     [Range(0.0f, 1.0f)] [SerializeField] private float clampWeight = 0.1f;
     [Range(0.0f, 1.0f)] [SerializeField] private float lookWeight = 1f;
+    [SerializeField]
+    float lerpSpeed = 3;
     private float startAimWeight;
+    [SerializeField]
+    private float currentAimWeight;
+    [SerializeField]
+    float targetAimWeight;
     float startClampWeight;
     private float startLookWeight;
     private float aimLerp = .03f;
@@ -86,6 +92,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     private float xMax;
     private float yMin;
     private float yMax;
+
     Vector3 targetPosition = Vector3.zero;
     Vector3 worldPosition = Vector3.zero;
 
@@ -94,13 +101,6 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     {
         if (!ReInput.isReady) return;
         player = ReInput.players.GetPlayer(playerId);
-        //if (crossHair != null)
-        //{
-        // crossHairOffset = crossHair.transform.position;
-        //}
-
-
-        //Debug.Log("cr " + crossHairOffset);
         animator = GetComponent<Animator>();
         target = crossHair;//default target
 
@@ -108,6 +108,8 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         startAimWeight = aimWeight;
         startClampWeight = clampWeight;
         startLookWeight = lookWeight;
+        currentAimWeight = lookWeight;
+        targetAimWeight = startClampWeight;
 
         SetCursorBounds();
 
@@ -132,8 +134,6 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         bool ik = true;
         if (weaponCamera == CameraType.TwoD)
         {
-            //   Debug.Log("x " + xd + "y " + yd);
-
             if (xd < 1 && yd < 2)
             {
                 ik = false;
@@ -147,19 +147,34 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
 
         }
 
-        if (lookAtIk)
+
+        if (ik && lookAtIk)
         {
-            lookAtIk.solver.IKPosition = aimTarget;
+            lookAtIk.solver.clampWeight = clampWeight;
             lookAtIk.solver.IKPositionWeight = lookWeight;
+            //lookAtIk.solver.IKPosition = aimTarget;
+            lookAtIk.solver.IKPosition = Vector3.Lerp(lookAtIk.solver.IKPosition, aimTarget, Time.deltaTime * lerpSpeed);
             lookAtIk.solver.Update();
         }
 
-
-        if (ik)
+        if (ik && aim)
         {
             aim.solver.clampWeight = clampWeight;
-            aim.solver.IKPositionWeight = aimWeight;
-            aim.solver.IKPosition = aimTarget;
+            aim.solver.IKPosition = Vector3.Lerp(aim.solver.IKPosition, aimTarget, Time.deltaTime * lerpSpeed);
+
+            if (targetAimWeight == 0 && currentAimWeight > Time.deltaTime * lerpSpeed)
+            {
+                currentAimWeight = math.lerp(currentAimWeight, targetAimWeight, Time.deltaTime * lerpSpeed);
+                aim.solver.IKPositionWeight = currentAimWeight;
+            }
+            else
+            {
+                Debug.Log("reset");
+                targetAimWeight = startAimWeight;
+                currentAimWeight = aimWeight;
+                aim.solver.IKPositionWeight = currentAimWeight;
+            }
+            //aim.solver.IKPosition = aimTarget;
             aim.solver.Update();
         }
 
@@ -175,24 +190,23 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     public void LateUpdateSystem(WeaponMotion weaponMotion)
     {
 
-        if (aim == null || target == null) return;
+        if (target == null) return;
         Crosshair();
         aimWeight = startAimWeight;
         clampWeight = startClampWeight;
-        lookWeight = startLookWeight;
-        if (weaponMotion == WeaponMotion.None)
+
+        if (targetAimWeight != 0)
         {
-            aimWeight = 0;
-            clampWeight = 1;
-            lookWeight = 0;
+            lookWeight = startLookWeight;
         }
 
         Vector3 targetDir = crossHair.position - transform.position;
         float distance = targetDir.magnitude;
         float angle = Vector3.Angle(targetDir, transform.forward);
-        if (angle > (180 - clampWeight * 360))
+        if (angle > (180 - clampWeight * 360) || weaponMotion == WeaponMotion.None)
         {
-            aimWeight = 0;
+            targetAimWeight = 0;
+            //aimWeight = 0;
             clampWeight = 1;
             lookWeight = 0;
             //return;
@@ -241,13 +255,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
             return v;
         }
 
-        //plane = new Plane(-transform.right, -transform.right * cameraZ);
-        //if (plane.Raycast(r, out d))
-        //{
-        //    Vector3 v = r.GetPoint(d);
-        //    return v;
-        //}
-
+      
         throw new UnityException("Mouse position ray not intersecting launcher plane");
     }
 

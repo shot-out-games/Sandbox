@@ -312,7 +312,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7695476}
-  m_LocalRotation: {x: 0.38268343, y: -1e-45, z: -0, w: 0.92387956}
+  m_LocalRotation: {x: 0.6463749, y: -0.000000029539319, z: 0.000000025023558, w: 0.76302004}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -528,7 +528,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 10383870}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 776adaaacdc5c4e8ab0395120a6e972b, type: 3}
   m_Name: 
@@ -536,36 +536,26 @@ MonoBehaviour:
   fixTransforms: 1
   solver:
     executedInEditor: 0
-    IKPosition: {x: 0, y: 0.6597924, z: -2.8279393}
+    IKPosition: {x: 0, y: 0.82176226, z: -2.8542755}
     IKPositionWeight: 1
-    root: {fileID: 872854895}
+    root: {fileID: 10383872}
     target: {fileID: 1171960156}
     spine:
-    - transform: {fileID: 360701264}
+    - transform: {fileID: 360701146}
       weight: 0
       solverPosition: {x: 0, y: 0, z: 0}
       solverRotation: {x: 0, y: 0, z: 0, w: 0}
-      defaultLocalPosition: {x: -0, y: 0.09982901, z: -0.0009797848}
+      defaultLocalPosition: {x: -0, y: 0.07514761, z: 0.024711514}
       defaultLocalRotation: {x: 0, y: -0, z: -0, w: 1}
       length: 0
       sqrMag: 0
       axis: {x: -0, y: 0, z: 1}
       baseForwardOffsetEuler: {x: 0, y: 0, z: 0}
-    - transform: {fileID: 360701270}
+    - transform: {fileID: 360701076}
       weight: 0
       solverPosition: {x: 0, y: 0, z: 0}
       solverRotation: {x: 0, y: 0, z: 0, w: 0}
-      defaultLocalPosition: {x: 0.000001, y: 0.0890388, z: -0.0044449884}
-      defaultLocalRotation: {x: 0, y: -0, z: -0, w: 1}
-      length: 0
-      sqrMag: 0
-      axis: {x: -0, y: 0, z: 1}
-      baseForwardOffsetEuler: {x: 0, y: 0, z: 0}
-    - transform: {fileID: 360701268}
-      weight: 0
-      solverPosition: {x: 0, y: 0, z: 0}
-      solverRotation: {x: 0, y: 0, z: 0, w: 0}
-      defaultLocalPosition: {x: -0.000001, y: 0.11302289, z: -0.036031503}
+      defaultLocalPosition: {x: -0, y: 0.16196987, z: 0.026336145}
       defaultLocalRotation: {x: 0, y: -0, z: -0, w: 1}
       length: 0
       sqrMag: 0
@@ -583,9 +573,9 @@ MonoBehaviour:
       axis: {x: -0, y: 0, z: 1}
       baseForwardOffsetEuler: {x: 0, y: 0, z: 0}
     eyes: []
-    bodyWeight: 0.5
-    headWeight: 0.5
-    eyesWeight: 1
+    bodyWeight: 0
+    headWeight: 1
+    eyesWeight: 0
     clampWeight: 0.5
     clampWeightHead: 0.5
     clampWeightEyes: 0.5
@@ -595,7 +585,7 @@ MonoBehaviour:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.3
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -605,8 +595,8 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 1
         value: 1
-        inSlope: 0
-        outSlope: 0
+        inSlope: 2
+        outSlope: 2
         tangentMode: 0
         weightedMode: 0
         inWeight: 0
@@ -26267,7 +26257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 5, z: -5}
+  m_FollowOffset: {x: 0, y: 30, z: -5}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -48998,10 +48988,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5013856973b27429d937d256dc082f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fixTransforms: 1
+  fixTransforms: 0
   solver:
     executedInEditor: 0
-    IKPosition: {x: -2.4955912, y: -2.1631396, z: -0.058069617}
+    IKPosition: {x: 2.4955912, y: -2.1631396, z: 0.05806899}
     IKPositionWeight: 1
     root: {fileID: 872854895}
     target: {fileID: 1171960156}
@@ -49013,7 +49003,7 @@ MonoBehaviour:
     transform: {fileID: 380916546}
     axis: {x: 0, y: 0, z: 1}
     poleAxis: {x: 0, y: 1, z: 0}
-    polePosition: {x: -0.5793555, y: 0.14511563, z: 2.9419312}
+    polePosition: {x: 0.5793555, y: 0.14511563, z: -2.9419312}
     poleWeight: 0
     poleTarget: {fileID: 0}
     clampWeight: 0.1
@@ -50297,7 +50287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 5, z: -5}
+  m_FollowOffset: {x: 0, y: 30, z: -5}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -51319,7 +51309,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171960155}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -51547,7 +51537,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1204100600}
-  m_LocalRotation: {x: 0.36581522, y: 0.000000016013763, z: -0.0000000062943566, w: 0.9306875}
+  m_LocalRotation: {x: 0.632389, y: 0.00000006331244, z: -0.00000005168533, w: 0.774651}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -56857,7 +56847,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 5, z: -5}
+  m_FollowOffset: {x: 0, y: 30, z: -5}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -57611,7 +57601,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2002095377}
-  m_LocalRotation: {x: 0.00000001004282, y: 0.973249, z: -0.22975291, w: 0.00000004254207}
+  m_LocalRotation: {x: 0.000000003195649, y: 0.973249, z: -0.22975294, w: 0.000000013536988}
   m_LocalPosition: {x: -0.0000008742278, y: 5, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -57810,7 +57800,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057045670}
-  m_LocalRotation: {x: 0.34887102, y: -0, z: -0, w: 0.9371708}
+  m_LocalRotation: {x: 0.61823165, y: -0.000000027258777, z: 0.000000021440618, w: 0.78599596}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -82971,7 +82961,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2475002597443398674}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: -5}
+  m_LocalPosition: {x: 0, y: 30, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7695477}
@@ -83072,7 +83062,7 @@ MonoBehaviour:
   m_Orbits:
   - m_Height: 15
     m_Radius: 15
-  - m_Height: 5
+  - m_Height: 30
     m_Radius: 5
   - m_Height: 15
     m_Radius: 15
@@ -84343,8 +84333,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6741819120784291202}
-  m_LocalRotation: {x: 0.36581522, y: 0.000000032027526, z: -0.000000012588711, w: 0.93068755}
-  m_LocalPosition: {x: 0, y: 5, z: -5}
+  m_LocalRotation: {x: 0.63238895, y: 0.00000012662491, z: -0.000000103370674, w: 0.774651}
+  m_LocalPosition: {x: 0, y: 30, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6741819121639992593}
@@ -88135,8 +88125,11 @@ MonoBehaviour:
   target: {fileID: 0}
   aimTransform: {fileID: 0}
   aimWeight: 1
-  clampWeight: 0.25
-  lookWeight: 0.5
+  clampWeight: 0.03
+  lookWeight: 1
+  lerpSpeed: 3
+  currentAimWeight: 0
+  targetAimWeight: 0
   playerId: 0
   crossHair: {fileID: 1171960156}
   crosshairImage: {fileID: 1927817829}
@@ -88146,7 +88139,7 @@ MonoBehaviour:
   simController: 0
   mouseSensitivity: 5
   gamePadSensitivity: 15
-  topDownY: 0.03
+  topDownY: 1
   viewportPct: 100
   mousePosition: {x: 0, y: 0, z: 0}
 --- !u!114 &8829560766490598594
