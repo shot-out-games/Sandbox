@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c63336138e98c764c920ab51a8d2074f, type: 3}
-  m_Name: Enemy Data CUBE 2
+  m_Name: Enemy Data BASIC
   m_EditorClassIdentifier: 
   speed: 12
-  combatStrikeDistanceZoneBegin: 1
-  combatStrikeDistanceZoneEnd: 3.5
-  combatRangeDistance: 4
-  shootRangeDistance: 5
-  chaseRange: 8
+  combatStrikeDistanceZoneBegin: 6
+  combatStrikeDistanceZoneEnd: 8
+  combatRangeDistance: 10
+  shootRangeDistance: 15
+  chaseRange: 50
   aggression: 50
   maxHealth: 10

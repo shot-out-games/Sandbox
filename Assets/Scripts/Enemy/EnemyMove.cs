@@ -122,7 +122,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     public float moveSpeed;
     public float rotateSpeed = 1;
 
-    public Transform target;//default chase target but if combat used gets replaced by combatsystem move target
+    public Transform target;//default chase target but if combat used gets replaced by combat system move target
     public Entity entity;
     private EntityManager manager;
     private EnemyRatings enemyRatings;

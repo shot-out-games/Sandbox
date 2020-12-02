@@ -7,6 +7,15 @@ using Unity.Mathematics;
 using Unity.Collections;
 
 
+[Serializable]
+public struct MatchupComponent : IComponentData
+{
+    public bool matchupClosest;
+    public bool leader;
+
+
+}
+
 
 
 
@@ -21,7 +30,8 @@ public class MatchupSystem :  SystemBase
 
 
 
-        Entities.WithAll<EnemyComponent>().WithNone<SkipMatchupComponent, CubeComponent>().WithoutBurst().ForEach
+        //get closest player to enemy
+        Entities.WithAll<EnemyComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
         (
             (
                 Transform enemyTransform,//traverse enemies
@@ -33,17 +43,33 @@ public class MatchupSystem :  SystemBase
                 GameObject enemy = enemyTransform.gameObject;
                 GameObject player = null;
                 GameObject closestPlayer = null;
-                bool enemyDead = EntityManager.GetComponentData<DeadComponent>(enemyEntity).isDead;
+                bool enemyDead = GetComponent<DeadComponent>(enemyEntity).isDead;
 
 
-                if (closestPlayer != null)
-                {
-                    if (enemy.GetComponent<EnemyMelee>() && closestPlayer.GetComponent<TargetZones>())
+
+                Entities.WithAll<PlayerComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
+                (
+                    (
+                        Transform playerTransform,//find closest player
+                        Entity playerEntity
+                    ) =>
                     {
-                        enemy.GetComponent<EnemyMelee>().moveUsing.target =
-                            closestPlayer.GetComponent<TargetZones>().headZone;
+                        bool playerDead = GetComponent<DeadComponent>(playerEntity).isDead;
+                        player = playerTransform.gameObject;
+
+                        if (playerDead == false && enemyDead == false)
+                        {
+                            float distance = Vector3.Distance(playerTransform.position, enemyTransform.position);
+                            if (distance < closestDistance)
+                            {
+                                closestPlayer = player;
+                                closestDistance = distance;
+                            }
+                        }
+
                     }
-                }
+                ).Run();
+
 
                 if (closestPlayer != null)
                 {
@@ -51,29 +77,26 @@ public class MatchupSystem :  SystemBase
                     {
                         enemy.GetComponent<EnemyWeaponAim>().target =
                             closestPlayer.GetComponent<TargetZones>().headZone;
-
                     }
-                }
-
-                if (closestPlayer != null)
-                {
+                    if (enemy.GetComponent<EnemyMelee>())
+                    {
+                        enemy.GetComponent<EnemyMelee>().moveUsing.target =
+                            closestPlayer.GetComponent<TargetZones>().headZone;
+                    }
                     if (enemy.GetComponent<EnemyMove>())
                     {
-                        enemy.GetComponent<EnemyMove>().target = closestPlayer.transform;
+                        enemy.GetComponent<EnemyMove>().target =
+                            closestPlayer.transform;
                     }
+
                 }
 
             }
         ).Run();
 
 
-
-
-
-
-
-
-        Entities.WithAll<PlayerComponent>().WithNone<SkipMatchupComponent, CubeComponent>().WithoutBurst().ForEach
+        //get closest enemy to player
+        Entities.WithAll<PlayerComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
         (
             (
                 Transform playerTransform,//traverse enemies
@@ -85,22 +108,21 @@ public class MatchupSystem :  SystemBase
                 GameObject player = playerTransform.gameObject;
                 GameObject enemy = null;
                 GameObject closestEnemy = null;
-                bool playerDead = EntityManager.GetComponentData<DeadComponent>(playerEntity).isDead;
+                bool playerDead = GetComponent<DeadComponent>(playerEntity).isDead;
 
 
-                Entities.WithAll<EnemyComponent>().WithNone<SkipMatchupComponent, CubeComponent>().WithoutBurst().ForEach
+                Entities.WithAll<EnemyComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
                 (
                     (
                         Transform enemyTransform,//find closest enemy
                         Entity enemyEntity
                     ) =>
                     {
-                        bool enemyDead = EntityManager.GetComponentData<DeadComponent>(enemyEntity).isDead;
+                        bool enemyDead = GetComponent<DeadComponent>(enemyEntity).isDead;
                         enemy = enemyTransform.gameObject;
 
                         if (playerDead == false && enemyDead == false)
                         {
-                            float dir = Vector3.Dot(playerTransform.forward, enemyTransform.forward);
                             float distance = Vector3.Distance(playerTransform.position, enemyTransform.position);
                             if (distance < closestDistance)
                             {
@@ -108,7 +130,6 @@ public class MatchupSystem :  SystemBase
                                 closestDistance = distance;
                             }
                         }
-
 
                     }
                 ).Run();
@@ -121,24 +142,18 @@ public class MatchupSystem :  SystemBase
                         player.GetComponent<PlayerWeaponAim>().target =
                             closestEnemy.GetComponent<TargetZones>().headZone;
                     }
-                }
-
-                if (closestEnemy != null)
-                {
-                    //Debug.Log("closest " + closestEnemy.name);
                     if (player.GetComponent<PlayerCombat>())
                     {
                         player.GetComponent<PlayerCombat>().moveUsing.target =
                             closestEnemy.GetComponent<TargetZones>().headZone;
                     }
+
                 }
-
-
 
             }
         ).Run();
 
-
+        //-----------------------------------------leader override--------------------------------------------
 
         Entities.WithoutBurst().WithStructuralChanges().WithAll<MatchupComponent>().ForEach
         (
