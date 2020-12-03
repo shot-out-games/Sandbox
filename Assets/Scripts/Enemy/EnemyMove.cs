@@ -299,9 +299,13 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         
 
         if (!agent.enabled) return;
+
         Vector3 lookDir = target.position - transform.position;
         lookDir.y = 0;
         if (lookDir.magnitude < .019f) return;
+
+        Debug.Log("dir " + target.position);
+
         Quaternion rot = Quaternion.LookRotation(lookDir);
         transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotateSpeed * Time.deltaTime);
 
@@ -329,7 +333,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         {
             Vector3 nextPosition = target.position;
             agent.destination = nextPosition;
-            Debug.Log("nav  " + agent.speed);
+            Debug.Log("nav  " + nextPosition);
             AnimationMovement();
         }
     }
@@ -354,6 +358,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             }
 
 
+
             MoveStates state = manager.GetComponentData<EnemyStateComponent>(entity).MoveState;
             int pursuitMode = anim.GetInteger("Zone");
             agent.speed = pursuitMode >= 2 ? moveSpeed : moveSpeed * 2;
@@ -376,6 +381,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             }
 
             velz = velz * speedMultiple;
+            //Debug.Log("velz " + velz);
             anim.SetFloat("velz", velz);
         }
 
@@ -385,7 +391,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     void OnAnimatorMove()
     {
 
-        if (agent == null || manager == default || entity == Entity.Null) return;
+        if (agent == null) return;
         if (isCurrentWayPointJump == false)
         {
             agent.updatePosition = true;

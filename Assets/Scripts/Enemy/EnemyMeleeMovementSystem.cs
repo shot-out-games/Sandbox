@@ -29,51 +29,44 @@ public class EnemyMeleeMovementSystem : SystemBase
             if (enemyMove.target != null)
             {
                 enemyMove.speedMultiple = 1;
-                enemyMovementComponent.speedMultiple = 1;//set both because we set component but currently still need in MB
                 MoveStates MoveState = enemyState.MoveState;
                 EnemyRoles role = enemyMove.enemyRole;
                 Vector3 enemyPosition = animator.transform.position;
                 float dist = Vector3.Distance(enemyMove.target.position, enemyPosition);
-                float backupZoneClose = animator.GetComponent<EnemyMelee>().currentStrikeDistanceZoneBegin;
+                //float backupZoneClose = animator.GetComponent<EnemyMelee>().currentStrikeDistanceZoneBegin;
+                float backupZoneClose = enemyMovementComponent.combatStrikeDistanceZoneBegin;
                 float backupZoneFar = enemyMovementComponent.combatStrikeDistanceZoneEnd;
                 bool strike = false;
                 if (dist < backupZoneClose)
                 {
                     MoveState = MoveStates.Default;
-                    enemyMovementComponent.backup = true;//only time to turn on 
-                    enemyMovementComponent.speedMultiple = dist / backupZoneClose;
+                    enemyMove.backup = true;//only time to turn on 
+                    enemyMove.speedMultiple = dist / backupZoneClose;
                 }
-                if (enemyMovementComponent.backup && dist > backupZoneFar)
+
+                if (enemyMove.backup && dist > backupZoneFar)
                 {
                     MoveState = MoveStates.Default;
-                    enemyMovementComponent.backup = false;//only time to turn off
+                    enemyMove.backup = false;//only time to turn off
                 }
                 else if (dist >= backupZoneClose && dist <= backupZoneFar)
                 {
-                    //enemyMovementComponent.speedMultiple = enemyMovementComponent.backup ? 1 : (dist - backupZoneClose) / (backupZoneFar - backupZoneClose);
-                    enemyMovementComponent.speedMultiple = (dist - backupZoneClose) / (backupZoneFar - backupZoneClose);
+                    enemyMove.speedMultiple = (dist - backupZoneClose) / (backupZoneFar - backupZoneClose);
                     MoveState = MoveStates.Default;
                     int n = Random.Range(0, 10);
-                    if (enemyMovementComponent.backup == true && n <= 2)
+                    if (enemyMove.backup == true && n <= 2)
                     {
-                        //enemyMovementComponent.backup = false;
                         strike = true;
                     }
-                    else if (enemyMovementComponent.backup == false && n <= 5)
+                    else if (enemyMove.backup == false && n <= 5)
                     {
                         strike = true;
                     }
                 }
 
-                float dist_from_station = Vector3.Distance(enemyPosition, enemyMovementComponent.originalPosition);
-                bool useStartPosition = enemyMovementComponent.useDistanceFromStation;
                 float chaseRange = enemyMove.chaseRange;
-                if (useStartPosition == true && dist_from_station > chaseRange) chaseRange = -1;
 
-                bool backup = enemyMovementComponent.backup;
-                float speedMultiple = enemyMovementComponent.speedMultiple;
-                enemyMove.backup = backup;
-                enemyMove.speedMultiple = speedMultiple;
+                bool backup = enemyMove.backup;
 
                 if (strike)
                 {
@@ -127,20 +120,11 @@ public class EnemyMeleeMovementSystem : SystemBase
 
                 enemyState = new EnemyStateComponent() { MoveState = MoveState };
 
-
-
-
             }
-
-            translation.Value.z = 0;
-
 
         }
         ).Run();
 
-
-
-        //return default;
     }
 
 }

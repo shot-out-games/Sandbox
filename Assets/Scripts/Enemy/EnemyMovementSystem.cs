@@ -15,8 +15,6 @@ public class EnemyMovementSystem : SystemBase
     protected override void OnUpdate()
     {
 
-        var entityManager = World.EntityManager;
-
 
         Entities.WithAll<EnemyComponent>().WithNone<Pause>().WithoutBurst().ForEach
         (
@@ -31,75 +29,24 @@ public class EnemyMovementSystem : SystemBase
             ) =>
             {
 
-                //if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
                 if (dead.isDead) return;
                 if (enemyMovementComponent.enabled == false) return;
-
-
-
 
                 if (enemyMove.target != null && enemyMove.enemyRole != EnemyRoles.None)
                 {
                     enemyMove.speedMultiple = 1;
-                    enemyMovementComponent.speedMultiple =
-                        1; //set both because we set component but currently still need in MB
-                    float backupZoneFar = enemyMovementComponent.combatStrikeDistanceZoneEnd;
-                    float backupZoneClose = enemyMovementComponent.combatStrikeDistanceZoneBegin;
-
                     MoveStates MoveState = enemyState.MoveState;
                     EnemyRoles enemyRole = enemyMove.enemyRole;
                     EnemyRoles role = enemyRole;
                     Vector3 playerPosition = enemyMove.target.position;
-                    //bool useStartPosition = enemyMovementComponent.useDistanceFromStation;
-                    //Vector3 enemyPosition = useStartPosition ? enemyMovementComponent.originalPosition : animator.transform.position;
                     Vector3 enemyPosition = animator.transform.position;
                     float dist = Vector3.Distance(playerPosition, enemyPosition);
-
-                    if (dist < backupZoneClose)
-                    {
-                        MoveState = MoveStates.Default;
-                        enemyMovementComponent.backup = true; //only time to turn on 
-                        enemyMovementComponent.speedMultiple = dist / backupZoneClose;
-                    }
-                    else if (enemyMove.backup && dist > backupZoneFar)
-                    {
-                        MoveState = MoveStates.Default;
-                        enemyMovementComponent.backup = false; //only time to turn off
-                    }
-                    else if (dist >= backupZoneClose && dist <= backupZoneFar)
-                    {
-                        MoveState = MoveStates.Default;
-                        enemyMovementComponent.speedMultiple = (dist - backupZoneClose) / (backupZoneFar - backupZoneClose);
-
-                        //enemyMovementComponent.speedMultiple = enemyMove.backup
-                        // ? 1
-                        //: (dist - backupZoneClose) / (backupZoneFar - backupZoneClose);
-                    }
-
-                    bool backup = enemyMovementComponent.backup;
-                    float speedMultiple = enemyMovementComponent.speedMultiple;
-                    enemyMove.backup = backup;
-                    enemyMove.speedMultiple = speedMultiple;
-
-                    float dist_from_station =
-                        Vector3.Distance(enemyPosition, enemyMovementComponent.originalPosition);
-                    bool useStartPosition = enemyMovementComponent.useDistanceFromStation;
                     float chaseRange = enemyMove.chaseRange;
-                    if (useStartPosition == true && dist_from_station > chaseRange) chaseRange = -1;
-
-
-                    if (backup)
-                    {
-                        MoveState = MoveStates.Default;
-                        animator.SetInteger("Zone", 2);
-                        Debug.Log("zone");
-                        enemyMove.SetBackup();
-                        enemyMove.FacePlayer();
-                    }
-                    else if (dist < chaseRange)
+                    if (dist < chaseRange)
                     {
                         MoveState = MoveStates.Chase;
                         animator.SetInteger("Zone", 1);
+                        Debug.Log("zone 1");
                         enemyMove.SetDestination();
                         enemyMove.FacePlayer();
                     }
@@ -117,21 +64,12 @@ public class EnemyMovementSystem : SystemBase
                         enemyMove.Patrol();
                         enemyMove.FaceWaypoint();
                     }
-
                     enemyState = new EnemyStateComponent() { MoveState = MoveState };
-
-                    translation.Value.z = 0;
+                    //translation.Value.z = 0;
                 }
-
-
                 translation.Value.y = 0;//only if no jumping enemy temp
-
-
-
             }
         ).Run();
-
-
 
 
         Entities.WithoutBurst().WithAll<EnemyComponent>().ForEach(
