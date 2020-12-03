@@ -312,7 +312,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7695476}
-  m_LocalRotation: {x: 0.38268346, y: 1e-45, z: -1e-45, w: 0.92387956}
+  m_LocalRotation: {x: 0.38268346, y: 1e-45, z: -0, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -22756,7 +22756,7 @@ MonoBehaviour:
   m_ShapeType: 0
   m_PrimitiveCenter:
     x: 0
-    y: 0.3
+    y: 0
     z: 0
   m_PrimitiveSize:
     x: 0.6
@@ -50991,10 +50991,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 904422697, guid: 6aa97f6bf5ff6c148a6f4b65709038a1, type: 3}
-      propertyPath: navigationStates
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 3466703481568296775, guid: 6aa97f6bf5ff6c148a6f4b65709038a1,
         type: 3}
       propertyPath: m_RootOrder
@@ -51054,56 +51050,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: enemy BASIC
-      objectReference: {fileID: 0}
-    - target: {fileID: 3466703481568296797, guid: 6aa97f6bf5ff6c148a6f4b65709038a1,
-        type: 3}
-      propertyPath: m_Smoothing
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3466703481568296798, guid: 6aa97f6bf5ff6c148a6f4b65709038a1,
-        type: 3}
-      propertyPath: m_Capsule.Axis
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3466703481568296798, guid: 6aa97f6bf5ff6c148a6f4b65709038a1,
-        type: 3}
-      propertyPath: m_SphereRadius
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3466703481568296798, guid: 6aa97f6bf5ff6c148a6f4b65709038a1,
-        type: 3}
-      propertyPath: m_Cylinder.Axis
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3466703481568296798, guid: 6aa97f6bf5ff6c148a6f4b65709038a1,
-        type: 3}
-      propertyPath: m_Capsule.Height
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3466703481568296798, guid: 6aa97f6bf5ff6c148a6f4b65709038a1,
-        type: 3}
-      propertyPath: m_Capsule.Radius
-      value: 0.5000001
-      objectReference: {fileID: 0}
-    - target: {fileID: 3466703481568296798, guid: 6aa97f6bf5ff6c148a6f4b65709038a1,
-        type: 3}
-      propertyPath: m_Cylinder.Height
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3466703481568296798, guid: 6aa97f6bf5ff6c148a6f4b65709038a1,
-        type: 3}
-      propertyPath: m_Cylinder.Radius
-      value: 0.5000001
-      objectReference: {fileID: 0}
-    - target: {fileID: 3466703481568296798, guid: 6aa97f6bf5ff6c148a6f4b65709038a1,
-        type: 3}
-      propertyPath: m_PrimitiveSize.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3466703481568296798, guid: 6aa97f6bf5ff6c148a6f4b65709038a1,
-        type: 3}
-      propertyPath: m_PrimitiveCenter.y
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6aa97f6bf5ff6c148a6f4b65709038a1, type: 3}
@@ -57734,7 +57680,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2002095377}
-  m_LocalRotation: {x: 0.22975291, y: 0.0000000187227, z: -0.0000000044198294, w: 0.973249}
+  m_LocalRotation: {x: 0.22975291, y: -0.0000000187227, z: 0.0000000044198294, w: 0.973249}
   m_LocalPosition: {x: 0, y: 5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -87822,12 +87768,12 @@ MonoBehaviour:
   m_ShapeType: 0
   m_PrimitiveCenter:
     x: 0
-    y: 0.4
+    y: 1
     z: 0
   m_PrimitiveSize:
-    x: 0.65
-    y: 0.8
-    z: 0.65
+    x: 1
+    y: 2
+    z: 1
   m_PrimitiveOrientation:
     Value:
       x: -0
@@ -87835,15 +87781,15 @@ MonoBehaviour:
       z: 0
     RotationOrder: 4
   m_Capsule:
-    Height: 0.8
-    Radius: 0.325
+    Height: 2
+    Radius: 0.5
     Axis: 1
   m_Cylinder:
-    Height: 0.8
-    Radius: 0.325
+    Height: 2
+    Radius: 0.5
     Axis: 1
   m_CylinderSideCount: 20
-  m_SphereRadius: 0.4
+  m_SphereRadius: 1
   m_MinimumSkinnedVertexWeight: 0.1
   m_ConvexHullGenerationParameters:
     m_SimplificationTolerance: 0.0150000015

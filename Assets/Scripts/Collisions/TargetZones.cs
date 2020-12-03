@@ -17,6 +17,12 @@ public class TargetZones : MonoBehaviour, IConvertGameObjectToEntity
         {
             deparentTriggers.parent = null;
         }
+
+        Animator animator = GetComponent<Animator>();
+
+        headZone = animator.GetBoneTransform(HumanBodyBones.Head);
+
+
     }
 
 

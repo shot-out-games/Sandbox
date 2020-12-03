@@ -30,7 +30,7 @@ public class PlayerInputAmmoSystem : SystemBase
             (
                 Animator animator,
                 ref GunComponent gunComponent,
-                ref PlayerWeaponAimComponent playerWeaponAimComponent,
+                ref ActorWeaponAimComponent playerWeaponAimComponent,
                 in Entity entity,
                 in InputControllerComponent inputController,
                     in AttachWeaponComponent attachWeapon

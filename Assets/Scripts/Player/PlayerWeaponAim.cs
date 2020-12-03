@@ -27,7 +27,7 @@ public enum CameraType
     ThirdPerson
 }
 
-public struct PlayerWeaponAimComponent : IComponentData
+public struct ActorWeaponAimComponent : IComponentData
 {
     public WeaponMotion weaponRaised;
     public float weaponUpTimer;
@@ -35,6 +35,7 @@ public struct PlayerWeaponAimComponent : IComponentData
     public bool dualMode;
     public bool cursorTargeting;
     public CameraType weaponCamera;
+
 
 }
 
@@ -399,7 +400,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         manager = dstManager;
 
         dstManager.AddComponentData(entity,
-            new PlayerWeaponAimComponent { weaponCamera = weaponCamera });
+            new ActorWeaponAimComponent { weaponCamera = weaponCamera });
     }
 }
 

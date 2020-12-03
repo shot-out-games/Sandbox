@@ -39,25 +39,15 @@ public class EnemyBehaviorSystem : SystemBase
             //if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
             if (dead.isDead) return;
 
-            if (enemyMeleeMovementComponent.switchUp == false || enemyWeaponMovementComponent.switchUp == false) return;
+            if (enemyWeaponMovementComponent.switchUp == false) return;
 
             enemyMeleeMovementComponent.switchUpTimer += Time.DeltaTime;
-            enemyWeaponMovementComponent.switchUpTimer += Time.DeltaTime;
-
-
 
             if (enemyMeleeMovementComponent.enabled && enemyMeleeMovementComponent.switchUpTimer <= enemyMeleeMovementComponent.currentSwitchUpTime) return;
-            if (enemyWeaponMovementComponent.enabled && enemyWeaponMovementComponent.switchUpTimer <= enemyWeaponMovementComponent.currentSwitchUpTime) return;
 
-
-            //Debug.Log("timer1  " + enemyWeaponMovementComponent.switchUpTimer);
             enemyMeleeMovementComponent.currentSwitchUpTime = random.NextFloat(enemyMeleeMovementComponent.originalSwitchUpTime * .5f, enemyMeleeMovementComponent.originalSwitchUpTime * 1.5f);
-            enemyWeaponMovementComponent.currentSwitchUpTime = random.NextFloat(enemyWeaponMovementComponent.originalSwitchUpTime * .5f, enemyWeaponMovementComponent.originalSwitchUpTime * 1.5f);
-            
 
             enemyMeleeMovementComponent.switchUpTimer = 0;
-            enemyWeaponMovementComponent.switchUpTimer = 0;
-
             //ignore or turn off basic movement for this
             enemyBasicMovementComponent.enabled = false;
             enemyMeleeMovementComponent.enabled = !enemyMeleeMovementComponent.enabled;

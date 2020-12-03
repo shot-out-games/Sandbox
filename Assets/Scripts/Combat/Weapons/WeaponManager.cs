@@ -28,6 +28,9 @@ public class WeaponManager : MonoBehaviour, IConvertGameObjectToEntity
     public bool primaryAttached = false;
     private bool attachedWeapon;
 
+    //public CameraType weaponCamera;
+
+
     void Start()
     {
         if (primaryWeapon != null)
@@ -60,6 +63,7 @@ public class WeaponManager : MonoBehaviour, IConvertGameObjectToEntity
 
     public void AttachPrimaryWeapon()
     {
+        if(primaryWeapon.weaponGameObject == null) return;
         primaryAttached = true;
         var weaponInstance = Instantiate(primaryWeapon.weaponGameObject);
         weaponInstance.transform.SetParent(primaryWeapon.weaponLocation);
@@ -101,6 +105,7 @@ public class WeaponManager : MonoBehaviour, IConvertGameObjectToEntity
                 attachWeaponType = (int)primaryWeapon.weaponType,
                 attachSecondaryWeaponType = (int)secondaryWeapon.weaponType,
                 weaponsAvailableCount = weaponsList.Count
+                //weaponCamera = weaponCamera
             });
         e = entity;
         manager = dstManager;

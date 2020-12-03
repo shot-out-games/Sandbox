@@ -37,7 +37,7 @@ public class GunAmmoHandlerSystem : SystemBase
                 in RatingsComponent ratingsComponent,
                 in Entity entity, in DeadComponent dead,
                 in AttachWeaponComponent attachWeapon,
-                 in PlayerWeaponAimComponent playerWeaponAimComponent
+                 in ActorWeaponAimComponent actorWeaponAimComponent
                  ) =>
             {
 
@@ -53,18 +53,18 @@ public class GunAmmoHandlerSystem : SystemBase
 
 
                 if (dead.isDead) return;
-                bool isEnemy = HasComponent<EnemyComponent>(entity);
+                bool isEnemy = EntityManager.HasComponent<EnemyComponent>(entity);
 
                 if (isEnemy)
                 {
-                    if (HasComponent<EnemyWeaponMovementComponent>(entity) == false)
+                    if (EntityManager.HasComponent<EnemyWeaponMovementComponent>(entity) == false)
                     {
                         return;
                     }
                 }
 
                 Entity primaryAmmoEntity = gun.PrimaryAmmo;
-                var ammoDataComponent = GetComponent<AmmoDataComponent>(primaryAmmoEntity);
+                var ammoDataComponent = EntityManager.GetComponentData<AmmoDataComponent>(primaryAmmoEntity);
                 float rate = ammoDataComponent.Rate;
                 float strength = ammoDataComponent.Strength;
                 float damage = ammoDataComponent.Damage;
@@ -74,7 +74,8 @@ public class GunAmmoHandlerSystem : SystemBase
                 if ((gun.Duration > rate) && (gun.IsFiring == 1))
                 {
 
-                    if (gun.PrimaryAmmo != null && playerWeaponAimComponent.weaponRaised == WeaponMotion.Raised)
+                    if (gun.PrimaryAmmo != null &&
+                        (actorWeaponAimComponent.weaponRaised == WeaponMotion.Raised || isEnemy))
                     {
                         gun.IsFiring = 0;
                         statsComponent.shotsFired += 1;
@@ -84,7 +85,7 @@ public class GunAmmoHandlerSystem : SystemBase
                         var playerVelocity = EntityManager.GetComponentData<PhysicsVelocity>(entity);
                         var velocity = EntityManager.GetComponentData<PhysicsVelocity>(e);
                         float3 forward = bulletManager.AmmoStartLocation.transform.forward;
-                        if (playerWeaponAimComponent.weaponCamera == CameraType.TopDown)
+                        if (actorWeaponAimComponent.weaponCamera == CameraType.TopDown)
                         {
                             velocity.Linear = forward * strength + playerVelocity.Linear;
                         }
