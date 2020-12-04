@@ -39,7 +39,7 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     private Entity meleeEntity;
     public bool active = true;
     public float hitPower = 10f;
-    public bool anyTouchDamage;
+    public bool allEnemyCollisionsCauseDamage;
 
     void Start()
     {
@@ -239,7 +239,7 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
             Available = active,
             hitPower = hitPower,
             gameHitPower = hitPower,
-            anyTouchDamage = anyTouchDamage
+            anyTouchDamage = allEnemyCollisionsCauseDamage
 
         });
         entityManager.AddComponentData(entity, new EnemyAttackComponent());

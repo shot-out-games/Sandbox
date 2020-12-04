@@ -8,15 +8,30 @@ using UnityEngine;
 using Unity.Jobs;
 using Unity.Physics.Extensions;
 
-//public class AmmoRatings
-//{
-//    bool randomize;
-//    public float AmmoTime;
-//    public float Strength;
-//    public float Damage;
-//    public float Rate;
 
-//}
+public struct GunComponent : IComponentData
+{
+    public Entity PrimaryAmmo;
+    public Entity SecondaryAmmo;
+    public Entity Weapon;
+    //public float AmmoTime;
+    public float gameStrength;
+    public float gameDamage;
+    public float gameRate;
+
+
+    public float Strength;
+    public float Damage;
+    public float Rate;
+    public float Duration;//rate counter for job
+    public int WasFiring;
+    public int IsFiring;
+    public Translation AmmoStartPosition;
+    public Rotation AmmoStartRotation;
+    public bool Disable;
+    //public Translation firingPosition;
+}
+
 
 public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObjectToEntity
 {
@@ -36,7 +51,7 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
 
     [Header("Ammo Ratings")]
     [SerializeField]
-    bool randomize;
+    //bool randomize;
     float AmmoTime;
     float Strength;
     float Damage;
@@ -69,7 +84,7 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
             Strength = PrimaryAmmoPrefab.GetComponent<AmmoData>().Strength;
             Damage = PrimaryAmmoPrefab.GetComponent<AmmoData>().Damage;
             Rate = PrimaryAmmoPrefab.GetComponent<AmmoData>().Rate;
-            //Debug.Log("Str " + Strength);
+            Debug.Log("dam " + Damage);
         }
 
 
@@ -79,10 +94,7 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        if (randomize == true)
-        {
-            Generate(randomize);
-        }
+            Generate(false);
 
         dstManager.AddComponentData<GunComponent>(
             entity,

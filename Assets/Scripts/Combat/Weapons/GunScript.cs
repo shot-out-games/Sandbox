@@ -8,61 +8,25 @@ using UnityEngine;
 using Unity.Jobs;
 using Unity.Physics.Extensions;
 
-public struct GunComponent : IComponentData
-{
-    public Entity PrimaryAmmo;
-    public Entity SecondaryAmmo;
-    public Entity Weapon;
-    //public float AmmoTime;
-    public float gameStrength;
-    public float gameDamage;
-    public float gameRate;
-
-
-    public float Strength;
-    public float Damage;
-    public float Rate;
-    public float Duration;//rate counter for job
-    public int WasFiring;
-    public int IsFiring;
-    public Translation AmmoStartPosition;
-    public Rotation AmmoStartRotation;
-    public bool Disable;
-    //public Translation firingPosition;
-}
-
 
 
 public class GunScript : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObjectToEntity
 {
     private EntityManager manager;
     private Entity entity;
-    //[SerializeField]
-    //private AudioSource audioSource;
     [HideInInspector]
     public List<GameObject> BulletInstances = new List<GameObject>();
-    //public Transform AmmoStartLocation;
     public GameObject BulletPrefab;
     public GameObject WeaponPrefab;
     public AudioClip weaponAudioClip;
 
-    //[Header("Weapon Ratings")]
-    //[SerializeField] bool randomize;
-    //public float AmmoTime;
-    //public float Strength;
-    //public float Damage;
-    //public float Rate;
-
-    //[Header("Misc")]
-    //public bool Disable;
-    
 
 
 
     private void Start()
 
     {
-    
+
     }
 
     // Referenced prefabs have to be declared so that the conversion system knows about them ahead of time
@@ -72,82 +36,16 @@ public class GunScript : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameO
         gameObjects.Add(WeaponPrefab);
     }
 
-    //void Generate()
-    //{
-    //    float multiplier = .7f;
-    //    Strength = UnityEngine.Random.Range(Strength * multiplier, Strength * (2 - multiplier));
-    //    Damage = UnityEngine.Random.Range(Damage * multiplier, Damage * (2 - multiplier));
-    //    Rate = UnityEngine.Random.Range(Rate * multiplier, Rate * (2 - multiplier));
-    //}
 
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        //if (randomize == true)
-        //{
-        //    Generate();
-        //}
-
-        //dstManager.AddComponentData<GunComponent>(
-        //    entity,
-        //    new GunComponent()
-        //    {
-        //        AmmoStartPosition = new Translation(){Value = AmmoStartLocation.position},
-        //        AmmoStartRotation = new Rotation(){Value = transform.rotation},
-        //        Bullet = conversionSystem.GetPrimaryEntity(BulletPrefab),
-        //        Weapon = conversionSystem.GetPrimaryEntity(WeaponPrefab),
-        //        Strength = Strength,
-        //        gameStrength = Strength,
-        //        Damage = Damage,
-        //        Rate = Rate,
-        //        gameDamage = Damage,
-        //        gameRate = Rate,
-        //        WasFiring = 0,
-        //        IsFiring = 0
-
-        //    });
         manager = dstManager;
         this.entity = entity;
-
     }
 
-    public void UpdateSystem()
-    {
-        if (manager == default || entity == Entity.Null) return;
 
-
-
-        if (BulletInstances.Count > 24 && BulletInstances[0].GetComponent<AmmoEntityTracker>())
-        {
-            Entity e = BulletInstances[0].GetComponent<AmmoEntityTracker>().ammoEntity;
-            if (e != Entity.Null)
-            {
-                DestroyImmediate(BulletInstances[0]);
-                manager.DestroyEntity(e);
-                BulletInstances.RemoveAt(0);
-            }
-        }
-
-    }
-
-    //public void CreateBulletInstance(Entity e)
-    //{
-    //    UpdateSystem();
-    //    GameObject go = Instantiate(BulletPrefab, AmmoStartLocation.position, AmmoStartLocation.rotation);
-    //    //GameObject go = Instantiate(BulletPrefab, AmmoStartLocation.position, Quaternion.identity);
-    //    BulletInstances.Add(go);
-    //    go.GetComponent<AmmoEntityTracker>().ammoEntity = e;
-    //    go.GetComponent<AmmoEntityTracker>().ownerAmmoEntity = entity;
-    //    go.GetComponent<AmmoEntityTracker>().ammoTime = AmmoTime;
-    //    if (audioSource != null)
-    //    {
-    //        audioSource.PlayOneShot(
-    //            weaponAudioClip); //to do - change to ecs - EffectsManager - Effects Componnent - add start clip field = 1 then switch to 0
-    //    }
-    //}
 }
-
-
 
 
 //public class AmmoRewindSystem : JobComponentSystem

@@ -51,6 +51,7 @@ public class GunAmmoHandlerSystem : SystemBase
                     return;
                 }
 
+                if(LevelManager.instance.endGame == true) return;
 
                 if (dead.isDead) return;
                 bool isEnemy = EntityManager.HasComponent<EnemyComponent>(entity);
@@ -65,9 +66,9 @@ public class GunAmmoHandlerSystem : SystemBase
 
                 Entity primaryAmmoEntity = gun.PrimaryAmmo;
                 var ammoDataComponent = EntityManager.GetComponentData<AmmoDataComponent>(primaryAmmoEntity);
-                float rate = ammoDataComponent.Rate;
-                float strength = ammoDataComponent.Strength;
-                float damage = ammoDataComponent.Damage;
+                float rate = ammoDataComponent.GameRate;
+                float strength = ammoDataComponent.GameStrength;
+                float damage = ammoDataComponent.GameDamage;
 
 
                 gun.Duration += dt;
@@ -79,6 +80,7 @@ public class GunAmmoHandlerSystem : SystemBase
                     {
                         gun.IsFiring = 0;
                         statsComponent.shotsFired += 1;
+                        //gun.gameDamage = strength;//current gun strength used by attacker handler collision system
                         Entity e = EntityManager.Instantiate(gun.PrimaryAmmo);
                         Translation translation = new Translation() { Value = bulletManager.AmmoStartLocation.position };//use bone mb transform
                         Rotation rotation = new Rotation() { Value = gun.AmmoStartRotation.Value };
@@ -107,8 +109,12 @@ public class GunAmmoHandlerSystem : SystemBase
                         EntityManager.SetComponentData(e, rotation);
                         EntityManager.SetComponentData(e, velocity);
                         var ammoComponent = EntityManager.GetComponentData<AmmoComponent>(e);
-                        ammoComponent.OwnerAmmoEntity = entity;
+                        ammoComponent.OwnerAmmoEntity = entity;//may not need use trigger instead
+                        var triggerComponent = EntityManager.GetComponentData<TriggerComponent>(e);
+                        triggerComponent.ParentEntity = entity;
                         EntityManager.SetComponentData(e, ammoComponent);
+                        EntityManager.SetComponentData(e, triggerComponent);
+
                         if (bulletManager.weaponAudioClip && bulletManager.weaponAudioSource)
                         {
                             bulletManager.weaponAudioSource.PlayOneShot(bulletManager.weaponAudioClip);

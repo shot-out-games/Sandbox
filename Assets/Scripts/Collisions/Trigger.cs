@@ -25,6 +25,7 @@ public class Trigger : MonoBehaviour, IConvertGameObjectToEntity
         TriggerComponent trigger = new TriggerComponent
         {
             Type = (int)Type,
+            Entity = entity,
             ParentEntity = conversionSystem.GetPrimaryEntity(transform.gameObject),
             CurrentFrame = 0,
             index = index,

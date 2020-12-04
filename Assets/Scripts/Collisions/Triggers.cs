@@ -72,7 +72,6 @@ public class CollisionSystem : SystemBase
     {
         [ReadOnly] public PhysicsWorld physicsWorld;
         [ReadOnly] public ComponentDataFromEntity<TriggerComponent> triggerGroup;
-        [ReadOnly] public ComponentDataFromEntity<MeleeComponent> meleeGroup;
         [ReadOnly] public ComponentDataFromEntity<HealthComponent> healthGroup;
         public EntityCommandBuffer CommandBuffer;
         public void Execute(CollisionEvent ev) // this is never called
@@ -86,9 +85,6 @@ public class CollisionSystem : SystemBase
             var triggerComponent_a = triggerGroup[a];
             var triggerComponent_b = triggerGroup[b];
 
-            //var healthComponent_a = healthGroup[a];
-            //var healthComponent_b = healthGroup[a];
-
             Entity ch_a = triggerComponent_a.ParentEntity;
             Entity ch_b = triggerComponent_b.ParentEntity;
             int type_a = triggerComponent_a.Type;
@@ -101,25 +97,7 @@ public class CollisionSystem : SystemBase
 
 
 
-            bool anyPVEtouchA = false;
-            bool anyPVEtouchB = false;
-            if (meleeGroup.HasComponent(ch_a) == true)
-            {
-                var meleeComponent_a = meleeGroup[ch_a];
-                if (meleeComponent_a.anyTouchDamage == true)
-                {
-                    anyPVEtouchA = true;
-                }
-            }
-            if (meleeGroup.HasComponent(ch_b) == true)
-            {
-                var meleeComponent_b = meleeGroup[ch_b];
-                if (meleeComponent_b.anyTouchDamage == true)
-                {
-                    anyPVEtouchB = true;
-                }
-
-            }
+      
 
 
             bool alwaysDamageA = false;
@@ -137,11 +115,6 @@ public class CollisionSystem : SystemBase
             }
 
 
-
-
-
-
-
             if (triggerComponent_a.Type == (int)TriggerType.Ground ||
                 triggerComponent_b.Type == (int)TriggerType.Ground)
             {
@@ -151,42 +124,31 @@ public class CollisionSystem : SystemBase
             Debug.Log("ta " + triggerComponent_a.Type);
             Debug.Log("tb " + triggerComponent_b.Type);
 
-            if (triggerComponent_a.Type == (int)TriggerType.Contact ||
-                triggerComponent_b.Type == (int)TriggerType.Contact)
-            {
-                // Debug.Log("cont");
-            }
 
 
             bool punchingA = false;
             bool punchingB = false;
-            if (anyPVEtouchA == true &&
-                (type_a == (int)TriggerType.Body || type_a == (int)TriggerType.Base) || type_a == (int)TriggerType.Head)
+            if (type_a == (int)TriggerType.Body || type_a == (int)TriggerType.Base || type_a == (int)TriggerType.Head)
             {
                 punchingA = true;
-                //Debug.Log("cha " + ch_a);
             }
-            else if (anyPVEtouchB == true &&
-                (type_b == (int)TriggerType.Body || type_b == (int)TriggerType.Base) || type_b == (int)TriggerType.Head)
+            else if (type_b == (int)TriggerType.Body || type_b == (int)TriggerType.Base || type_b == (int)TriggerType.Head)
 
             {
                 punchingB = true;
-                //Debug.Log("chb" + ch_b);
             }
 
 
 
             if (type_a == type_b && punchingA == false && punchingB == false && alwaysDamageA == false && alwaysDamageB == false) return;
 
-            bool meleeA = false;
-            bool meleeB = false;
 
 
-            meleeA = (type_b == (int)TriggerType.Base || type_b == (int)TriggerType.Head) &&
-    (type_a == (int)TriggerType.Melee);
+            bool meleeA = (type_b == (int)TriggerType.Base || type_b == (int)TriggerType.Head) &&
+    (type_a == (int)TriggerType.Melee);//doubt this will be needed
 
-            meleeB = (type_a == (int)TriggerType.Base || type_a == (int)TriggerType.Head) &&
-    (type_b == (int)TriggerType.Melee);
+            bool meleeB = (type_a == (int)TriggerType.Base || type_a == (int)TriggerType.Head) &&
+    (type_b == (int)TriggerType.Melee);//doubt this will be needed
 
 
 
@@ -204,44 +166,17 @@ public class CollisionSystem : SystemBase
 
 
 
-
-
-
-
             bool ammoA = (type_b == (int)TriggerType.Base || type_b == (int)TriggerType.Head || type_b == (int)TriggerType.Body) &&
                          (type_a == (int)TriggerType.Ammo);
 
             bool ammoB = (type_a == (int)TriggerType.Base || type_a == (int)TriggerType.Head || type_a == (int)TriggerType.Body) &&
                          (type_b == (int)TriggerType.Ammo);
 
-            Debug.Log("aa " + ammoA + " ab " + ammoB);
-            //Debug.Log("aa " + alwaysDamageA + " ab " + alwaysDamageB);
+            //Debug.Log("aa " + ammoA + " ab " + ammoB);
 
-            if (punchingA || ammoB || meleeA || alwaysDamageB)
+            if (ammoA)
             {
-
-                //Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
-                Debug.Log("c b " + ch_b + " c a " + ch_a);
-
-                CollisionComponent collisionComponent =
-                    new CollisionComponent()
-                    {
-                        Part_entity = triggerComponent_a.Type,
-                        Part_other_entity = triggerComponent_b.Type,
-                        Character_entity = ch_a,
-                        Character_other_entity = ch_b,
-                        isMelee = meleeA
-                    };
-                CommandBuffer.AddComponent(ch_a, collisionComponent);
-            }
-            else if (punchingB || ammoA || meleeB || alwaysDamageA)
-            {
-
-                // Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
-                //Debug.Log("c b " + ch_b + " c a " + ch_a);
-
-
-
+                Debug.Log("aa " + ammoA + " pe " + triggerComponent_b.Type + "  ce " + ch_b);
 
                 CollisionComponent collisionComponent =
                     new CollisionComponent()
@@ -249,15 +184,56 @@ public class CollisionSystem : SystemBase
                         Part_entity = triggerComponent_b.Type,
                         Part_other_entity = triggerComponent_a.Type,
                         Character_entity = ch_b,
-                        Character_other_entity = ch_a,
+                        Character_other_entity = triggerComponent_a.Entity,
                         isMelee = meleeA
+                    };
+                CommandBuffer.AddComponent(ch_a, collisionComponent);
+            }
+            if (ammoB)
+            {
+                Debug.Log("ab " + ammoB + " pe " + triggerComponent_a.Type + "  ce " + ch_a);
+
+                CollisionComponent collisionComponent =
+                    new CollisionComponent()
+                    {
+                        Part_entity = triggerComponent_a.Type,
+                        Part_other_entity = triggerComponent_b.Type,
+                        Character_entity = ch_a,
+                        Character_other_entity = triggerComponent_b.Entity,
+                        isMelee = meleeB
 
                     };
                 CommandBuffer.AddComponent(ch_b, collisionComponent);
             }
+            //else if (punchingA || ammoB || meleeA || alwaysDamageB)
+            //{
+            //    //Debug.Log("c b " + ch_b + " c a " + ch_a);
+            //    CollisionComponent collisionComponent =
+            //        new CollisionComponent()
+            //        {
+            //            Part_entity = triggerComponent_a.Type,
+            //            Part_other_entity = triggerComponent_b.Type,
+            //            Character_entity = ch_a,
+            //            Character_other_entity = ch_b,
+            //            isMelee = meleeA
+            //        };
+            //    CommandBuffer.AddComponent(ch_a, collisionComponent);
+            //}
+            //else if (punchingB || ammoA || meleeB || alwaysDamageA)
+            //{
 
+            //    CollisionComponent collisionComponent =
+            //        new CollisionComponent()
+            //        {
+            //            Part_entity = triggerComponent_b.Type,
+            //            Part_other_entity = triggerComponent_a.Type,
+            //            Character_entity = ch_b,
+            //            Character_other_entity = ch_a,
+            //            isMelee = meleeB
 
-
+            //        };
+            //    CommandBuffer.AddComponent(ch_b, collisionComponent);
+            //}
 
         }
     }
@@ -281,7 +257,6 @@ public class CollisionSystem : SystemBase
             physicsWorld = physicsWorld,
             CommandBuffer = m_EntityCommandBufferSystem.CreateCommandBuffer(),
             triggerGroup = GetComponentDataFromEntity<TriggerComponent>(true),
-            meleeGroup = GetComponentDataFromEntity<MeleeComponent>(true),
             healthGroup = GetComponentDataFromEntity<HealthComponent>(true)
         };
         JobHandle collisionHandle = collisionJob.Schedule(stepPhysicsWorld.Simulation, ref physicsWorld, inputDeps);
