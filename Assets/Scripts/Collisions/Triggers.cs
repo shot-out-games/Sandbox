@@ -80,7 +80,7 @@ public class CollisionSystem : SystemBase
 
             Entity a = physicsWorld.Bodies[ev.BodyIndexA].Entity;
             Entity b = physicsWorld.Bodies[ev.BodyIndexB].Entity;
-            Debug.Log("ena " + a + " enb " + b);
+            //Debug.Log("ena " + a + " enb " + b);
 
             if (triggerGroup.HasComponent(a) == false || triggerGroup.HasComponent(b) == false) return;
             var triggerComponent_a = triggerGroup[a];
@@ -94,7 +94,7 @@ public class CollisionSystem : SystemBase
             int type_a = triggerComponent_a.Type;
             int type_b = triggerComponent_b.Type;
 
-            Debug.Log("tya " + type_a + " tyb  " + type_b);
+            //Debug.Log("tya " + type_a + " tyb  " + type_b);
 
 
             if (ch_a == ch_b) return;////?????
@@ -148,8 +148,8 @@ public class CollisionSystem : SystemBase
                 return;
             }
 
-            //Debug.Log("ta " + triggerComponent_a.Type);
-            //Debug.Log("tb " + triggerComponent_b.Type);
+            Debug.Log("ta " + triggerComponent_a.Type);
+            Debug.Log("tb " + triggerComponent_b.Type);
 
             if (triggerComponent_a.Type == (int)TriggerType.Contact ||
                 triggerComponent_b.Type == (int)TriggerType.Contact)
@@ -214,13 +214,14 @@ public class CollisionSystem : SystemBase
             bool ammoB = (type_a == (int)TriggerType.Base || type_a == (int)TriggerType.Head || type_a == (int)TriggerType.Body) &&
                          (type_b == (int)TriggerType.Ammo);
 
+            Debug.Log("aa " + ammoA + " ab " + ammoB);
             //Debug.Log("aa " + alwaysDamageA + " ab " + alwaysDamageB);
 
             if (punchingA || ammoB || meleeA || alwaysDamageB)
             {
 
                 //Debug.Log("t b " + triggerComponent_b.Type + " t a " + triggerComponent_a.Type);
-                //Debug.Log("c b " + ch_b + " c a " + ch_a);
+                Debug.Log("c b " + ch_b + " c a " + ch_a);
 
                 CollisionComponent collisionComponent =
                     new CollisionComponent()

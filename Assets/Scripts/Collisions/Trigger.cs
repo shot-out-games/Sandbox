@@ -33,11 +33,6 @@ public class Trigger : MonoBehaviour, IConvertGameObjectToEntity
         };
 
         dstManager.AddComponentData(entity, trigger);
-        if (Type == TriggerType.Ammo)
-        {
-            //Debug.Log("tr " + trigger.ParentEntity);
-        }
-
     }
 
 

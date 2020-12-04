@@ -139,13 +139,11 @@ public class AttackerSystem : SystemBase
                     {
                         hw = 1;
                         hitPower = 10;//add to arcadeGame Component later
-                                      //Debug.Log("hp 1d");
                     }
 
-                    //Debug.Log("hp " + hitPower + " hw " + hw + " wp " + WeaponPower + " game hp " + EntityManager.GetComponentData<MeleeComponent>(entityA).gameHitPower);
 
                     float damage = hitPower * hw;
-                    //Debug.Log("damage " + damage);
+                    Debug.Log("damage " + damage);
 
                     bool inFling = false;
                     if (EntityManager.HasComponent<FlingMechanicComponent>(entityB))

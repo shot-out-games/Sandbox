@@ -26,6 +26,7 @@ public class EnemyWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     void Start()
     {
         if (aim == null) return;
+        aimTransform = aim.solver.transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         animator.SetLayerWeight(0, 1);
@@ -45,6 +46,7 @@ public class EnemyWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     public void SetAim()
     {
         if (aim == null || aimTransform == null || target == null || !agent.enabled) return;
+        Debug.Log("enemy aim weight " + aimWeight);
         aim.solver.IKPositionWeight = weaponRaised ? aimWeight : 1;
         aim.solver.transform = aimTransform;
         aim.solver.IKPosition = target.position;
@@ -73,12 +75,14 @@ public class EnemyWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         }
     }
 
-    void LateUpdate()
+    public void LateUpdateSystem()
     {
 
         SetCCD();
         SetAim();
     }
+
+
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
