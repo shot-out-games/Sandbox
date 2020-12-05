@@ -19,7 +19,7 @@ using SphereCollider = Unity.Physics.SphereCollider;
 
 
 
-public class PickupRaycastSystem : SystemBase
+public class PickupWeaponRaycastSystem : SystemBase
 {
 
 
@@ -120,11 +120,6 @@ public class PickupRaycastSystem : SystemBase
                 }
 
 
-                start = translation.Value + new float3(0, .03f, 0);
-                direction = new float3(0, -1, 0);
-                distance = .35f;
-                end = start + direction * distance;
-
 
 
             }
@@ -174,13 +169,81 @@ public class PickupRaycastSystem : SystemBase
         {
             EntityManager.SetComponentData(pickedUpEntity, new Translation { Value = new float3(0, -2500, 0) });
         }
-        else
-        {
-
-        }
 
 
     }
+
+
+
+
+}
+
+
+public class PickupPowerUpRaycastSystem : SystemBase
+{
+
+
+
+
+    protected override void OnUpdate()
+    {
+        bool pickedUp = false;
+        Entity pickedUpActor = Entity.Null;
+
+
+        Entities.WithoutBurst().ForEach((
+                in Translation translation,
+                in Entity entity, in PowerItemComponent powerItemComponent
+                ) =>
+        {
+
+
+            var physicsWorldSystem = World.GetExistingSystem<BuildPhysicsWorld>();
+            var collisionWorld = physicsWorldSystem.PhysicsWorld.CollisionWorld;
+
+            float3 start = translation.Value + new float3(0f, .38f, 0);
+            float3 direction = new float3(0, 0, 0);
+            float distance = 2f;
+            float3 end = start + direction * distance;
+
+
+            PointDistanceInput pointDistanceInput = new PointDistanceInput
+            {
+                Position = start,
+                MaxDistance = distance,
+                //Filter = CollisionFilter.Default
+                Filter = new CollisionFilter()
+                {
+                    BelongsTo = 7u,
+                    CollidesWith = 1u,
+                    GroupIndex = 0
+                }
+            };
+
+
+
+            bool hasPointHit = collisionWorld.CalculateDistance(pointDistanceInput, out DistanceHit pointHit);
+
+
+            if (hasPointHit)
+            {
+                Debug.Log("hit " + pointHit.Entity);
+                if (HasComponent<TriggerComponent>(pointHit.Entity))
+                {
+                    var parent = GetComponent<TriggerComponent>(pointHit.Entity).ParentEntity;
+                    Entity e = physicsWorldSystem.PhysicsWorld.Bodies[pointHit.RigidBodyIndex].Entity;
+                    pickedUp = true;
+                    pickedUpActor = parent;
+                    Debug.Log(" pt e " + pickedUpActor);
+                }
+            }
+
+
+
+        }).Run();
+
+    }
+
 
 
 

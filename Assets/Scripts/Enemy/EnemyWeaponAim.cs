@@ -46,7 +46,6 @@ public class EnemyWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     public void SetAim()
     {
         if (aim == null || aimTransform == null || target == null || !agent.enabled) return;
-        Debug.Log("enemy aim weight " + aimWeight);
         aim.solver.IKPositionWeight = weaponRaised ? aimWeight : 1;
         aim.solver.transform = aimTransform;
         aim.solver.IKPosition = target.position;

@@ -170,7 +170,6 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
             }
             else
             {
-                Debug.Log("reset");
                 targetAimWeight = startAimWeight;
                 currentAimWeight = aimWeight;
                 aim.solver.IKPositionWeight = currentAimWeight;

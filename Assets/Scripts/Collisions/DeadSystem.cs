@@ -65,26 +65,19 @@ public class DeadSystem : SystemBase //really game over system currently
 
 
 
-
                 if (deadComponent.isDying
                     && deadComponent.tag == 2)//enemy
                 {
                     Debug.Log("set dead");
                     deadComponent.isDying = false;
                     deadComponent.playDeadEffects = true;
-                    //ecb.DestroyEntity(entity);//for now 
                     if (winnerComponent.checkWinCondition == true)//this  (and all with this true) enemy must be defeated to win the game
                     {
                         winnerComponent.endGameReached = true;
                     }
-                    //else
-                    //{
-                    //deadComponent.justDead = false;
                     enemyJustDead = true;
                     LevelManager.instance.levelSettings[currentLevel].enemiesDead += 1;
-                    pv.Linear = new float3(0, -1, 0);
-
-                    //}
+                    //pv.Linear = new float3(0, -1, 0);
                 }
             }
         ).Run();

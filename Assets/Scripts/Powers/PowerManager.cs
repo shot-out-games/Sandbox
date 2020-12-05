@@ -53,40 +53,7 @@ public class PowerManager : MonoBehaviour, IConvertGameObjectToEntity
     private EntityManager manager;
     private Entity e;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        PowerTrigger(other.gameObject);
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        PowerTrigger(collision.gameObject);
-    }
-
-
-    void PowerTriggerDots(int powerType)
-    {
-        var powerItem = manager.GetComponentData<PowerItemComponent>(e);
-        //int powerType = powerItem.powerType;
-
-
-        if (powerType == (int)PowerType.Control)
-        {
-            var control = manager.GetComponentData<ControlPower>(e);
-            control.enabled = true;
-            control.controlMultiplier = powerItem.healthMultiplier;
-            manager.SetComponentData<ControlPower>(e, control);
-        }
-        if (powerType == (int)PowerType.Health)
-        {
-            var power = manager.GetComponentData<HealthPower>(e);
-            power.enabled = true;
-            power.healthMultiplier = powerItem.healthMultiplier;
-            manager.SetComponentData<HealthPower>(e, power);
-        }
-
-
-    }
 
     private void PowerTrigger(GameObject go)
     {
@@ -149,30 +116,7 @@ public class PowerManager : MonoBehaviour, IConvertGameObjectToEntity
     {
         manager = dstManager;
         e = entity;
-        dstManager.AddComponentData(entity, new Speed
-        {
-            enabled = false,
-            timer = 0,
-            timeOn = 0,
-            startTimer = false,
-            originalSpeed = 0,
-            multiplier = 0,
-        }
-        );
 
-        dstManager.AddComponentData(entity, new HealthPower
-            {
-                enabled = false,
-                healthMultiplier = 0
-            }
-        );
-
-        dstManager.AddComponentData(entity, new ControlPower
-            {
-                enabled = false,
-                controlMultiplier = 0
-            }
-        );
 
 
     }

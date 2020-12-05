@@ -64,9 +64,51 @@ public class PowerItem : MonoBehaviour, IConvertGameObjectToEntity
             active = active,
             powerType = (int)powerType,
             speedTimeOn = speedTimeOn,
-            speedTimeMultiplier =  speedMultiplier,
+            speedTimeMultiplier = speedMultiplier,
             healthMultiplier = healthMultiplier
         });
+
+
+        if (powerType == PowerType.Speed)
+        {
+            dstManager.AddComponentData(entity, new Speed
+            {
+                enabled = false,
+                timer = 0,
+                timeOn = 0,
+                startTimer = false,
+                originalSpeed = 0,
+                multiplier = 0,
+            }
+           );
+
+        }
+
+        if (powerType == PowerType.Health)
+        {
+            dstManager.AddComponentData(entity, new HealthPower
+            {
+                enabled = false,
+                healthMultiplier = 0
+            }
+            );
+        }
+
+
+        if (powerType == PowerType.Control)
+        {
+
+            dstManager.AddComponentData(entity, new ControlPower
+            {
+                enabled = false,
+                controlMultiplier = 0
+            }
+        );
+
+        }
+
+
+
 
     }
 
