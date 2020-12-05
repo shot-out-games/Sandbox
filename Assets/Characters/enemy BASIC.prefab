@@ -30945,7 +30945,7 @@ MonoBehaviour:
   score3dText: {fileID: 821383783832579042, guid: 70aed6e00832f9442b6c3e53fc04944c,
     type: 3}
   showDamageMin: 0
-  showText3D: 2
+  showText3D: 1
   showTime: 3
 --- !u!114 &3466703481568296797
 MonoBehaviour:
@@ -31168,7 +31168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f6412195c876441801337b1d808706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 20
+  Type: 1
   index: 0
   triggerParticleSystem: {fileID: 0}
   triggerAudioSource: {fileID: 0}
@@ -31364,7 +31364,7 @@ MonoBehaviour:
   SecondaryAmmoPrefab: {fileID: 0}
   AmmoPrefabList: []
   weaponAudioClip: {fileID: 0}
-  randomize: 0
+  AmmoTime: 0
 --- !u!114 &672662333
 MonoBehaviour:
   m_ObjectHideFlags: 0

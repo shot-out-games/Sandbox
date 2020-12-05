@@ -376,8 +376,8 @@ public class AttackerSystem : SystemBase
                             .ParentEntity;
                 //}
 
-                //Debug.Log("ta " + type_a + " tb " + type_b);
-                //Debug.Log("ea " + collision_entity_a + " eb " + collision_entity_b);
+                Debug.Log("ta " + type_a + " tb " + type_b);
+                Debug.Log("ea " + collision_entity_a + " eb " + collision_entity_b);
                 Debug.Log("shooter " + shooter);
 
                 if (shooter != Entity.Null)

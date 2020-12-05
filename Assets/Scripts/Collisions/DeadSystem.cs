@@ -92,7 +92,7 @@ public class DeadSystem : SystemBase //really game over system currently
 
         if (enemyJustDead == true)
         {
-            Entities.WithoutBurst().ForEach
+            Entities.WithoutBurst().WithAny<EnemyComponent>().ForEach
             (
                 (Animator animator) =>
                 {

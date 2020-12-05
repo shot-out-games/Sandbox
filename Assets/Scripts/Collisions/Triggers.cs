@@ -121,8 +121,8 @@ public class CollisionSystem : SystemBase
                 return;
             }
 
-            Debug.Log("ta " + triggerComponent_a.Type);
-            Debug.Log("tb " + triggerComponent_b.Type);
+            //Debug.Log("ta " + triggerComponent_a.Type);
+            //Debug.Log("tb " + triggerComponent_b.Type);
 
 
 
@@ -130,16 +130,16 @@ public class CollisionSystem : SystemBase
             bool punchingB = false;
             if (type_a == (int)TriggerType.Body || type_a == (int)TriggerType.Base || type_a == (int)TriggerType.Head)
             {
-                punchingA = true;
+                punchingB = true;
             }
             else if (type_b == (int)TriggerType.Body || type_b == (int)TriggerType.Base || type_b == (int)TriggerType.Head)
 
             {
-                punchingB = true;
+                punchingA = true;
             }
 
 
-
+            //if punching A or B is true then we dont skip eventhough type a = type b 
             if (type_a == type_b && punchingA == false && punchingB == false && alwaysDamageA == false && alwaysDamageB == false) return;
 
 
@@ -183,11 +183,11 @@ public class CollisionSystem : SystemBase
                     {
                         Part_entity = triggerComponent_b.Type,
                         Part_other_entity = triggerComponent_a.Type,
-                        Character_entity = ch_b,
+                        Character_entity = triggerComponent_b.ParentEntity,
                         Character_other_entity = triggerComponent_a.Entity,
                         isMelee = meleeA
                     };
-                CommandBuffer.AddComponent(ch_a, collisionComponent);
+                CommandBuffer.AddComponent(triggerComponent_a.ParentEntity, collisionComponent);
             }
             if (ammoB)
             {
@@ -198,12 +198,12 @@ public class CollisionSystem : SystemBase
                     {
                         Part_entity = triggerComponent_a.Type,
                         Part_other_entity = triggerComponent_b.Type,
-                        Character_entity = ch_a,
+                        Character_entity = triggerComponent_a.ParentEntity,
                         Character_other_entity = triggerComponent_b.Entity,
                         isMelee = meleeB
 
                     };
-                CommandBuffer.AddComponent(ch_b, collisionComponent);
+                CommandBuffer.AddComponent(triggerComponent_b.ParentEntity, collisionComponent);
             }
             //else if (punchingA || ammoB || meleeA || alwaysDamageB)
             //{

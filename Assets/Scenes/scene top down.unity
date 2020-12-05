@@ -57879,7 +57879,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057045670}
-  m_LocalRotation: {x: 0.34887102, y: 1e-45, z: -0, w: 0.9371708}
+  m_LocalRotation: {x: 0.34887102, y: -3e-45, z: 1e-45, w: 0.9371708}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -87710,6 +87710,7 @@ GameObject:
   - component: {fileID: 8829560766490598202}
   - component: {fileID: 8829560766490598209}
   - component: {fileID: 8829560766490598221}
+  - component: {fileID: 8829560766490598210}
   m_Layer: 11
   m_Name: READY PLAYER ONE
   m_TagString: Player
@@ -87975,6 +87976,20 @@ MonoBehaviour:
   startSpeed: 4
   currentSpeed: 4
   targetFrameRate: -1
+--- !u!114 &8829560766490598210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8829560766490598201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e7c1069f3554a24eb3e665c614b0244, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  track: {fileID: 8829560766490598201}
+  Type: 1
 --- !u!114 &8829560766490598211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88339,9 +88354,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthBar: {fileID: 861901505}
-  alwaysDamage: 1
-  score3dText: {fileID: 0}
-  showDamageMin: 50
+  alwaysDamage: 0
+  score3dText: {fileID: 821383783832579042, guid: 99d3c87643eef064995e94c45a7a7ee1,
+    type: 3}
+  showDamageMin: 0
   showText3D: 1
   showTime: 3
 --- !u!114 &8829560766490598613
