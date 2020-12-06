@@ -7,11 +7,13 @@ using Unity.Entities;
 [System.Serializable]
 public struct PowerItemComponent : IComponentData
 {
+    public Entity pickedUpActor;
     public bool active;
     public int powerType;
     public float speedTimeOn;
     public float speedTimeMultiplier;
     public float healthMultiplier;
+    public Entity particleSystemEntity;
 
 }
 
@@ -19,7 +21,7 @@ public struct PowerItemComponent : IComponentData
 
 
 
-public class PowerItem : MonoBehaviour, IConvertGameObjectToEntity
+public class PowerItem : MonoBehaviour, IConvertGameObjectToEntity, IDeclareReferencedPrefabs
 {
     public PowerType powerType;
 
@@ -36,18 +38,40 @@ public class PowerItem : MonoBehaviour, IConvertGameObjectToEntity
     [Header("Health")]
     [SerializeField] private float healthMultiplier = .75f;
 
+    public GameObject powerEnabledEffectPrefab;
+    public GameObject powerEnabledEffectInstance;
+    public AudioClip powerEnabledAudioClip;
+
+
+
+    void Start()
+    {
+        //if (powerEnabledEffectPrefab)
+        //{
+        //    var ps = Instantiate(powerEnabledEffectPrefab);
+        //    ps.transform.parent = transform;
+        //    ps.transform.localPosition = new Vector3(0, ps.transform.localPosition.y, 0);
+        //    powerEnabledEffectInstance = ps;
+        //    Debug.Log("ps");
+        //}
+    }
+
+    public void DeclareReferencedPrefabs(List<GameObject> referencedPrefabs)
+    {
+        referencedPrefabs.Add(powerEnabledEffectPrefab);
+    }
 
 
     void Update()
     {
-        if (manager == default || e == Entity.Null) return;
-        if (manager.HasComponent<PowerItemComponent>(e) == false) return;
+        //if (manager == default || e == Entity.Null) return;
+        //if (manager.HasComponent<PowerItemComponent>(e) == false) return;
 
-        PowerItemComponent powerItem = manager.GetComponentData<PowerItemComponent>(e);
-        if (powerItem.active == false)
-        {
-            gameObject.SetActive(false);
-        };
+        //PowerItemComponent powerItem = manager.GetComponentData<PowerItemComponent>(e);
+        //if (powerItem.active == false)
+        //{
+        //    gameObject.SetActive(false);
+        //};
 
     }
 
@@ -57,10 +81,16 @@ public class PowerItem : MonoBehaviour, IConvertGameObjectToEntity
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
+
+        //conversionSystem.AddHybridComponent(powerEnabledEffectInstance);
+
+        conversionSystem.DeclareLinkedEntityGroup(this.gameObject);
+
         e = entity;
         manager = dstManager;
         manager.AddComponentData<PowerItemComponent>(entity, new PowerItemComponent
         {
+            particleSystemEntity = conversionSystem.GetPrimaryEntity(powerEnabledEffectPrefab),
             active = active,
             powerType = (int)powerType,
             speedTimeOn = speedTimeOn,

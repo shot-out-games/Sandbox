@@ -182,19 +182,28 @@ public class PickupWeaponRaycastSystem : SystemBase
 public class PickupPowerUpRaycastSystem : SystemBase
 {
 
+    EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
 
 
+    protected override void OnCreate()
+    {
+        base.OnCreate();
+        // Find the ECB system once and store it for later usage
+        m_EndSimulationEcbSystem = World
+            .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+    }
 
     protected override void OnUpdate()
     {
         bool pickedUp = false;
         Entity pickedUpActor = Entity.Null;
-
+        var ecb = m_EndSimulationEcbSystem.CreateCommandBuffer();
 
         Entities.WithoutBurst().ForEach((
-                in Translation translation,
-                in Entity entity, in PowerItemComponent powerItemComponent
-                ) =>
+            in Translation translation,
+            in Entity entity,
+            in PowerItemComponent powerItemComponent
+        ) =>
         {
 
 
@@ -232,15 +241,62 @@ public class PickupPowerUpRaycastSystem : SystemBase
                 {
                     var parent = GetComponent<TriggerComponent>(pointHit.Entity).ParentEntity;
                     Entity e = physicsWorldSystem.PhysicsWorld.Bodies[pointHit.RigidBodyIndex].Entity;
-                    pickedUp = true;
+                    //pickedUp = true;
                     pickedUpActor = parent;
                     Debug.Log(" pt e " + pickedUpActor);
+                    if (HasComponent<PowerItemComponent>(parent) == false)
+                    {
+                        var powerItem = GetComponent<PowerItemComponent>(entity);
+
+
+                        //powerItem.pickedUpActor = pickedUpActor;
+                        //SetComponent(pointHit.Entity, powerItemComponent);
+                        if (powerItem.powerType == (int)PowerType.Health &&
+                            HasComponent<HealthPower>(pickedUpActor) == false)
+                        {
+                            HealthPower healthPower = new HealthPower
+                            {
+                                itemEntity = entity,
+                                enabled = true,
+                                healthMultiplier = powerItem.healthMultiplier
+                            };
+                            ecb.AddComponent(pickedUpActor, healthPower);
+                            Entity instanceEntity = ecb.Instantiate(powerItemComponent.particleSystemEntity);
+                            ecb.AddComponent(instanceEntity, new ParticleSystemComponent { followActor = false, pickedUpActor = pickedUpActor });
+
+                        }
+
+                        //        var speed = manager.GetComponentData<Speed>(e);
+                        //        speed.enabled = true;
+                        //        speed.timeOn = powerItem.speedTimeOn;
+                        //        speed.multiplier = powerItem.speedTimeMultiplier;
+                        //        manager.SetComponentData<Speed>(e, speed);
+
+                        if (powerItem.powerType == (int)PowerType.Speed &&
+                            HasComponent<HealthPower>(pickedUpActor) == false)
+                        {
+                            Speed speedPower = new Speed{
+                                itemEntity = entity,
+                                enabled = true,
+                                timeOn =  powerItem.speedTimeOn,
+                                multiplier = powerItem.speedTimeMultiplier
+                            };
+                            ecb.AddComponent(pickedUpActor, speedPower);
+                            Entity instanceEntity = ecb.Instantiate(powerItemComponent.particleSystemEntity);
+                            ecb.AddComponent(instanceEntity, new ParticleSystemComponent { followActor = true, pickedUpActor = pickedUpActor });
+
+                        }
+                    }
                 }
             }
 
 
 
         }).Run();
+
+        // Make sure that the ECB system knows about our job
+        m_EndSimulationEcbSystem.AddJobHandleForProducer(this.Dependency);
+
 
     }
 
