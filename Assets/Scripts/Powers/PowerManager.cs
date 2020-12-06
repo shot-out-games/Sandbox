@@ -18,17 +18,6 @@ public enum PowerType
     Control = 3,
 }
 
-public struct Speed : IComponentData
-{
-    public Entity itemEntity;
-    public bool triggered;
-    public bool enabled;
-    public bool startTimer;
-    public float timer;
-    public float timeOn;
-    public float originalSpeed;
-    public float multiplier;
-}
 
 public struct TestComponent : IComponentData
 {
@@ -42,8 +31,26 @@ public struct ParticleSystemComponent : IComponentData
     public Entity pickedUpActor;
 }
 
+
+public struct Speed : IComponentData
+{
+
+    public Entity psAttached;
+    public Entity pickedUpActor;
+    public Entity itemEntity;
+    public bool triggered;
+    public bool enabled;
+    public bool startTimer;
+    public float timer;
+    public float timeOn;
+    public float originalSpeed;
+    public float multiplier;
+}
+
 public struct HealthPower : IComponentData
 {
+    public Entity psAttached;
+    public Entity pickedUpActor;
     public Entity itemEntity;
     public bool enabled;
     public float healthMultiplier;
@@ -51,6 +58,8 @@ public struct HealthPower : IComponentData
 
 public struct ControlPower : IComponentData
 {
+    public Entity psAttached;
+    public Entity pickedUpActor;
     public Entity itemEntity;
     public bool enabled;
     public float controlMultiplier;
@@ -58,74 +67,13 @@ public struct ControlPower : IComponentData
 
 public class PowerManager : MonoBehaviour, IConvertGameObjectToEntity
 {
-    //[Header("Speed")]
-    //[SerializeField] private float speedTimeOn = 3.0f;
-    //[SerializeField] private float speedMultiplier = 3.0f;
-
-    //[Header("Health")]
-    //[SerializeField] private float healthMultiplier = 1.5f;
+    
 
 
 
     private EntityManager manager;
     private Entity e;
 
-
-
-    //private void PowerTrigger(GameObject go)
-    //{
-    //    Debug.Log("Power");
-    //    Entity other_e = Entity.Null;
-    //    if (go.GetComponent<PowerItem>())///if has this mono then has component poweritemcomponent - check??
-    //    {
-    //        other_e = go.GetComponent<PowerItem>().e;
-    //    }
-    //    else
-    //    {
-    //        return;
-    //    }
-
-    //    if (manager.HasComponent<PowerItemComponent>(other_e) == false) return;
-
-    //    bool active = manager.GetComponentData<PowerItemComponent>(other_e).active;
-    //    if (active == false)
-    //    {
-    //        return;
-    //    }
-
-    //    var powerItem = manager.GetComponentData<PowerItemComponent>(other_e);
-    //    int powerType = powerItem.powerType;
-
-    //    if (powerType == (int)PowerType.Speed)
-    //    {
-    //        var speed = manager.GetComponentData<Speed>(e);
-    //        speed.enabled = true;
-    //        speed.timeOn = powerItem.speedTimeOn;
-    //        speed.multiplier = powerItem.speedTimeMultiplier;
-    //        manager.SetComponentData<Speed>(e, speed);
-    //    }
-
-    //    if (powerType == (int)PowerType.Health)
-    //    {
-    //        var health = manager.GetComponentData<HealthPower>(e);
-    //        health.enabled = true;
-    //        health.healthMultiplier = powerItem.healthMultiplier;
-    //        manager.SetComponentData<HealthPower>(e, health);
-    //    }
-
-
-
-    //    //set other item to inactive
-    //    var item = manager.GetComponentData<PowerItemComponent>(other_e);
-    //    item.active = false;
-    //    manager.SetComponentData<PowerItemComponent>(other_e, item);
-
-    //    go.SetActive(false);
-    //    //destroy optional  as makes item.active irrelevant but now no need to cleanup the item elsewhere but option still
-    //    //Destroy(go);
-    //    //manager.DestroyEntity(other_e);
-
-    //}
 
 
 
@@ -176,8 +124,6 @@ public class PowersSystem : SystemBase
 
         Entities.WithoutBurst().ForEach((ParticleSystemComponent ps, Entity e) =>
             {
-                //ecb.Instantiate(powerItem.particleSystemEntity);
-
 
                 float3 value = GetComponent<Translation>(ps.pickedUpActor).Value;
 
@@ -191,9 +137,6 @@ public class PowersSystem : SystemBase
 
                 SetComponent(e, new Translation { Value = value });
 
-
-                //Debug.Log("tr  " + value);
-                //ecb.AddComponent<TestComponent>(e);
 
             }
         ).Run();
@@ -231,6 +174,9 @@ public class PowersSystem : SystemBase
                     speed.timer = 0;
                     speed.enabled = false;
                     ratings.gameSpeed = ratings.speed;
+                    Debug.Log("ps att " + speed.psAttached);
+                    ecb.DestroyEntity(speed.psAttached);
+                    //ecb.DestroyEntity(speed.);
                     //speed.originalSpeed = 0;
                     //ecb.RemoveComponent<Speed>(e);
 
@@ -257,6 +203,8 @@ public class PowersSystem : SystemBase
                     }
                     ecb.RemoveComponent<HealthPower>(e);
                     ecb.DestroyEntity(healthPower.itemEntity);
+                    ecb.DestroyEntity(healthPower.psAttached);
+
 
                 }
 

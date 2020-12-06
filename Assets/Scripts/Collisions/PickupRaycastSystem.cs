@@ -254,36 +254,53 @@ public class PickupPowerUpRaycastSystem : SystemBase
                         if (powerItem.powerType == (int)PowerType.Health &&
                             HasComponent<HealthPower>(pickedUpActor) == false)
                         {
+                            Entity instanceEntity = ecb.Instantiate(powerItemComponent.particleSystemEntity);
+                            var ps = new ParticleSystemComponent
+                            {
+                                followActor = true,
+                                pickedUpActor = pickedUpActor
+                            };
+
+                            ecb.AddComponent(instanceEntity, ps);
+
+
                             HealthPower healthPower = new HealthPower
                             {
+                                psAttached = instanceEntity,//attached to player picking up
+                                pickedUpActor = pickedUpActor,
                                 itemEntity = entity,
                                 enabled = true,
                                 healthMultiplier = powerItem.healthMultiplier
                             };
                             ecb.AddComponent(pickedUpActor, healthPower);
-                            Entity instanceEntity = ecb.Instantiate(powerItemComponent.particleSystemEntity);
-                            ecb.AddComponent(instanceEntity, new ParticleSystemComponent { followActor = false, pickedUpActor = pickedUpActor });
 
                         }
 
-                        //        var speed = manager.GetComponentData<Speed>(e);
-                        //        speed.enabled = true;
-                        //        speed.timeOn = powerItem.speedTimeOn;
-                        //        speed.multiplier = powerItem.speedTimeMultiplier;
-                        //        manager.SetComponentData<Speed>(e, speed);
+                 
 
                         if (powerItem.powerType == (int)PowerType.Speed &&
-                            HasComponent<HealthPower>(pickedUpActor) == false)
+                            HasComponent<Speed>(pickedUpActor) == false)
                         {
+                            Entity instanceEntity = ecb.Instantiate(powerItemComponent.particleSystemEntity);
+
+                            var ps = new ParticleSystemComponent
+                            {
+                                followActor = true,
+                                pickedUpActor = pickedUpActor
+                            };
+
+                            ecb.AddComponent(instanceEntity, ps);
+
                             Speed speedPower = new Speed{
+                                psAttached = instanceEntity,//attached to player on health pick up
+                                pickedUpActor = pickedUpActor,
                                 itemEntity = entity,
                                 enabled = true,
                                 timeOn =  powerItem.speedTimeOn,
                                 multiplier = powerItem.speedTimeMultiplier
                             };
+
                             ecb.AddComponent(pickedUpActor, speedPower);
-                            Entity instanceEntity = ecb.Instantiate(powerItemComponent.particleSystemEntity);
-                            ecb.AddComponent(instanceEntity, new ParticleSystemComponent { followActor = true, pickedUpActor = pickedUpActor });
 
                         }
                     }
