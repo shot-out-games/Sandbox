@@ -22,13 +22,7 @@ public class EffectsManager : MonoBehaviour, IConvertGameObjectToEntity
     private float timeActive = .5f;
 
     [SerializeField] private bool pauseEffect;
-    public ParticleSystem powerTriggerEffectPrefab;
-    public ParticleSystem powerTriggerEffectInstance;
-    public AudioClip powerTriggerAudioClip;
 
-    public ParticleSystem powerEnabledEffectPrefab;
-    public ParticleSystem powerEnabledEffectInstance;
-    public AudioClip powerEnabledAudioClip;
 
     public ParticleSystem actorDeadEffectPrefab;
     public ParticleSystem actorDeadEffectInstance;
@@ -38,8 +32,6 @@ public class EffectsManager : MonoBehaviour, IConvertGameObjectToEntity
     public ParticleSystem actorHurtEffectInstance;
     public AudioClip actorHurtAudioClip;
 
-
-    public AudioClip playerLevelCompleteClip;
     public AudioSource audioSource;
 
 
@@ -61,21 +53,6 @@ public class EffectsManager : MonoBehaviour, IConvertGameObjectToEntity
             actorDeadEffectInstance = ps;
         }
 
-        if (powerTriggerEffectPrefab)
-        {
-            var ps = Instantiate(powerTriggerEffectPrefab);
-            ps.transform.parent = transform;
-            ps.transform.localPosition = new Vector3(0, ps.transform.localPosition.y, 0);
-            powerTriggerEffectInstance = ps;
-        }
-
-        if (powerEnabledEffectPrefab)
-        {
-            var ps = Instantiate(powerEnabledEffectPrefab);
-            ps.transform.parent = transform;
-            ps.transform.localPosition = new Vector3(0, ps.transform.localPosition.y, 0);
-            powerEnabledEffectInstance = ps;
-        }
 
 
     }

@@ -19,19 +19,19 @@ public class ParticleConversionSystem : GameObjectConversionSystem
         //Entities.ForEach((ParticleSystem ps) =>
         {
             //AddHybridComponent(animator);
-            AddHybridComponent(particleSystem);
-            AddHybridComponent(particleSystemRenderer);
+            //AddHybridComponent(particleSystem);
+            //AddHybridComponent(particleSystemRenderer);
            // Debug.Log("ps " + particleSystem.name);
         });
 
 
-        //Entities.ForEach((Transform tracker) =>
-        //{
-        //Debug.Log("tracker");
-        //    AddHybridComponent(tracker);
-        //    //AddHybridComponent(particleSystemRenderer);
+        Entities.ForEach((AudioSource audioSource) =>
+        {
+            //Debug.Log("as " + audioSource);
+            //AddHybridComponent(audioSource);
+            //AddHybridComponent(particleSystemRenderer);
 
-        //});
+        });
 
 
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
+using Unity.Rendering;
 
 
 [System.Serializable]
@@ -9,6 +10,7 @@ public struct PowerItemComponent : IComponentData
 {
     public Entity pickedUpActor;
     public bool active;
+    public bool enabled;
     public int powerType;
     public float speedTimeOn;
     public float speedTimeMultiplier;
@@ -25,6 +27,7 @@ public class PowerItem : MonoBehaviour, IConvertGameObjectToEntity, IDeclareRefe
 {
     public PowerType powerType;
 
+    public bool alive = true;
 
     [SerializeField]
     bool active = true;
@@ -40,20 +43,22 @@ public class PowerItem : MonoBehaviour, IConvertGameObjectToEntity, IDeclareRefe
 
     public GameObject powerEnabledEffectPrefab;
     public GameObject powerEnabledEffectInstance;
+
     public AudioClip powerEnabledAudioClip;
+    public AudioClip powerTriggerAudioClip;
+    public AudioSource audioSource;
+
+    public Mesh mesh;
+    public Material material;
+    public MeshRenderer meshRenderer;
 
 
 
     void Start()
     {
-        //if (powerEnabledEffectPrefab)
-        //{
-        //    var ps = Instantiate(powerEnabledEffectPrefab);
-        //    ps.transform.parent = transform;
-        //    ps.transform.localPosition = new Vector3(0, ps.transform.localPosition.y, 0);
-        //    powerEnabledEffectInstance = ps;
-        //    Debug.Log("ps");
-        //}
+        if(audioSource) return;
+        audioSource = GetComponent<AudioSource>();
+
     }
 
     public void DeclareReferencedPrefabs(List<GameObject> referencedPrefabs)
@@ -62,32 +67,26 @@ public class PowerItem : MonoBehaviour, IConvertGameObjectToEntity, IDeclareRefe
     }
 
 
-    void Update()
-    {
-        //if (manager == default || e == Entity.Null) return;
-        //if (manager.HasComponent<PowerItemComponent>(e) == false) return;
-
-        //PowerItemComponent powerItem = manager.GetComponentData<PowerItemComponent>(e);
-        //if (powerItem.active == false)
-        //{
-        //    gameObject.SetActive(false);
-        //};
-
-    }
-
-
-
 
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
 
-        //conversionSystem.AddHybridComponent(powerEnabledEffectInstance);
 
         conversionSystem.DeclareLinkedEntityGroup(this.gameObject);
 
+        dstManager.AddComponent<AudioSourceComponent>(entity);
+
+
         e = entity;
         manager = dstManager;
+
+        conversionSystem.AddHybridComponent(audioSource);
+        conversionSystem.AddHybridComponent(this);
+
+
+
+
         manager.AddComponentData<PowerItemComponent>(entity, new PowerItemComponent
         {
             particleSystemEntity = conversionSystem.GetPrimaryEntity(powerEnabledEffectPrefab),
@@ -137,6 +136,7 @@ public class PowerItem : MonoBehaviour, IConvertGameObjectToEntity, IDeclareRefe
 
         }
 
+        dstManager.SetSharedComponentData(entity, new RenderMesh(){ mesh = mesh, material =  material} );
 
 
 

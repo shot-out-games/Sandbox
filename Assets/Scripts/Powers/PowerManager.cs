@@ -31,6 +31,11 @@ public struct ParticleSystemComponent : IComponentData
     public Entity pickedUpActor;
 }
 
+public struct AudioSourceComponent : IComponentData
+{
+    public bool active;
+}
+
 
 public struct Speed : IComponentData
 {
@@ -112,6 +117,9 @@ public class PowersSystem : SystemBase
         var ecb = m_EndSimulationEcbSystem.CreateCommandBuffer();
 
 
+
+
+
         //test
         Entities.WithoutBurst().WithNone<TriggerComponent>().ForEach((ParticleSystem ps, Entity e) =>
             {
@@ -121,6 +129,37 @@ public class PowersSystem : SystemBase
 
             }
         ).Run();
+
+
+
+
+        //Entities.WithoutBurst().ForEach(
+        //    (
+        //        PowerItem power,
+        //        AudioSource audioSource,
+        //        in PowerItemComponent powerItemComponent
+        //    ) =>
+        //    {
+        //        if (powerItemComponent.enabled == true)
+        //        {
+        //            if (power.powerEnabledAudioClip)
+        //            {
+        //                audioSource.PlayOneShot(power.powerEnabledAudioClip);
+        //            }
+        //        }
+        //        //else if (powerItemComponent.triggered == true)
+        //        //{
+        //        //    if (power.powerTriggerAudioClip)
+        //        //    {
+        //        //        audioSource.PlayOneShot(power.powerTriggerAudioClip);
+        //        //    }
+        //        //}
+
+
+        //    }
+        //).Run();
+
+
 
         Entities.WithoutBurst().ForEach((ParticleSystemComponent ps, Entity e) =>
             {
@@ -156,10 +195,11 @@ public class PowersSystem : SystemBase
 
                 if (speed.startTimer == false && speed.enabled == true)
                 {
-                    ecb.DestroyEntity(speed.itemEntity);
+                    //ecb.DestroyEntity(speed.itemEntity);
                     speed.triggered = true;
                     speed.startTimer = true;
                     speed.timer = 0;
+                    ecb.AddComponent(speed.itemEntity, new DestroyComponent());
                     //speed.originalSpeed = ratings.gameSpeed;
                     ratings.gameSpeed = ratings.gameSpeed * speed.multiplier;
                 }
@@ -176,7 +216,7 @@ public class PowersSystem : SystemBase
                     ratings.gameSpeed = ratings.speed;
                     Debug.Log("ps att " + speed.psAttached);
                     ecb.DestroyEntity(speed.psAttached);
-                    //ecb.DestroyEntity(speed.);
+                    //ecb.DestroyEntity(speed.itemEntity);
                     //speed.originalSpeed = 0;
                     //ecb.RemoveComponent<Speed>(e);
 
@@ -202,7 +242,8 @@ public class PowersSystem : SystemBase
                         healthComponent.TotalDamageReceived = ratings.maxHealth;
                     }
                     ecb.RemoveComponent<HealthPower>(e);
-                    ecb.DestroyEntity(healthPower.itemEntity);
+                    //ecb.DestroyEntity(healthPower.itemEntity);
+                    ecb.AddComponent(healthPower.itemEntity, new DestroyComponent());
                     ecb.DestroyEntity(healthPower.psAttached);
 
 
@@ -230,6 +271,40 @@ public class PowersSystem : SystemBase
 
             }
         ).Run();
+
+
+
+        Entities.WithoutBurst().WithAll<AudioSourceComponent>().ForEach(
+            (
+                AudioSource audioSource, PowerItem powerItem, in Entity e, in PowerItemComponent powerItemComponent) =>
+            {
+                Debug.Log("en " + powerItemComponent.enabled);
+                if (audioSource.isPlaying == false
+                    && powerItemComponent.enabled == true
+                )
+                {
+                    audioSource.PlayOneShot(powerItem.powerEnabledAudioClip);
+                    Debug.Log("play " + powerItem.powerEnabledAudioClip);
+                }
+            }
+        ).Run();
+
+
+        //Entities.WithoutBurst().ForEach(
+        //    (
+        //        Entity e,
+        //        PowerItemComponent powerItemComponent
+
+        //    ) =>
+        //    {
+        //        if (powerItemComponent.enabled == true)
+        //        {
+        //            ecb.DestroyEntity(e);
+        //        }
+        //    }
+        //).Run();
+
+
 
         // Make sure that the ECB system knows about our job
         m_EndSimulationEcbSystem.AddJobHandleForProducer(this.Dependency);
