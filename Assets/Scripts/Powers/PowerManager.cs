@@ -119,48 +119,6 @@ public class PowersSystem : SystemBase
 
 
 
-
-        //test
-        Entities.WithoutBurst().WithNone<TriggerComponent>().ForEach((ParticleSystem ps, Entity e) =>
-            {
-
-                //Debug.Log("ps " + e);
-                //ecb.AddComponent<TriggerComponent>(e);
-
-            }
-        ).Run();
-
-
-
-
-        //Entities.WithoutBurst().ForEach(
-        //    (
-        //        PowerItem power,
-        //        AudioSource audioSource,
-        //        in PowerItemComponent powerItemComponent
-        //    ) =>
-        //    {
-        //        if (powerItemComponent.enabled == true)
-        //        {
-        //            if (power.powerEnabledAudioClip)
-        //            {
-        //                audioSource.PlayOneShot(power.powerEnabledAudioClip);
-        //            }
-        //        }
-        //        //else if (powerItemComponent.triggered == true)
-        //        //{
-        //        //    if (power.powerTriggerAudioClip)
-        //        //    {
-        //        //        audioSource.PlayOneShot(power.powerTriggerAudioClip);
-        //        //    }
-        //        //}
-
-
-        //    }
-        //).Run();
-
-
-
         Entities.WithoutBurst().ForEach((ParticleSystemComponent ps, Entity e) =>
             {
 
@@ -195,12 +153,10 @@ public class PowersSystem : SystemBase
 
                 if (speed.startTimer == false && speed.enabled == true)
                 {
-                    //ecb.DestroyEntity(speed.itemEntity);
                     speed.triggered = true;
                     speed.startTimer = true;
                     speed.timer = 0;
                     ecb.AddComponent(speed.itemEntity, new DestroyComponent());
-                    //speed.originalSpeed = ratings.gameSpeed;
                     ratings.gameSpeed = ratings.gameSpeed * speed.multiplier;
                 }
                 else if (speed.enabled && speed.timer < speed.timeOn)
@@ -214,18 +170,15 @@ public class PowersSystem : SystemBase
                     speed.timer = 0;
                     speed.enabled = false;
                     ratings.gameSpeed = ratings.speed;
-                    Debug.Log("ps att " + speed.psAttached);
                     ecb.DestroyEntity(speed.psAttached);
-                    //ecb.DestroyEntity(speed.itemEntity);
-                    //speed.originalSpeed = 0;
-                    //ecb.RemoveComponent<Speed>(e);
+                    ecb.RemoveComponent<Speed>(e);
 
                 }
 
             }
         ).Run();
 
-        Entities.WithoutBurst().ForEach(
+        Entities.ForEach(
             (
                 ref HealthPower healthPower, ref HealthComponent healthComponent, in RatingsComponent ratings, in Entity e
 
@@ -233,7 +186,6 @@ public class PowersSystem : SystemBase
             {
                 if (healthPower.enabled == true)
                 {
-                    Debug.Log("hp");
                     healthPower.enabled = false;
                     healthComponent.TotalDamageReceived = healthComponent.TotalDamageReceived * healthPower.healthMultiplier;
                     //Rare used if multiplier is > 1 meaning health damage increased
@@ -242,15 +194,13 @@ public class PowersSystem : SystemBase
                         healthComponent.TotalDamageReceived = ratings.maxHealth;
                     }
                     ecb.RemoveComponent<HealthPower>(e);
-                    //ecb.DestroyEntity(healthPower.itemEntity);
                     ecb.AddComponent(healthPower.itemEntity, new DestroyComponent());
                     ecb.DestroyEntity(healthPower.psAttached);
-
 
                 }
 
             }
-        ).Run();
+        ).Schedule();
 
         Entities.WithoutBurst().ForEach(
             (
@@ -276,34 +226,17 @@ public class PowersSystem : SystemBase
 
         Entities.WithoutBurst().WithAll<AudioSourceComponent>().ForEach(
             (
-                AudioSource audioSource, PowerItem powerItem, in Entity e, in PowerItemComponent powerItemComponent) =>
+                AudioSource audioSource, PowerItem powerItem,  ref PowerItemComponent powerItemComponent, in Entity e) =>
             {
-                Debug.Log("en " + powerItemComponent.enabled);
                 if (audioSource.isPlaying == false
                     && powerItemComponent.enabled == true
                 )
                 {
+                    powerItemComponent.enabled = false;
                     audioSource.PlayOneShot(powerItem.powerEnabledAudioClip);
-                    Debug.Log("play " + powerItem.powerEnabledAudioClip);
                 }
             }
         ).Run();
-
-
-        //Entities.WithoutBurst().ForEach(
-        //    (
-        //        Entity e,
-        //        PowerItemComponent powerItemComponent
-
-        //    ) =>
-        //    {
-        //        if (powerItemComponent.enabled == true)
-        //        {
-        //            ecb.DestroyEntity(e);
-        //        }
-        //    }
-        //).Run();
-
 
 
         // Make sure that the ECB system knows about our job

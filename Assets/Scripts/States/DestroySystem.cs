@@ -36,16 +36,17 @@ public class DestroySystem : SystemBase
         var ecb = m_EndSimulationEcbSystem.CreateCommandBuffer();
 
 
-        Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity e, ref DestroyComponent destroyComponent, in PowerItem powerItem) =>
+        Entities.ForEach((Entity e, ref DestroyComponent destroyComponent, ref Translation translation) =>
         {
-
+            translation.Value = new float3(0, -50, 0);
+            ecb.AddComponent(e, new DisableRendering());//not needed because it doesn't turn off child particle system render
             destroyComponent.frames++;
-            if (destroyComponent.frames > 60)
+            if (destroyComponent.frames > 600)
             {
                 ecb.DestroyEntity(e);
             }
 
-        }).Run();
+        }).Schedule();
 
 
         // Make sure that the ECB system knows about our job
