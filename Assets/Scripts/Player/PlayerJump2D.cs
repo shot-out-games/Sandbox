@@ -22,6 +22,7 @@ public struct PlayerJumpComponent : IComponentData
     public float airForce;
     public int jumpPoints;
     public JumpStages JumpStage;
+    public float hiJumpMultiplier;
 }
 
 
@@ -53,6 +54,8 @@ namespace SandBox.Player
         [Range(1, 3)]
         public int jumpPoints;
 
+        [Range(.05f, 5f)]
+        public float hiJumpMultiplier = 1;
 
 
         Animator anim;
@@ -98,7 +101,8 @@ namespace SandBox.Player
                     jumpDownGravityMultiplier = jumpDownGravityMultiplier,
                     jumpY = jumpY,
                     airForce = airForce,
-                    jumpPoints = jumpPoints
+                    jumpPoints = jumpPoints,
+                    hiJumpMultiplier =  hiJumpMultiplier
                 }
             );
 

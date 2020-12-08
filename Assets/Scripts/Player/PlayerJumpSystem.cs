@@ -73,7 +73,7 @@ namespace SandBox.Player
 
                         float standardJumpHeight =
                             originalJumpPower * originalJumpFrames; //total height of jump at peak - ref only
-                        float hiJumpMultiplier = 2f; //multiply jump power by this - frames 
+                        float hiJumpMultiplier = playerJumpComponent.hiJumpMultiplier; //multiply jump power by this - frames 
                         float hiJumpAirFramesMax = jumpFrames * hiJumpMultiplier;
 
                         if (applyImpulseComponent.InJump == false)
