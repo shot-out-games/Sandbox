@@ -87,8 +87,8 @@ namespace SandBox.Player
                     animator.SetFloat("Vertical", stickSpeed, playerMoveComponent.dampTime, Time.DeltaTime);
                     float3 fwd = cam.transform.forward;
                     float3 right = cam.transform.right;
-                    fwd = Vector3.forward;
-                    right = Vector3.right;
+                    //fwd = Vector3.forward;
+                    //right = Vector3.right;
                     fwd = playerMove.transform.forward;
                     right = playerMove.transform.right;
                     fwd.y = 0;
@@ -217,6 +217,9 @@ namespace SandBox.Player
                              //var right = playerMove.mainCam.transform.TransformDirection(Vector3.right);
                              var forward = playerMove.mainCam.transform.forward;
                              var right = playerMove.mainCam.transform.right;
+                             //forward = Vector3.forward;
+                             //right = Vector3.right;
+
                              forward.y = 0;
 
                              Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
