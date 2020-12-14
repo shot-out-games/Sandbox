@@ -13,33 +13,16 @@ MonoBehaviour:
   m_Name: New Prefab Palette
   m_EditorClassIdentifier: 
   prefabs:
-  - gameObject: {fileID: 3466703481568296788, guid: 6aa97f6bf5ff6c148a6f4b65709038a1,
-      type: 3}
-    settings:
-      m_Strength: 16.621674
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 0, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 0
-      m_XRotationBool: 0
-      m_YRotationBool: 0
-      m_ZRotationBool: 0
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: enemy BASIC
   - gameObject: {fileID: 1000010151976528, guid: ca0f87d8635ce0940b7441781fb4354d,
       type: 3}
     settings:
-      m_Strength: 50
+      m_Strength: 100
       m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 0, z: 0}
+      m_RotationRangeMax: {x: 0, y: 359.1367, z: 0}
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 0
+      m_UniformScale: {x: 0.3, y: 0.7}
+      m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 0
       m_ZRotationBool: 0
@@ -47,7 +30,7 @@ MonoBehaviour:
       m_YScaleBool: 0
       m_ZScaleBool: 0
     name: FAE_Birch_A
-  - gameObject: {fileID: 1000013527354224, guid: 4369bfb570c67dd4796c048ed31d6858,
+  - gameObject: {fileID: 1000011430780218, guid: 9064929bb9122724684ed7abbf313f4d,
       type: 3}
     settings:
       m_Strength: 50
@@ -63,4 +46,4 @@ MonoBehaviour:
       m_XScaleBool: 0
       m_YScaleBool: 0
       m_ZScaleBool: 0
-    name: FAE_Tree_A
+    name: FAE_Spruce_B
