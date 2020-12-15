@@ -13,24 +13,7 @@ MonoBehaviour:
   m_Name: New Prefab Palette
   m_EditorClassIdentifier: 
   prefabs:
-  - gameObject: {fileID: 1000010151976528, guid: ca0f87d8635ce0940b7441781fb4354d,
-      type: 3}
-    settings:
-      m_Strength: 100
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 359.1367, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 0.3, y: 0.7}
-      m_UniformBool: 1
-      m_XRotationBool: 0
-      m_YRotationBool: 0
-      m_ZRotationBool: 0
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: FAE_Birch_A
-  - gameObject: {fileID: 1000011430780218, guid: 9064929bb9122724684ed7abbf313f4d,
+  - gameObject: {fileID: 1000013857952760, guid: 0a9df222064d4534da4279115fea376b,
       type: 3}
     settings:
       m_Strength: 50
@@ -39,11 +22,11 @@ MonoBehaviour:
       m_ScaleRangeMin: {x: 1, y: 1, z: 1}
       m_ScaleRangeMax: {x: 1, y: 1, z: 1}
       m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 0
+      m_UniformBool: 1
       m_XRotationBool: 0
       m_YRotationBool: 0
       m_ZRotationBool: 0
       m_XScaleBool: 0
       m_YScaleBool: 0
       m_ZScaleBool: 0
-    name: FAE_Spruce_B
+    name: RockCluster_A
