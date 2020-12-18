@@ -236,7 +236,6 @@ public class PickupPowerUpRaycastSystem : SystemBase
 
             if (hasPointHit)
             {
-                Debug.Log("hit " + pointHit.Entity);
                 if (HasComponent<TriggerComponent>(pointHit.Entity))
                 {
                     var parent = GetComponent<TriggerComponent>(pointHit.Entity).ParentEntity;
