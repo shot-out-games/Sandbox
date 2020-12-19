@@ -74,15 +74,15 @@ public class EnemyMoveGeneric : MonoBehaviour, IConvertGameObjectToEntity
 
         }
 
-
+        Debug.Log("nav  " + agent.speed);
 
 
         if (agent)
         {
-            //   agent.autoBraking = false;
-            //agent.updateRotation = false;
-            //agent.autoTraverseOffMeshLink = false;
-                //agent.updatePosition = false;
+            manager.AddComponent<NavMeshAgentComponent>(entity);
+            agent.autoBraking = false;
+            agent.updateRotation = false;
+            agent.autoTraverseOffMeshLink = false;
         }
 
 
@@ -115,9 +115,7 @@ public class EnemyMoveGeneric : MonoBehaviour, IConvertGameObjectToEntity
         if (agent.enabled)
         {
             Vector3 nextPosition = target.position;
-            //agent.destination = nextPosition;
             agent.SetDestination(target.position);
-            Debug.Log("nav  " + agent.speed);
         }
     }
 
@@ -152,18 +150,13 @@ public class EnemyMoveGenericSystem : SystemBase
             in EnemyMoveGenericComponent enemyMoveGenericComponent
         ) =>
         {
-            //if (pause.value == 1) return;
             if (dead.isDead) return;
             move.SetDestination();
             if(Vector3.SqrMagnitude(pv.Linear) < .0001f)
             {
                 pv.Linear = enemyMoveGenericComponent.startVelocity;
             }
-
             translation.Value.y = 0;//no jump for 1d jam
-            //Debug.Log("en");
-
-
 
         }).Run();
         }

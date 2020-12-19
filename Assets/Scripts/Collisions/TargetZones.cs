@@ -19,8 +19,11 @@ public class TargetZones : MonoBehaviour, IConvertGameObjectToEntity
         }
 
         Animator animator = GetComponent<Animator>();
-
-        headZone = animator.GetBoneTransform(HumanBodyBones.Head);
+        if (!animator) return;
+        if (headZone == null)
+        {
+            headZone = animator.GetBoneTransform(HumanBodyBones.Head);
+        }
 
 
     }
