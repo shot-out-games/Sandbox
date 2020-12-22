@@ -21,6 +21,7 @@ public struct EnemyComponent : IComponentData
     public float maxHealth;
     public bool invincible;
     public float3 startPosition;
+    public bool humanoid;
 
 }
 
@@ -30,6 +31,8 @@ public class EnemyComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 {
     public Entity enemyEntity;
     public EntityManager manager;
+
+    [SerializeField] private bool humanoid = true;
 
     [SerializeField]
     private bool checkLossCondition = true;
@@ -65,6 +68,7 @@ public class EnemyComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
             {
                 e = entity,
                 invincible = invincible,
+                humanoid = humanoid,
                 startPosition = manager.GetComponentData<Translation>(entity).Value
             }
             );
