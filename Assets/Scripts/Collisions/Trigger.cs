@@ -16,7 +16,7 @@ public class Trigger : MonoBehaviour, IConvertGameObjectToEntity
     private void Start()
     {
         triggerAudioSource = GetComponent<AudioSource>();
-    }
+    } 
 
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
