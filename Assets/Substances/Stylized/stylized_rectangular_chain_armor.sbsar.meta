@@ -29,11 +29,13 @@ ScriptedImporter:
       customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {instanceID: 0}
+        texture: {fileID: 790634387751579333, guid: 32657958ab4eb224d9d8dcfdeed8c279,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _BumpMap
-        texture: {instanceID: 0}
+        texture: {fileID: -7567767875877720605, guid: 32657958ab4eb224d9d8dcfdeed8c279,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _DetailAlbedoMap
@@ -57,11 +59,13 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
-        texture: {instanceID: 0}
+        texture: {fileID: 4246437352872402768, guid: 32657958ab4eb224d9d8dcfdeed8c279,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _OcclusionMap
-        texture: {instanceID: 0}
+        texture: {fileID: -6683426088878002775, guid: 32657958ab4eb224d9d8dcfdeed8c279,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _ParallaxMap
@@ -69,7 +73,8 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _SpecGlossMap
-        texture: {instanceID: 0}
+        texture: {fileID: 8599971025068931036, guid: 32657958ab4eb224d9d8dcfdeed8c279,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: unity_Lightmaps
@@ -340,10 +345,11 @@ ScriptedImporter:
       textureFormatMode: 0
       normalCompressed: 0
       bGenerateOnLoad: 1
-    material: {instanceID: 0}
+    material: {fileID: -7289381980050280070, guid: 32657958ab4eb224d9d8dcfdeed8c279,
+      type: 3}
     generatedTextures:
-    - {instanceID: 0}
-    - {instanceID: 0}
-    - {instanceID: 0}
-    - {instanceID: 0}
-    - {instanceID: 0}
+    - {fileID: 790634387751579333, guid: 32657958ab4eb224d9d8dcfdeed8c279, type: 3}
+    - {fileID: -7567767875877720605, guid: 32657958ab4eb224d9d8dcfdeed8c279, type: 3}
+    - {fileID: 8599971025068931036, guid: 32657958ab4eb224d9d8dcfdeed8c279, type: 3}
+    - {fileID: 4246437352872402768, guid: 32657958ab4eb224d9d8dcfdeed8c279, type: 3}
+    - {fileID: -6683426088878002775, guid: 32657958ab4eb224d9d8dcfdeed8c279, type: 3}

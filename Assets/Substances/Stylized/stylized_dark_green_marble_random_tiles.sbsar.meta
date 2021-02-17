@@ -29,11 +29,13 @@ ScriptedImporter:
       customRenderQueue: -1
       texEnvs:
       - name: _BaseMap
-        texture: {instanceID: 0}
+        texture: {fileID: -5550857291592314210, guid: 601ce4c28505dae4dbfa5cf129831e5d,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _BumpMap
-        texture: {instanceID: 0}
+        texture: {fileID: 6714610753322717977, guid: 601ce4c28505dae4dbfa5cf129831e5d,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _DetailAlbedoMap
@@ -57,7 +59,8 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MetallicGlossMap
-        texture: {instanceID: 0}
+        texture: {fileID: 8135365121621461532, guid: 601ce4c28505dae4dbfa5cf129831e5d,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _OcclusionMap
@@ -69,7 +72,8 @@ ScriptedImporter:
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _SpecGlossMap
-        texture: {instanceID: 0}
+        texture: {fileID: 7604107797772276849, guid: 601ce4c28505dae4dbfa5cf129831e5d,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: unity_Lightmaps
@@ -304,9 +308,10 @@ ScriptedImporter:
       textureFormatMode: 0
       normalCompressed: 0
       bGenerateOnLoad: 1
-    material: {instanceID: 0}
+    material: {fileID: 1122025438451160537, guid: 601ce4c28505dae4dbfa5cf129831e5d,
+      type: 3}
     generatedTextures:
-    - {instanceID: 0}
-    - {instanceID: 0}
-    - {instanceID: 0}
-    - {instanceID: 0}
+    - {fileID: -5550857291592314210, guid: 601ce4c28505dae4dbfa5cf129831e5d, type: 3}
+    - {fileID: 6714610753322717977, guid: 601ce4c28505dae4dbfa5cf129831e5d, type: 3}
+    - {fileID: 7604107797772276849, guid: 601ce4c28505dae4dbfa5cf129831e5d, type: 3}
+    - {fileID: 8135365121621461532, guid: 601ce4c28505dae4dbfa5cf129831e5d, type: 3}
