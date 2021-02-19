@@ -69,6 +69,12 @@ public class GunAmmoHandlerSystem : SystemBase
                 float rate = ammoDataComponent.GameRate;
                 float strength = ammoDataComponent.GameStrength;
                 float damage = ammoDataComponent.GameDamage;
+                //change based on game
+                if (gun.ChangeAmmoStats > 0)
+                {
+                    strength = strength - gun.ChangeAmmoStats * 25;
+                    if (strength <= 0) strength = 1;
+                }
 
 
                 gun.Duration += dt;
@@ -95,6 +101,7 @@ public class GunAmmoHandlerSystem : SystemBase
                         {
                             velocity.Linear = forward * strength;
                         }
+
 
 
                         //Matrix4x4 matrix4x4 = Matrix4x4.identity;

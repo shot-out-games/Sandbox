@@ -28,35 +28,48 @@ public class MatchupSystem :  SystemBase
             ) =>
             {
 
-                float closestDistance = Mathf.Infinity;
+                float closestDistance = math.INFINITY;
                 GameObject enemy = enemyTransform.gameObject;
                 GameObject player = null;
                 GameObject closestPlayer = null;
                 bool enemyDead = GetComponent<DeadComponent>(enemyEntity).isDead;
 
 
-
-                Entities.WithoutBurst().WithAny<CloseComponent>().ForEach((Entity e, Translation translation) =>
+                //CloseComponent added to npc only too far away (1 only because no time to figure more)
+                float3 closePlayerPosition = float3.zero;
+                float closePlayerMaxDistance = math.INFINITY;
+                Entities.WithoutBurst().ForEach((Entity e, Translation translation, CloseComponent closeComponent) =>
                     {
-
-
-                        Entities.WithoutBurst().ForEach(
-                            (PlayerComponent playerComponent, Entity playerE, Translation playerTranslation) =>
-                            {
-
-                                Debug.Log("pos " + playerTranslation.Value);
-
-
-                            }).Run();
-
-
+                        closePlayerPosition = translation.Value;
+                        closePlayerMaxDistance = closeComponent.maxDistance;
 
                     }
 
 
                     ).Run();
 
-                    
+
+                Entities.WithoutBurst().WithNone<CloseComponent>().ForEach(
+                    (PlayerComponent playerComponent, Entity playerE, Translation playerTranslation, ref GunComponent gun) =>
+                    {
+
+                        float distance = math.distance(playerTranslation.Value, closePlayerPosition);
+                        //Debug.Log("pos " + distance);
+                        gun.ChangeAmmoStats = 0;
+                        if (distance > closePlayerMaxDistance)
+                        {
+                            gun.ChangeAmmoStats = distance;
+                            Debug.Log("change write");
+
+                        }
+
+
+                    }).Run();
+
+
+
+
+
 
 
                 Entities.WithAll<PlayerComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach

@@ -9,6 +9,7 @@ using UnityEngine;
 public struct CloseComponent : IComponentData
 {
     public bool active;
+    public float maxDistance;
 
 }
 
@@ -27,7 +28,8 @@ public class CloseComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     // For example,
     //public bool matchupClosest = true;
     //public bool leader = false;
-    
+    [SerializeField]
+    private float maxDistance = 1;
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
@@ -39,7 +41,7 @@ public class CloseComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
         //   to do it, instead of adding entities through 'dstManager' directly.
         //
         // For example,
-         dstManager.AddComponentData(entity, new CloseComponent());
+         dstManager.AddComponentData(entity, new CloseComponent {maxDistance = maxDistance});
         
         
     }

@@ -19,7 +19,6 @@ public struct GunComponent : IComponentData
     public float gameDamage;
     public float gameRate;
 
-
     public float Strength;
     public float Damage;
     public float Rate;
@@ -29,6 +28,7 @@ public struct GunComponent : IComponentData
     public Translation AmmoStartPosition;
     public Rotation AmmoStartRotation;
     public bool Disable;
+    public float ChangeAmmoStats;
     //public Translation firingPosition;
 }
 
