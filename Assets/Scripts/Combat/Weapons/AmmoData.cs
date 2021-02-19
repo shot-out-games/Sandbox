@@ -14,6 +14,7 @@ public struct AmmoDataComponent : IComponentData
     public float GameStrength;
     public float GameDamage;
     public float GameRate;
+    public bool ChargeRequired;
 
 }
 
@@ -27,7 +28,7 @@ public class AmmoData : MonoBehaviour, IConvertGameObjectToEntity
     public float Strength;
     public float Damage;
     public float Rate;
-
+    public bool ChargeRequired;
 
 
 
@@ -45,7 +46,9 @@ public class AmmoData : MonoBehaviour, IConvertGameObjectToEntity
                 GameStrength = Strength,
                 GameDamage = Damage,
                 GameRate = Rate,
-                GameAmmoTime = AmmoTime
+                GameAmmoTime = AmmoTime,
+                ChargeRequired = ChargeRequired
+                
             }
 
         );

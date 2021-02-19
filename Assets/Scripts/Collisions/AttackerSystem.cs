@@ -336,8 +336,6 @@ public class AttackerSystem : SystemBase
             bool check = false;
 
             float hw = animator.GetFloat("HitWeight");
-
-
             if (playerA && enemyB || playerB && enemyA) check = true;
 
             if (check == true)
@@ -387,11 +385,14 @@ public class AttackerSystem : SystemBase
                     AmmoComponent ammo =
                         EntityManager.GetComponentData<AmmoComponent>(collision_entity_b);
 
+                    AmmoDataComponent ammoData =
+                        EntityManager.GetComponentData<AmmoDataComponent>(collision_entity_b);
+
                     float damage = EntityManager.GetComponentData<GunComponent>(shooter).gameDamage;
                     Debug.Log("damage " + damage);
                     ammo.AmmoDead = true;
 
-                    if (ammo.DamageCausedPreviously == true)
+                    if (ammo.DamageCausedPreviously == true || ammoData.ChargeRequired == true && ammo.Charged == false)
                     {
                         damage = 0;
                     }

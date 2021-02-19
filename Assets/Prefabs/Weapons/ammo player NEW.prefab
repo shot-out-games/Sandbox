@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f6412195c876441801337b1d808706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 0
+  Type: 8
   index: 0
   triggerParticleSystem: {fileID: 0}
   triggerAudioSource: {fileID: 0}
@@ -341,6 +341,7 @@ MonoBehaviour:
   Strength: 50
   Damage: 5
   Rate: 0.5
+  ChargeRequired: 1
 --- !u!1001 &1155093784678171370
 PrefabInstance:
   m_ObjectHideFlags: 0

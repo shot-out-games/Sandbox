@@ -5,18 +5,7 @@ using Unity.Jobs;
 using UnityEngine;
 using Unity.Mathematics;
 using Unity.Collections;
-
-
-[Serializable]
-public struct MatchupComponent : IComponentData
-{
-    public bool matchupClosest;
-    public bool leader;
-
-
-}
-
-
+using Unity.Transforms;
 
 
 public class MatchupSystem :  SystemBase
@@ -45,6 +34,29 @@ public class MatchupSystem :  SystemBase
                 GameObject closestPlayer = null;
                 bool enemyDead = GetComponent<DeadComponent>(enemyEntity).isDead;
 
+
+
+                Entities.WithoutBurst().WithAny<CloseComponent>().ForEach((Entity e, Translation translation) =>
+                    {
+
+
+                        Entities.WithoutBurst().ForEach(
+                            (PlayerComponent playerComponent, Entity playerE, Translation playerTranslation) =>
+                            {
+
+                                Debug.Log("pos " + playerTranslation.Value);
+
+
+                            }).Run();
+
+
+
+                    }
+
+
+                    ).Run();
+
+                    
 
 
                 Entities.WithAll<PlayerComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach

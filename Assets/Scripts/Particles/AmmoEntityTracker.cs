@@ -11,6 +11,7 @@ public struct AmmoComponent : IComponentData
     public float AmmoTime;
     public float AmmoTimeCounter;
     public bool DamageCausedPreviously;
+    public bool Charged;
     public bool rewinding;
 }
 
@@ -41,7 +42,8 @@ public class AmmoEntityTracker : MonoBehaviour, IConvertGameObjectToEntity
             {
                 AmmoDead = false,
                 AmmoTimeCounter = 0,
-                AmmoTime = ammoTime
+                AmmoTime = ammoTime,
+                Charged = false
             });
 
 

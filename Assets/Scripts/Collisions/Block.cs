@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 
-public struct BlockComponent : IComponentData
+public struct BlockComponent : IComponentData // also use for chargingComponent currently
 {
     public bool blocked;
 }

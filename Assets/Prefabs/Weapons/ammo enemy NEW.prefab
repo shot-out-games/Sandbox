@@ -341,6 +341,7 @@ MonoBehaviour:
   Strength: 25
   Damage: 5
   Rate: 5
+  ChargeRequired: 0
 --- !u!1001 &1155093784678171370
 PrefabInstance:
   m_ObjectHideFlags: 0

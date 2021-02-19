@@ -1,8 +1,26 @@
-﻿using Unity.Entities;
+﻿using System;
+using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
-[DisallowMultipleComponent]
+
+[Serializable]
+public struct MatchupComponent : IComponentData
+{
+    public bool matchupClosest;
+    public bool leader;
+
+}
+
+//public struct CloseComponent : IComponentData
+//{
+//    public bool active;
+
+
+//}
+
+
+
 public class MatchupComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 {
     // Add fields to your component here. Remember that:
@@ -16,7 +34,6 @@ public class MatchupComponentAuthoring : MonoBehaviour, IConvertGameObjectToEnti
     // For example,
     public bool matchupClosest = true;
     public bool leader = false;
-    
     
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)

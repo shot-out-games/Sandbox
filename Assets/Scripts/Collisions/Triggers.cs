@@ -73,6 +73,7 @@ public class CollisionSystem : SystemBase
         [ReadOnly] public PhysicsWorld physicsWorld;
         [ReadOnly] public ComponentDataFromEntity<TriggerComponent> triggerGroup;
         [ReadOnly] public ComponentDataFromEntity<HealthComponent> healthGroup;
+        public ComponentDataFromEntity<AmmoComponent> ammoGroup;
         public EntityCommandBuffer CommandBuffer;
         public void Execute(CollisionEvent ev) // this is never called
         {
@@ -172,18 +173,40 @@ public class CollisionSystem : SystemBase
             bool ammoB = (type_a == (int)TriggerType.Base || type_a == (int)TriggerType.Head || type_a == (int)TriggerType.Body) &&
                          (type_b == (int)TriggerType.Ammo);
 
+            bool ammoBlockedA = (type_b == (int)TriggerType.Blocks) &&
+                         (type_a == (int)TriggerType.Ammo);
+
+            bool ammoBlockedB = ( type_a == (int)TriggerType.Blocks) &&
+                         (type_b == (int)TriggerType.Ammo);
+
             //Debug.Log("aa " + ammoA + " ab " + ammoB);
+            if (ammoBlockedA)
+            {
+                AmmoComponent ammoComponent = ammoGroup[triggerComponent_a.Entity];
+                ammoComponent.Charged = true;
+                ammoGroup[triggerComponent_a.Entity] = ammoComponent;
+            }
+            if (ammoBlockedB)
+            {
+                AmmoComponent ammoComponent = ammoGroup[triggerComponent_b.Entity];
+                ammoComponent.Charged = true;
+                ammoGroup[triggerComponent_b.Entity] = ammoComponent;
+            }
+
+
+
+
 
             if (ammoA)
             {
                 Debug.Log("aa " + ammoA + " pe " + triggerComponent_b.Type + "  ce " + ch_b);
-
+                //coll component part other always ammo ?
                 CollisionComponent collisionComponent =
                     new CollisionComponent()
                     {
                         Part_entity = triggerComponent_b.Type,
                         Part_other_entity = triggerComponent_a.Type,
-                        Character_entity = triggerComponent_b.ParentEntity,
+                        Character_entity = triggerComponent_b.ParentEntity,//actor hit by ammo
                         Character_other_entity = triggerComponent_a.Entity,
                         isMelee = meleeA
                     };
@@ -257,7 +280,8 @@ public class CollisionSystem : SystemBase
             physicsWorld = physicsWorld,
             CommandBuffer = m_EntityCommandBufferSystem.CreateCommandBuffer(),
             triggerGroup = GetComponentDataFromEntity<TriggerComponent>(true),
-            healthGroup = GetComponentDataFromEntity<HealthComponent>(true)
+            healthGroup = GetComponentDataFromEntity<HealthComponent>(true),
+            ammoGroup = GetComponentDataFromEntity<AmmoComponent>(false)
         };
         JobHandle collisionHandle = collisionJob.Schedule(stepPhysicsWorld.Simulation, ref physicsWorld, inputDeps);
         collisionHandle.Complete();

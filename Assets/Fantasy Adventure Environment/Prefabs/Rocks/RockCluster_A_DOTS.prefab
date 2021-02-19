@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 143745110}
   - component: {fileID: 143745111}
   - component: {fileID: 7370015221256261455}
+  - component: {fileID: 1710882645607233715}
+  - component: {fileID: -7783561550870741747}
   m_Layer: 0
   m_Name: RockCluster_A_DOTS
   m_TagString: Untagged
@@ -6942,3 +6944,31 @@ MonoBehaviour:
   m_OriginalMeshObject: {fileID: 4300000, guid: 18624824f2fcc58409cfe17122ffd26c,
     type: 3}
   m_Mode: 0
+--- !u!114 &1710882645607233715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8981990343550481989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 433f9586962c39744806cff470eab309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-7783561550870741747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8981990343550481989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01f6412195c876441801337b1d808706, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 10
+  index: 0
+  triggerParticleSystem: {fileID: 0}
+  triggerAudioSource: {fileID: 0}
