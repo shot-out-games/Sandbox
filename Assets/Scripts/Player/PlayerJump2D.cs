@@ -23,6 +23,7 @@ public struct PlayerJumpComponent : IComponentData
     public int jumpPoints;
     public JumpStages JumpStage;
     public float hiJumpMultiplier;
+    public bool disabled;
 }
 
 
@@ -44,12 +45,16 @@ namespace SandBox.Player
     {
 
         //public JumpStages JumpStage = JumpStages.Ground;
+
         [HideInInspector] public Camera mainCam;
         [HideInInspector] public float startJumpGravityForce = 9.81f;
         [HideInInspector] public float addedNegativeForce = 0f;
         [HideInInspector] public float jumpDownGravityMultiplier = 1.0f;
         [HideInInspector] public float jumpY = 6f;
         [HideInInspector] public float airForce = 500f;
+        [HideInInspector]
+        [SerializeField] private bool disabled = false;
+
         public float jumpFramesToPeak = 5;
         [Range(1, 3)]
         public int jumpPoints;
@@ -102,7 +107,8 @@ namespace SandBox.Player
                     jumpY = jumpY,
                     airForce = airForce,
                     jumpPoints = jumpPoints,
-                    hiJumpMultiplier =  hiJumpMultiplier
+                    hiJumpMultiplier =  hiJumpMultiplier,
+                    disabled = disabled
                 }
             );
 

@@ -143,5 +143,5 @@ Material:
     - _Color: {r: 0.8, g: 0.8, b: 0.8, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _GlobalColor: {r: 0.5882353, g: 0.5294118, b: 0.40784317, a: 1}
-    - _ObjectColor: {r: 0.86764705, g: 0.86764705, b: 0.86764705, a: 1}
+    - _ObjectColor: {r: 0.83137256, g: 0.6862745, b: 0.21568628, a: 1}
   m_BuildTextureStacks: []

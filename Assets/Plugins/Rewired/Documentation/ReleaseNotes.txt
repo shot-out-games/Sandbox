@@ -1,3 +1,51 @@
+1.1.38.2:
+    
+    Changes:
+      - Changed WebGL native library to prevent failure in Chrome browser on MacOS 11+.
+      - Changed WebGL OS version parsing to handle inconsistencies between browsers in how the os version is reported.
+      - Touch Controller Disable Mouse Input When Enabled toggle now records original mouse state when component is intialized and restores this value when disabled.
+      - Xbox One controller definition now used on Stadia instead of Xbox 360 controller definition for Xbox-compatible controllers.
+
+1.1.38.1:
+
+    Bug Fixes:
+      - Fixed D-pad mapping bug in Sony DualSense controller definition internal driver mapping.
+
+1.1.38.0:
+
+    Changes:
+      - Added support for Game Core Xbox platforms through additional plugin.
+      - Added Enhanced Device Support for Sony DualSense controller (Windows and MacOS).
+      - Changed display name of Nintendo Switch handheld controller to meet Nintendo's new naming requirements.
+      
+    API Changes:
+      - Added ControllerExtensions.DualSenseExtension class.
+      - Added ControllerExtensions.DualSenseMicrophoneLightMode enum.
+      - Added ControllerExtensions.DualSenseOtherLightBrightness enum.
+      - Added ControllerExtensions.DualSensePlayerLightFlags enum.
+
+    New Controller Definitions:
+      - Sony DualSense
+
+    Bug Fixes:
+      - Fixed broken ReInput.MappingHelper.GetActionElementMap function.
+
+1.1.37.0:
+
+  Changes:
+    - Windows Standalone, Raw Input, Use XInput disabled: Implemented workaround for Steam not creating device notifications when creating or removing virtual controllers so controller changes can be detected correctly.
+    - Export constants variable, class, and namespace sanitization now uses a blacklist instead of a whitelist so unicode characters such as non-English characters are no longer filtered out. (May lead to compiler errors if certain invalid characters are used in identifier strings.)
+    - Bolt integration: Added PreserveAttribute to all classes to prevent Unity from stripping the classes on certain platforms.
+
+  API Changes:
+    - Added Platforms.PS4.PS4ControllerExtension.deviceHandle property.
+    
+  Bug Fixes:
+    - Action Element Maps that bind to an invalid controller element are filtered out when loading Joystick Maps in Players.
+    - Control Mapper: Null Reference Exception is no longer thrown when looking up a controller element name for an Action Element Map that maps to an invalid controller element.
+    - MacOS Standalone, Native: When using multiple identical controllers that do not provide enough identifying information to differentiate the controller from the others and one controller is disconnected and reconnected, it will now be detected and re-appear in the Joysticks list.
+    - Fixed bug in ComponentControls.TouchPad.pressStartDelay property causing value to always be set to float.MaxValue if set from scripting.
+
 1.1.36.1:
     
     Changes:

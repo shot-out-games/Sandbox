@@ -50,7 +50,7 @@ namespace SandBox.Player
 
                     if (HasComponent<PlayerJumpComponent>(e) == false)
                     {
-                        translation.Value.y = 0; //change for jump use
+                        //translation.Value.y = 0; //change for jump use
                     }
 
 
@@ -138,6 +138,8 @@ namespace SandBox.Player
 
                     }
 
+
+                    pv.Linear.y += applyImpulseComponent.NegativeForce;
 
 
 
