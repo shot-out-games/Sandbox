@@ -12,6 +12,10 @@ public class LoadSystem : SystemBase
 
     protected override void OnUpdate()
     {
+        if (SaveManager.instance == null || LevelManager.instance == null) return;
+        //if (SaveManager.instance.saveData == null) return;
+        //if (SaveManager.instance.saveData.saveGames == null) return;
+
 
         if (SaveManager.instance.saveWorld.isSlotSaved[0] == false) return;//deleted / cleared slot
         if (LevelManager.instance.loadGame == false) return;

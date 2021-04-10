@@ -288,6 +288,8 @@ public class ResetLevelSystem : SystemBase
 {
     protected override void OnUpdate()
     {
+        if (SaveManager.instance == null || LevelManager.instance == null) return;
+
 
         if (LevelManager.instance.resetLevel == false) return;
         LevelManager.instance.resetLevel = false;
@@ -322,6 +324,9 @@ public class SetupNextLevelSystem : SystemBase
 
     protected override void OnUpdate()
     {
+
+        if (SaveManager.instance == null || LevelManager.instance == null) return;
+
 
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 

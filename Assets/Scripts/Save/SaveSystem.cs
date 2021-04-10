@@ -30,6 +30,8 @@ public class SaveSystem : SystemBase
     protected override void OnUpdate()
     {
 
+        if (SaveManager.instance == null || LevelManager.instance == null) return;
+
         var ecb = new EntityCommandBuffer(Allocator.Temp);
         var scoreGroup = GetComponentDataFromEntity<ScoreComponent>(false);
 
