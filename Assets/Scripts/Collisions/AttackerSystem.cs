@@ -406,8 +406,24 @@ public class AttackerSystem : SystemBase
                             { DamageLanded = 0, DamageReceived = damage, StunLanded = damage });
 
 
+                    if (HasComponent<ScoreComponent>(shooter))
+                    {
+                        Debug.Log("score");
+                        var scoreComponent = EntityManager.GetComponentData<ScoreComponent>(shooter);
+                        scoreComponent.pointsScored = true;
+                        scoreComponent.scoredAgainstEntity = collision_entity_a;
+                        EntityManager.SetComponentData(shooter, scoreComponent);
+                    }
+
+
+
                 }
             }
+
+
+
+
+
 
 
             ecb.RemoveComponent<CollisionComponent>(entity);
