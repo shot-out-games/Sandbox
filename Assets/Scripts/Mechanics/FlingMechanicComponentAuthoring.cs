@@ -6,6 +6,7 @@ using UnityEngine;
 public struct FlingMechanicComponent : IComponentData
 {
     public bool active;
+    public bool flingInputEnabled;
     public float force;
     public bool inFling;
     public float inFlingTime;
@@ -27,6 +28,7 @@ public struct FlingMechanicComponent : IComponentData
 public class FlingMechanicComponentAuthoring: MonoBehaviour, IConvertGameObjectToEntity
 {
     public bool active = true;
+    public bool flingInputEnabled = false;
     public float force = 24f;
     public float inFlingMaxTime = 1.0f;
     public float vulnerableMaxTime = 2.0f;
@@ -44,6 +46,7 @@ public class FlingMechanicComponentAuthoring: MonoBehaviour, IConvertGameObjectT
         dstManager.AddComponentData(entity, new FlingMechanicComponent()
         {
             active = active, force = force, inFlingMaxTime = inFlingMaxTime, vulnerableMaxTime = vulnerableMaxTime, 
+            flingInputEnabled = flingInputEnabled,
             vulnerableMaxTimeGame = vulnerableMaxTime,
             resetTimerAfterHitLanded = resetTimerAfterHitLanded
 
