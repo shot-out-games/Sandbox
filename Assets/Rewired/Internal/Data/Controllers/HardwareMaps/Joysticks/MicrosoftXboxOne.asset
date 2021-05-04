@@ -3152,20 +3152,24 @@ MonoBehaviour:
           buttonInfo:
             _excludeFromPolling: 0
             _isPressureSensitive: 0
-    - description: Xbox One S Bluetooth (fw 3.1.1221.0)
+    - description: Xbox One S Bluetooth (fw 3.1.1221.0), Xbox Wireless Controller
+        (new firmware)
       matchingCriteria:
         axisCount: 6
         buttonCount: 17
         disabled: 0
         tag: 
         hatCount: 1
-        alternateElementCounts: []
+        alternateElementCounts:
+        - axisCount: 6
+          buttonCount: 16
+          hatCount: 1
         productName_useRegex: 1
         productName:
         - Xbox Wireless Controller.*
         manufacturer: []
-        productId: e0020000
-        vendorId: 5e040000
+        productId: e0020000130b0000
+        vendorId: 5e0400005e040000
       elements:
         axes:
         - elementIdentifier: 0

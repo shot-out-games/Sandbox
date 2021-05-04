@@ -21661,6 +21661,11 @@
         <member name="M:Rewired.Utils.Libraries.TinyJson.JsonWriter.ToJson(System.Object)">
             <exclude></exclude>
         </member>
+        <member name="M:Rewired.Utils.Libraries.JoyShock.Motion.Update(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            The gyro inputs should be calibrated degrees per second but have no other processing
+            </summary>
+        </member>
         <member name="T:Rewired.Utils.SafeDelegate">
             <summary>
             Base class for custom delegate.

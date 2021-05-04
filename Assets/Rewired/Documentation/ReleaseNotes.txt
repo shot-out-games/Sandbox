@@ -1,8 +1,22 @@
+1.1.39.1:
+  
+    Bug Fixes:
+      - Fixed IL2CPP compile errors and runtime exceptions on some platforms due to error in obfuscation introduced in 1.1.39.0.
+      - Disabled debug logging in OSX builds in Unity 2020 and 2021 branches introduced in 1.1.39.0.
+
+1.1.39.0:
+
+    Changes:
+      - Added Unity 2021.x branch.
+      - Windows Native, OSX Native: Marginally improved DualShock 4 and DualSense gyro drift in computed orientation.
+      - Changed inspector settings on Rewired_DirectInput.dll to explicitly exclude OSX platforms due to new Unity bug in Unity 2020.x including Windows DLLs on MacOS builds.
+      - Added changes for new Xbox Wireless Controller firmware on MacOS.
+
 1.1.38.4:
 
     Changes:
       - Updated Universal Fighting Engine 2 integration due to major breaking changes made in UFE 2.4.1 update.
-      - Updated Bolt implementing workaround to prevent Rewired Bolt DLL containing custom units from being stripped from project in IL2CPP builds resulting in deserialization errors.
+      - Updated Bolt integration implementing workaround to prevent Rewired Bolt DLL containing custom units from being stripped from project in IL2CPP builds resulting in deserialization errors.
       - Windows 10 Universal: Added workaround for new bug in IL2CPP that causes builds to fail in Unity 2020.2.x and later.
 
 1.1.38.3:
