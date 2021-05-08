@@ -9,6 +9,14 @@ using Unity.Entities;
 using Unity.Jobs;
 using UnityEngine.AI;
 
+
+public enum toggleStates
+{
+    off,
+    on,
+    post
+}
+
 [System.Serializable]
 public struct WinnerMenuComponent : IComponentData
 {
@@ -16,33 +24,51 @@ public struct WinnerMenuComponent : IComponentData
     public int levelTargetReachedCounter;
     public int endGameTargetReachedCounter;
     public int npcDeadCounter;
+    public int score;
+    public int rank;
+    public bool showScore;
+    //public bool scoreBoard;
+
 
 }
 
+[System.Serializable]
+public struct WinnerComponent : IComponentData
+{
+    public bool active;
+    public int goalCounter;
+    public int goalCounterTarget;
+    public bool targetReached;
+    public bool endGameReached;
+    public bool resetLevel;
+    public bool checkWinCondition;
+    public int winnerCounter;
+    public int keys;
+    public toggleStates winConditionMet;
+
+
+
+}
 
 public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 {
-    private EntityManager manager;
     public Entity entity;
 
-    AudioSource audioSource;
+    public AudioSource audioSource;
     private List<Button> buttons;
     public AudioClip clickSound;
     public EventSystem eventSystem;
     private CanvasGroup canvasGroup;
     [SerializeField]
     private Button defaultButton;
-
-    private int goalTarget;
-
     [SerializeField]
     private TextMeshProUGUI message;
+
+    [SerializeField] private ParticleSystem winnerParticleSystem;
 
 
     void Start()
     {
-        //goalTarget = manager.GetComponentData<WinnerComponent>(entity).goalCounterTarget;
-        goalTarget = 36;//using this for this game its an optional target only so not suing above commented
 
         audioSource = GetComponent<AudioSource>();
         canvasGroup = GetComponent<CanvasGroup>();
@@ -53,27 +79,10 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
-    public void Quit()
+
+
+    public void ShowMenu(bool showScoreboard, int score, int rank)
     {
-        SaveManager.instance.SaveWorldSettings();
-
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
-
-    }
-
-    void Update()
-    {
-        //ShowMenu();
-    }
-
-
-    public void ShowMenu()
-    {
-        //Debug.Log("end " + manager.GetComponentData<WinnerMenuComponent>(entity).endGameTargetReachedCounter);
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
@@ -82,38 +91,27 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
             defaultButton.Select();
         }
 
-        int npcDead = LevelManager.instance.NpcDead;
-        int npcSaved = LevelManager.instance.NpcSaved;
-        int totalPossible = LevelManager.instance.potentialGameTargets;
-
-        float f = (float)npcSaved  /  (float)totalPossible * 100f;
-        int score = Mathf.FloorToInt(f);
-
-        Debug.Log("f " + f);
-        Debug.Log("sc " + score);
-
-
-        if (score < 3)
+        if (winnerParticleSystem)
         {
-            //message.SetText("Curse you!  My plans for domination are ruined");
-            message.SetText("The curse is broken");
+            winnerParticleSystem.Play(true);
         }
-        else if (score > 99)
+
+        if (audioSource)
         {
-            message.SetText("You did it! Or did you? Now GTFO");
+            audioSource.Play();
         }
-        else if (score > 90)
+
+
+        if (showScoreboard == false)
         {
-            message.SetText("Yes, you did well. No, that is not good enough");
-        }
-        else if (score > 75)
-        {
-            message.SetText("This is not good enough");
+            message.SetText("Winner!");
         }
         else
         {
-            message.SetText("Your success can only be classified as pathetic");
+            message.SetText("SCORE: " + score + " RANK:  " + rank);
         }
+
+
 
     }
 
@@ -135,7 +133,6 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         this.entity = entity;
-        manager = dstManager;
 
         dstManager.AddComponentData(entity, new WinnerMenuComponent()
         {

@@ -22,49 +22,38 @@ public class EffectsManager : MonoBehaviour, IConvertGameObjectToEntity
     private float timeActive = .5f;
 
     [SerializeField] private bool pauseEffect;
-    public ParticleSystem powerTriggerEffect;
-    public AudioClip powerTriggerAudioClip;
-
-    public ParticleSystem powerEnabledEffect;
-    public AudioClip powerEnabledAudioClip;
-
-    public ParticleSystem playerDeadEffect;
-    public AudioClip playerDeadAudioClip;
-
-    public ParticleSystem playerHurtEffect;
-    public AudioClip playerHurtAudioClip;
 
 
-    public AudioClip playerLevelCompleteClip;
+    public ParticleSystem actorDeadEffectPrefab;
+    public ParticleSystem actorDeadEffectInstance;
+    public AudioClip actorDeadAudioClip;
+
+    public ParticleSystem actorHurtEffectPrefab;
+    public ParticleSystem actorHurtEffectInstance;
+    public AudioClip actorHurtAudioClip;
+
     public AudioSource audioSource;
 
 
     void Start()
     {
-        if (playerHurtEffect)
+        if (actorHurtEffectPrefab)
         {
-            playerHurtEffect.transform.SetParent(transform);
-            playerHurtEffect.transform.localPosition = new Vector3(0, playerHurtEffect.transform.localPosition.y, 0);
+            var ps = Instantiate(actorHurtEffectPrefab);
+            ps.transform.parent = transform;
+            ps.transform.localPosition = new Vector3(0, ps.transform.localPosition.y, 0);
+            actorHurtEffectInstance = ps;
         }
 
-        if (playerDeadEffect)
+        if (actorDeadEffectPrefab)
         {
-            playerDeadEffect.transform.SetParent(transform);
-            playerDeadEffect.transform.localPosition = new Vector3(0, playerDeadEffect.transform.localPosition.y, 0);
+            var ps = Instantiate(actorDeadEffectPrefab);
+            ps.transform.parent = transform;
+            ps.transform.localPosition = new Vector3(0, ps.transform.localPosition.y, 0);
+            actorDeadEffectInstance = ps;
         }
 
-        if (powerTriggerEffect)
-        {
-            powerTriggerEffect.transform.SetParent(transform);
-            powerTriggerEffect.transform.localPosition = new Vector3(0, powerTriggerEffect.transform.localPosition.y, 0);
-        }
 
-        if (powerEnabledEffect)
-        {
-            powerEnabledEffect.transform.SetParent(transform);
-            powerEnabledEffect.transform.localPosition = new Vector3(0, powerEnabledEffect.transform.localPosition.y, 0);
-
-        }
 
     }
 

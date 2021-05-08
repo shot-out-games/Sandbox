@@ -9,9 +9,6 @@ public class Loader : MonoBehaviour
 
 
 
-    public Image progressBar = null;
-    string loadProgress;
-    private string lastLoadProgress;
     float loadTime = 2.0f;
     private int currentSceneIndex = 0;
 
@@ -77,18 +74,19 @@ public class Loader : MonoBehaviour
         {
             //Output the current progress
             Debug.Log("Loading progress: " + (asyncOperation.progress * 100) + "%");
-            float pct = Mathf.Min(asyncOperation.progress * 100f, 100f);
-            progressBar.fillAmount = pct;
 
             // Check if the load has finished
             if (asyncOperation.progress >= 0.9f)
             {
                 //Activate the Scene
                 asyncOperation.allowSceneActivation = true;
+                float pct = asyncOperation.progress;
+
 
             }
 
             yield return null;
+
 
         }
 

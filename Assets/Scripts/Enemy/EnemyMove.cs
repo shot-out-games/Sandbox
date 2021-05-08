@@ -52,6 +52,7 @@ public enum CombatStates
 
 public enum EnemyRoles
 {
+    None,
     Chase,
     Patrol,
     Evade,
@@ -76,10 +77,17 @@ public enum AttackStages
     End
 }
 
+public struct NavMeshAgentComponent : IComponentData
+{
+
+}
 
 public struct MeleeComponent : IComponentData
 {
     public bool Available;
+    public float hitPower;
+    public float gameHitPower;
+    public bool anyTouchDamage;
 }
 public struct EnemyAttackComponent : IComponentData
 {
@@ -113,7 +121,8 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     public EnemyRoles enemyRole;
     public float moveSpeed;
     public float rotateSpeed = 1;
-    public Transform target;//default chase target but if combat used gets replaced by combatsystem move target
+
+    public Transform target;//default chase target but if combat used gets replaced by combat system move target
     public Entity entity;
     private EntityManager manager;
     private EnemyRatings enemyRatings;
@@ -121,23 +130,21 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     public float speedMultiple;
     public bool backup;
 
-    [SerializeField]
-    private Vector3 originalPosition;
-    private Vector3 destinationBeforeRewind;
-    private bool currentRewind;
+    [HideInInspector]
+    public Vector3 originalPosition;
 
 
-    //[SerializeField]
-    //Vector3[] offsets;
-    [SerializeField]
-    Vector3 leapTarget;
+    public AudioSource audioSource;
+    public AudioClip clip;
+    public ParticleSystem ps;
+    [HideInInspector]
+    public ParticleSystem stunEffect;//used by freeze system
+
     [SerializeField]
     float duration = 3.0f;
     float normalizedTime = 0.0f;
     Vector3 startPos;
     Vector3 endPos;
-
-
 
     public AnimationCurve curve = new AnimationCurve();
 
@@ -158,18 +165,25 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             chaseRange = ratings.chaseRangeDistance;
             combatRangeDistance = ratings.combatRangeDistance;
             shootRangeDistance = ratings.shootRangeDistance;
-            agent.speed = ratings.speed;
-            moveSpeed = agent.speed;
+            if (agent)
+            {
+                agent.speed = ratings.speed;
+                moveSpeed = agent.speed;
+            }
 
         }
 
-
-
-        agent.autoBraking = false;
-        anim = GetComponent<Animator>();
-        //SetWaypoints(randomWayPoints);
-        agent.updateRotation = false;
         originalPosition = transform.position;
+        anim = GetComponent<Animator>();
+
+        if (agent)
+        {
+            manager.AddComponent<NavMeshAgentComponent>(entity);
+            agent.autoBraking = false;
+            agent.updateRotation = false;
+            agent.autoTraverseOffMeshLink = false;
+        }
+
 
 
     }
@@ -177,14 +191,13 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     void Start()
     {
+
         SetWaypoints(randomWayPoints);
 
     }
 
     public void SetWaypoints(bool _randomWayPoints)
     {
-
-
         for (int i = 0; i < wayPoints.Count; i++)
         {
             WayPoint wayPoint = wayPoints[i];
@@ -197,33 +210,21 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     public void Patrol()
     {
-        //        if (wayPoints.Count == 0)
-        //     {
-        //      SetWaypoints(randomWayPoints);
-        //}
-
 
         if (wayPoints.Count == 0 | agent.enabled == false)
             return;
 
-        //Debug.Log("path pending " + agent.pathPending + " dist " + agent.remainingDistance);
-
-        //Debug.Log("path");
-
-
         float distance = isCurrentWayPointJump ? .0003f : .5f;
+
 
         if (agent.pathPending == false && agent.remainingDistance < distance)
         {
-            //wayPoints[currentWayPoint] = transform.position + offsets[currentWayPoint];
             anim.SetInteger("JumpState", 0);
             agent.destination = wayPoints[currentWayPointIndex].targetPosition;
             isCurrentWayPointJump = wayPoints[currentWayPointIndex].action == WayPointAction.Jump;
-            //leapTarget = wayPoints[currentWayPointIndex].targetPosition;
 
             if (isCurrentWayPointJump)
             {
-                //StartCoroutine(Curve(agent, duration));
                 anim.SetInteger("JumpState", 1);
                 normalizedTime = 0.0f;
                 startPos = agent.transform.position;
@@ -237,38 +238,12 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         }
 
 
-
-
-        //        else
-        //     {
-
         if (isCurrentWayPointJump == false)
         {
             AnimationMovement();
         }
-        //  }
-
 
     }
-
-
-    public void SetDestination()
-    {
-        if (agent == null || manager == null || entity == Entity.Null) return;
-
-        bool noX = false;
-        bool noZ = true;
-
-        if (agent.enabled)
-        {
-
-            Vector3 nextPosition = target.position;
-            if (noZ) nextPosition.z = 0;
-            agent.destination = nextPosition;
-            AnimationMovement();
-        }
-    }
-
 
 
 
@@ -278,16 +253,9 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         if (normalizedTime < 1.0f)
         {
 
-            //Debug.Log("next0 " + agent.nextPosition);
             float yOffset = curve.Evaluate(normalizedTime);
-            //Debug.Log("y " + math.round(yOffset));
             agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
             normalizedTime += Time.deltaTime / duration;
-                //Debug.Log("n " + normalizedTime);
-            //Debug.Log("pos " + agent.transform.position);
-
-            // yield return null;
-
         }
         else
         {
@@ -304,7 +272,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     {
         if (agent == null) return;
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(agent.destination, 1);
+        Gizmos.DrawSphere(agent.destination, .095f);
     }
 
 
@@ -327,7 +295,11 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     public void FacePlayer()
     {
+        if(!agent) return;
+        
+
         if (!agent.enabled) return;
+
         Vector3 lookDir = target.position - transform.position;
         lookDir.y = 0;
         if (lookDir.magnitude < .019f) return;
@@ -336,57 +308,78 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     }
 
+
+    public void SetBackup()
+    {
+        if (agent == null) return;
+
+        if (agent.enabled)
+        {
+            Vector3 nextPosition = target.position;
+            Vector3 offset = transform.forward * Time.deltaTime * moveSpeed * 2;
+            agent.Move(-offset);
+            AnimationMovement();
+        }
+    }
+
+    public void SetDestination()
+    {
+        if (agent == null) return;
+
+        if (agent.enabled)
+        {
+            Vector3 nextPosition = target.position;
+            agent.destination = nextPosition;
+            AnimationMovement();
+        }
+    }
+
+
+
+
+
+
     public void AnimationMovement()
     {
 
         if (target == null || anim == null) return;
 
 
-        //Debug.Log("next 1 " + agent.nextPosition);
-        //Debug.Log("rem 1 " + agent.remainingDistance);
-
-
-        bool onLink = agent.isOnOffMeshLink;
-
-
-
-
-        MoveStates state = manager.GetComponentData<EnemyStateComponent>(entity).MoveState;
-        int pursuitMode = anim.GetInteger("Zone");
-        agent.speed = pursuitMode >= 2 ? moveSpeed : moveSpeed * 2;
-        Vector3 forward =
-            transform.InverseTransformDirection(transform.forward); //world to local so always local forward (0,0,1)
-
-
-        float velx = 0;
-        float velz = forward.normalized.z;
-
-        if (currentRewind == true)
+        if (agent)
         {
-            agent.speed = moveSpeed * 2;
-            velz = velz * 2;
+
+            if (backup == false)
+            {
+                agent.updatePosition = true;
+            }
+
+
+
+            MoveStates state = manager.GetComponentData<EnemyStateComponent>(entity).MoveState;
+            int pursuitMode = anim.GetInteger("Zone");
+            agent.speed = pursuitMode >= 2 ? moveSpeed : moveSpeed * 2;
+            Vector3 forward =
+                transform.InverseTransformDirection(transform.forward); //world to local so always local forward (0,0,1)
+
+
+            //float velx = 0;
+            float velz = forward.normalized.z;
+
+            if (state == MoveStates.Idle)
+            {
+                agent.speed = 0;
+                velz = 0;
+            }
+            else if (state == MoveStates.Patrol)
+            {
+                agent.speed = moveSpeed * .5f;
+                velz = .5f;
+            }
+
+            velz = velz * speedMultiple;
+            //Debug.Log("velz " + velz);
+            anim.SetFloat("velz", velz);
         }
-        else if (state == MoveStates.Idle)
-        {
-            agent.speed = 0;
-            velz = 0;
-        }
-        else if (state == MoveStates.Patrol)
-        {
-            agent.speed = agent.speed * .5f;
-            velz = .5f;
-        }
-
-
-
-        velz = velz * speedMultiple;
-
-
-
-        anim.SetFloat("velx", velx);
-        anim.SetFloat("velz", velz);
-
-
 
     }
 
@@ -394,35 +387,16 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     void OnAnimatorMove()
     {
 
-        //return;
-
-        if (agent == null || manager == null || entity == Entity.Null) return;
+        if (agent == null) return;
         if (isCurrentWayPointJump == false)
         {
-
-            float speed = speedMultiple * 1.0f;
-            Vector3 velocity = anim.deltaPosition / Time.deltaTime * speed;
-
-            //Debug.Log("v " + velocity + " " + speed);
-            //Debug.Log("v " + agent.velocity);
-
-            if (backup)
-            {
-                agent.velocity = -velocity;
-            }
-            else
-            {
-                transform.position = agent.nextPosition;
-            }
-
-
-            transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+            agent.updatePosition = true;
+            transform.position = agent.nextPosition;
         }
         else if (isCurrentWayPointJump)
         {
             Curve();
         }
-
 
 
 

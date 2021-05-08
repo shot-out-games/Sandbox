@@ -4,6 +4,7 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Physics;
+using Unity.Physics.Systems;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -15,84 +16,99 @@ namespace SandBox.Player
 {
 
 
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+    //[UpdateAfter(typeof(ExportPhysicsWorld)), UpdateBefore(typeof(EndFramePhysicsSystem))]
 
 
-
-    public class PlayerMoveSystem : JobComponentSystem
+    public class PlayerMoveSystem : SystemBase
     {
 
 
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void OnUpdate()
         {
             bool rewindPressed = false;
             float damage = 25;
             float stickSpeed = 0;
-
-            Entities.WithoutBurst().WithStructuralChanges().ForEach(
-                (ref PlayerMoveComponent playerMove, ref Translation translation, ref PhysicsVelocity pv,
-                    ref ApplyImpulseComponent applyImpulseComponent,
-                    in Pause pause, in DeadComponent dead,
-                    in Entity entity, in InputController inputController) =>
-                {
-
-                    if (pause.value == 0 && !dead.isDead)
-                    {
-
-                        //if (!EntityManager.HasComponent<PlayerTurboComponent>(entity))
-                        // playerMove.currentSpeed = ratingsComponent.speed;
-
-                        damage = EntityManager.GetComponentData<ControlBarComponent>(entity).value;
-
-                        if (inputController.buttonY_Pressed && damage < 25)
-                        {
-                            rewindPressed = true;
-                            //enemyMove.SetDestination();
-                        }
-
-
-                        float leftStickX = inputController.leftStickX;
-                        float leftStickY = inputController.leftStickY;
-                        leftStickX =math.abs(leftStickX) < .5 ? 0 : leftStickX;
-                        leftStickY = math.abs(leftStickY) < .5 ? 0 : leftStickY;
-                        applyImpulseComponent.stickX = leftStickX;
-                        applyImpulseComponent.stickY = leftStickY;
-
-                        leftStickY = 0;//2d but need Y for shooting still so save to applyimpulse above
-                        Vector3 stickInput = new Vector3(leftStickX, 0, leftStickY);
-                        stickSpeed = stickInput.sqrMagnitude;
-
-                        //if (EntityManager.HasComponent<PlayerStopComponent>(entity))
-                        //{
-                        //    if (EntityManager.GetComponentData<PlayerStopComponent>(entity).enabled)
-                        //        stickSpeed = 0; //turn off animator
-                        //}
-
-                        pv.Linear = applyImpulseComponent.Velocity;
-
-
-                        //Debug.Log("pm v " + pv.Linear);
-                        //Debug.Log("sx " + applyImpulseComponent.stickX);
-                        inputController.gameObject.GetComponent<Animator>().SetFloat("Speed", stickSpeed);
-                        translation.Value.z = 0;
-
-
-                    }
-
-                }
-            ).Run();
+            Vector3 stickInput = Vector3.zero;
 
 
 
-            Entities.WithoutBurst().ForEach(
+
+            Entities.WithoutBurst().WithNone<Pause>().ForEach(
                 (
                     Entity e,
                     PlayerMove playerMove,
-                    in PhysicsVelocity physicsVelocity
+                    ref PhysicsVelocity pv,
+                    ref Translation translation,
+                    in ApplyImpulseComponent applyImpulseComponent,
+                    in InputControllerComponent inputController,
+                    in RatingsComponent ratingsComponent,
+                    in PlayerMoveComponent playerMoveComponent
                 ) =>
                 {
+
+
+                    if (HasComponent<PlayerJumpComponent>(e) == false)
+                    {
+                        translation.Value.y = 0; //change for jump use
+                    }
+
+
+                    bool hasFling = HasComponent<FlingMechanicComponent>(e);
+                    if (hasFling)
+                    {
+                        if (GetComponent<FlingMechanicComponent>(e).inFling == true)
+                        {
+                            return;
+                        }
+                    }
+
+
+
+                    Camera cam = playerMove.mainCam;
+                    Animator animator = playerMove.GetComponent<Animator>();
+
+
+
+                    float currentSpeed = ratingsComponent.gameSpeed;
+                    pv.Linear = float3.zero;
+                    //Vector3 velocity = animator.deltaPosition / Time.DeltaTime * currentSpeed;
+
+                    float leftStickX = inputController.leftStickX;
+                    float leftStickY = inputController.leftStickY;
+
+                    if (playerMoveComponent.move2d) leftStickY = 0;
+
+                    stickInput = new Vector3(leftStickX, 0, leftStickY);//x is controlled by rotation
+                    stickInput.Normalize();
+
+                    stickSpeed = stickInput.sqrMagnitude;
+                    //animator.SetFloat("Vertical", stickSpeed);
+                    animator.SetFloat("Vertical", stickSpeed, playerMoveComponent.dampTime, Time.DeltaTime);
+                    float3 fwd = cam.transform.forward;
+                    float3 right = cam.transform.right;
+                    //fwd = Vector3.forward;
+                    //right = Vector3.right;
+                    fwd = playerMove.transform.forward;
+                    right = playerMove.transform.right;
+                    fwd.y = 0;
+                    right.y = 0;
+                    fwd = math.normalize(fwd);
+                    right = math.normalize(right);
+                    
+                    if (math.abs(stickSpeed) > .01f)
+                    {
+                        pv.Linear =  fwd * stickSpeed * currentSpeed;
+                        pv.Linear.y = 0;
+                    }
+
+                    animator.SetBool("Grounded", applyImpulseComponent.Grounded);
+
+
+
                     AudioSource audioSource = playerMove.audioSource;
 
-                    if (math.abs(stickSpeed) >= .01f  && math.abs(physicsVelocity.Linear.y) <= .000001f)
+                    if (math.abs(stickSpeed) >= .01f && math.abs(pv.Linear.y) <= .000001f)
                     {
                         if (playerMove.clip && audioSource)
                         {
@@ -101,7 +117,6 @@ namespace SandBox.Player
                             {
                                 audioSource.clip = playerMove.clip;
                                 audioSource.Play();
-                                //Debug.Log("clip " + audioSource.clip);
 
                             }
 
@@ -118,8 +133,8 @@ namespace SandBox.Player
                     }
                     else
                     {
-                        if(audioSource != null) audioSource.Stop();
-                        if(playerMove.ps != null) playerMove.ps.Stop();
+                        if (audioSource != null) audioSource.Stop();
+                        if (playerMove.ps != null) playerMove.ps.Stop();
 
                     }
 
@@ -129,48 +144,134 @@ namespace SandBox.Player
                 }
             ).Run();
 
-            Entities.WithoutBurst().ForEach(
-                (
-                    in Entity e,
-                    in Impulse impulse) =>
-                {
-                    if (rewindPressed && damage < 25)
-                    {
-                        impulse.impulseSource.GenerateImpulse();
-                    }
-
-                }
-            ).Run();
-
-
-
-            Entities.WithoutBurst().ForEach(
-                (Entity e, ref RewindComponent rewindComponent) =>
-                {
-
-                    if (rewindPressed)
-                    {
-                        rewindComponent.@on = !rewindComponent.@on;
-                        rewindComponent.pressed = true;
-                        Debug.Log("rew " + rewindComponent.@on);
-                    }
-                    else
-                    {
-                        rewindComponent.pressed = false;
-                    }
-
-
-                }
-            ).Run();
 
 
 
 
-
-
-            return default;
         }
 
     }
+
+
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+    //[UpdateAfter(typeof(ExportPhysicsWorld)), UpdateBefore(typeof(EndFramePhysicsSystem))]
+    [UpdateAfter(typeof(PlayerMoveSystem))]
+
+
+    public class PlayerRotateSystem : SystemBase
+    {
+
+        //public float desiredRotationAngle;
+        //public float CurrentRotationAngle;
+
+
+        protected override void OnUpdate()
+        {
+
+
+
+            Entities.WithoutBurst().WithStructuralChanges().WithAll<PlayerComponent>().WithNone<Pause>().ForEach
+         (
+             (
+                 PlayerMove playerMove,
+                 ref Rotation rotation,
+                 ref Translation translation,
+                 ref PhysicsVelocity pv,
+                 in DeadComponent deadComponent,
+                 in PlayerMoveComponent playerMoveComponent,
+                 in RatingsComponent ratingsComponent,
+                 in InputControllerComponent inputController
+
+             ) =>
+             {
+                 float leftStickX = inputController.leftStickX;
+                 float leftStickY = inputController.leftStickY;
+
+                 if (!deadComponent.isDead)
+                 {
+                     float slerpDampTime = playerMoveComponent.rotateSpeed;
+                     var up = math.up();
+                     bool haveInput = (math.abs(leftStickX) > float.Epsilon) || (math.abs(leftStickY) > float.Epsilon);
+
+                     if (playerMoveComponent.snapRotation == true)
+                     {
+
+                         if (haveInput == true)
+                         {
+                             Vector3 forward = Vector3.forward;
+                             forward.y = 0;
+                             Vector3 right = Vector3.right;
+                             Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
+                             targetDirection.Normalize();
+                             quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
+                             rotation.Value = targetRotation;
+                         }
+                     }
+                     else
+                     {
+
+                         if (haveInput == true)
+                         {
+
+                             //var forward = playerMove.mainCam.transform.TransformDirection(Vector3.forward);
+                             //var right = playerMove.mainCam.transform.TransformDirection(Vector3.right);
+                             var forward = playerMove.mainCam.transform.forward;
+                             var right = playerMove.mainCam.transform.right;
+                             //forward = Vector3.forward;
+                             //right = Vector3.right;
+
+                             forward.y = 0;
+
+                             Vector3 targetDirection = (leftStickX * right + leftStickY * forward);
+                             if (targetDirection.magnitude > .1)
+                             {
+                                 targetDirection.Normalize();
+                                 quaternion targetRotation = quaternion.LookRotation(targetDirection, math.up());
+                                 rotation.Value = math.slerp(rotation.Value, targetRotation, slerpDampTime * Time.DeltaTime);
+                             }
+                         }
+
+                     }
+
+                     if (playerMoveComponent.move2d)
+                     {
+                         translation.Value.z = playerMoveComponent.startPosition.z;
+                     }
+
+
+
+
+                 }
+             }
+         ).Run();
+
+
+
+
+
+
+
+
+
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

@@ -14,6 +14,10 @@ public struct RatingsComponent : IComponentData
     public float chaseRangeDistance;
     public float combatRangeDistance;
 
+    public float gameSpeed;
+    public float gameWeaponPower;
+    public float WeaponPower;
+
 
 }
 

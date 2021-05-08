@@ -4,40 +4,63 @@ using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
 
-public class CharacterEffectsSystem : JobComponentSystem
+[UpdateAfter(typeof(DeadSystem))]
+
+public class CharacterEffectsSystem : SystemBase
 {
     private float timer;
 
 
-
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
         timer += Time.DeltaTime;
 
 
+
+
         Entities.WithoutBurst().ForEach(
             (
                 in DamageComponent damageComponent,
                 in Impulse impulse) =>
             {
                 if (damageComponent.DamageReceived == 0) return;
-                impulse.impulseSource.GenerateImpulse();
+                //impulse.impulseSourceHitReceived.GenerateImpulse();
 
             }
         ).Run();
 
 
 
+
+
+        //Entities.WithoutBurst().WithAll<AudioSourceComponent>().ForEach(
+        //    (
+        //        PowerItem powerItem, Entity e, AudioSource audioSource, PowerItemComponent powerItemComponent) =>
+        //    {
+        //        //impulse.impulseSourceHitReceived.GenerateImpulse();
+        //        if (audioSource.isPlaying == false && powerItemComponent.enabled)
+        //        {
+        //            Debug.Log("play ");
+        //            audioSource.Play();
+        //        }
+
+        //    }
+        //).Run();
+
+
+
         Entities.WithoutBurst().ForEach(
             (
-                InputController input, ControlBarComponent controlBar,
+                in InputController input, in ControlBarComponent controlBar,
                 in Impulse impulse) =>
             {
                 //if (input.rightTriggerDown == true && controlBar.value < 25f) 
-                if (input.leftTriggerDown == true)
-                {
-                        impulse.impulseSource.GenerateImpulse();
-                }
+                //if (pause.value == 1) return;
+
+                //if (input.leftTriggerDown == true || input.rightTriggerDown == true)
+                //{
+                //impulse.impulseSource.GenerateImpulse();
+                //}
 
             }
         ).Run();
@@ -46,89 +69,63 @@ public class CharacterEffectsSystem : JobComponentSystem
 
 
 
-
-        Entities.WithoutBurst().ForEach(
+        Entities.WithoutBurst().WithNone<Pause>().ForEach(
             (
                 Entity e,
+                ref DeadComponent deadComponent,
                 in EffectsComponent effectsComponent,
-                in DamageComponent damageComponent,
-                in Transform transform, in EffectsManager effects) =>
+                in Animator animator,
+                in EffectsManager effects) =>
             {
-                if (damageComponent.DamageReceived == 0) return;
 
-                bool skip = false;
-                if (EntityManager.HasComponent(e, typeof(EnemyComponent)))
+
+                AudioSource audioSource = effects.audioSource;
+
+                if (deadComponent.playDeadEffects)
                 {
-                    skip = EntityManager.GetComponentData<EnemyComponent>(e).invincible;
-                }
+                    deadComponent.playDeadEffects = false;
 
-                if (skip == false)
-                {
-                    AudioSource audioSource = effects.audioSource;
-
-                    if (effects.playerHurtEffect)
+                    if (effects.actorDeadEffectInstance)
                     {
-                        timer = 0f;
-                        effects.playerHurtEffect.Play(true);
+                        if (effects.actorDeadEffectInstance.isPlaying == false)
+                        {
+                            effects.actorDeadEffectInstance.Play(true);
+                        }
                     }
-
-                    if (effects.playerHurtAudioClip)
+                    if (effects.actorDeadAudioClip)
                     {
-                        //audioSource.PlayOneShot(effects.playerHurtAudioClip);
-                        audioSource.clip = effects.playerHurtAudioClip;
+                        audioSource.clip = effects.actorDeadAudioClip;
                         audioSource.Play();
                     }
                 }
+                else
+                {
+                    bool hasDamage = HasComponent<DamageComponent>(e);
+                    if (hasDamage == true)
+                    {
+                        var damageComponent = GetComponent<DamageComponent>(e);
+                        if (damageComponent.DamageReceived <= .0001) return;
+                        animator.SetInteger("HitReact", 1);
+                        Debug.Log("hit react");
+
+
+                        if (effects.actorHurtEffectInstance)
+                        {
+                            effects.actorHurtEffectInstance.Play(true);
+                        }
+                        if (effects.actorHurtAudioClip)
+                        {
+                            audioSource.clip = effects.actorHurtAudioClip;
+                            audioSource.Play();
+                        }
+
+                    }
+                }
             }
         ).Run();
 
 
-        Entities.WithoutBurst().ForEach(
-            (
-                in Speed power,
-                 in AudioSource audioSource, in EffectsManager effects) =>
-            {
-                if (power.enabled == false)
-                {
-                    if (effects.powerEnabledEffect)
-                    {
-                        effects.powerEnabledEffect.Stop(true);
-                    }
-                    return;
-                }
 
-                if (power.enabled == true)
-                {
-                    if (effects.powerEnabledEffect)
-                    {
-                        if (effects.powerTriggerEffect.isPlaying == false)
-                        {
-                            effects.powerEnabledEffect.Play(true);
-                            Debug.Log("power enabled");
-                        }
-                    }
-                    if (effects.powerEnabledAudioClip) audioSource.PlayOneShot(effects.powerEnabledAudioClip);
-                }
-                else if (power.triggered == true)
-                {
-                    if (effects.powerTriggerEffect)
-                    {
-                        if (effects.powerTriggerEffect.isPlaying == false)
-                        {
-                            effects.powerTriggerEffect.Play(true);
-                            Debug.Log("power triggered");
-                        }
-                    }
-
-                    if (effects.powerTriggerAudioClip)
-                    {
-                        audioSource.PlayOneShot(effects.powerTriggerAudioClip);
-                    }
-                }
-
-
-            }
-        ).Run();
 
 
         Entities.WithoutBurst().ForEach
@@ -137,18 +134,11 @@ public class CharacterEffectsSystem : JobComponentSystem
                 in LevelCompleteComponent goal, in Entity entity, in EffectsManager effects, in AudioSource audioSource) =>
             {
                 if (goal.active == true || effectsComponent.soundPlaying == true) return;
-                if (effects.playerLevelCompleteClip)
-                {
-                    audioSource.PlayOneShot(effects.playerLevelCompleteClip);
-                    effectsComponent.soundPlaying = true;
-                }
 
             }
         ).Run();
 
 
-
-        return default;
     }
 
 

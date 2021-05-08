@@ -24,28 +24,42 @@ public class LoadDeleteMenuGroup : MonoBehaviour
 
     public void OnLoadSlot(int slot)
     {
-        if(!loadButton || !deleteButton) return;
+        if (!deleteButton) return;
         selectedSlot = slot;
-        bool isSlotSaved = SaveManager.instance.saveWorld.isSlotSaved[slot];
+        bool isSlotSaved = SaveManager.instance.saveWorld.isSlotSaved[slot-1];//slot always 0
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;
-        loadButton.Select();
+        deleteButton.Select();
         deleteButton.interactable = isSlotSaved;
-        loadButton.gameObject.SetActive(true);
         deleteButton.gameObject.SetActive(isSlotSaved);
 
-        Debug.Log("slot");
+        //Debug.Log("slot " + isSlotSaved);
+    }
+
+    public void OnQuickButtonDelete()
+    {
+        SaveManager.instance.DeleteGameData(1);
+        SaveManager.instance.SaveCurrentLevelCompleted(0);
+        SaveManager.instance.saveWorld.isSlotSaved = new bool[] { false, false, false, false };
     }
 
     public void OnButtonDelete()
     {
         //if deleted slot is last loaded slot then reset
-        if (SaveManager.instance.saveWorld.lastLoadedSlot == selectedSlot)
-        {
-            SaveManager.instance.saveWorld.lastLoadedSlot = 0;
-        }
+        //if (SaveManager.instance.saveWorld.lastLoadedSlot == selectedSlot)
+        //{
+
+        //just using zero scarpping multi game saves - just 0 slot
+        //SaveManager.instance.saveData.saveGames[0].currentLevel = 0;
+        //SaveManager.instance.saveWorld.lastLoadedSlot = 0;
+        SaveManager.instance.SaveCurrentLevelCompleted(0);
+        SaveManager.instance.saveWorld.isSlotSaved = new bool[] { false, false, false, false };
+        //}
 
         OnLoadSlot(selectedSlot);
+        defaultButton.Select();
+
+
     }
 
 

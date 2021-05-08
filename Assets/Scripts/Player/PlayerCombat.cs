@@ -22,6 +22,14 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     private EntityManager _manager;
     public AttackStages AttackStage { get; set; }
 
+    [SerializeField]
+    private bool active = true;
+    [SerializeField]
+    private float hitPower = 100;
+
+    [SerializeField] private float fbbIKUseDistance = 8;
+    //public bool haraKiri = false;
+    //public Transform haraKiriTarget;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -31,36 +39,46 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
         for (int i = 0; i < movesInspector.Moves.Count; i++)
         {
             Moves move = movesInspector.Moves[i];
-            if (move.playerMove && move.active)
+            if (move.aimIk != null)
             {
-                if (move.aimIk != null)
+                aim = move.aimIk;
+                AimTransform = move.aimTransform;
+                if (AimTransform == null)
                 {
-                    aim = move.aimIk;
-                    AimTransform = move.aimTransform;
-                    if (AimTransform == null)
-                    {
-                        int boneCount = aim.solver.bones.Length;
-                        AimTransform = aim.solver.bones[boneCount - 1].transform;
-                    }
-
+                    int boneCount = aim.solver.bones.Length;
+                    AimTransform = aim.solver.bones[boneCount - 1].transform;
                 }
-                move.target = moveUsing.target;//default target assigned in system
-                moveList.Add(move);
             }
+            move.target = moveUsing.target;//default target assigned in system
+            moveList.Add(move);
+
         }
 
 
 
-        if(aim != null) aim.enabled = false;
-        if(ik != null) ik.enabled = false;
+        if (aim != null) aim.enabled = false;
+        if (ik != null) ik.enabled = false;
 
     }
 
     public void SelectMove(int combatAction)
     {
-        if (moveList.Count < combatAction) return;
+        if (moveList.Count <= 0) return;
 
-        moveUsing = moveList[combatAction - 1];
+        int animationIndex = -1;
+
+        for (int i = 0; i < moveList.Count; i++)
+        {
+            if ((int)moveList[i].animationType == combatAction)
+            {
+                moveUsing = moveList[i];
+                animationIndex = (int)moveUsing.animationType;
+            }
+        }
+
+        if (animationIndex <= 0) return;//0 is none on enum
+
+
         aim = moveUsing.aimIk;
         AimTransform = moveUsing.aimTransform;
         if (aim != null)
@@ -69,18 +87,96 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
             {
                 int boneCount = aim.solver.bones.Length;
                 AimTransform = aim.solver.bones[boneCount - 1].transform;
+                Debug.Log("aim ik auto bone ");
             }
             moveUsing.aimTransform = AimTransform;
-            //Debug.Log("at1 " + AimTransform);
+        }
+        if (moveUsing.moveAudioSource && moveUsing.moveAudioClip && moveUsing.moveAudioSource.isPlaying == false)
+        {
+            moveUsing.moveAudioSource.clip = moveUsing.moveAudioClip;
+            moveUsing.moveAudioSource.Play();
+        }
+        if (moveUsing.moveParticleSystem)
+        {
+            moveUsing.moveParticleSystem.Play(true);
+        }
+
+        StartMove(animationIndex);
+
+        //if (combatAction == 3)
+        //{
+        // moveUsing.target = transform;
+        //}
+        //Debug.Log("at1 " + AimTransform);
+
+
+    }
+
+    public void StartMove(int animationIndex)
+    {
+        if (moveList.Count <= 0) return;
+
+
+        animator.SetInteger("CombatAction", animationIndex);
+        animator.SetLayerWeight(0, 0);
+        animator.SetLayerWeight(1, 1);
+        animator.SetLayerWeight(2, 0);
+
+        StartIKPlayer();
+    }
+
+    public void StartIKPlayer()
+    {
+        if (moveUsing.usingAim)
+        {
+            aim.enabled = true;
+        }
+        if (moveUsing.usingFbb)
+        {
+            ik.enabled = true;
         }
 
     }
 
-    public void StartMove(int combatAction)
+    public void StopIKPlayer()
     {
-        animator.SetInteger("CombatAction", combatAction);
+        animator.SetFloat("HitWeight", 0);
+
+        if (moveUsing.usingFbb)
+        {
+            ik.solver.GetEffector(moveUsing.effector).positionWeight = 0;
+        }
+
+        if (moveUsing.moveParticleSystem)
+        {
+            moveUsing.moveParticleSystem.Stop(true);
+        }
+
+        //haraKiri = false;
+        if (moveUsing.usingAim)
+        {
+            aim.enabled = false;
+        }
+        if (moveUsing.usingFbb)
+        {
+            ik.enabled = false;
+        }
+
     }
 
+    float AdjustWeightToDistanceFromTarget(float weight)
+    {
+        float distance = Vector3.Distance(transform.position, moveUsing.target.position);
+        //Debug.Log("dist " + distance);
+        float adjustedWeight = weight;
+        if (distance > fbbIKUseDistance) //change to member for fbbik start using distance
+        {
+            adjustedWeight = 0;
+        }
+
+        return adjustedWeight;
+
+    }
 
     public void Aim()
     {
@@ -95,21 +191,37 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
             aim.solver.transform.LookAt(moveUsing.pin.position);
             aim.solver.IKPosition = moveUsing.target.position;
             aim.solver.IKPositionWeight = hitWeight * moveUsing.weight;
+            //if (haraKiri == true)
+            //{
+            // aim.solver.IKPosition = haraKiriTarget.position;
+            //    //aim.solver.IKPositionWeight = 1;
+            //}
+
             aim.solver.Update();
         }
 
         if (ik == null || moveUsing.target == null) return;
 
-        if (moveUsing.usingFbb)
+        if (moveUsing.usingFbb && ik.enabled)
         {
+            float adjHitWeight = AdjustWeightToDistanceFromTarget(hitWeight);
+            //Debug.Log("ik " + " hw " + hitWeight + " move weight " + moveUsing.weight);
             ik.solver.GetEffector(moveUsing.effector).position = moveUsing.target.position;
-            ik.solver.GetEffector(moveUsing.effector).positionWeight = hitWeight * hitWeight;
+            ik.solver.GetEffector(moveUsing.effector).positionWeight = adjHitWeight * moveUsing.weight;
+
+            //if (haraKiri == true)
+            //{
+            //    ik.solver.GetEffector(moveUsing.effector).position = haraKiriTarget.position;
+            //    ik.solver.GetEffector(moveUsing.effector).positionWeight = hitWeight * moveUsing.weight;
+            //}
+
+
             ik.solver.Update();
         }
 
     }
 
-    private void LateUpdate()
+    public void LateUpdateSystem()
     {
         if (moveList.Count == 0) return;
         Aim();
@@ -118,16 +230,31 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
     public void EndAttack()
     {
-        //Debug.Log("attack stage end");
+        Debug.Log("attack stage end");
         AttackStage = AttackStages.End;//
-        animator.SetInteger("CombatAction", 0);
-
+        //animator.SetInteger("CombatAction", 0);
+        StopIKPlayer();
+        if (_manager.HasComponent<CheckedComponent>(_entity))
+        {
+            var checkedComponent = _manager.GetComponentData<CheckedComponent>(_entity);
+            checkedComponent.collisionChecked = false;
+            _manager.SetComponentData(_entity, checkedComponent);
+        }
     }
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         _entity = entity;
         _manager = dstManager;
+
+        _manager.AddComponentData(_entity, new MeleeComponent
+        {
+            Available = active,
+            hitPower = hitPower,
+            gameHitPower = hitPower
+        });
+
+
     }
 }
 

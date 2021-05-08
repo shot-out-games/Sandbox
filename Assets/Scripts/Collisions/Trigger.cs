@@ -8,18 +8,15 @@ public class Trigger : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField]
     private int index;
 
-    private void OnTriggerEnter(Collider other)
+    public ParticleSystem triggerParticleSystem;
+    [HideInInspector]
+    public AudioSource triggerAudioSource;
+
+
+    private void Start()
     {
-        Debug.Log("tr");
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("co");
-
-    }
-
-
+        triggerAudioSource = GetComponent<AudioSource>();
+    } 
 
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
@@ -27,15 +24,16 @@ public class Trigger : MonoBehaviour, IConvertGameObjectToEntity
         //parent needs to be fixed currently self
         TriggerComponent trigger = new TriggerComponent
         {
-            Type = (int) Type, ParentEntity = conversionSystem.GetPrimaryEntity(transform.gameObject), CurrentFrame = 0, index = index
+            Type = (int)Type,
+            Entity = entity,
+            ParentEntity = conversionSystem.GetPrimaryEntity(transform.gameObject),
+            CurrentFrame = 0,
+            index = index,
+            Hit = false,
+            Active = true
         };
 
         dstManager.AddComponentData(entity, trigger);
-        if (Type == TriggerType.Ammo)
-        {
-            //Debug.Log("tr " + trigger.ParentEntity);
-        }
-
     }
 
 

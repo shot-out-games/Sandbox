@@ -2,7 +2,6 @@
 using Unity.Entities;
 
 
-[RequiresEntityConversion]
 
 public class EnemyRatings : MonoBehaviour, IConvertGameObjectToEntity
 {
@@ -35,7 +34,9 @@ public class EnemyRatings : MonoBehaviour, IConvertGameObjectToEntity
                 speed = Ratings.speed,
                 shootRangeDistance = Ratings.shootRangeDistance,
                 chaseRangeDistance = Ratings.chaseRange,
-                combatRangeDistance = Ratings.combatRangeDistance
+                combatRangeDistance = Ratings.combatRangeDistance,
+                WeaponPower = 1,
+                gameWeaponPower = 1
             });
 
         e = entity;

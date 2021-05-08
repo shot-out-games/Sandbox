@@ -7,20 +7,30 @@ using Unity.Mathematics;
 using Unity.Collections;
 
 
+[Serializable]
+public struct MatchupComponent : IComponentData
+{
+    public bool matchupClosest;
+    public bool leader;
+
+
+}
 
 
 
-public class MatchupSystem : JobComponentSystem
+
+public class MatchupSystem :  SystemBase
 {
 
 
 
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
 
 
 
+        //get closest player to enemy
         Entities.WithAll<EnemyComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
         (
             (
@@ -33,56 +43,33 @@ public class MatchupSystem : JobComponentSystem
                 GameObject enemy = enemyTransform.gameObject;
                 GameObject player = null;
                 GameObject closestPlayer = null;
-                bool enemyDead = EntityManager.GetComponentData<DeadComponent>(enemyEntity).isDead;
+                bool enemyDead = GetComponent<DeadComponent>(enemyEntity).isDead;
 
-                Entities.WithAny<PlayerComponent, NpcComponent>().WithoutBurst().ForEach
+
+
+                Entities.WithAll<PlayerComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
                 (
                     (
                         Transform playerTransform,//find closest player
                         Entity playerEntity
                     ) =>
                     {
-                        bool playerDead = EntityManager.GetComponentData<DeadComponent>(playerEntity).isDead;
+                        bool playerDead = GetComponent<DeadComponent>(playerEntity).isDead;
                         player = playerTransform.gameObject;
 
                         if (playerDead == false && enemyDead == false)
                         {
-                            bool skipMatchup = EntityManager.HasComponent<SkipMatchupComponent>(playerEntity);
-
-
-                            if (EntityManager.HasComponent<NpcComponent>(playerEntity) == true)
-                            {
-                                if (EntityManager.GetComponentData<NpcComponent>(playerEntity).active == false)
-                                    skipMatchup = true;
-                                if (EntityManager.HasComponent<LevelCompleteComponent>(playerEntity) == true)
-                                {
-                                    if (EntityManager.GetComponentData<LevelCompleteComponent>(playerEntity).targetReached == true)
-                                        skipMatchup = true;
-                                }
-                            }
                             float distance = Vector3.Distance(playerTransform.position, enemyTransform.position);
-                            if (distance < closestDistance & skipMatchup == false)
+                            if (distance < closestDistance)
                             {
                                 closestPlayer = player;
                                 closestDistance = distance;
                             }
                         }
 
-
-
                     }
                 ).Run();
 
-
-
-                if (closestPlayer != null)
-                {
-                    if (enemy.GetComponent<EnemyMelee>() && closestPlayer.GetComponent<TargetZones>())
-                    {
-                        enemy.GetComponent<EnemyMelee>().moveUsing.target =
-                            closestPlayer.GetComponent<TargetZones>().headZone;
-                    }
-                }
 
                 if (closestPlayer != null)
                 {
@@ -90,28 +77,25 @@ public class MatchupSystem : JobComponentSystem
                     {
                         enemy.GetComponent<EnemyWeaponAim>().target =
                             closestPlayer.GetComponent<TargetZones>().headZone;
-
                     }
-                }
-
-                if (closestPlayer != null)
-                {
+                    if (enemy.GetComponent<EnemyMelee>())
+                    {
+                        enemy.GetComponent<EnemyMelee>().moveUsing.target =
+                            closestPlayer.GetComponent<TargetZones>().headZone;
+                    }
                     if (enemy.GetComponent<EnemyMove>())
                     {
-                        enemy.GetComponent<EnemyMove>().target = closestPlayer.transform;
+                        enemy.GetComponent<EnemyMove>().target =
+                            closestPlayer.transform;
                     }
+
                 }
 
             }
         ).Run();
 
 
-
-
-
-
-
-
+        //get closest enemy to player
         Entities.WithAll<PlayerComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
         (
             (
@@ -124,7 +108,7 @@ public class MatchupSystem : JobComponentSystem
                 GameObject player = playerTransform.gameObject;
                 GameObject enemy = null;
                 GameObject closestEnemy = null;
-                bool playerDead = EntityManager.GetComponentData<DeadComponent>(playerEntity).isDead;
+                bool playerDead = GetComponent<DeadComponent>(playerEntity).isDead;
 
 
                 Entities.WithAll<EnemyComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
@@ -134,12 +118,11 @@ public class MatchupSystem : JobComponentSystem
                         Entity enemyEntity
                     ) =>
                     {
-                        bool enemyDead = EntityManager.GetComponentData<DeadComponent>(enemyEntity).isDead;
+                        bool enemyDead = GetComponent<DeadComponent>(enemyEntity).isDead;
                         enemy = enemyTransform.gameObject;
 
                         if (playerDead == false && enemyDead == false)
                         {
-                            float dir = Vector3.Dot(playerTransform.forward, enemyTransform.forward);
                             float distance = Vector3.Distance(playerTransform.position, enemyTransform.position);
                             if (distance < closestDistance)
                             {
@@ -147,7 +130,6 @@ public class MatchupSystem : JobComponentSystem
                                 closestDistance = distance;
                             }
                         }
-
 
                     }
                 ).Run();
@@ -160,125 +142,18 @@ public class MatchupSystem : JobComponentSystem
                         player.GetComponent<PlayerWeaponAim>().target =
                             closestEnemy.GetComponent<TargetZones>().headZone;
                     }
-                }
-
-                if (closestEnemy != null)
-                {
                     if (player.GetComponent<PlayerCombat>())
                     {
                         player.GetComponent<PlayerCombat>().moveUsing.target =
                             closestEnemy.GetComponent<TargetZones>().headZone;
                     }
+
                 }
-
-
 
             }
         ).Run();
 
-
-
-
-        EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
-
-
-        Entities.WithoutBurst().ForEach//npc to static object distance
-        (
-        (
-             ref NpcMovementComponent npcMovementComponent,
-             in Transform npcTransform,
-             in NonPlayerCharacter npc,
-             in NpcComponent npcComponent,
-             in Entity npcEntity
-        ) =>
-        {
-
-            float closestDistance = Mathf.Infinity;
-            float closestPlayerDistance = Mathf.Infinity;
-            float closestItemDistance = Mathf.Infinity;
-
-            Transform closestTransform = null;
-            Transform closestPlayerTransform = null;
-            Transform closestItemTransform = null;
-
-            bool npcDead = EntityManager.GetComponentData<DeadComponent>(npcEntity).isDead;
-            bool chaseOnly = npcMovementComponent.chaseOnly;
-
-            Vector3 npcPosition = npcTransform.position;
-
-
-            Entities.WithNone<SkipMatchupComponent>().WithStructuralChanges().WithoutBurst().ForEach
-            (
-                (
-
-                     DestinationEligibleComponent destination,
-                     Transform objectTransform,//find closest player
-                     Entity objectEntity
-                ) =>
-                {
-
-                    if (npcDead == false)
-                    {
-                        float distance = Vector3.Distance(npcPosition, objectTransform.position);
-                        if (destination.priority && chaseOnly)
-                        {
-                            distance = -1;
-                        }
-                        if (distance < closestDistance)
-                        {
-                            closestTransform = objectTransform;
-                            closestDistance = distance;
-                        }
-
-                        bool isPlayer = EntityManager.HasComponent<PlayerComponent>(objectEntity);
-                        if (isPlayer)
-                        {
-                            if (distance < closestPlayerDistance)
-                            {
-                                closestPlayerTransform = objectTransform;
-                                closestPlayerDistance = distance;
-                            }
-                        }
-                        else
-                        {
-                            if (distance < closestItemDistance)
-                            {
-                                closestItemTransform = objectTransform;
-                                closestItemDistance = distance;
-                            }
-                        }
-
-                    }
-
-
-                }
-            ).Run();
-
-            bool npcLevelActive = EntityManager.GetComponentData<LevelCompleteComponent>(npcEntity).active;
-            bool npcActive = EntityManager.GetComponentData<NpcComponent>(npcEntity).active;
-
-
-            if (closestTransform != null && npcLevelActive == true && npcActive == true)
-            {
-         
-                if (closestItemDistance < 12.0f || closestItemDistance < closestPlayerDistance)
-                {
-                    npcMovementComponent.chaseOnly = true;
-                    npc.target = closestItemTransform;
-                }
-                else
-                {
-                    npc.target = closestTransform;
-                }
-
-            }
-
-        }
-    ).Run();
-
-
-
-
+        //-----------------------------------------leader override--------------------------------------------
 
         Entities.WithoutBurst().WithStructuralChanges().WithAll<MatchupComponent>().ForEach
         (
@@ -318,9 +193,6 @@ public class MatchupSystem : JobComponentSystem
         ).Run();
 
 
-
-
-        return default;
     }
 
 

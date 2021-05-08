@@ -1,4 +1,6 @@
-﻿using Unity.Burst;
+﻿using SandBox.Player;
+using TMPro;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
@@ -12,30 +14,13 @@ using SphereCollider = Unity.Physics.SphereCollider;
 
 
 
-//[UpdateAfter(typeof(Unity.Physics.Systems.EndFramePhysicsSystem))]
-//[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+[UpdateAfter(typeof(Unity.Physics.Systems.EndFramePhysicsSystem))]
+[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
-//[UpdateAfter(typeof(BuildPhysicsWorld))]
-//[UpdateBefore(typeof(BeginFixedStepSimulationEntityCommandBufferSystem))]
 
-//[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
 public class RaycastSystem : SystemBase
 {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -46,7 +31,7 @@ public class RaycastSystem : SystemBase
 
 
 
-        Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity entity, ref ApplyImpulseComponent applyImpulse,
+        Entities.WithoutBurst().ForEach((Entity entity, ref ApplyImpulseComponent applyImpulse,
             ref Translation translation, ref PhysicsVelocity pv, ref PhysicsCollider collider, ref Rotation rotation, in PlayerComponent playerComponent) =>
         {
 
@@ -57,9 +42,9 @@ public class RaycastSystem : SystemBase
             applyImpulse.BumpLeft = false;
             applyImpulse.BumpRight = false;
 
-            float3 start = translation.Value + new float3(0f,  .38f, 0);
+            float3 start = translation.Value + new float3(0f, .4f, 0);
             float3 direction = new float3(0, 0, 0);
-            float distance = .38f;
+            float distance = .4f;
             float3 end = start + direction * distance;
 
 
@@ -76,7 +61,7 @@ public class RaycastSystem : SystemBase
                 }
             };
 
-            bool hasPointHit = collisionWorld.CalculateDistance(pointDistanceInput, out DistanceHit pointHit);
+            bool hasPointHit = collisionWorld.CalculateDistance(pointDistanceInput, out DistanceHit pointHit);//bump left / right n/a
 
             hasPointHit = false;
 
@@ -84,29 +69,24 @@ public class RaycastSystem : SystemBase
             if (hasPointHit && applyImpulse.InJump == true)
             {
                 Entity e = physicsWorldSystem.PhysicsWorld.Bodies[pointHit.RigidBodyIndex].Entity;
-                //Debug.Log("ve " + applyImpulse.Velocity.x);
                 if (applyImpulse.Velocity.x < 0)
                 {
                     applyImpulse.Grounded = false;
                     applyImpulse.BumpLeft = true;
-                    Debug.Log("bump left ");
                 }
                 else if (applyImpulse.Velocity.x > 0)
                 {
                     applyImpulse.Grounded = false;
                     applyImpulse.BumpRight = true;
-                    Debug.Log("bump right ");
                 }
 
-                //Debug.Log("pt pos " + pointHit.Position + " pt fraction " + pointHit.Fraction + " pt e " + e);
             }
-
             else
             {
 
-                start = translation.Value + new float3(0, 0, 0);
+                start = translation.Value + new float3(0, .03f, 0);
                 direction = new float3(0, -1, 0);
-                distance = .25f;
+                distance = .35f;
                 end = start + direction * distance;
 
 
@@ -130,28 +110,14 @@ public class RaycastSystem : SystemBase
 
                 if (hasPointHitDown)
                 {
-                    //Debug.Log("start " + start +  "end " + end + " fraction " + hitDown.Fraction);
-
-
-
                     Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hitDown.RigidBodyIndex].Entity; //grounded
-                    Debug.Log("hd " + hitDown.Entity);
-
-                    //Filter replaces tag
-                    //if (EntityManager.HasComponent(e, typeof(TriggerComponent)))
-                    //{
-                    //Debug.Log("pt " + e);
-                    //    if (EntityManager.GetComponentData<TriggerComponent>(e).Type == (int)TriggerType.Ground)
-                    //    {
-                    //        applyImpulse.Grounded = true;
-                    //    }
-                    //}
                     if (applyImpulse.InJump == true)
                     {
                         applyImpulse.InJump = false;
                         applyImpulse.Grounded = true;
                     }
 
+                    applyImpulse.fallingFramesCounter = 0;
                     applyImpulse.Falling = false;
 
                 }
@@ -159,7 +125,15 @@ public class RaycastSystem : SystemBase
                 {
                     if (applyImpulse.InJump == false)
                     {
-                        applyImpulse.Falling = true;
+                        if (applyImpulse.fallingFramesCounter > applyImpulse.fallingFramesMaximuim)
+                        {
+                            applyImpulse.Falling = true;
+                        }
+                        else
+                        {
+                            applyImpulse.Falling = false;
+                            applyImpulse.fallingFramesCounter++;
+                        }
                     }
 
                     applyImpulse.Grounded = false;
@@ -168,15 +142,13 @@ public class RaycastSystem : SystemBase
 
                 start = translation.Value + new float3(0, 1f, 0);
                 direction = new float3(0, 1f, 0);
-                distance = .19f;
+                distance = .20f;
                 end = start + direction * distance;
-                //end = start + pv.Linear * Time.DeltaTime;
 
                 RaycastInput inputUp = new RaycastInput()
                 {
                     Start = start,
                     End = end,
-                    //Filter = CollisionFilter.Default
                     Filter = new CollisionFilter()
                     {
                         BelongsTo = 1,
@@ -184,9 +156,6 @@ public class RaycastSystem : SystemBase
                         GroupIndex = 0
                     }
                 };
-                Debug.DrawRay(inputUp.Start, direction, Color.green, distance);
-                //Debug.Log("st " + inputUp.Start);
-                //Debug.Log("en " + inputUp.End);
 
                 Unity.Physics.RaycastHit hitUp = new Unity.Physics.RaycastHit();
 
@@ -196,118 +165,20 @@ public class RaycastSystem : SystemBase
 
                 if (hasPointHitUp)
                 {
-
-                    Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hitUp.RigidBodyIndex].Entity; //grounded
-                    //Debug.Log("hu " + hitUp.Entity);
-                    //applyImpulse.Ceiling = true;
-
+                    Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hitUp.RigidBodyIndex].Entity; //ceiling n/a
                 }
-
-
-
-                //start = translation.Value + new float3(.19f, .5f, 0);
-                //direction = new float3(.19f, 0, 0);
-                //distance = 1.0f;
-                //end = start + direction * distance;
-                //RaycastInput inputRight = new RaycastInput()
-                //{
-                //    Start = start,
-                //    End = end,
-                //    Filter = new CollisionFilter()
-                //    {
-                //        BelongsTo = 1,
-                //        CollidesWith = 2,
-                //        GroupIndex = 0
-                //    }
-                //};
-                //Debug.DrawRay(inputRight.Start, direction, Color.red, distance);
-
-                //Unity.Physics.RaycastHit hitRight = new Unity.Physics.RaycastHit();
-
-                //bool hasPointHitRight = collisionWorld.CastRay(inputRight, out hitRight);
-
-
-
-                //if (hasPointHitRight)
-                //{
-
-                //    Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hitUp.RigidBodyIndex].Entity;//grounded
-                //    //Debug.Log("hr " + hitRight.Entity);
-                //    //applyImpulse.BumpRight = true;
-
-                //}
-
-
-
-
-
-
-                //start = translation.Value + new float3(-.19f, .5f, 0);
-                //direction = new float3(-.19f, 0f, 0);
-                //distance = 1.0f;
-                //end = start + direction * distance;
-                ////end = start + pv.Linear * Time.DeltaTime;
-
-                //RaycastInput inputLeft = new RaycastInput()
-                //{
-                //    Start = start,
-                //    End = end,
-                //    //Filter = CollisionFilter.Default
-                //    Filter = new CollisionFilter()
-                //    {
-                //        BelongsTo = 1,
-                //        CollidesWith = 2,
-                //        GroupIndex = 0
-                //    }
-                //};
-                //Debug.DrawRay(inputLeft.Start, direction, Color.blue, distance);
-                //Unity.Physics.RaycastHit hitLeft = new Unity.Physics.RaycastHit();
-
-                //bool hasPointHitLeft = collisionWorld.CastRay(inputLeft, out hitLeft);
-
-
-
-                //if (hasPointHitLeft)
-                //{
-
-                //    Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hitLeft.RigidBodyIndex].Entity;//grounded
-                //    //Debug.Log("hl " + hitLeft.Entity);
-                //    //applyImpulse.BumpLeft = true;
-
-                //}
-
-
-
-
-
-                ////start = translation.Value + new float3(-.19f, .5f, 0);
-                ////direction = new float3(-1.0f, 0f, 0);
-                ////distance = 1.0f;
-                ////end = start + direction * distance;
-                ////SphereCast(ref collider, ref applyImpulse, start, end, direction, distance);
-
 
 
 
             }
 
 
-
-
-
-
-
-
-
         }).Run();
-
-
 
 
         bool key = false;
 
-
-        Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity entity,
+        Entities.WithoutBurst().ForEach((Entity entity,
             ref LevelCompleteComponent levelComplete, ref WinnerComponent winnerComponent,
             ref Translation translation, ref PhysicsVelocity pv, ref Rotation rotation, in PlayerComponent playerComponent) =>
         {
@@ -328,54 +199,39 @@ public class RaycastSystem : SystemBase
                 }
             };
 
-            bool haveHit = collisionWorld.CalculateDistance(input, out DistanceHit hit);
+            bool haveHit = collisionWorld.CalculateDistance(input, out DistanceHit hit);//trigger hit
 
-
-
-            //RaycastInput input = new RaycastInput
-            //{
-            //    Start = translation.Value + new float3(-1, 5, 0),
-            //    End = translation.Value + new float3(1, 5, 0),
-            //    Filter = CollisionFilter.Default
-            //};
-
-
-            //Unity.Physics.RaycastHit hit = new Unity.Physics.RaycastHit();
-            //bool haveHit = collisionWorld.CalculateDistance(input, out hit);
             if (haveHit)
             {
-
-
                 Entity e = physicsWorldSystem.PhysicsWorld.Bodies[hit.RigidBodyIndex].Entity;
-                //Debug.Log("e " + e);
-                if (EntityManager.HasComponent(e, typeof(TriggerComponent)))
+                if (HasComponent<TriggerComponent>(e))
                 {
-                    if (EntityManager.GetComponentData<TriggerComponent>(e).Type == (int)TriggerType.Trigger
-                        && EntityManager.GetComponentData<TriggerComponent>(e).index == LevelManager.instance.currentLevel + 1
+                    if (GetComponent<TriggerComponent>(e).Type == (int)TriggerType.Trigger
+                        && GetComponent<TriggerComponent>(e).index == LevelManager.instance.currentLevelCompleted + 1
 
                     )
                     {
                         levelComplete.targetReached = true;
                     }
 
-                    if (EntityManager.GetComponentData<TriggerComponent>(e).Type == (int)TriggerType.Key
+                    if (GetComponent<TriggerComponent>(e).Type == (int)TriggerType.Key &&
+                    GetComponent<TriggerComponent>(e).Active == true
                     )
                     {
                         winnerComponent.keys += 1;
                         key = true;
-                        EntityManager.DestroyEntity(e);
+                        TriggerComponent trigger = GetComponent<TriggerComponent>(e);
+                        trigger.Hit = true;
+                        SetComponent<TriggerComponent>(e, trigger);
+                        LevelManager.instance.audioSourceGame.Stop();
+
                     }
 
-
-
                 }
+
+
+
             }
-
-
-
-
-
-
 
 
         }).Run();
@@ -384,49 +240,42 @@ public class RaycastSystem : SystemBase
 
 
 
+        Entities.WithoutBurst().ForEach((
+            ref TriggerComponent triggerComponent,
+            in Trigger triggerMB
 
-
-
-
-
-
-        Entities.WithoutBurst().WithStructuralChanges().ForEach((Entity entity,
-
-                 HudGroup hudGroup
-
-            ) =>
+        ) =>
         {
 
-            if (key == true)
+            if (triggerComponent.Hit && triggerComponent.Active == true)
             {
-                key = false;
-                hudGroup.cubes -= 1;
-                hudGroup.ShowLabelLevelTargets();
+                triggerComponent.Active = false;
+                Debug.Log("active ");
+
+                if (triggerMB.triggerParticleSystem != null)
+                {
+                    triggerMB.triggerParticleSystem.Play(true);
+                }
+                if (triggerMB.triggerAudioSource != null)
+                {
+
+                    triggerMB.triggerAudioSource.Play();
+                    Debug.Log("active audio source play ");
+                }
+
+
+            }
+            else if (key == true && triggerMB.triggerAudioSource != null)
+            {
+                triggerMB.triggerAudioSource.Stop();
+                Debug.Log("active audio source play  stop ");
             }
 
 
 
-
-
-
+            triggerComponent.Hit = false;
 
         }).Run();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     }

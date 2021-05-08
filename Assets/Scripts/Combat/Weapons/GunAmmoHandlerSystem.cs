@@ -1,141 +1,146 @@
-﻿using Unity.Entities;
+﻿using SandBox.Player;
+using Unity.Collections;
+using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Physics;
 using Unity.Physics.Extensions;
+using Unity.Physics.Systems;
 using Unity.Transforms;
 using UnityEngine;
 
 
+//[UpdateInGroup(typeof(PresentationSystemGroup))]
+[UpdateInGroup(typeof(TransformSystemGroup))]
+
 //[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
 
-public class GunAmmoHandlerSystem : JobComponentSystem
+public class GunAmmoHandlerSystem : SystemBase
 {
 
-
-
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    
+    protected override void OnUpdate()
     {
 
+        //EntityCommandBufferSystem barrier = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
 
-        //EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.TempJob);
+        //var ecb = new EntityCommandBuffer(Allocator.Temp);
+        //var ecb = barrier.CreateCommandBuffer().AsParallelWriter();
+        //var ecb = barrier.CreateCommandBuffer();
         float dt = UnityEngine.Time.fixedDeltaTime;//gun duration
 
-
-
-
-
-        Entities.WithoutBurst().WithStructuralChanges().ForEach(
-            (ref GunComponent gun, ref LocalToWorld gunTransform, ref StatsComponent statsComponent,
-                ref Rotation gunRotation, in GunScript gunScript, in Entity entity, in AttachWeaponComponent attachWeapon) =>
+        Entities.WithoutBurst().WithStructuralChanges().WithNone<Pause>().ForEach(
+            (
+                 BulletManager bulletManager,
+                ref GunComponent gun, ref StatsComponent statsComponent,
+                in RatingsComponent ratingsComponent,
+                in Entity entity, in DeadComponent dead,
+                in AttachWeaponComponent attachWeapon,
+                 in ActorWeaponAimComponent actorWeaponAimComponent
+                 ) =>
             {
+
+
                 if (attachWeapon.attachedWeaponSlot < 0 ||
                     attachWeapon.attachWeaponType != (int)WeaponType.Gun &&
                     attachWeapon.attachSecondaryWeaponType != (int)WeaponType.Gun
                     )
                 {
-                    //gun.IsFiring = 0;
                     gun.Duration = 0;
-                    gun.WasFiring = 0;
                     return;
                 }
 
+                if(LevelManager.instance.endGame == true) return;
 
+                if (dead.isDead) return;
+                bool isEnemy = EntityManager.HasComponent<EnemyComponent>(entity);
 
-                if (EntityManager.GetComponentData<Pause>(entity).value == 1) return;
-                if (EntityManager.GetComponentData<DeadComponent>(entity).isDead) return;
+                if (isEnemy)
+                {
+                    if (EntityManager.HasComponent<EnemyWeaponMovementComponent>(entity) == false)
+                    {
+                        return;
+                    }
+                }
+
+                Entity primaryAmmoEntity = gun.PrimaryAmmo;
+                var ammoDataComponent = EntityManager.GetComponentData<AmmoDataComponent>(primaryAmmoEntity);
+                float rate = ammoDataComponent.GameRate;
+                float strength = ammoDataComponent.GameStrength;
+                float damage = ammoDataComponent.GameDamage;
 
 
                 gun.Duration += dt;
-                //if ((gun.Duration > gun.Rate) || (gun.WasFiring == 0))
-                if ((gun.Duration > gun.Rate) && (gun.IsFiring == 1))
+                if ((gun.Duration > rate) && (gun.IsFiring == 1))
                 {
-                    if (gun.Bullet != null)
+
+                    if (gun.PrimaryAmmo != null &&
+                        (actorWeaponAimComponent.weaponRaised == WeaponMotion.Raised || isEnemy))
                     {
-
-                        Vector3 pos = gunScript.AmmoStartLocation.position;
-                        Quaternion rot = gunScript.AmmoStartLocation.rotation;
-
-
                         gun.IsFiring = 0;
                         statsComponent.shotsFired += 1;
-                        Entity e = EntityManager.Instantiate(gun.Bullet);
-                        Translation translation = new Translation { Value = pos };
-                        Rotation rotation = new Rotation { Value = rot };
-
+                        //gun.gameDamage = strength;//current gun strength used by attacker handler collision system
+                        Entity e = EntityManager.Instantiate(gun.PrimaryAmmo);
+                        Translation translation = new Translation() { Value = bulletManager.AmmoStartLocation.position };//use bone mb transform
+                        Rotation rotation = new Rotation() { Value = gun.AmmoStartRotation.Value };
                         var playerVelocity = EntityManager.GetComponentData<PhysicsVelocity>(entity);
-
                         var velocity = EntityManager.GetComponentData<PhysicsVelocity>(e);
-                        var mass = EntityManager.GetComponentData<PhysicsMass>(e);
+                        float3 forward = bulletManager.AmmoStartLocation.transform.forward;
+                        if (actorWeaponAimComponent.weaponCamera == CameraType.TopDown)
+                        {
+                            velocity.Linear = forward * strength + playerVelocity.Linear;
+                        }
+                        else
+                        {
+                            velocity.Linear = forward * strength;
+                        }
 
-                        //ComponentExtensions.ApplyImpulse(ref velocity, new PhysicsMass(), position , rotation,  gunScript.Strength, position.Value);
-
-
-
-
-                        //float3 direction = math.normalizesafe(gunScript.AmmoStartLocation.forward * velocity.Linear);
-                        //float3  translate = math.mul(rotation.Value, gunScript.AmmoStartLocation.forward)  ;
-
-
-
-                        //float3 forward = rot * pos;
-                        float3 forward = gunScript.AmmoStartLocation.forward;
-
-
-                        //Debug.Log("fwd " + forward);
-
-                        //forward = gunScript.AmmoStartLocation.transform.TransformPoint(forward);
-
-                        //Debug.Log("fwd1 " + forward);
-
-
-                        //                        ComponentExtensions.ApplyLinearImpulse
-                        //                     (ref velocity,
-                        //                      mass,
-                        //                   gunScript.AmmoStartLocation.forward * (gun.Strength + math.abs(playerVelocity.Linear.x)));
-
-                        //ComponentExtensions.ApplyLinearImpulse
-                        //(ref velocity,
-                        //    mass,
-                        //    translate * (gun.Strength + math.abs(playerVelocity.Linear.x)));
-
-                        // Direction Functions
-                        //Matrix4x4 version of Transform.InverseTransformDirection
 
                         //Matrix4x4 matrix4x4 = Matrix4x4.identity;
-                        //matrix4x4.SetTRS(translate, rotation, Vector3.one);
+                        //matrix4x4.SetTRS(translation.Value, rotation.Value, Vector3.one);
+                        //Vector3 localDirection = matrix4x4.inverse.MultiplyVector(forward);
+                        //Vector3 worldDirection = matrix4x4.MultiplyVector(forward);
+                        //velocity.Linear = worldDirection * strength;
 
-                        //Vector3 localDirection = Matrix4x4.Inverse(MultiplyVector(worldDirection);
-
-                        velocity.Linear = forward * (gun.Strength + math.abs(playerVelocity.Linear.x));
-                        //velocity.Linear = forward * gun.Strength;
-
-
+                        //if (playerWeaponAimComponent.weapon2d) velocity.Linear.z = 0;
 
                         EntityManager.SetComponentData(e, translation);
                         EntityManager.SetComponentData(e, rotation);
                         EntityManager.SetComponentData(e, velocity);
+                        var ammoComponent = EntityManager.GetComponentData<AmmoComponent>(e);
+                        ammoComponent.OwnerAmmoEntity = entity;//may not need use trigger instead
+                        var triggerComponent = EntityManager.GetComponentData<TriggerComponent>(e);
+                        triggerComponent.ParentEntity = entity;
+                        EntityManager.SetComponentData(e, ammoComponent);
+                        EntityManager.SetComponentData(e, triggerComponent);
 
-                        gunScript.CreateBulletInstance(e);
+                        if (bulletManager.weaponAudioClip && bulletManager.weaponAudioSource)
+                        {
+                            bulletManager.weaponAudioSource.PlayOneShot(bulletManager.weaponAudioClip);
+                        }
+                        gun.Duration = 0;
+
+
+
+
+
+                        if (EntityManager.HasComponent<Animator>(entity))
+                        {
+                            bulletManager.GetComponent<Animator>().SetLayerWeight(0, 0);
+                        }
+
 
 
                     }
-                    gun.Duration = 0;
                 }
-
-
-
-
-                gun.WasFiring = 1;
             }
         ).Run();
 
+        //ecb.Playback(EntityManager);
+        //ecb.Dispose();
 
 
-
-
-        return default;
     }
 
 

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Unity.Entities;
 using Unity.Jobs;
 using UnityEngine.AI;
+using TMPro;
 
 [System.Serializable]
 public struct DeadMenuComponent : IComponentData
@@ -19,13 +20,18 @@ public class DeadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 {
 
     // Use this for initialization
-    AudioSource audioSource;
+    public AudioSource audioSource;
     private List<Button> buttons;
     public AudioClip clickSound;
     public EventSystem eventSystem;
     private CanvasGroup canvasGroup;
     [SerializeField]
     private Button defaultButton;
+
+    [SerializeField] private ParticleSystem deadParticleSystem;
+    [SerializeField]
+    private TextMeshProUGUI message;
+
 
 
     void Start()
@@ -39,20 +45,9 @@ public class DeadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
-    public void Quit()
-    {
-        SaveManager.instance.SaveWorldSettings();
-
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
-
-    }
-
    
-    public void ShowMenu()
+
+    public void ShowMenu(bool showScoreboard, int score, int rank)
     {
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;
@@ -61,7 +56,33 @@ public class DeadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
         {
             defaultButton.Select();
         }
+
+        if (deadParticleSystem)
+        {
+            deadParticleSystem.Play(true);
+        }
+
+        if (audioSource)
+        {
+            audioSource.Play();
+        }
+
+
+        if (showScoreboard == false)
+        {
+            message.SetText("Game Over");
+        }
+        else
+        {
+            message.SetText("SCORE: " + score + " RANK:  " + rank);
+        }
+
+
+
     }
+
+
+
 
     public void HideMenu()
     {

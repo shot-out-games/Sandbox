@@ -20,11 +20,13 @@ public class MainMenuGroup : MonoBehaviour
     private void OnEnable()
     {
         OptionsMenuGroup.OptionsExitBackClickedEvent += ShowMenu;
+        HowMenuGroup.HowExitBackClickedEvent += ShowMenu;
     }
 
     private void OnDisable()
     {
         OptionsMenuGroup.OptionsExitBackClickedEvent -= ShowMenu;
+        HowMenuGroup.HowExitBackClickedEvent -= ShowMenu;
     }
 
 
@@ -115,7 +117,7 @@ public class MainMenuGroup : MonoBehaviour
     void PlayMenuClickSound(AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
-        Debug.Log("clip " + clip);
+        //Debug.Log("clip " + clip);
 
 
     }

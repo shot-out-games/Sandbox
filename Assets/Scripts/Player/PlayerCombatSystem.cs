@@ -1,49 +1,50 @@
 ﻿using Unity.Entities;
 using UnityEngine;
 using Unity.Jobs;
+using Unity.Mathematics;
 
 //[UpdateBefore(typeof(UnityEngine.Experimental.PlayerLoop.PreLateUpdate))]
 namespace SandBox.Player
 {
 
-    public class PlayerCombatSystem : JobComponentSystem
+    public class PlayerCombatSystem : SystemBase
     {
 
 
-        protected override JobHandle OnUpdate(JobHandle inputDeps)
+        protected override void OnUpdate()
         {
 
             Entities.WithoutBurst().ForEach(
                 (
-                    InputController inputController,
+                    PlayerCombat playerCombat,
                     Animator animator,
-                    Rigidbody rb,
-                    PlayerMove playerMove,
-                    PlayerCombat playerCombat) =>
+                    in  InputControllerComponent inputController,
+                    in ApplyImpulseComponent applyImpulse
+
+                ) =>
                 {
 
-                    bool button_b = inputController.buttonB_Pressed;
-                    bool button_y = inputController.buttonY_Pressed;
+                    bool buttonB = inputController.buttonB_Pressed;//kick types
+                    bool buttonY = inputController.buttonY_Pressed;//punch types
+
+                    bool allowKick = buttonY == true && (math.abs(animator.GetFloat("Vertical")) < .1 || applyImpulse.Grounded == false) ;
 
 
 
-
-                    if (button_y)
+                    if (buttonB)//punch
                     {
                         playerCombat.SelectMove(1);
-                        playerCombat.StartMove(1);
                     }
-                    else if (button_b)
+                    else if (allowKick)//kick
                     {
+                        Debug.Log("allow kick");
                         playerCombat.SelectMove(2);
-                        playerCombat.StartMove(2);
                     }
 
 
                 }
             ).Run();
 
-            return default;
 
         }
 

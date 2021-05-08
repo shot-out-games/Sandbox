@@ -18,19 +18,22 @@ public class ControlBar : MonoBehaviour, IConvertGameObjectToEntity
             return;
         }
 
-        float maxHealth = 100f;
+        //float maxHealth = 100f;
 
-        if (entityManager.HasComponent<ControlBarComponent>(entity))
-        {
-            maxHealth = entityManager.GetComponentData<ControlBarComponent>(entity).maxHealth;
-        }
+        //if (entityManager.HasComponent<ControlBarComponent>(entity))
+        //{
+        //    maxHealth = entityManager.GetComponentData<ControlBarComponent>(entity).maxHealth;
+        //}
 
-        maxHealth = 25f;
+        //maxHealth = 25f;
+
+        float maxHealth = entityManager.GetComponentData<ControlBarComponent>(entity).maxHealth;
 
 
-        float damage = entityManager.GetComponentData<ControlBarComponent>(entity).value;
 
-        var pct = 1.00f - (damage / maxHealth);
+        float value = entityManager.GetComponentData<ControlBarComponent>(entity).value;
+
+        var pct = value / maxHealth;
         if (pct < 0)
         {
             pct = 0;

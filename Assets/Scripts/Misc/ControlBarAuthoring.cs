@@ -3,7 +3,6 @@ using Unity.Mathematics;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-[RequiresEntityConversion]
 public class ControlBarAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 {
     public float maxControl = 100f;

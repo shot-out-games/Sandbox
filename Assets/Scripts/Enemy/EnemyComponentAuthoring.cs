@@ -3,14 +3,36 @@ using System.Linq;
 using UnityEngine;
 using Unity.Entities;
 using Unity.Transforms;
+using Unity.Mathematics;
+using Vector3 = UnityEngine.Vector3;
+
+[System.Serializable]
+public struct EnemyComponent : IComponentData
+{
+    [System.NonSerialized]
+    public Entity e;
+    //public int saveIndex;
+    public float3 position;
+    public float speed;
+    public float combatStrikeDistance;
+    public float combatRangeDistance;
+    public float chaseRange;
+    public float aggression;
+    public float maxHealth;
+    public bool invincible;
+    public float3 startPosition;
+    public bool humanoid;
+
+}
 
 
-[RequiresEntityConversion]
 
 public class EnemyComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 {
     public Entity enemyEntity;
     public EntityManager manager;
+
+    [SerializeField] private bool humanoid = true;
 
     [SerializeField]
     private bool checkLossCondition = true;
@@ -24,10 +46,13 @@ public class EnemyComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField]
     int saveIndex;
 
+    [SerializeField]
+    bool paused = false;
+
 
     void LateUpdate()
     {
-        if (manager == null) return;
+        if (manager == default) return;
         if (!manager.HasComponent(enemyEntity, typeof(Translation))) return;
 
         manager.SetComponentData(enemyEntity, new Translation { Value = transform.position });
@@ -38,10 +63,20 @@ public class EnemyComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
         enemyEntity = entity;
         manager = dstManager;
-        dstManager.AddComponentData(entity, 
-            new EnemyComponent { e = entity, invincible = invincible }
+        dstManager.AddComponentData(entity,
+            new EnemyComponent
+            {
+                e = entity,
+                invincible = invincible,
+                humanoid = humanoid,
+                startPosition = manager.GetComponentData<Translation>(entity).Value
+            }
             );
-        dstManager.AddComponentData(entity, new Pause { value = 0 });
+
+        if (paused == true)
+        {
+            dstManager.AddComponent<Pause>(entity);
+        }
 
 
         dstManager.AddComponentData(entity, new StatsComponent()
@@ -87,8 +122,6 @@ public class EnemyComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
             new LevelCompleteComponent
             {
                 active = true,
-                goalCounter = 0,
-                goalCounterTarget = 0,//ie how many players you have to save - usually zero
                 targetReached = false,
                 checkWinCondition = checkWinCondition
             }
@@ -97,12 +130,12 @@ public class EnemyComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 
 
         dstManager.AddComponentData(entity, new DeadComponent
-            {
-                tag = 2,
-                isDead = false,
-                checkLossCondition = checkLossCondition
+        {
+            tag = 2,
+            isDead = false,
+            checkLossCondition = checkLossCondition
 
-            }
+        }
         );
 
         //string str = gameObject.name;
@@ -128,6 +161,9 @@ public class EnemyComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
         //Debug.Log("go " + a + " val " + index);
 
         dstManager.AddComponentData(entity, new CharacterSaveComponent { saveIndex = index });
+
+        dstManager.AddComponentData(entity, new CheckedComponent());
+
 
 
 

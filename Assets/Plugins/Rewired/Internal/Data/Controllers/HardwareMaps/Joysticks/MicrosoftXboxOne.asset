@@ -173,7 +173,10 @@ MonoBehaviour:
       disabled: 0
       tag: '[CombinedTriggers]'
       hatCount: 1
-      alternateElementCounts: []
+      alternateElementCounts:
+      - axisCount: 5
+        buttonCount: 16
+        hatCount: 1
       productName_useRegex: 0
       productName:
       - Controller (XBOX One For Windows)
@@ -1429,7 +1432,10 @@ MonoBehaviour:
       disabled: 0
       tag: '[CombinedTriggers]'
       hatCount: 1
-      alternateElementCounts: []
+      alternateElementCounts:
+      - axisCount: 5
+        buttonCount: 16
+        hatCount: 1
       productName_useRegex: 0
       productName:
       - Controller (XBOX One For Windows)
@@ -3976,7 +3982,10 @@ MonoBehaviour:
       disabled: 0
       tag: '[CombinedTriggers]'
       hatCount: 1
-      alternateElementCounts: []
+      alternateElementCounts:
+      - axisCount: 5
+        buttonCount: 16
+        hatCount: 1
       manufacturer_useRegex: 0
       productName_useRegex: 0
       manufacturer: []

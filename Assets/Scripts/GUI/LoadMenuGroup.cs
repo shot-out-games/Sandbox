@@ -1,76 +1,73 @@
 ﻿using System.Collections;
+using Rewired;
 using TMPro;
 using Unity.Entities;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-//mish mash
-//not consistent using entity components for some and static level settings (easier) for others
-
 public class LoadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 {
-    //[SerializeField]
-    //private Text[] slotTexts = new Text[3];
     private CanvasGroup canvasGroup;
-    private InputController inputController;
     public UnityEvent OnBackClicked = new UnityEvent();
     private int selectedSlot = 0;
-    private EntityManager manager;
-    private Entity e;
     [SerializeField]
     Button loadButton;
-    [SerializeField]
-    Button deleteButton;
 
+    private Player player;
+    [SerializeField]
+    private TextMeshProUGUI slotText;
+    [SerializeField]
+    private TextMeshProUGUI slotTextHighlighted;
 
 
     void Start()
     {
-
+        if (!ReInput.isReady) return;
+        player = ReInput.players.GetPlayer(0);
         canvasGroup = GetComponent<CanvasGroup>();
-        inputController = GetComponent<InputController>();
-
         UpdateButtons();
+
     }
 
-    private void UpdateButtons()
+    public void UpdateButtons()
     {
         if (SaveManager.instance.saveData.saveGames.Count == 0) return;
-
         SaveWorld sw = SaveManager.instance.saveWorld;
 
-
-        TextMeshProUGUI[] slotTexts = GetComponentsInChildren<TextMeshProUGUI>(); //3 button texts
-
-        
-
-
-        for (int i = 1; i <= 3; i++)
+        if (sw.isSlotSaved[0] == true)
         {
-
-            //slotTexts[i* 2-2].text = "";
-            slotTexts[i * 2 - 2].text = sw.isSlotSaved[i] ? "GAME " + i : "New Game";
-            slotTexts[i * 2 - 1].text = sw.isSlotSaved[i] ? "GAME " + i : "New Game";
-
-            //Debug.Log("btn "+i + " " +  btn_txt + " " + slotTexts.Length);
+            slotText.text = "CONTINUE";
+            LevelManager.instance.newGame = false;
         }
-    }
+        else
+        {
+            slotText.text = "New Game";
+            LevelManager.instance.newGame = true;
+        }
 
+        slotTextHighlighted.text = sw.isSlotSaved[0] ? "CONTINUE " : "New Game";
+    }
 
     public void OnLoadSlotClicked(int slot)
     {
         selectedSlot = slot;
-        //loadButton.gameObject.SetActive(true);
-        //deleteButton.gameObject.SetActive(true);
+        OnLoadOptionClicked();
     }
 
     public void OnLoadOptionClicked()
     {
         loadButton.interactable = false;
+        LevelManager.instance.resetLevel = true;
         SaveManager.instance.LoadSaveWorld();
-        SaveManager.instance.saveWorld.lastLoadedSlot = selectedSlot;
-        SaveManager.instance.LoadSaveData();
+        SaveData sd = SaveManager.instance.LoadSaveData();
+        int level = sd.saveGames[0].currentLevel;
+        SaveManager.instance.SaveCurrentLevelCompleted(level);
+        LevelManager.instance.currentLevelCompleted = level;
+        if(SaveManager.instance.saveWorld.isSlotSaved[0] == false)
+        {
+            LevelManager.instance.currentLevelCompleted = 0;
+        }
     }
 
 
@@ -89,16 +86,15 @@ public class LoadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 
     public void OnButtonDelete()
     {
-        Debug.Log("s " + selectedSlot);
         SaveManager.instance.DeleteGameData(selectedSlot);
         UpdateButtons();
     }
 
     void Update()
     {
-        if (!inputController) return;
 
-        if (inputController.buttonSelect_Pressed && canvasGroup.interactable)
+
+        if (player.GetButtonDown("select") && canvasGroup.interactable)
         {
             BackClicked();
             HideMenu();
@@ -121,15 +117,8 @@ public class LoadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        e = entity;
-        manager = dstManager;
-        //manager.AddComponentData(e, new LoadComponent { value = false });
     }
 
-    IEnumerator Wait(float time)
-    {
-        yield return new WaitForSeconds(time);
-    }
 
 
 }

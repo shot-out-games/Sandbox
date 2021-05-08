@@ -1,8 +1,6 @@
 #ifndef CUSTOM_LIGHTING_INCLUDED
 #define CUSTOM_LIGHTING_INCLUDED
 
-
-
 void MainLight_float(float3 WorldPos, out float3 Direction, out float3 Color, out float DistanceAtten, out float ShadowAtten)
 {
 #if SHADERGRAPH_PREVIEW
@@ -21,19 +19,7 @@ void MainLight_float(float3 WorldPos, out float3 Direction, out float3 Color, ou
     Direction = mainLight.direction;
     Color = mainLight.color;
     DistanceAtten = mainLight.distanceAttenuation;
-
-#if !defined(_MAIN_LIGHT_SHADOWS) || defined(_RECEIVE_SHADOWS_OFF)
-    ShadowAtten = 1.0;
-#endif
-
-#if SHADOWS_SCREEN
-    ShadowAtten = SampleScreenSpaceShadowmap(shadowCoord);
-#else
-    ShadowSamplingData shadowSamplingData = GetMainLightShadowSamplingData();
-    float shadowStrength = GetMainLightShadowStrength();
-    ShadowAtten = SampleShadowmap(shadowCoord, TEXTURE2D_ARGS(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture), shadowSamplingData, shadowStrength, false);
-#endif
-
+    ShadowAtten = mainLight.shadowAttenuation;
 #endif
 }
 
@@ -55,23 +41,9 @@ void MainLight_half(float3 WorldPos, out half3 Direction, out half3 Color, out h
     Direction = mainLight.direction;
     Color = mainLight.color;
     DistanceAtten = mainLight.distanceAttenuation;
-
-#if !defined(_MAIN_LIGHT_SHADOWS) || defined(_RECEIVE_SHADOWS_OFF)
-    ShadowAtten = 1.0h;
-#endif
-
-#if SHADOWS_SCREEN
-    ShadowAtten = SampleScreenSpaceShadowmap(shadowCoord);
-#else
-    ShadowSamplingData shadowSamplingData = GetMainLightShadowSamplingData();
-    half shadowStrength = GetMainLightShadowStrength();
-    ShadowAtten = SampleShadowmap(shadowCoord, TEXTURE2D_ARGS(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture), shadowSamplingData, shadowStrength, false);
-#endif
-
+    ShadowAtten = mainLight.shadowAttenuation;
 #endif
 }
-
-
 
 void DirectSpecular_float(float3 Specular, float Smoothness, float3 Direction, float3 Color, float3 WorldNormal, float3 WorldView, out float3 Out)
 {
@@ -96,9 +68,6 @@ void DirectSpecular_half(half3 Specular, half Smoothness, half3 Direction, half3
     Out = LightingSpecular(Color, Direction, WorldNormal, WorldView, half4(Specular, 0), Smoothness);
 #endif
 }
-
-
-
 
 void AdditionalLights_float(float3 SpecColor, float Smoothness, float3 WorldPosition, float3 WorldNormal, float3 WorldView, out float3 Diffuse, out float3 Specular)
 {

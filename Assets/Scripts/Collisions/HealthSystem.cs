@@ -8,45 +8,88 @@ using System;
 using Unity.Collections;
 using Unity.Rendering;
 
-public class HealthSystem : JobComponentSystem
+public class HealthSystem : SystemBase
 {
 
     private EndSimulationEntityCommandBufferSystem ecbSystem;
 
 
+    
 
-
-
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
 
-
         EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
+
+        bool anyEnemyDamaged = false;
+        bool anyPlayerDamaged = false;
         Entities.WithoutBurst().ForEach((ref DeadComponent deadComponent,
             ref HealthComponent healthComponent, ref DamageComponent damageComponent,
-            ref RatingsComponent ratingsComponent, in Entity entity) =>
+            ref RatingsComponent ratingsComponent,
+            in Entity entity) =>
             {
-                //healthComponent.TotalDamageReceived += damageComponent.DamageReceived + damageComponent.DamageLanded; //kenney
-                healthComponent.TotalDamageReceived += damageComponent.DamageReceived;
-                healthComponent.TotalDamageLanded += damageComponent.DamageLanded;
-                ecb.RemoveComponent<DamageComponent>(entity);
-
-                var dead = EntityManager.GetComponentData<DeadComponent>(entity);
-                if (healthComponent.TotalDamageReceived >= ratingsComponent.maxHealth && dead.isDead == false && dead.justDead == false)
+                healthComponent.ShowDamage = false;
+                if (EntityManager.HasComponent(entity, typeof(EnemyComponent)))
                 {
+                    if (EntityManager.GetComponentData<EnemyComponent>(entity).invincible == true)
+                    {
+                        damageComponent.DamageReceived = 0;
+                    }
+                }
+
+                if (damageComponent.DamageReceived > healthComponent.ShowDamageMin)
+                {
+                    healthComponent.ShowDamage = true;
+                }
+
+                healthComponent.TotalDamageReceived += damageComponent.DamageReceived;
+                ecb.RemoveComponent<DamageComponent>(entity);
+                var dead = EntityManager.GetComponentData<DeadComponent>(entity);
+                if (damageComponent.DamageReceived > 0)
+                {
+                    if (HasComponent<EnemyComponent>(entity) == true)
+                    {
+                        anyEnemyDamaged = true;
+                    }
+                    else if (HasComponent<PlayerComponent>(entity) == true)
+                    {
+                        anyPlayerDamaged = true;
+                    }
+                }
+
+
+
+                if (healthComponent.TotalDamageReceived >= ratingsComponent.maxHealth && dead.isDead == false)
+                {
+                    dead.dieLevel = LevelManager.instance.currentLevelCompleted;
+                    dead.isDying = true;
                     dead.isDead = true;
-                    dead.justDead= true;
-                    ecb.SetComponent(entity, dead);//tag player or enemy
+                    dead.playDeadEffects = true;
+                    ecb.SetComponent(entity, dead);
                 }
 
             }
         ).Run();
 
+        if(anyEnemyDamaged == false && anyPlayerDamaged == false) return;
+
+        Entities.WithoutBurst(). ForEach((HealthBar healthUI, in HealthComponent healthComponent, in DamageComponent damage) =>
+        {
+            if (healthComponent.ShowText3D == ShowText3D.hitScore && healthComponent.ShowDamage == true)
+            {
+                healthUI.ShowText3dValue((int)damage.ScorePointsReceived);
+            }
+            else if (healthComponent.ShowText3D == ShowText3D.hitDamage && healthComponent.ShowDamage == true)
+            {
+                healthUI.ShowText3dValue((int)damage.DamageReceived);
+            }
+            healthUI.HealthChange();
+
+        }).Run();
+
         ecb.Playback(EntityManager);
         ecb.Dispose();
 
-
-        return default;
 
 
     }
@@ -55,68 +98,6 @@ public class HealthSystem : JobComponentSystem
 
 }
 
-
-
-
-//public class HealthSystem : JobComponentSystem
-//{
-
-//    private EndSimulationEntityCommandBufferSystem barrier;
-
-
-//    protected override void OnCreate()
-//    {
-//        barrier = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-
-//    }
-
-
-//    private struct HealthJob : IJobForEachWithEntity<HealthComponent, DamageComponent, RatingsComponent >
-//    {
-
-
-
-//        public EntityCommandBuffer.Concurrent Ecb;
-//        [ReadOnly] public ComponentDataFromEntity<DeadComponent> Dead;
-
-//        public void Execute(
-//            Entity entity,
-//            int index,
-//            ref HealthComponent healthComponent,
-//            ref DamageComponent damageComponent,
-//            ref RatingsComponent ratingsComponent
-
-//            )
-//        {
-//            healthComponent.TotalDamageReceived += damageComponent.DamageReceived;
-//            healthComponent.TotalDamageLanded += damageComponent.DamageLanded;
-//            Debug.Log("damage received ");
-//            Debug.Log("damage landed ");
-//            Ecb.RemoveComponent<DamageComponent>(index, entity);
-
-//            if (healthComponent.TotalDamageReceived >= ratingsComponent.maxHealth && !Dead.Exists(entity))
-//            {
-//                Ecb.AddComponent(index, entity, new DeadComponent { tag = ratingsComponent.tag });//tag player or enemy
-//            }
-
-//        }
-//    }
-
-//    protected override JobHandle OnUpdate(JobHandle inputDeps)
-//    {
-//        var job = new HealthJob
-//        {
-//            Ecb = barrier.CreateCommandBuffer().ToConcurrent(),
-//            Dead = GetComponentDataFromEntity<DeadComponent>()
-//        };
-//        inputDeps = job.Schedule(this, inputDeps);
-//        barrier.AddJobHandleForProducer(inputDeps);
-//        return inputDeps;
-//    }
-
-
-
-//}
 
 
 

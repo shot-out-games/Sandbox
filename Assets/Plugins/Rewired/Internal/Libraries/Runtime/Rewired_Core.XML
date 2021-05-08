@@ -1076,21 +1076,21 @@
         </member>
         <member name="M:Rewired.ElementAssignmentConflictCheck.ToElementAssignment">
             <summary>
-            Converts ElementAssignmentConflictChec into an ElementAssignment.
+            Converts ElementAssignmentConflictCheck into an ElementAssignment.
             Can be used to make an element assignment.
             </summary>
             <returns>ElementAssignment</returns>
         </member>
         <member name="M:Rewired.ElementAssignmentConflictCheck.ToFullAxisAssignment">
             <summary>
-            Converts ElementAssignmentConflictChec into an ElementAssignment for a full axis assignment.
+            Converts ElementAssignmentConflictCheck into an ElementAssignment for a full axis assignment.
             Can be used to make an element assignment.
             </summary>
             <returns>ElementAssignment</returns>
         </member>
         <member name="M:Rewired.ElementAssignmentConflictCheck.ToSplitAxisAssignment">
             <summary>
-            Converts ElementAssignmentConflictChec into an ElementAssignment for a split axis assignment.
+            Converts ElementAssignmentConflictCheck into an ElementAssignment for a split axis assignment.
             Can be used to make an element assignment.
             </summary>
             <returns>ElementAssignment</returns>

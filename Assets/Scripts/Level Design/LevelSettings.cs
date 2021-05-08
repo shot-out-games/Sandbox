@@ -1,5 +1,12 @@
 ﻿using UnityEngine;
 
+public enum LevelCompleteScenario
+{
+    DestroyAll,
+    DestroyLeader,
+    TriggerReached
+}
+
 [System.Serializable]
 
 public class LevelSettings
@@ -9,7 +16,9 @@ public class LevelSettings
     [System.NonSerialized]
     public AudioClip levelMusic = null;
     public string levelName;
-    public bool completed { get; set; }
+    public LevelCompleteScenario levelCompleteScenario = LevelCompleteScenario.DestroyAll;
+
+
     public int potentialLevelTargets;//in some games max of something ie potential saved robots
 
 

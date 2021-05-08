@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using SandBox.Player;
 using Unity.Entities;
 using Unity.Jobs;
+using Unity.Mathematics;
+using Unity.Transforms;
 using UnityEngine;
 
 
@@ -16,8 +18,31 @@ public enum PowerType
     Control = 3,
 }
 
+
+public struct TestComponent : IComponentData
+{
+    public float value;
+}
+
+public struct ParticleSystemComponent : IComponentData
+{
+    public float value;
+    public bool followActor;
+    public Entity pickedUpActor;
+}
+
+public struct AudioSourceComponent : IComponentData
+{
+    public bool active;
+}
+
+
 public struct Speed : IComponentData
 {
+
+    public Entity psAttached;
+    public Entity pickedUpActor;
+    public Entity itemEntity;
     public bool triggered;
     public bool enabled;
     public bool startTimer;
@@ -29,119 +54,31 @@ public struct Speed : IComponentData
 
 public struct HealthPower : IComponentData
 {
+    public Entity psAttached;
+    public Entity pickedUpActor;
+    public Entity itemEntity;
     public bool enabled;
     public float healthMultiplier;
 }
 
 public struct ControlPower : IComponentData
 {
+    public Entity psAttached;
+    public Entity pickedUpActor;
+    public Entity itemEntity;
     public bool enabled;
     public float controlMultiplier;
 }
 
 public class PowerManager : MonoBehaviour, IConvertGameObjectToEntity
 {
-    //[Header("Speed")]
-    //[SerializeField] private float speedTimeOn = 3.0f;
-    //[SerializeField] private float speedMultiplier = 3.0f;
-
-    //[Header("Health")]
-    //[SerializeField] private float healthMultiplier = 1.5f;
+    
 
 
 
     private EntityManager manager;
     private Entity e;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        PowerTrigger(other.gameObject);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        PowerTrigger(collision.gameObject);
-    }
-
-
-    void PowerTriggerDots(int powerType)
-    {
-        var powerItem = manager.GetComponentData<PowerItemComponent>(e);
-        //int powerType = powerItem.powerType;
-
-
-        if (powerType == (int)PowerType.Control)
-        {
-            var control = manager.GetComponentData<ControlPower>(e);
-            control.enabled = true;
-            control.controlMultiplier = powerItem.healthMultiplier;
-            manager.SetComponentData<ControlPower>(e, control);
-        }
-        if (powerType == (int)PowerType.Health)
-        {
-            var power = manager.GetComponentData<HealthPower>(e);
-            power.enabled = true;
-            power.healthMultiplier = powerItem.healthMultiplier;
-            manager.SetComponentData<HealthPower>(e, power);
-        }
-
-
-    }
-
-    private void PowerTrigger(GameObject go)
-    {
-        Debug.Log("Power");
-        Entity other_e = Entity.Null;
-        if (go.GetComponent<PowerItem>())///if has this mono then has component poweritemcomponent - check??
-        {
-            other_e = go.GetComponent<PowerItem>().e;
-        }
-        else
-        {
-            return;
-        }
-
-        if (manager.HasComponent<PowerItemComponent>(other_e) == false) return;
-
-        bool active = manager.GetComponentData<PowerItemComponent>(other_e).active;
-        if (active == false)
-        {
-            return;
-        }
-
-        var powerItem = manager.GetComponentData<PowerItemComponent>(other_e);
-        int powerType = powerItem.powerType;
-
-        if (powerType == (int)PowerType.Speed)
-        {
-            var speed = manager.GetComponentData<Speed>(e);
-            speed.enabled = true;
-            speed.timeOn = powerItem.speedTimeOn;
-            speed.multiplier = powerItem.speedTimeMultiplier;
-            manager.SetComponentData<Speed>(e, speed);
-        }
-
-        if (powerType == (int)PowerType.Health)
-        {
-            var health = manager.GetComponentData<HealthPower>(e);
-            health.enabled = true;
-            health.healthMultiplier = powerItem.healthMultiplier;
-            manager.SetComponentData<HealthPower>(e, health);
-        }
-
-
-
-        //set other item to inactive
-        var item = manager.GetComponentData<PowerItemComponent>(other_e);
-        item.active = false;
-        manager.SetComponentData<PowerItemComponent>(other_e, item);
-
-        go.SetActive(false);
-        //destroy optional  as makes item.active irrelevant but now no need to cleanup the item elsewhere but option still
-        //Destroy(go);
-        //manager.DestroyEntity(other_e);
-
-    }
 
 
 
@@ -149,54 +86,67 @@ public class PowerManager : MonoBehaviour, IConvertGameObjectToEntity
     {
         manager = dstManager;
         e = entity;
-        dstManager.AddComponentData(entity, new Speed
-        {
-            enabled = false,
-            timer = 0,
-            timeOn = 0,
-            startTimer = false,
-            originalSpeed = 0,
-            multiplier = 0,
-        }
-        );
 
-        dstManager.AddComponentData(entity, new HealthPower
-            {
-                enabled = false,
-                healthMultiplier = 0
-            }
-        );
-
-        dstManager.AddComponentData(entity, new ControlPower
-            {
-                enabled = false,
-                controlMultiplier = 0
-            }
-        );
 
 
     }
 }
 
 
-[UpdateAfter(typeof(PlayerMoveSystem))]
+//[UpdateAfter(typeof(PlayerMoveSystem))]
 
-public class PowersSystem : JobComponentSystem
+public class PowersSystem : SystemBase
 {
+
+    EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
+
 
     protected override void OnCreate()
     {
-
+        base.OnCreate();
+        // Find the ECB system once and store it for later usage
+        m_EndSimulationEcbSystem = World
+            .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
     }
 
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+
+    protected override void OnUpdate()
     {
+
+        var ecb = m_EndSimulationEcbSystem.CreateCommandBuffer();
+
+
+
+
+        Entities.WithoutBurst().ForEach((ParticleSystemComponent ps, Entity e) =>
+            {
+
+                float3 value = GetComponent<Translation>(ps.pickedUpActor).Value;
+
+
+                if (ps.followActor == false)
+                {
+                    ecb.DestroyEntity(e);
+                    return;
+                }
+
+
+                SetComponent(e, new Translation { Value = value });
+
+
+            }
+        ).Run();
+
+
+
 
 
         Entities.WithoutBurst().ForEach(
             (
-                    ref Speed speed, ref RatingsComponent ratings
+                    ref Speed speed, ref RatingsComponent ratings,
+                        in Entity e
+
 
                 ) =>
             {
@@ -206,8 +156,8 @@ public class PowersSystem : JobComponentSystem
                     speed.triggered = true;
                     speed.startTimer = true;
                     speed.timer = 0;
-                    speed.originalSpeed = ratings.speed;
-                    ratings.speed = ratings.speed * speed.multiplier;
+                    ecb.AddComponent(speed.itemEntity, new DestroyComponent());
+                    ratings.gameSpeed = ratings.gameSpeed * speed.multiplier;
                 }
                 else if (speed.enabled && speed.timer < speed.timeOn)
                 {
@@ -219,16 +169,18 @@ public class PowersSystem : JobComponentSystem
                     speed.startTimer = false;
                     speed.timer = 0;
                     speed.enabled = false;
-                    ratings.speed = speed.originalSpeed;
-                    speed.originalSpeed = 0;
+                    ratings.gameSpeed = ratings.speed;
+                    ecb.DestroyEntity(speed.psAttached);
+                    ecb.RemoveComponent<Speed>(e);
+
                 }
 
             }
         ).Run();
 
-        Entities.WithoutBurst().ForEach(
+        Entities.ForEach(
             (
-                ref HealthPower healthPower, ref HealthComponent healthComponent, in RatingsComponent ratings
+                ref HealthPower healthPower, ref HealthComponent healthComponent, in RatingsComponent ratings, in Entity e
 
             ) =>
             {
@@ -241,10 +193,14 @@ public class PowersSystem : JobComponentSystem
                     {
                         healthComponent.TotalDamageReceived = ratings.maxHealth;
                     }
+                    ecb.RemoveComponent<HealthPower>(e);
+                    ecb.AddComponent(healthPower.itemEntity, new DestroyComponent());
+                    ecb.DestroyEntity(healthPower.psAttached);
+
                 }
 
             }
-        ).Run();
+        ).Schedule();
 
         Entities.WithoutBurst().ForEach(
             (
@@ -267,7 +223,27 @@ public class PowersSystem : JobComponentSystem
         ).Run();
 
 
-        return default;
+
+        Entities.WithoutBurst().WithAll<AudioSourceComponent>().ForEach(
+            (
+                AudioSource audioSource, PowerItem powerItem,  ref PowerItemComponent powerItemComponent, in Entity e) =>
+            {
+                if (audioSource.isPlaying == false
+                    && powerItemComponent.enabled == true
+                )
+                {
+                    powerItemComponent.enabled = false;
+                    audioSource.PlayOneShot(powerItem.powerEnabledAudioClip);
+                }
+            }
+        ).Run();
+
+
+        // Make sure that the ECB system knows about our job
+        m_EndSimulationEcbSystem.AddJobHandleForProducer(this.Dependency);
+
+
+
     }
 
 

@@ -74,7 +74,7 @@ public class InputController : MonoBehaviour, IConvertGameObjectToEntity
 
     public Player player;
     public int playerId = 0; // The Rewired player id of this character
-    float deadZone = .2f;
+    float deadZone = Mathf.Epsilon;
 
 
     [Header("Left Stick")]
@@ -129,7 +129,6 @@ public class InputController : MonoBehaviour, IConvertGameObjectToEntity
     public bool buttonX_Pressed;
     public bool buttonX_held;
     public bool buttonX_Released;
-    public float buttonX_Value;
 
     public bool buttonY_Pressed;
     public bool buttonY_held;
@@ -152,7 +151,7 @@ public class InputController : MonoBehaviour, IConvertGameObjectToEntity
 
         if (!ReInput.isReady) return;
 
-        if (manager == null || playerEntity == Entity.Null) return;
+        if (manager == default || playerEntity == Entity.Null) return;
 
 
         bool hasComponent = manager.HasComponent<InputControllerComponent>(playerEntity);
@@ -201,7 +200,6 @@ public class InputController : MonoBehaviour, IConvertGameObjectToEntity
         buttonB_Released = player.GetButtonUp("FireB");
 
 
-        buttonX_Value = player.GetAxis("FireX");
         buttonX_Pressed = player.GetButtonDown("FireX");
         buttonX_held = player.GetButton("FireX");
         buttonX_Released = player.GetButtonUp("FireX");
@@ -228,17 +226,17 @@ public class InputController : MonoBehaviour, IConvertGameObjectToEntity
         leftTriggerValue = player.GetAxis("LeftTrigger");
         rightTriggerValue = player.GetAxis("RightTrigger");
 
-        leftTriggerPressed = leftTriggerValue > 0.02;
-        rightTriggerPressed = rightTriggerValue > 0.02;
-
+        leftTriggerPressed = player.GetButtonDown("LeftTrigger");
+        rightTriggerPressed = player.GetButtonDown("RightTrigger");
+        
         leftTriggerLast = player.GetAxisPrev("LeftTrigger");
         rightTriggerLast = player.GetAxisPrev("RightTrigger");
 
         leftTriggerChange = player.GetAxisDelta("LeftTrigger");
         rightTriggerChange = player.GetAxisDelta("RightTrigger");
 
-        leftTriggerDown = player.GetButtonDown("LeftTrigger");
-        rightTriggerDown = player.GetButtonDown("RightTrigger");
+        leftTriggerDown = player.GetButton("LeftTrigger");
+        rightTriggerDown = player.GetButton("RightTrigger");
 
         leftTriggerUp = player.GetButtonUp("LeftTrigger");
         rightTriggerUp = player.GetButtonUp("RightTrigger");
@@ -246,26 +244,6 @@ public class InputController : MonoBehaviour, IConvertGameObjectToEntity
         leftStickX = Mathf.Abs(leftStickX) < deadZone ? 0 : leftStickX;
         leftStickY = Mathf.Abs(leftStickY) < deadZone ? 0 : leftStickY;
         UpdateInputControllerComponent();
-
-
-    }
-
-    public void LateUpdateSystem()
-    {
-        if (manager == null || playerEntity == Entity.Null) return;
-
-
-        bool hasComponent = manager.HasComponent<InputControllerComponent>(playerEntity);
-        if (hasComponent == false) return;
-
-        if (Mathf.Abs(leftStickX) >= deadZone || Mathf.Abs(leftStickY) >= deadZone)
-        {
-            rotating = true;
-        }
-        else
-        {
-            rotating = false;
-        }
 
 
     }

@@ -14,89 +14,109 @@ using UnityEngine;
 public struct LevelCompleteComponent : IComponentData
 {
     public bool active;
-    public int goalCounter;
-    public int goalCounterTarget;
     public bool targetReached;
     public bool checkWinCondition;
 
 }
 
-[UpdateAfter(typeof(WinnerSystem))]
+//[UpdateAfter(typeof(WinnerSystems))]
 
-public class LevelCompleteSystem : JobComponentSystem
+public class LevelCompleteSystem : SystemBase
 {
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
 
 
-
-
-        bool levelCompleteCounter = false;//# reached end that are required to complete the level
-        int currentLevel = LevelManager.instance.currentLevel;
+        int currentLevelCompleted = LevelManager.instance.currentLevelCompleted;
         int totalGameLevels = LevelManager.instance.totalLevels;
-        if (LevelManager.instance.levelSettings.Count < totalGameLevels)
-            totalGameLevels = LevelManager.instance.levelSettings.Count;
+        if (currentLevelCompleted >= totalGameLevels) return;//all levels complete before even checking if level complete below than return since game over basically
 
-
+        int levelCompleteCounter = 0;//# reached end that are required to complete the level
+        bool levelComplete = false;
         Entity playerEntity = Entity.Null;
-
-        Entities.WithoutBurst().ForEach
-        (
-            (ref LevelCompleteComponent LevelCompleteComponent, ref WinnerComponent winner, in PlayerComponent player, in Entity entity) =>
-            {
-                if (LevelCompleteComponent.targetReached)
-                {
-                    levelCompleteCounter = true;
-                    winner.endGameReached = true;
-                    playerEntity = entity;
-                    Debug.Log("LEVEL COMPLETE " + currentLevel);
-                }
-
-            }
-        ).Run();
+        string message = "Level Complete";
 
 
-
-
-        if (levelCompleteCounter == true)
+        if (LevelManager.instance.levelSettings[currentLevelCompleted].levelCompleteScenario ==
+            LevelCompleteScenario.TriggerReached)
         {
+            int levelCompleteRequired = 1;
 
 
             Entities.WithoutBurst().ForEach
             (
-                (ref LevelCompleteMenuComponent LevelCompleteMenuComponent, in LevelCompleteMenuGroup LevelCompleteMenuGroup) =>
+                (ref LevelCompleteComponent LevelCompleteComponent, in PlayerComponent player, in Entity entity) =>
                 {
-                    LevelManager.instance.levelSettings[currentLevel].completed = true;
-                    if (LevelManager.instance.endGame == false)
+                    if (LevelCompleteComponent.targetReached == true)
                     {
-                        var playerLevelComplete = EntityManager.GetComponentData<LevelCompleteComponent>(playerEntity);//only works on one player level complete
-                        playerLevelComplete.targetReached = false;
-                        //Debug.Log("levl com show menu ");
-                        EntityManager.SetComponentData(playerEntity, playerLevelComplete);
-                        LevelCompleteMenuGroup.ShowMenu();
+                        LevelCompleteComponent.targetReached = false;
+                        levelCompleteCounter += 1;
+                        playerEntity = entity;
+                        Debug.Log("LEVEL COMPLETE " + currentLevelCompleted + 1);
                     }
                 }
             ).Run();
 
 
-
-       
-
-            if (totalGameLevels > currentLevel + 1 )
+            if (levelCompleteCounter >= levelCompleteRequired)
             {
-                LevelManager.instance.currentLevel += 1;
-                Debug.Log("LEVEL UP " + LevelManager.instance.currentLevel);
-                LevelManager.instance.PlayLevelMusic();
+                levelComplete = true;
+                message = "Target Reached";
             }
 
+        }
 
+        if (LevelManager.instance.levelSettings[currentLevelCompleted].levelCompleteScenario ==
+            LevelCompleteScenario.DestroyAll)
+        {
+
+            levelComplete = true;
+            message = "Eliminated all ...";
+
+            Entities.WithAll<EnemyComponent>().WithNone<CubeComponent>(). WithoutBurst().ForEach
+            (
+                (in DeadComponent dead) =>
+                {
+                    if (levelComplete == false) return;
+                    if (dead.isDead == false || dead.dieLevel != currentLevelCompleted)
+                    {
+                        levelComplete = false;
+                    }
+                }
+            ).Run();
+
+        }
+
+
+        if (levelComplete == true)
+        {
+            LevelManager.instance.currentLevelCompleted += 1;
+            Debug.Log("LEVEL UP " + LevelManager.instance.currentLevelCompleted);
+            if (LevelManager.instance.currentLevelCompleted < LevelManager.instance.totalLevels)
+            {
+
+                LevelManager.instance.PlayLevelMusic();
+                Entities.WithoutBurst().WithStructuralChanges().ForEach
+                (
+                    (
+                        LevelCompleteMenuGroup LevelCompleteMenuGroup,
+                        ref LevelCompleteMenuComponent LevelCompleteMenuComponent) =>
+                    {
+                        LevelCompleteMenuComponent.levelLoaded = false; //need?
+                        SaveLevelManager.instance.levelMenuShown = true;
+                        LevelCompleteMenuGroup.ShowMenu(message);
+                    }
+                ).Run();
+
+                Debug.Log("level complete menu " + LevelManager.instance.currentLevelCompleted);
+            }
 
 
         }
 
 
-        return default;
+
     }
 
 }

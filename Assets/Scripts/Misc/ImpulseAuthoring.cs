@@ -9,15 +9,13 @@ using UnityEngine;
 public class ImpulseAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 {
 
-    
 
+//    public float fallingFramesMax;
+//    public float negativeForce = -9.81f;
 
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        //dstManager.AddComponentData(entity, new LocalToWorld());
-        //dstManager.AddComponentData(entity, new PhysicsVelocity());
-        //dstManager.AddComponentData(entity, new PhysicsMass());
-        dstManager.AddComponentData(entity, new ApplyImpulseComponent { Force = 0, Direction = Vector3.zero, Grounded = false });
+//        dstManager.AddComponentData(entity, new ApplyImpulseComponent { Force = 0, Direction = Vector3.zero, Grounded = false, fallingFramesMaximuim = fallingFramesMax, NegativeForce = negativeForce });
     }
 }

@@ -16,6 +16,8 @@ public class EnemyWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     public Transform aimTransform;
     public bool weaponRaised = false;
     [Range(0.0f, 1.0f)] [SerializeField] private float aimWeight = 1.0f;
+    public CameraType weaponCamera;
+
     Entity entity;
     EntityManager manager;
 
@@ -24,6 +26,7 @@ public class EnemyWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     void Start()
     {
         if (aim == null) return;
+        aimTransform = aim.solver.transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         animator.SetLayerWeight(0, 1);
@@ -71,17 +74,22 @@ public class EnemyWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         }
     }
 
-    void LateUpdate()
+    public void LateUpdateSystem()
     {
 
         SetCCD();
         SetAim();
     }
 
+
+
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         this.entity = entity;
         manager = dstManager;
+        dstManager.AddComponentData(entity,
+            new ActorWeaponAimComponent { weaponCamera = weaponCamera });
+
 
     }
 }

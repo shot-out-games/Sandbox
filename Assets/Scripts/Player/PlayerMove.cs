@@ -11,34 +11,47 @@ using Unity.Physics.Extensions;
 using Unity.Physics.Systems;
 using Unity.Transforms;
 
+
 public struct PlayerMoveComponent : IComponentData
 {
     public float currentSpeed;
     public float negativeForce;
-    public float rotateSlerpDampTime;
+    public float rotateSpeed;
+    public bool snapRotation;
+    public float dampTime;
+    public bool move2d;
+    public float3 startPosition;
+
 }
 
 
 
 namespace SandBox.Player
 {
-    [RequiresEntityConversion]
+    
 
 
     public class PlayerMove : MonoBehaviour, IConvertGameObjectToEntity
     {
 
+
+
         public AudioSource audioSource;
-
-
-
         public AudioClip clip;
         public ParticleSystem ps;
 
 
+        public float fallingFramesMax;
+        public float negativeForce = -9.81f;
 
         [SerializeField]
-        float rotateSlerpDampTime = 9f;
+        float rotateSpeed = 9;
+        [SerializeField]
+        float dampTime = .03f;
+        [SerializeField]
+        bool snapRotation = true;
+        [SerializeField]
+        bool move2d = false;
 
         [HideInInspector]
         public Camera mainCam;
@@ -48,127 +61,43 @@ namespace SandBox.Player
         private EntityManager _entityManager;
         private Entity _entity;
 
-        [SerializeField]
-        float negativeForce = -9.81f;
+        //[SerializeField]
+        //float negativeForce = -9.81f;
         private Animator animator;
-        //private Rigidbody rigidbody;
-        private bool jumpEnabled;
+        public int targetFrameRate = -1;
 
-        //public Quaternion rotation { get; set; }
-        public float slerpDampTime { get; set; }
-
-
-
-
-        // Start is called before the first frame update
         void Start()
         {
+            if (targetFrameRate >= 10)
+            {
+                Application.targetFrameRate = targetFrameRate;
+            }
+
             animator = GetComponent<Animator>();
-            jumpEnabled = GetComponent<PlayerJump>() || GetComponent<PlayerJumpDots>();
             mainCam = Camera.main;
 
         }
 
-        void FixedUpdate()
-        {
-
-        }
 
 
-        private void OnAnimatorMove()
-        //private void Update()
+        //private void OnAnimatorMove()
+        private void Update()
         {
             if (_entity == Entity.Null) return;
-
-
-            if (!_entityManager.HasComponent(_entity, typeof(ApplyImpulseComponent))) return;
-            if (!_entityManager.HasComponent(_entity, typeof(PlayerMoveComponent))) return;
+            //changing so we need root animation here only
             if (!ReInput.isReady) return;
-
-
-
-
-
-            ApplyImpulseComponent applyImpulseComponent =
-                _entityManager.GetComponentData<ApplyImpulseComponent>(_entity);
-
-
-            //float h = ReInput.players.GetPlayer(0).GetAxis("Move Horizontal");
-            float h = applyImpulseComponent.stickX;
-
-
-
-
-            currentSpeed = _entityManager.GetComponentData<PlayerMoveComponent>(_entity).currentSpeed;
-            Vector3 velocity = animator.deltaPosition / Time.deltaTime * currentSpeed;
-
-
-            float size =  math.length(applyImpulseComponent.Velocity);
-            //Debug.Log("size " + size);
-            size = 1;
-
-            float v = applyImpulseComponent.InJump? negativeForce : 0;
-            if (applyImpulseComponent.Falling)
-            {
-                v = negativeForce;
-            }
-
-            if (applyImpulseComponent.BumpLeft == true)
-            {
-                if (h < 0)
-                {
-                    //h = applyImpulseComponent.Velocity.x * -1;
-                    //v = applyImpulseComponent.Velocity.y * -1;
-                    h = -negativeForce * size;
-                    v = negativeForce * size;
-                    applyImpulseComponent.InJump = false;
-                }
-            }
-            else if (applyImpulseComponent.BumpRight == true)
-            {
-                if (h > 0)
-                {
-                    //h = applyImpulseComponent.Velocity.x * -1;
-                    //v = applyImpulseComponent.Velocity.y * -1;
-                    h = negativeForce * size;
-                    v = negativeForce * size;
-                    applyImpulseComponent.InJump = false;
-                }
-            }
-
-
-
-
-            //vy = negativeForce;
-
-            velocity.x = h * currentSpeed;
-            applyImpulseComponent.Velocity = new float3(velocity.x, v, velocity.z);            //
-
-            //Debug.Log("v " + applyImpulseComponent.Velocity);
-            _entityManager.SetComponentData(_entity, applyImpulseComponent);
-
-
-            bool grounded = applyImpulseComponent.Grounded;
-
-
-            //if (!jumpEnabled && animator != null)
-            if (animator != null)
-            {
-                //Debug.Log("v " + velocity);
-                animator.SetBool("Grounded", grounded);
-            }
 
 
         }
 
         void LateUpdate()
         {
-            if (Terrain.activeTerrain != null && !jumpEnabled)
-            {
-                Vector3 newpos = transform.position;
-                newpos.y = Terrain.activeTerrain.SampleHeight(transform.position);
-                transform.position = newpos;
-            }
+            //if (Terrain.activeTerrain != null && !jumpEnabled)
+            //{
+            //    Vector3 newpos = transform.position;
+            //    newpos.y = Terrain.activeTerrain.SampleHeight(transform.position);
+            //    transform.position = newpos;
+            //}
 
         }
 
@@ -183,13 +112,35 @@ namespace SandBox.Player
         }
 
 
+
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
             _entity = entity;
             _entityManager = dstManager;
 
             startSpeed = GetComponent<PlayerRatings>() ? GetComponent<PlayerRatings>().Ratings.speed : 4f;
-            dstManager.AddComponentData(entity, new PlayerMoveComponent() { negativeForce = negativeForce, currentSpeed = startSpeed, rotateSlerpDampTime = rotateSlerpDampTime });
+            //if (move2d)
+            //{
+                //snapRotation = true;
+                //dampTime = 0;
+            //}
+
+
+        dstManager.AddComponentData(entity, new PlayerMoveComponent()
+            {
+                //negativeForce = negativeForce,
+                currentSpeed = startSpeed, rotateSpeed = rotateSpeed,
+                snapRotation = snapRotation,
+                dampTime = dampTime,
+                move2d = move2d,
+                startPosition = transform.position
+                
+
+            });
+
+
+        dstManager.AddComponentData(entity, new ApplyImpulseComponent { Force = 0, Direction = Vector3.zero, Grounded = false, fallingFramesMaximuim = fallingFramesMax, NegativeForce = negativeForce });
+
 
         }
     }

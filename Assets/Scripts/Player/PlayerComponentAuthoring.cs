@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Transforms;
 
 
@@ -18,29 +19,43 @@ public struct SkillTreeComponent : IComponentData
     [System.NonSerialized]
     public Entity e;
     public int CurrentLevel;
-    public int CurrentLevelXp;
+    public float CurrentLevelXp;
     public int PointsNextLevel;
 
     public int availablePoints;
     public int SpeedPts;
     public int PowerPts;
     public int ChinPts;
+    public float TotalPoints;
 
     public float baseSpeed;
 
 
 }
 
+[System.Serializable]
+public struct PlayerComponent : IComponentData
+{
+    public int index;
+    public int keys;
+    public int tag;
+    public float speed;
+    public float power;
+    public float maxHealth;
+    public bool threeD;
+    public float3 startPosition;
+
+}
 
 
-
-[RequiresEntityConversion]
 
 
 public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 {
     public Entity playerEntity;
     public EntityManager manager;
+    private Animator animator;
+
 
     [SerializeField]
     private bool checkWinCondition = true;
@@ -49,7 +64,11 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
     private bool checkLossCondition = true;
 
 
+    public bool threeD;
+    public int skillTreePointsToNextLevel = 10;
 
+    [SerializeField]
+    bool paused = false;
 
     //void LateUpdate()
     //{
@@ -58,14 +77,44 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
     //    manager.SetComponentData(playerEntity, new Translation { Value = transform.position });
     //}
 
+    void Awake()
+    {
+        //Debug.Log("player awake ");
+        animator = GetComponent<Animator>();
+
+    }
+
+    void Start()
+    {
+        //Debug.Log("player start ");
+
+    }
+
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
         playerEntity = entity;
         manager = dstManager;
 
-        dstManager.AddComponent<PlayerComponent>(entity);
-        dstManager.AddComponentData(entity, new Pause { value = 0 });
+        conversionSystem.AddHybridComponent(animator);
+
+        dstManager.AddComponentData(entity, new PlayerComponent
+        {
+
+
+            threeD = threeD,
+            startPosition = manager.GetComponentData<Translation>(entity).Value
+        }
+
+            );
+
+
+        if (paused == true)
+        {
+            dstManager.AddComponent<Pause>(entity);
+        }
+
+
         dstManager.AddComponentData(entity,
             new WinnerComponent
             {
@@ -82,8 +131,6 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
             new LevelCompleteComponent
             {
                 active = true,
-                goalCounter = 0,
-                goalCounterTarget = 0,//ie how many players you have to save - usually zero
                 targetReached = false,
                 checkWinCondition = checkWinCondition
             }
@@ -102,24 +149,31 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
         {
             e = entity,
             availablePoints = 0,
+            TotalPoints = 0,
             SpeedPts = 0,
             PowerPts = 0,
             ChinPts = 0,
             baseSpeed = 0,
             CurrentLevel = 1,
             CurrentLevelXp = 0,
-            PointsNextLevel = 10
+            PointsNextLevel = skillTreePointsToNextLevel
 
         }
 
         );
 
         dstManager.AddComponentData(entity, new StatsComponent()
-            {
-                shotsFired = 0,
-                shotsLanded = 0
-            }
+        {
+            shotsFired = 0,
+            shotsLanded = 0
+        }
         );
+
+        dstManager.AddComponentData(entity, new CheckedComponent());
+
+
+        //Debug.Log("player convert ");
+
 
 
     }

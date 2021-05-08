@@ -1,33 +1,50 @@
 ﻿using RootMotion.FinalIK;
 using UnityEngine;
 
+public enum AnimationType
+{
+    None,
+    Punch,
+    Kick,
+    Swing,
+    Aim,
+    Locomotion,
+    Lowering
+}
 
 [System.Serializable]
-
 public class Moves
 {
-    public bool playerMove;
-    public bool enemyMove;
+    [Header("IK")]
+    public bool usingFbb = true;
+    public bool usingAim = true;
+    public bool usingLimb = true;
+    public FullBodyBipedEffector effector;
+    public AimIK aimIk;
+    public FABRIK limbIk;
+
+    [Header("TARGETING")]
+    public AnimationType animationType;
     public Transform target = null;
     public Transform pin = null;
     public float weight;
-    public FullBodyBipedEffector effector;
-    [HideInInspector]
-    public float calculatedStrikeDistanceZoneBegin;
-    public bool usingFbb = true;
-    public bool usingAim = true;
-    public AimIK aimIk;
-    public bool active = true;
     public Transform aimTransform = null;
 
 
-    public float strikeDistanceAdjustment
-    { get; set; } = 1.0f;
+    [Header("EFFECTS")]
+    public AudioSource moveAudioSource;
+    public AudioClip moveAudioClip;
+    public ParticleSystem moveParticleSystem;
 
-    public void CalculateStrikeDistanceFromPinPosition(Transform _transform)
+    public float CalculateStrikeDistanceFromPinPosition(Transform _transform)
     {
+        if (pin == null) return -1;
+        
         float offset = .23f;
-        calculatedStrikeDistanceZoneBegin = Vector3.Distance(_transform.position, pin.position) -  offset;//.25 
+        float calculatedStrikeDistanceZoneBegin = Vector3.Distance(_transform.position, pin.position) - offset;//.25 
+        //Debug.Log("strike start " + calculatedStrikeDistanceZoneBegin);
+        return calculatedStrikeDistanceZoneBegin;
+
     }
 
 }

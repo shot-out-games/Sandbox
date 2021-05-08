@@ -8,6 +8,7 @@ namespace Rewired.Integration.UnityUI {
     using UnityEngine;
     using UnityEngine.EventSystems;
     
+    [AddComponentMenu("Rewired/Rewired Event System")]
     public class RewiredEventSystem : EventSystem {
         
         [Tooltip("If enabled, the Event System will be updated every frame even if other Event Systems are enabled. Otherwise, only EventSystem.current will be updated.")]

@@ -28,16 +28,17 @@ public struct ApplyImpulseComponent : IComponentData
     public float Force;
     public float3 Direction;
     public float3 Velocity;
-    public float3 NegativeForce;
+    public float NegativeForce;
     public Translation Translation;
     public Rotation Rotation;
     public float3 LastPositionLand;
-}
-/// <summary> Our simple system. </summary>
-//[UpdateAfter(typeof(Unity.Transforms.CompositeRotationSystem,))]
-//[UpdateAfter(typeof(Unity.Physics.Systems.EndFramePhysicsSystem))]
+    public bool hiJump;
+    public float fallingFramesCounter;
+    public float fallingFramesMaximuim;
 
-//[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+
+}
+
 
 public class ApplyImpulseSystem : SystemBase
 {
@@ -65,7 +66,12 @@ public class ApplyImpulseSystem : SystemBase
                 //ComponentExtensions.ApplyLinearImpulse(ref physicsVelocity, physicsMass,
                 //applyImpulseData.Direction * applyImpulseData.Force);
 
-                physicsVelocity.Linear = applyImpulseData.Velocity;
+                
+                
+                //physicsVelocity.Linear = applyImpulseData.Velocity;
+
+
+
                 //translation.Value.y = 0;
 
 

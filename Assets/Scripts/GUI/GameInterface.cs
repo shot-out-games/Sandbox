@@ -6,15 +6,16 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.AI;
 using Unity.Jobs;
+using Unity.Physics.Systems;
 
 public struct GameInterfaceComponent : IComponentData
 {
-    public int pause;
+    public bool paused;
 }
 
 public struct Pause : IComponentData
 {
-    public int value;
+    //public int value;
 }
 
 public class GameInterface : MonoBehaviour, IConvertGameObjectToEntity
@@ -56,6 +57,10 @@ public class GameInterface : MonoBehaviour, IConvertGameObjectToEntity
         paused = pause;
     }
 
+    public void SetPauseMember(bool pause)
+    {
+        paused = pause;
+    }
 
 
     public void SelectClicked()//only called with button from system no menu item currently
@@ -77,17 +82,26 @@ public class GameInterface : MonoBehaviour, IConvertGameObjectToEntity
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        dstManager.AddComponentData<GameInterfaceComponent>(entity, new GameInterfaceComponent { pause = 0 });
+        dstManager.AddComponentData<GameInterfaceComponent>(entity, new GameInterfaceComponent { paused = paused });
     }
 }
 
 
 
 
-public class GameInterfaceSystem : JobComponentSystem
+public class GameInterfaceSystem : SystemBase
 {
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    StepPhysicsWorld stepPhysicsWorld;
+
+    protected override void OnCreate()
+    {
+        stepPhysicsWorld = World.GetOrCreateSystem<StepPhysicsWorld>();
+    }
+
+
+
+    protected override void OnUpdate()
     {
 
         bool paused = false;
@@ -96,7 +110,7 @@ public class GameInterfaceSystem : JobComponentSystem
         //if(EntityManager.HasComponent<DeadMenuComponent>())
 
         bool required = HasSingleton<DeadMenuComponent>() && HasSingleton<WinnerMenuComponent>();
-        if (required == false) return  default;
+        if (required == false) return;
 
         bool deadMenuDisplayed = !GetSingleton<DeadMenuComponent>().hide;
         bool winnerMenuDisplayed = !GetSingleton<WinnerMenuComponent>().hide;
@@ -107,8 +121,8 @@ public class GameInterfaceSystem : JobComponentSystem
             (
                 (
                     Entity entity,
-                    InputController inputController,
-                    GameInterface gameInterface
+                    GameInterface gameInterface,
+                    in InputControllerComponent inputController
 
                 ) =>
                 {
@@ -116,30 +130,38 @@ public class GameInterfaceSystem : JobComponentSystem
                     if (selectPressed && deadMenuDisplayed == false && winnerMenuDisplayed == false)
                     {
                         gameInterface.SelectClicked();
+                        //Debug.Log("select " + selectPressed);
                     }
                     paused = gameInterface.paused;//should probably be component
+
                 }
 
             ).Run();
 
-        int pause = paused ? 1 : 0;
-        Entities.WithoutBurst().ForEach((Animator animator, Entity entity) =>
+        stepPhysicsWorld.Enabled = !paused;
+
+
+        if (selectPressed)
         {
-            animator.speed = paused ? 0 : 1; ;
-            EntityManager.SetComponentData<Pause>(entity, new Pause { value = pause });
+
+            Entities.WithoutBurst().WithAll<RatingsComponent>().WithStructuralChanges().ForEach((Entity entity) =>
+            {
+
+                if (paused)
+                {
+                    //Debug.Log("add");
+                    EntityManager.AddComponent<Pause>(entity);
+                }
+                else
+                {
+                    //Debug.Log("remove");
+                    EntityManager.RemoveComponent<Pause>(entity);
+                }
+            }
+            ).Run();
         }
-        ).Run();
 
 
-        Entities.WithoutBurst().ForEach((EnemyMove enemyMove, Entity entity, NavMeshAgent agent, RatingsComponent enemyRatings, DeadComponent dead) =>
-        {
-            enemyMove.moveSpeed = paused || dead.isDead ? 0 : enemyRatings.speed;
-            //agent.speed = enemyMove.moveSpeed;
-            EntityManager.SetComponentData<Pause>(entity, new Pause { value = pause });
-        }
-        ).Run();
-
-        return default;
 
     }
 }

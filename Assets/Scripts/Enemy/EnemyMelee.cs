@@ -13,25 +13,33 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     private NavMeshAgent agent;
     private Animator animator;
     private Rigidbody rb;
-    [HideInInspector]
+    //[HideInInspector]
     public Transform AimTransform;
+    //[HideInInspector]
     public FullBodyBipedIK ik;
-    [HideInInspector]
+    //[HideInInspector]
     public AimIK aim;
+    //[HideInInspector]
+    public FABRIK limb;
     public Moves moveUsing = new Moves();
+    public float currentStrikeDistanceZoneBegin;
+    public float currentStrikeDistanceAdjustment;
+
+
     [SerializeField]
     private List<Moves> moveList = new List<Moves>();
     public CombatStats combatStats = new CombatStats();
     public bool hitLanded { get; set; }
     public bool hitReceived { get; set; }
     public AttackStages AttackStage { get; set; }
-    public float strikeDistanceAdjustment { get; set; } = 1.0f;
+    //public float strikeDistanceAdjustment { get; set; } = 1.0f;
     public MovesManager movesInspector;
     public bool attackStarted { get; internal set; }
     private EntityManager entityManager;
     private Entity meleeEntity;
     public bool active = true;
-
+    public float hitPower = 10f;
+    public bool allEnemyCollisionsCauseDamage;
 
     void Start()
     {
@@ -46,19 +54,23 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
         for (int i = 0; i < movesInspector.Moves.Count; i++)
         {
             Moves move = movesInspector.Moves[i];
-            if (move.enemyMove && move.active)
+            if (move.aimIk != null)
             {
-                if (move.aimIk != null)
+                aim = move.aimIk;
+                AimTransform = move.aimTransform;
+                if (AimTransform == null)
                 {
-                    aim = move.aimIk;
-                    AimTransform = move.aimTransform;
-                    if (AimTransform == null)
-                    {
-                        int boneCount = aim.solver.bones.Length;
-                        AimTransform = aim.solver.bones[boneCount - 1].transform;
-                    }
-
+                    Debug.Log("aim ik auto bone ENEMY ");
+                    int boneCount = aim.solver.bones.Length;
+                    AimTransform = aim.solver.bones[boneCount - 1].transform;
                 }
+
+                if (move.limbIk)
+                {
+                    limb = move.limbIk;
+                }
+
+                currentStrikeDistanceZoneBegin = move.CalculateStrikeDistanceFromPinPosition(transform);
                 move.target = moveUsing.target;//default target assigned in system
                 moveList.Add(move);
             }
@@ -74,6 +86,7 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
         combatAction = Random.Range(1, moveList.Count + 1);
         moveUsing = moveList[combatAction - 1];
         aim = moveUsing.aimIk;
+        limb = moveUsing.limbIk;
         AimTransform = moveUsing.aimTransform;
         if (aim != null)
         {
@@ -84,6 +97,10 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
             }
             moveUsing.aimTransform = AimTransform;
         }
+        if (limb != null)
+        {
+            //
+        }
 
 
     }
@@ -92,7 +109,8 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
     public void StartMove()
     {
-        animator.SetInteger("CombatAction", combatAction);
+        int animationIndex = (int)moveUsing.animationType;
+        animator.SetInteger("CombatAction", animationIndex);
     }
 
     public void StartAgent()
@@ -113,6 +131,10 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
         {
             aim.enabled = true;
         }
+        if (moveUsing.usingLimb)
+        {
+            limb.enabled = true;
+        }
     }
 
     public void StopAimIK()
@@ -120,6 +142,10 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
         if (moveUsing.usingAim)
         {
             aim.enabled = false;
+        }
+        if (moveUsing.usingLimb)
+        {
+            limb.enabled = false;
         }
     }
 
@@ -145,7 +171,24 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
     public void Aim()
     {
+
         float hitWeight = animator.GetFloat("HitWeight");
+
+        if (limb != null)
+        {
+            if (moveUsing.usingLimb && limb.enabled)
+            {
+
+                limb.solver.IKPosition = moveUsing.target.position;
+                limb.solver.IKPositionWeight = hitWeight * moveUsing.weight;
+                limb.solver.target = moveUsing.target;
+                //Debug.Log("mv " + moveUsing.target.position);
+                limb.solver.Update();
+                //Debug.Log("hw " + hitWeight);
+            }
+        }
+
+
 
         if (ik == null || aim == null || moveUsing.target == null) return;
         //if (aim == null || !ik.enabled || !aim.enabled) return;
@@ -167,6 +210,8 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
         }
 
 
+
+
         if (moveUsing.usingFbb && ik.enabled)
         {
             ik.solver.GetEffector(moveUsing.effector).position = moveUsing.target.position;
@@ -176,10 +221,10 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
     }
 
-    private void LateUpdate()
+    public void LateUpdateSystem()
     {
         //if (entityManager.HasComponent<EnemyMeleeMovementComponent>(meleeEntity) == false) return;
-        if (entityManager == null) return;
+        if (entityManager == default) return;
         Aim();
     }
 
@@ -189,7 +234,14 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
     {
         entityManager = dstManager;
         meleeEntity = entity;
-        entityManager.AddComponentData(meleeEntity, new MeleeComponent { Available = active });
+        entityManager.AddComponentData(meleeEntity, new MeleeComponent
+        {
+            Available = active,
+            hitPower = hitPower,
+            gameHitPower = hitPower,
+            anyTouchDamage = allEnemyCollisionsCauseDamage
+
+        });
         entityManager.AddComponentData(entity, new EnemyAttackComponent());
 
     }
@@ -199,19 +251,19 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
 
 
-public class EnemyMeleeSystem : JobComponentSystem
+public class EnemyMeleeSystem : SystemBase
 {
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
 
-        var entityManager = World.EntityManager;
 
 
-        Entities.WithStructuralChanges().WithoutBurst().ForEach
+        Entities.WithStructuralChanges().WithAll<EnemyComponent>().WithoutBurst().ForEach
         (
             (
                 ref EnemyAttackComponent enemyAttackComponent,
+                ref CheckedComponent checkedComponent,
                 in Entity entity,
                 in EnemyMove enemyMove,
                 in EnemyMelee enemyCombat,
@@ -220,12 +272,12 @@ public class EnemyMeleeSystem : JobComponentSystem
 
             ) =>
             {
-                bool hasMeleeComponent = entityManager.HasComponent<MeleeComponent>(entity);
+                bool hasMeleeComponent = EntityManager.HasComponent<MeleeComponent>(entity);
                 if (hasMeleeComponent && enemyMove.target != null)
                 {
                     bool attackStarted = enemyCombat.attackStarted;
-                    float strikeDistanceAdjustment = enemyCombat.moveUsing.strikeDistanceAdjustment;
-                    float strikeDistance = enemyCombat.moveUsing.calculatedStrikeDistanceZoneBegin;
+                    float strikeDistanceAdjustment = enemyCombat.currentStrikeDistanceAdjustment;
+                    float strikeDistance = enemyCombat.currentStrikeDistanceZoneBegin;
                     float adjStrikeDistance = strikeDistance * strikeDistanceAdjustment;
 
                     bool hitLanded = enemyCombat.hitLanded;
@@ -238,6 +290,7 @@ public class EnemyMeleeSystem : JobComponentSystem
                     if (attackStarted && enemyAttackComponent.AttackStage == AttackStages.No)
                     {
                         enemyAttackComponent = new EnemyAttackComponent() { AttackStage = AttackStages.Start };
+                        //trigger.triggerChecked = false;
                         enemyCombat.SelectMove();
                     }
                     else if (attackStarted && enemyAttackComponent.AttackStage == AttackStages.Start)
@@ -253,15 +306,16 @@ public class EnemyMeleeSystem : JobComponentSystem
 
                         if (hitLanded && dist < adjStrikeDistance && dist > adjStrikeDistance / 1.02f)
                         {
-                            enemyCombat.moveUsing.strikeDistanceAdjustment *= 1.02f;
+                            enemyCombat.currentStrikeDistanceAdjustment = 1.02f;//reset to 1.02f
                         }
                         else if (!hitLanded && strikeDistanceAdjustment > strikeDistance * .8f) // strike distance is the calculated strike distance in Moves class table
                         {
-                            enemyCombat.moveUsing.strikeDistanceAdjustment *= .98f;
+                            enemyCombat.currentStrikeDistanceAdjustment *= .98f;
                         }
-
+                        //Debug.Log("strike " + adjStrikeDistance);
                         enemyCombat.hitLanded = false;
                         enemyCombat.hitReceived = false;
+                        checkedComponent.collisionChecked = false;
                         enemyAttackComponent = new EnemyAttackComponent() { AttackStage = AttackStages.No };
                     }
 
@@ -270,7 +324,7 @@ public class EnemyMeleeSystem : JobComponentSystem
             }
         ).Run();
 
-        return default;
+        //return default;
     }
 
 

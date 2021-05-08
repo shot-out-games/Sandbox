@@ -18,27 +18,14 @@ public class ControlBarSystem : SystemBase
                 {
 
                    
-
-                   var dead = EntityManager.GetComponentData<DeadComponent>(entity).isDead;
-                    if(dead == false)
+                    //example
+                    if(deadComponent.isDead == false)
                     {
                         if (controlComponent.value > 20)
                         {
                             controlComponent.value -= 1 * Time.DeltaTime;
-                            //Debug.Log("tm " + controlComponent.value);
                         }
                     }
-
-
-                    //float val = controlComponent.maxHealth;
-                    //val = 25f;
-
-                    //if (controlComponent.value >= val && dead.isDead == false && dead.justDead == false)
-                    //{
-                    //    dead.isDead = true;
-                    //    dead.justDead = true;
-                    //    ecb.SetComponent(entity, dead);//tag player or enemy
-                    //}
 
                 }
             ).Run();
@@ -46,7 +33,5 @@ public class ControlBarSystem : SystemBase
             ecb.Playback(EntityManager);
             ecb.Dispose();
 
-
-        //.Schedule();
     }
 }
