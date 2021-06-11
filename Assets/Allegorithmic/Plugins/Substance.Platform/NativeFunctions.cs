@@ -188,7 +188,7 @@ namespace Substance.Platform
 
                         if (DllHandle == IntPtr.Zero)
                         {
-                            // Unity added the subfolder 'x86_64' in Unity2019.3.9f1 & later versions...
+                            // Unity added the subfolder 'x86_64' in Unity2019.3.9f1 & later versions...?
                             LibDestination = Path.Combine(dataPath, "Plugins/x86_64/Substance.Engine.dll");
                             DllHandle = LoadLibrary(LibDestination);
                         }

@@ -83,5 +83,100 @@ namespace Substance.EditorHelper
             }
             */
         }
+
+        // =================================================================================
+        // SendTo: launch launcher:
+        [DllImport("substance_portal_cli", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public static extern uint substance_portal_cli_invoke();
+
+        // ---------------------------------------------------------------------------------
+        // The following 'Shader' functions are only used for Unity2019.3 & up.
+        // (so, for compilation purposes, with pre-Unity2019.3 APIs: we have to implement a dummy version of each)
+
+#if UNITY_2019_3_OR_NEWER
+        public enum ShaderPropertyType
+        {
+            Color = UnityEngine.Rendering.ShaderPropertyType.Color,
+            Float = UnityEngine.Rendering.ShaderPropertyType.Float
+        }
+#else
+        public enum ShaderPropertyType
+        {
+            Invalid = -1,
+            Color = -2,
+            Float = -3
+        }
+#endif
+
+#if UNITY_2019_3_OR_NEWER
+        public static int GetPropertyCount(Shader pShader)
+        {
+            return pShader.GetPropertyCount();
+        }
+#else
+        public static int GetPropertyCount(Shader pShader)
+        {
+            Debug.LogWarning(string.Format("Unexpected Shader function call: '{0}'!",
+                System.Reflection.MethodBase.GetCurrentMethod().Name));
+            return 0;
+        }
+#endif
+
+#if UNITY_2019_3_OR_NEWER
+        public static string GetPropertyName(Shader pShader, int pIndex)
+        {
+            return pShader.GetPropertyName(pIndex);
+        }
+#else
+        public static string GetPropertyName(Shader pShader, int pIndex)
+        {
+            Debug.LogWarning(string.Format("Unexpected Shader function call: '{0}'!",
+                System.Reflection.MethodBase.GetCurrentMethod().Name));
+            return string.Empty;
+        }
+#endif
+
+#if UNITY_2019_3_OR_NEWER
+        public static ShaderPropertyType GetPropertyType(Shader pShader, int pIndex)
+        {
+            return (ShaderPropertyType)pShader.GetPropertyType(pIndex);
+        }
+#else
+        public static ShaderPropertyType GetPropertyType(Shader pShader, int pIndex)
+        {
+            Debug.LogWarning(string.Format("Unexpected Shader function call: '{0}'!",
+                System.Reflection.MethodBase.GetCurrentMethod().Name));
+            return ShaderPropertyType.Invalid;
+        }
+#endif
+
+#if UNITY_2019_3_OR_NEWER
+        public static float GetPropertyDefaultFloatValue(Shader pShader, int pIndex)
+        {
+            return pShader.GetPropertyDefaultFloatValue(pIndex);
+        }
+#else
+        public static float GetPropertyDefaultFloatValue(Shader pShader, int pIndex)
+        {
+            Debug.LogWarning(string.Format("Unexpected Shader function call: '{0}'!",
+                System.Reflection.MethodBase.GetCurrentMethod().Name));
+            return 0;
+        }
+#endif
+
+#if UNITY_2019_3_OR_NEWER
+        public static Color GetPropertyDefaultVectorValue(Shader pShader, int pIndex)
+        {
+            return pShader.GetPropertyDefaultVectorValue(pIndex);
+        }
+#else
+        public static Color GetPropertyDefaultVectorValue(Shader pShader, int pIndex)
+        {
+            Debug.LogWarning(string.Format("Unexpected Shader function call: '{0}'!",
+                System.Reflection.MethodBase.GetCurrentMethod().Name));
+            return new Color(0,0,0,0);
+        }
+#endif
+
     }
 }
