@@ -14,7 +14,7 @@ public class EnemyRatings : MonoBehaviour, IConvertGameObjectToEntity
     {
         float multiplier = .7f;
         RatingsComponent ratings = manager.GetComponentData<RatingsComponent>(e);
-        ratings.speed = Random.Range(ratings.speed * multiplier, ratings.speed * (2 - multiplier));
+        ratings.speed = Random.Range(ratings.speed * multiplier, ratings.speed * (2 - multiplier)) ;
         //ratings.shootRangeDistance = Random.Range(ratings.shootRangeDistance * multiplier, ratings.shootRangeDistance* (2 - multiplier));
 
 

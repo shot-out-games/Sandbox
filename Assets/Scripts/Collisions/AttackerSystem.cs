@@ -370,17 +370,25 @@ public class AttackerSystem : SystemBase
                 Entity shooter = Entity.Null;
                 //if (EntityManager.HasComponent<AmmoComponent>(collision_entity_b)) //ammo entity not character if true
                 //{
-                    shooter = EntityManager.GetComponentData<TriggerComponent>(collision_entity_b)
-                            .ParentEntity;
+                shooter = EntityManager.GetComponentData<TriggerComponent>(collision_entity_b)
+                    .ParentEntity;
                 //}
+
+
 
                 Debug.Log("ta " + type_a + " tb " + type_b);
                 Debug.Log("ea " + collision_entity_a + " eb " + collision_entity_b);
                 Debug.Log("shooter " + shooter);
-
+                
                 if (shooter != Entity.Null)
                 {
-                    bool isEnemy = (EntityManager.HasComponent(shooter, typeof(EnemyComponent)));
+                    bool isEnemyShooter = (EntityManager.HasComponent(shooter, typeof(EnemyComponent)));
+                    Entity target = EntityManager.GetComponentData<TriggerComponent>(collision_entity_a)
+                        .ParentEntity;
+                    bool isEnemyTarget = (EntityManager.HasComponent(target, typeof(EnemyComponent)));
+
+                    Debug.Log("es " + isEnemyShooter + " et " + isEnemyTarget);
+
 
                     AmmoComponent ammo =
                         EntityManager.GetComponentData<AmmoComponent>(collision_entity_b);
@@ -391,8 +399,10 @@ public class AttackerSystem : SystemBase
                     float damage = EntityManager.GetComponentData<GunComponent>(shooter).gameDamage;
                     Debug.Log("damage " + damage);
                     ammo.AmmoDead = true;
-
-                    if (ammo.DamageCausedPreviously == true || ammoData.ChargeRequired == true && ammo.Charged == false)
+                    
+                    if (ammo.DamageCausedPreviously == true || ammoData.ChargeRequired == true && ammo.Charged == false  ||
+                        isEnemyShooter == isEnemyTarget
+                        )
                     {
                         damage = 0;
                     }
@@ -406,7 +416,7 @@ public class AttackerSystem : SystemBase
                             { DamageLanded = 0, DamageReceived = damage, StunLanded = damage });
 
 
-                    if (HasComponent<ScoreComponent>(shooter))
+                    if (HasComponent<ScoreComponent>(shooter) && damage != 0)
                     {
                         Debug.Log("score");
                         var scoreComponent = EntityManager.GetComponentData<ScoreComponent>(shooter);
