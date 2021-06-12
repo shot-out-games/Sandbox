@@ -22,8 +22,9 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Lit
     materialProperties:
       shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-      shaderKeywords: _ALPHABLEND_ON _EMISSION _GLOSSINESSMAP _HEIGHTMAP _METALLICSPECGLOSSMAP
-        _NA_DIFFUSE _NORMALMAP _OCCLUSIONMAP _ROUGHNESSMAP
+      shaderKeywords: _ALPHABLEND_ON _BASEMAP _BUMPMAP _EMISSION _EMISSIONMAP _GLOSSINESSMAP
+        _HEIGHTMAP _METALLICGLOSSMAP _METALLICSPECGLOSSMAP _NA_DIFFUSE _NORMALMAP
+        _OCCLUSIONMAP _ROUGHNESSMAP _SPECGLOSSMAP
       lightmapFlags: 1
       enableInstancingVariants: 0
       doubleSidedGI: 0

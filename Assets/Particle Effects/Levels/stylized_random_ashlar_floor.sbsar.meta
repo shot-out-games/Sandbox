@@ -22,19 +22,20 @@ ScriptedImporter:
     shaderName: Universal Render Pipeline/Unlit
     materialProperties:
       shader: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}
-      shaderKeywords: 
+      shaderKeywords: _MAINTEX
       lightmapFlags: 4
       enableInstancingVariants: 0
       doubleSidedGI: 0
       customRenderQueue: 2000
       texEnvs:
       - name: _BaseMap
-        texture: {fileID: 5047375678401728980, guid: db1f66135ae06c7418b977a981103e7f,
+        texture: {fileID: -5113140176248137256, guid: db1f66135ae06c7418b977a981103e7f,
           type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       - name: _MainTex
-        texture: {instanceID: 0}
+        texture: {fileID: -5113140176248137256, guid: db1f66135ae06c7418b977a981103e7f,
+          type: 3}
         scale: {x: 1, y: 1}
         offset: {x: 0, y: 0}
       floats:
@@ -242,4 +243,4 @@ ScriptedImporter:
     material: {fileID: 5796991794740986973, guid: db1f66135ae06c7418b977a981103e7f,
       type: 3}
     generatedTextures:
-    - {fileID: 5047375678401728980, guid: db1f66135ae06c7418b977a981103e7f, type: 3}
+    - {fileID: -5113140176248137256, guid: db1f66135ae06c7418b977a981103e7f, type: 3}
