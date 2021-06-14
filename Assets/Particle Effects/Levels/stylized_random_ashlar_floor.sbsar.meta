@@ -17,8 +17,7 @@ ScriptedImporter:
     generateAllOutputs: 0
     generateMipMaps: 1
     preset: " <sbspreset pkgurl=\"pkg://stylized_random_ashlar_floor\" label=\"\"
-      >\n  <presetinput identifier=\"$outputsize\" uid=\"1410480360\" type=\"8\"
-      value=\"9,9\" />\n </sbspreset>\n"
+      >\n </sbspreset>\n"
     shaderName: Universal Render Pipeline/Unlit
     materialProperties:
       shader: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}

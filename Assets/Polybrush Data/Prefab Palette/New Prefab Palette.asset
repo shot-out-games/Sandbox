@@ -13,23 +13,6 @@ MonoBehaviour:
   m_Name: New Prefab Palette
   m_EditorClassIdentifier: 
   prefabs:
-  - gameObject: {fileID: 8981990343550481989, guid: 1f830fedf8b4f824ead9884c44902907,
-      type: 3}
-    settings:
-      m_Strength: 57.25
-      m_RotationRangeMin: {x: 0, y: 0, z: 0}
-      m_RotationRangeMax: {x: 0, y: 0, z: 0}
-      m_ScaleRangeMin: {x: 1, y: 1, z: 1}
-      m_ScaleRangeMax: {x: 1, y: 1, z: 1}
-      m_UniformScale: {x: 1, y: 1}
-      m_UniformBool: 0
-      m_XRotationBool: 0
-      m_YRotationBool: 0
-      m_ZRotationBool: 0
-      m_XScaleBool: 0
-      m_YScaleBool: 0
-      m_ZScaleBool: 0
-    name: RockCluster_A_DOTS
   - gameObject: {fileID: 3466703481568296788, guid: 6aa97f6bf5ff6c148a6f4b65709038a1,
       type: 3}
     settings:

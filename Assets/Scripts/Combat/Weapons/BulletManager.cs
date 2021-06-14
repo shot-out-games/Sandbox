@@ -84,7 +84,7 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
             Strength = PrimaryAmmoPrefab.GetComponent<AmmoData>().Strength;
             Damage = PrimaryAmmoPrefab.GetComponent<AmmoData>().Damage;
             Rate = PrimaryAmmoPrefab.GetComponent<AmmoData>().Rate;
-            Debug.Log("dam " + Damage);
+            //Debug.Log("dam " + Damage);
         }
 
 

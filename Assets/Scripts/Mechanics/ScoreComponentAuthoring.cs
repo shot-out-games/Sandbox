@@ -16,6 +16,9 @@ public struct ScoreComponent : IComponentData
     public bool pointsScored;
     public int lastPointValue;
     public int defaultPointsScored;
+    public int addBonus;//used for bank shot bonus for example
+
+
     public int scoreChecked;
     public float timeSinceLastScore;
     public int streak;

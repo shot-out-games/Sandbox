@@ -18,7 +18,7 @@ namespace SandBox.Player
                 (
                     PlayerCombat playerCombat,
                     Animator animator,
-                    in  InputControllerComponent inputController,
+                    in InputControllerComponent inputController,
                     in ApplyImpulseComponent applyImpulse
 
                 ) =>

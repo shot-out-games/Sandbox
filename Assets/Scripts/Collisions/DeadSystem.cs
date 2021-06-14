@@ -59,7 +59,7 @@ public class DeadSystem : SystemBase //really game over system currently
 
         Entities.WithoutBurst().ForEach
         (
-            (ref DeadComponent deadComponent, ref WinnerComponent winnerComponent, ref PhysicsVelocity pv, ref Translation translation,
+            ( Animator animator, ref DeadComponent deadComponent, ref WinnerComponent winnerComponent, ref PhysicsVelocity pv, ref Translation translation,
             in Entity entity) =>
             {
 
@@ -68,7 +68,6 @@ public class DeadSystem : SystemBase //really game over system currently
                 if (deadComponent.isDying
                     && deadComponent.tag == 2)//enemy
                 {
-                    Debug.Log("set dead");
                     deadComponent.isDying = false;
                     deadComponent.playDeadEffects = true;
                     if (winnerComponent.checkWinCondition == true)//this  (and all with this true) enemy must be defeated to win the game
@@ -78,22 +77,27 @@ public class DeadSystem : SystemBase //really game over system currently
                     enemyJustDead = true;
                     LevelManager.instance.levelSettings[currentLevel].enemiesDead += 1;
                     //pv.Linear = new float3(0, -1, 0);
+                    Debug.Log("set dead");
+                    ecb.DestroyEntity(entity);
+                    animator.SetInteger("Dead", 5);
+                    //animator.SetInteger("Zone", 0);
                 }
             }
         ).Run();
 
 
-        if (enemyJustDead == true)
-        {
-            Entities.WithoutBurst().WithAny<EnemyComponent>().ForEach
-            (
-                (Animator animator) =>
-                {
-                    //animator.SetInteger("Zone", 4);
-                    animator.SetInteger("Dead", 1);
-                }
-            ).Run();
-        }
+        //if (enemyJustDead == true)
+        //{
+        //    Entities.WithoutBurst().WithAny<EnemyComponent>().ForEach
+        //    (
+        //        (Animator animator) =>
+        //        {
+        //            Debug.Log("set dead");
+
+        //            animator.SetInteger("Dead", 1);
+        //        }
+        //    ).Run();
+        //}
 
 
         if (enemyJustDead == true)

@@ -1,3 +1,15 @@
+1.1.39.2:
+    
+    Changes:
+      - Missing mouse axis entries in the Unity Input Manager entries no longer cause Rewired to fail initialization, but instead log an error.
+    
+    API Changes:
+      - Added public setter to InputManager_Base.dataFiles property.
+    
+    Bug Fixes:
+      - Windows Standalone, Native Mouse Handling: Virtual desktop mouse delta value is no longer ~1/2 size of local mouse delta.
+      - Fixd missing stick buttons mappings for Steam Controller (emulated) in Gamepad Template.
+
 1.1.39.1:
   
     Bug Fixes:

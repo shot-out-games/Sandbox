@@ -30852,7 +30852,7 @@ Transform:
   m_GameObject: {fileID: 3466703481568296788}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1.0000002, z: 1.0000002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3466703479999941608}
   - {fileID: 3466703480129002580}
@@ -30899,7 +30899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62ef646c0e6b68d44a63943c709b5ffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomize: 0
+  randomize: 1
   Ratings: {fileID: 11400000, guid: 4b147d42db405bc46b759777c45c8346, type: 2}
 --- !u!114 &3466703481568296794
 MonoBehaviour:
@@ -30945,7 +30945,7 @@ MonoBehaviour:
   score3dText: {fileID: 821383783832579042, guid: 70aed6e00832f9442b6c3e53fc04944c,
     type: 3}
   showDamageMin: 0
-  showText3D: 1
+  showText3D: 2
   showTime: 3
 --- !u!114 &3466703481568296797
 MonoBehaviour:

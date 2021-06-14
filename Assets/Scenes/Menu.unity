@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 9a1af42ce4bb180459d4c861d696429c,
+  m_LightingDataAsset: {fileID: 112000000, guid: 7347bf7f78a5a524ebcdfab73b24e55d,
     type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
@@ -900,6 +900,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.mouseMaps.Array.data[0].actionElementMaps.Array.data[0]._actionId
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8468523140163583471, guid: 3764df9cde8d8314683850f5158ee0b5,
         type: 3}
       propertyPath: m_RootOrder
@@ -3163,7 +3168,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ONE DIRECTION
+  m_text: TWO CLOSE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1ca2a657d10d8a04c90b136837422597, type: 2}
   m_sharedMaterial: {fileID: 5492435546947484485, guid: 1ca2a657d10d8a04c90b136837422597,
@@ -8718,6 +8723,37 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 459216244}
     m_Modifications:
+    - target: {fileID: 8204699602833128145, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_text
+      value: 'RIGHT CLICK Stops Your Buddy from moving but with increased risk to
+        damage
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699603120978797, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_text
+      value: SPACE BAR will cause your Buddy only to JUMP
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699603239268279, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_text
+      value: 'TIPS
+
+        STAY CLOSE TO YOUR PARTNER.
+
+        YOU CAN BARELY SHOOT
+        IF YOU DO NOT.
+
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699603239268279, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 48
+      objectReference: {fileID: 0}
     - target: {fileID: 8204699603398090866, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -8742,6 +8778,37 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699603439684909, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_text
+      value: 'CONTROLS (GAMEPAD COMPATIBLE)
+
+        MOVE : WASD (LEFT STICK)
+
+        PARTNER
+        JUMP :  Space Bar (X BUTTON X-BOX)
+
+        SHOOT : Left Click (RIGHT TRIGGER)
+
+        RIGHT
+        CLICK : Breaks the invisible chain with your partner to stop movement (B
+        BUTTON)'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699603439684909, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 47.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699603684121735, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_text
+      value: LEFT CLICK to SHOOT
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699603684121735, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 8204699603711743919, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
@@ -8905,6 +8972,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8204699604231433094, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699604231433094, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -8913,6 +8985,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8204699604335639384, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_text
+      value: "Protect you and your partner by destroying all opposition. \nYour partner
+        moves in the same direction with you at all times but just a bit faster.
+        If your partner moves to far away you lose almost all of your SHOT POWER.
+        \nKeep him close.\nPress RIGHT CLICK to stop your partner and help you stay
+        closer but increasing risk.\nPartner can still jump out of danger.\nSCORE
+        as many points as you can. The quicker the higher you score. \nCHAIN shots
+        together and off walls for Bonus Scores."
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699604335639384, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 34.95
+      objectReference: {fileID: 0}
     - target: {fileID: 8204699604363823225, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -8977,6 +9065,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699604407054605, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 8204699604407054605, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
@@ -8991,6 +9084,41 @@ PrefabInstance:
     - target: {fileID: 8204699604530050705, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699604684407025, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699604684407030, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699604684407030, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699604684407030, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699604684407030, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699604684407030, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699604684407030, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

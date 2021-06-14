@@ -59,7 +59,7 @@ public class MatchupSystem :  SystemBase
                         if (distance > closePlayerMaxDistance)
                         {
                             gun.ChangeAmmoStats = distance;
-                            Debug.Log("change write");
+                            //Debug.Log("change write");
 
                         }
 

@@ -30,6 +30,7 @@ public class CloseComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     //public bool leader = false;
     [SerializeField]
     private float maxDistance = 1;
+    [SerializeField] bool canFreeze;
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
@@ -42,7 +43,13 @@ public class CloseComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
         //
         // For example,
          dstManager.AddComponentData(entity, new CloseComponent {maxDistance = maxDistance});
-        
-        
+
+        if (canFreeze)
+        {
+            dstManager.AddComponentData(entity, new FreezeComponent());
+        }
+
+
+
     }
 }

@@ -55,7 +55,7 @@ public class ScoreSystem : SystemBase
 
 
 
-                    float defaultScore = score.defaultPointsScored;
+                    float defaultScore = score.defaultPointsScored ;
 
                     float timeBonus = (5 - score.timeSinceLastScore) * defaultScore;
                     timeBonus = math.clamp(timeBonus, -.5f * defaultScore, 2f * defaultScore);
@@ -65,7 +65,7 @@ public class ScoreSystem : SystemBase
                     float comboBonus = math.pow(score.combo * defaultScore, 2) / 100;
                     //Debug.Log("combo Bonus " + comboBonus);
 
-                    score.lastPointValue = score.defaultPointsScored + (int)timeBonus + (int)streakBonus + (int)comboBonus;
+                    score.lastPointValue = score.defaultPointsScored + (int)timeBonus + (int)streakBonus + (int)comboBonus + (int)score.addBonus;
                     score.score = score.score + score.lastPointValue;
 
                     if(HasComponent<DamageComponent>(score.scoredAgainstEntity))
