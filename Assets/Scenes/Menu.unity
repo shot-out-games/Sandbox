@@ -902,6 +902,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
         type: 3}
+      propertyPath: _dontDestroyOnLoad
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
       propertyPath: _userData.mouseMaps.Array.data[0].actionElementMaps.Array.data[0]._actionId
       value: 10
       objectReference: {fileID: 0}
@@ -4936,6 +4941,7 @@ GameObject:
   - component: {fileID: 1156797396}
   - component: {fileID: 1156797399}
   - component: {fileID: 1156797400}
+  - component: {fileID: 1156797401}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5056,6 +5062,31 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!114 &1156797401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1156797395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da862f6a3ad61334aae68294036536aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rewiredInputManager: {fileID: 1206656658}
+  _absoluteAxisSensitivity: 10
+  _scaleAbsoluteAxesToScreen: 1
+  _runInEditMode: 0
+  _playerMappings:
+  - _playerId: 0
+    _actionMappings:
+    - _cinemachineAxis: Mouse X
+      _rewiredActionName: 
+      _rewiredActionId: 0
+    - _cinemachineAxis: Mouse Y
+      _rewiredActionName: 
+      _rewiredActionId: 2
 --- !u!1 &1166302171
 GameObject:
   m_ObjectHideFlags: 0
@@ -5266,6 +5297,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1197741202}
   m_CullTransparentMesh: 0
+--- !u!114 &1206656658 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+    type: 3}
+  m_PrefabInstance: {fileID: 225628095}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581b3e3c96df0ef42aef16b63b27b87f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1231071963
 GameObject:
   m_ObjectHideFlags: 0

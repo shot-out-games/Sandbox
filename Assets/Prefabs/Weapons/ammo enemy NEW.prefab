@@ -340,7 +340,7 @@ MonoBehaviour:
   AmmoTime: 1
   Strength: 25
   Damage: 5
-  Rate: 5
+  Rate: 0.2
   ChargeRequired: 0
 --- !u!1001 &1155093784678171370
 PrefabInstance:
