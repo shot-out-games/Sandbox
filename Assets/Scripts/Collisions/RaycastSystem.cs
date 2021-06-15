@@ -84,9 +84,9 @@ public class RaycastSystem : SystemBase
             else
             {
 
-                start = translation.Value + new float3(0, .03f, 0);
+                start = translation.Value + new float3(0, .5f, 0);
                 direction = new float3(0, -1, 0);
-                distance = .35f;
+                distance = 1;
                 end = start + direction * distance;
 
 
@@ -103,7 +103,7 @@ public class RaycastSystem : SystemBase
                     }
                 };
                 Unity.Physics.RaycastHit hitDown = new Unity.Physics.RaycastHit();
-                Debug.DrawRay(inputDown.Start, direction, Color.yellow, distance);
+                Debug.DrawRay(inputDown.Start, direction, Color.red, distance);
 
                 bool hasPointHitDown = collisionWorld.CastRay(inputDown, out hitDown);
 
