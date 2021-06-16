@@ -106,7 +106,7 @@ public class CharacterEffectsSystem : SystemBase
                         var damageComponent = GetComponent<DamageComponent>(e);
                         if (damageComponent.DamageReceived <= .0001) return;
                         animator.SetInteger("HitReact", 1);
-                        Debug.Log("hit react");
+                        //Debug.Log("hit react");
 
 
                         if (effects.actorHurtEffectInstance)

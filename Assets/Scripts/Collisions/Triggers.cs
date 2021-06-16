@@ -214,7 +214,7 @@ public class CollisionSystem : SystemBase
             }
             if (ammoB)
             {
-                Debug.Log("ab " + ammoB + " pe " + triggerComponent_a.Type + "  ce " + ch_a);
+                //Debug.Log("ab " + ammoB + " pe " + triggerComponent_a.Type + "  ce " + ch_a);
 
                 CollisionComponent collisionComponent =
                     new CollisionComponent()

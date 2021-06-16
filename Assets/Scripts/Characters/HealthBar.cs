@@ -114,7 +114,7 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
     public void ShowText3dValue(int value)
     {
         score3dTextInstance.text = value.ToString();
-        Debug.Log("val " + value);
+        //Debug.Log("val " + value);
         SetAlpha(1);
         alphaTime += Time.deltaTime; 
         //StartCoroutine(Wait(showTime));
