@@ -86,7 +86,7 @@ public class RaycastSystem : SystemBase
 
                 start = translation.Value + new float3(0, .5f, 0);
                 direction = new float3(0, -1, 0);
-                distance = 1;
+                distance = .6f;
                 end = start + direction * distance;
 
 
