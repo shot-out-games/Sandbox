@@ -199,7 +199,7 @@ public class CollisionSystem : SystemBase
 
             if (ammoA)
             {
-                Debug.Log("aa " + ammoA + " pe " + triggerComponent_b.Type + "  ce " + ch_b);
+                //Debug.Log("aa " + ammoA + " pe " + triggerComponent_b.Type + "  ce " + ch_b);
                 //coll component part other always ammo ?
                 CollisionComponent collisionComponent =
                     new CollisionComponent()

@@ -87,7 +87,7 @@ public class ScoreSystem : SystemBase
 
                     if (HasComponent<DamageComponent>(score.scoredAgainstEntity))
                     {
-                        Debug.Log("against " + score.scoredAgainstEntity);
+                        //Debug.Log("against " + score.scoredAgainstEntity);
                         var damage = damageGroup[score.scoredAgainstEntity];
                         damage.ScorePointsReceived = score.lastPointValue;
                         damageGroup[score.scoredAgainstEntity] = damage;
@@ -101,8 +101,8 @@ public class ScoreSystem : SystemBase
 
                     if (inputController.leftTriggerPressed)
                     {
-                        if (score.lastShotConnected == false) score.streak = 0;
-                        score.lastShotConnected = false;
+                      //if (score.lastShotConnected == false) score.streak = 0;
+                      score.lastShotConnected = false;
                     }
 
 

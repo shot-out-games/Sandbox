@@ -22,6 +22,9 @@ public struct DeadComponent : IComponentData
 }
 
 
+[UpdateAfter(typeof(CollisionSystem))]
+
+
 public class DeadSystem : SystemBase //really game over system currently
 {
 
@@ -78,9 +81,12 @@ public class DeadSystem : SystemBase //really game over system currently
                     LevelManager.instance.levelSettings[currentLevel].enemiesDead += 1;
                     //pv.Linear = new float3(0, -1, 0);
                     Debug.Log("set dead");
-                    ecb.DestroyEntity(entity);
-                    animator.SetInteger("Dead", 5);
-                    //animator.SetInteger("Zone", 0);
+                    //ecb.DestroyEntity(entity);
+                    //int state = animator.GetInteger("Dead");
+                    //if (state == 0)
+                    //{
+                        animator.SetInteger("Dead", 5);
+                    //}
                 }
             }
         ).Run();
