@@ -50,22 +50,22 @@ public class CameraControls : MonoBehaviour
         bool keyboard = controller.type == ControllerType.Keyboard;
 
 
-        if (player.GetAxisRaw("RightVertical") >= 1)
+        if (player.GetAxisRaw("Dpad Vertical") >= 1)
         {
             fov -= Time.deltaTime * multiplier;
             ChangeFov(fov);
         }
-        else if (player.GetAxisRaw("RightVertical") <= -1)
+        else if (player.GetAxisRaw("Dpad Vertical") <= -1)
         {
             fov += Time.deltaTime * multiplier;
             ChangeFov(fov);
         }
-        else if (player.GetAxisRaw("RightVertical") >= 1)
+        else if (player.GetAxisRaw("Dpad Vertical") >= 1)
         {
             fov -= Time.deltaTime * multiplier;
             ChangeFov(fov);
         }
-        else if (player.GetAxisRaw("RightVertical") <= -1)
+        else if (player.GetAxisRaw("Dpad Vertical") <= -1)
         {
             fov += Time.deltaTime * multiplier;
             ChangeFov(fov);

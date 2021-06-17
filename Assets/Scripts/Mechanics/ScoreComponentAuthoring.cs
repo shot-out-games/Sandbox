@@ -23,6 +23,8 @@ public struct ScoreComponent : IComponentData
     public float timeSinceLastScore;
     public int streak;
     public int combo;
+    public bool lastShotConnected;
+
     [NonSerialized]
     public Entity scoredAgainstEntity;
 

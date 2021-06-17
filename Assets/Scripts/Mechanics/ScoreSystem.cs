@@ -23,7 +23,9 @@ public class ScoreSystem : SystemBase
 
         int currentScore = 0;
         int scoreChecked = 0;
-        Entities.WithoutBurst().ForEach((ref ScoreComponent score, in ScoreComponentAuthoring scoreComponentAuthoring, in Entity e) =>
+        Entities.WithoutBurst().ForEach((ref ScoreComponent score, in ScoreComponentAuthoring scoreComponentAuthoring, in Entity e,
+            in InputController inputController
+) =>
             {
 
 
@@ -34,7 +36,7 @@ public class ScoreSystem : SystemBase
                         var fling = flingGroup[e];
                         fling.shotLanded = true;
                         score.combo += 1;
-                        if(fling.resetTimerAfterHitLanded == true)
+                        if (fling.resetTimerAfterHitLanded == true)
                         {
                             fling.inFlingTime = fling.inFlingMaxTime * .5f;
                         }
@@ -52,10 +54,25 @@ public class ScoreSystem : SystemBase
                         //Debug.Log("combo " + score.combo);
 
                     }
+                    else
+                    {
 
 
 
-                    float defaultScore = score.defaultPointsScored ;
+                        //standard streak scoring - if not used just turn off UI but leave this
+                        //if (score.lastShotConnected == true)
+                        //{
+                        score.streak += 1;
+                        score.lastShotConnected = true;
+
+                        //}
+
+
+                    }
+
+
+
+                    float defaultScore = score.defaultPointsScored;
 
                     float timeBonus = (5 - score.timeSinceLastScore) * defaultScore;
                     timeBonus = math.clamp(timeBonus, -.5f * defaultScore, 2f * defaultScore);
@@ -68,7 +85,7 @@ public class ScoreSystem : SystemBase
                     score.lastPointValue = score.defaultPointsScored + (int)timeBonus + (int)streakBonus + (int)comboBonus + (int)score.addBonus;
                     score.score = score.score + score.lastPointValue;
 
-                    if(HasComponent<DamageComponent>(score.scoredAgainstEntity))
+                    if (HasComponent<DamageComponent>(score.scoredAgainstEntity))
                     {
                         Debug.Log("against " + score.scoredAgainstEntity);
                         var damage = damageGroup[score.scoredAgainstEntity];
@@ -81,6 +98,14 @@ public class ScoreSystem : SystemBase
                 }
                 else
                 {
+
+                    if (inputController.leftTriggerPressed)
+                    {
+                        if (score.lastShotConnected == false) score.streak = 0;
+                        score.lastShotConnected = false;
+                    }
+
+
                     score.timeSinceLastScore += Time.DeltaTime;
                 }
 

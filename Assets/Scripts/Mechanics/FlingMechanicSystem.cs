@@ -81,13 +81,7 @@ namespace SandBox.Player
 
                     float3 forward = playerMove.transform.forward;
                     forward = math.normalize(forward);
-                    //Debug.Log("fw " + forward);
-
-                    //if (inputController.leftTriggerPressed == true)
-                    //{
-                        //Debug.Log("press");
-                    //}
-
+                
                     flingMechanic.timeSinceCausingDamage += Time.DeltaTime;
 
                     if (flingMechanic.inFling == true && flingMechanic.inFlingTime >= flingMechanic.inFlingMaxTime)
@@ -104,7 +98,7 @@ namespace SandBox.Player
                         }
                         else
                         {
-                            flingMechanic.lastShotConnected = false;
+                            flingMechanic.lastShotConnected = false;//reset
                             flingMechanic.vulnerableMaxTimeGame = flingMechanic.
                                 vulnerableMaxTime;//reset after streak broken
                         }
@@ -122,7 +116,7 @@ namespace SandBox.Player
 
 
 
-                        flingMechanic.shotLanded = false;
+                        flingMechanic.shotLanded = false;//reset 
 
                         if (flingMechanicComponentAuthoring.inFlingParticleSystem)
                         {
