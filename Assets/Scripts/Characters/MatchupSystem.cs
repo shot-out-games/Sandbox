@@ -42,6 +42,7 @@ public class MatchupSystem : SystemBase
                     {
                         closePlayerPosition = translation.Value;
                         closePlayerMaxDistance = closeComponent.maxDistance;
+                        if (closeComponent.isDamaging == false) closePlayerMaxDistance = math.INFINITY;
 
                     }
 

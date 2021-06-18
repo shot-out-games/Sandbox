@@ -10,6 +10,7 @@ public struct CloseComponent : IComponentData
 {
     public bool active;
     public float maxDistance;
+    public bool isDamaging;
 
 }
 
@@ -31,6 +32,7 @@ public class CloseComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField]
     private float maxDistance = 1;
     [SerializeField] bool canFreeze;
+    [SerializeField] bool isDamaging;
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
@@ -42,11 +44,11 @@ public class CloseComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
         //   to do it, instead of adding entities through 'dstManager' directly.
         //
         // For example,
-         dstManager.AddComponentData(entity, new CloseComponent {maxDistance = maxDistance});
+         dstManager.AddComponentData(entity, new CloseComponent {maxDistance = maxDistance, isDamaging = isDamaging});
 
         if (canFreeze)
         {
-            dstManager.AddComponentData(entity, new FreezeComponent());
+            dstManager.AddComponentData(entity, new FreezeComponent() );
         }
 
 

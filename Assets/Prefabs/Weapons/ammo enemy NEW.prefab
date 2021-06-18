@@ -339,7 +339,7 @@ MonoBehaviour:
   randomize: 0
   AmmoTime: 1
   Strength: 25
-  Damage: 0.5
+  Damage: 5
   Rate: 1
   ChargeRequired: 0
 --- !u!1001 &1155093784678171370

@@ -9,14 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adbe377f4f72c497faee64bc3f0580b9, type: 3}
+  m_Script: {fileID: 0}
   m_Name: NewWaterSystemFeature
   m_EditorClassIdentifier: 
-  m_Active: 0
-  settings:
-    causticScale: 0.25
-    debug: 0
-  causticShader: {fileID: 4800000, guid: 90939d2e4b62841d29c136c866715501, type: 3}
 --- !u!114 &-4585988639010439413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
   m_Name: PlayerBack
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     passTag: PlayerBack
     Event: 300
@@ -89,7 +84,6 @@ MonoBehaviour:
   m_Name: CustomRendererData with Features
   m_EditorClassIdentifier: 
   m_RendererFeatures:
-  - {fileID: -6224377790435695709}
   - {fileID: -2107704535276541153}
   - {fileID: 1446809449846411322}
   - {fileID: 4902940009299907032}
@@ -98,7 +92,7 @@ MonoBehaviour:
   - {fileID: 8214535992997598727}
   - {fileID: 1966196141964474561}
   - {fileID: 6260104184162376091}
-  m_RendererFeatureMap: a3e33fb560919ea91fab5c6be4edbfe23a10c67387191414d8115f29f6bd0a440b3fce63a14b5bc095b898ed152cea2b07564891f6e4ff71c1388948f954491b9b59ef89965be056
+  m_RendererFeatureMap: 1fab5c6be4edbfe23a10c67387191414d8115f29f6bd0a440b3fce63a14b5bc095b898ed152cea2b07564891f6e4ff71c1388948f954491b9b59ef89965be056
   postProcessData: {fileID: 11400000, guid: 965dc8fa9987fb24b8a967d82f854f13, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   shaders:
@@ -198,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804bf49869d3b4315a850958d8530433, type: 3}
   m_Name: OutlinePass
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   settings:
     Event: 300
     blitMaterial: {fileID: 2100000, guid: 40085b480ff98a944af12796f052956e, type: 2}

@@ -14,6 +14,7 @@ public struct FreezeComponent : IComponentData
 
     public float freezeTime;
     public bool isFrozen;
+
     public bool stopAnimation;
 }
 
@@ -104,7 +105,6 @@ public class FreezeSystem : SystemBase
                 ratingsComponent.gameSpeed = 0;
             }
             else
-//                else if (button_b_released)
             {
                         playerMoveComponent.currentSpeed = currentSpeed;
                 ratingsComponent.gameSpeed = currentSpeed;
