@@ -16,13 +16,13 @@ public struct DeadComponent : IComponentData
     public bool isDying;
     public bool playDeadEffects;
     //public bool justDead;
-    public int dieLevel;
+    //public int dieLevel;
     public int tag;
     public bool checkLossCondition;
 }
 
 
-[UpdateAfter(typeof(CollisionSystem))]
+//[UpdateAfter(typeof(CollisionSystem))]
 
 
 public class DeadSystem : SystemBase //really game over system currently
@@ -65,13 +65,23 @@ public class DeadSystem : SystemBase //really game over system currently
             ( Animator animator, ref DeadComponent deadComponent, ref WinnerComponent winnerComponent, ref PhysicsVelocity pv, ref Translation translation,
             in Entity entity) =>
             {
+                if (deadComponent.isDead == true) return;
 
+                int state = animator.GetInteger("Dead");
+             
 
-
-                if (deadComponent.isDying
-                    && deadComponent.tag == 2)//enemy
+                if(state > 0)
                 {
                     deadComponent.isDying = false;
+                    deadComponent.isDead = true;
+                    ecb.RemoveComponent<DeadComponent>(entity);
+                    //animator.speed = 0;
+                    //ecb.DestroyEntity(entity);
+                }
+                else if (deadComponent.isDying
+                    && deadComponent.tag == 2 && state == 0)//enemy
+                {
+                    //deadComponent.isDying = false;
                     deadComponent.playDeadEffects = true;
                     if (winnerComponent.checkWinCondition == true)//this  (and all with this true) enemy must be defeated to win the game
                     {
@@ -79,31 +89,13 @@ public class DeadSystem : SystemBase //really game over system currently
                     }
                     enemyJustDead = true;
                     LevelManager.instance.levelSettings[currentLevel].enemiesDead += 1;
-                    //pv.Linear = new float3(0, -1, 0);
                     Debug.Log("set dead");
-                    //ecb.DestroyEntity(entity);
-                    //int state = animator.GetInteger("Dead");
-                    //if (state == 0)
-                    //{
-                        animator.SetInteger("Dead", 5);
-                    //}
+                    animator.SetInteger("Dead", 5);
                 }
             }
         ).Run();
 
 
-        //if (enemyJustDead == true)
-        //{
-        //    Entities.WithoutBurst().WithAny<EnemyComponent>().ForEach
-        //    (
-        //        (Animator animator) =>
-        //        {
-        //            Debug.Log("set dead");
-
-        //            animator.SetInteger("Dead", 1);
-        //        }
-        //    ).Run();
-        //}
 
 
         if (enemyJustDead == true)

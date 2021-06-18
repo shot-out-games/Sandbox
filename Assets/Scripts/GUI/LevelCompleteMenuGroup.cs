@@ -42,6 +42,7 @@ public class LevelCompleteMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     private float showTimeLength = 1.0f;
     private float showTimer = 0f;
     private bool startShowTimer;
+    public bool loadNextScene;
 
     [SerializeField]
     private TextMeshProUGUI message;
@@ -73,7 +74,7 @@ public class LevelCompleteMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
                 showTimer = 0;
                 startShowTimer = false;
                 HideMenu();
-                LevelCompleteEvent?.Invoke();
+                if(loadNextScene) LevelCompleteEvent?.Invoke();
             }
         }
     }

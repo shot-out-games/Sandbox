@@ -119,7 +119,7 @@ public class PowersSystem : SystemBase
 
 
 
-        Entities.WithoutBurst().ForEach((ParticleSystemComponent ps, Entity e) =>
+        Entities.WithoutBurst().ForEach((in ParticleSystemComponent ps, in Entity e) =>
             {
 
                 float3 value = GetComponent<Translation>(ps.pickedUpActor).Value;

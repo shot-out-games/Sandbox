@@ -77,9 +77,10 @@ public class CollisionSystem : SystemBase
         public EntityCommandBuffer CommandBuffer;
         public void Execute(CollisionEvent ev) // this is never called
         {
-
-            Entity a = physicsWorld.Bodies[ev.BodyIndexA].Entity;
-            Entity b = physicsWorld.Bodies[ev.BodyIndexB].Entity;
+            Entity a = ev.EntityA;
+            Entity b = ev.EntityB;
+            //Entity a =   physicsWorld.Bodies[ev.BodyIndexA].Entity;
+            //Entity b = physicsWorld.Bodies[ev.BodyIndexB].Entity;
             //Debug.Log("ena " + a + " enb " + b);
 
             if (triggerGroup.HasComponent(a) == false || triggerGroup.HasComponent(b) == false) return;

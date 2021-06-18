@@ -23,7 +23,9 @@ public class HealthSystem : SystemBase
 
         bool anyEnemyDamaged = false;
         bool anyPlayerDamaged = false;
-        Entities.WithoutBurst().ForEach((ref DeadComponent deadComponent,
+        Entities.WithoutBurst().ForEach((
+            ref LevelCompleteComponent levelCompleteComponent,
+            ref DeadComponent deadComponent,
             ref HealthComponent healthComponent, ref DamageComponent damageComponent,
             ref RatingsComponent ratingsComponent,
             in Entity entity) =>
@@ -61,9 +63,9 @@ public class HealthSystem : SystemBase
 
                 if (healthComponent.TotalDamageReceived >= ratingsComponent.maxHealth && dead.isDead == false)
                 {
-                    dead.dieLevel = LevelManager.instance.currentLevelCompleted;
+                    levelCompleteComponent.dieLevel = LevelManager.instance.currentLevelCompleted;
                     dead.isDying = true;
-                    dead.isDead = true;
+                    //dead.isDead = true;
                     dead.playDeadEffects = true;
                     ecb.SetComponent(entity, dead);
                 }

@@ -16,6 +16,7 @@ public struct LevelCompleteComponent : IComponentData
     public bool active;
     public bool targetReached;
     public bool checkWinCondition;
+    public int dieLevel;
 
 }
 
@@ -67,6 +68,8 @@ public class LevelCompleteSystem : SystemBase
 
         }
 
+        //to do : add new scenario where destroy set amount determined by level settings
+
         if (LevelManager.instance.levelSettings[currentLevelCompleted].levelCompleteScenario ==
             LevelCompleteScenario.DestroyAll)
         {
@@ -74,15 +77,21 @@ public class LevelCompleteSystem : SystemBase
             levelComplete = true;
             message = "Eliminated all ...";
 
-            Entities.WithAll<EnemyComponent>().WithNone<CubeComponent>(). WithoutBurst().ForEach
+            Entities.WithAll<EnemyComponent>().WithoutBurst().ForEach
             (
-                (in DeadComponent dead) =>
+                (in Entity e, in LevelCompleteComponent levelCompleteComponent) =>
                 {
                     if (levelComplete == false) return;
-                    if (dead.isDead == false || dead.dieLevel != currentLevelCompleted)
+                    if (HasComponent<DeadComponent>(e)
+                    || levelCompleteComponent.dieLevel != currentLevelCompleted)
                     {
                         levelComplete = false;
                     }
+
+                    //if (dead.isDead == false || dead.dieLevel != currentLevelCompleted)
+                    //{
+                    //    levelComplete = false;
+                    //}
                 }
             ).Run();
 
@@ -93,6 +102,7 @@ public class LevelCompleteSystem : SystemBase
         {
             LevelManager.instance.currentLevelCompleted += 1;
             Debug.Log("LEVEL UP " + LevelManager.instance.currentLevelCompleted);
+            Debug.Log("LEVEL TOTAL " + LevelManager.instance.totalLevels);
             if (LevelManager.instance.currentLevelCompleted < LevelManager.instance.totalLevels)
             {
 

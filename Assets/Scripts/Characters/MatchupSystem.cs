@@ -8,7 +8,7 @@ using Unity.Collections;
 using Unity.Transforms;
 
 
-public class MatchupSystem :  SystemBase
+public class MatchupSystem : SystemBase
 {
 
 
@@ -20,7 +20,7 @@ public class MatchupSystem :  SystemBase
 
 
         //get closest player to enemy
-        Entities.WithAll<EnemyComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
+        Entities.WithAll<DeadComponent>().WithAll<EnemyComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
         (
             (
                 Transform enemyTransform,//traverse enemies
@@ -38,7 +38,7 @@ public class MatchupSystem :  SystemBase
                 //CloseComponent added to npc only too far away (1 only because no time to figure more)
                 float3 closePlayerPosition = float3.zero;
                 float closePlayerMaxDistance = math.INFINITY;
-                Entities.WithoutBurst().ForEach((Entity e, Translation translation, CloseComponent closeComponent) =>
+                Entities.WithoutBurst().ForEach((in Entity e, in Translation translation, in CloseComponent closeComponent) =>
                     {
                         closePlayerPosition = translation.Value;
                         closePlayerMaxDistance = closeComponent.maxDistance;
@@ -50,7 +50,12 @@ public class MatchupSystem :  SystemBase
 
 
                 Entities.WithoutBurst().WithNone<CloseComponent>().ForEach(
-                    (PlayerComponent playerComponent, Entity playerE, Translation playerTranslation, ref GunComponent gun) =>
+                    (
+                        ref GunComponent gun,
+                        in PlayerComponent playerComponent,
+                        in Entity playerE,
+                        in Translation playerTranslation
+                    ) =>
                     {
 
                         float distance = math.distance(playerTranslation.Value, closePlayerPosition);
@@ -72,7 +77,7 @@ public class MatchupSystem :  SystemBase
 
 
 
-                Entities.WithAll<PlayerComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
+                Entities.WithAll<DeadComponent>().WithAll<PlayerComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
                 (
                     (
                         Transform playerTransform,//find closest player
@@ -121,7 +126,7 @@ public class MatchupSystem :  SystemBase
 
 
         //get closest enemy to player
-        Entities.WithAll<PlayerComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
+        Entities.WithAll<DeadComponent>().WithAll<PlayerComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
         (
             (
                 Transform playerTransform,//traverse enemies
@@ -136,7 +141,7 @@ public class MatchupSystem :  SystemBase
                 bool playerDead = GetComponent<DeadComponent>(playerEntity).isDead;
 
 
-                Entities.WithAll<EnemyComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
+                Entities.WithAll<DeadComponent>().WithAll<EnemyComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
                 (
                     (
                         Transform enemyTransform,//find closest enemy

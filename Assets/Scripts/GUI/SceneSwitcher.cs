@@ -346,6 +346,7 @@ public class SetupNextLevelSystem : SystemBase
 
         var playerQuery = GetEntityQuery(ComponentType.ReadOnly<PlayerComponent>());
         NativeArray<Entity> playerEntities = playerQuery.ToEntityArray(Allocator.Temp);
+        SaveLevelManager.instance.saveLevelPlayers.Clear();
 
         for (int i = 0; i < playerEntities.Length; i++)
         {
@@ -375,7 +376,7 @@ public class SetupNextLevelSystem : SystemBase
                 }
             };
 
-            SaveLevelManager.instance.saveLevelPlayers.Clear();
+            //SaveLevelManager.instance.saveLevelPlayers.Clear();
             SaveLevelManager.instance.saveLevelPlayers.Add(levelPlayers);
             Debug.Log("setup level  ");
 

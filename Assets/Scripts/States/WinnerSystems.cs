@@ -14,25 +14,28 @@ public class BasicWinnerSystem : SystemBase
 
     protected override void OnUpdate()
     {
-        if(LevelManager.instance.currentLevelCompleted  < LevelManager.instance.totalLevels ) return;//not yet marked as completed
+        if (LevelManager.instance.currentLevelCompleted  < LevelManager.instance.totalLevels ) return;//not yet marked as completed
 
         bool winner = true;
 
+        Debug.Log("test0");
 
-        Entities.WithAll<EnemyComponent>().WithNone<CubeComponent>().WithoutBurst().ForEach
+        Entities.WithAll<EnemyComponent>().WithoutBurst().ForEach
         (
-            (in DeadComponent dead) =>
+            (in Entity e) =>
             {
                 if (winner == false) return;
-                if (dead.isDead == false)
-                {
-                    winner = false;
-                }
+                if (HasComponent<DeadComponent>(e)) winner = false;//dead component removed when dead and animation complete
+
+                //if (dead.isDead == false)
+                //{
+                    //winner = false;
+                //}
             }
         ).Run();
 
         if (winner == false) return;
-
+        Debug.Log("winner");
         LevelManager.instance.endGame = true;
         LevelManager.instance.gameResult = GameResult.Winner;
 
