@@ -15,6 +15,7 @@ public enum ShowText3D
 [System.Serializable]
 public struct HealthComponent : IComponentData
 {
+    public bool combineDamage;
     public float TotalDamageLanded;
     public float TotalDamageReceived;
     public bool AlwaysDamage;//ignore hit weights and similar
@@ -48,7 +49,7 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
     public TextMeshPro score3dText;
     private TextMeshPro score3dTextInstance;
 
-
+    [SerializeField] bool combineDamage = false;
     [SerializeField] private float showDamageMin = 50;
     [SerializeField] private ShowText3D showText3D = ShowText3D.hitDamage;
     [SerializeField] float showTime = 3;
@@ -171,6 +172,7 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
         entity = _entity;
         entityManager.AddComponentData(entity, new HealthComponent
         {
+            combineDamage = combineDamage,
             TotalDamageLanded = 0, TotalDamageReceived = 0,
             AlwaysDamage = alwaysDamage,
             ShowDamageMin = showDamageMin,

@@ -31,8 +31,13 @@ public class DeadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField] private ParticleSystem deadParticleSystem;
     [SerializeField]
     private TextMeshProUGUI message;
+    [SerializeField] private float showTimer = 3;
 
 
+    [HideInInspector] public bool showMenu;
+    [HideInInspector] public bool showScoreboard;
+    [HideInInspector] public int score;
+    [HideInInspector] public int rank;
 
     void Start()
     {
@@ -45,11 +50,23 @@ public class DeadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
-   
-
-    public void ShowMenu(bool showScoreboard, int score, int rank)
+   void Update()
     {
+        if (showMenu && showTimer >= 0)
+        {
+            showTimer -= Time.deltaTime;
+            if(showTimer <= 0)
+            {
+                ShowMenu();
+            }
+        }
+    }
+
+    void ShowMenu()
+    {
+
         canvasGroup.alpha = 1;
+
         canvasGroup.interactable = true;
         canvasGroup.blocksRaycasts = true;
         if (defaultButton)

@@ -19,4 +19,4 @@ MonoBehaviour:
   shootRangeDistance: 8
   chaseRange: 40
   aggression: 50
-  maxHealth: 10
+  maxHealth: 20

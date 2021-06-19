@@ -294,7 +294,7 @@ public class ResetLevelSystem : SystemBase
         if (LevelManager.instance.resetLevel == false) return;
         LevelManager.instance.resetLevel = false;
 
-        Debug.Log("reset level");
+        //Debug.Log("reset level");
 
         var ecb = new EntityCommandBuffer(Allocator.Temp);
 

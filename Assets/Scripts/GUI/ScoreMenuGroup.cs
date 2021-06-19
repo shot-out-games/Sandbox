@@ -108,7 +108,7 @@ public class ScoreMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     private void UpdateScoreShowMenu()
     {
         SaveManager.instance.updateScore = true;
-        Debug.Log("update score");
+        //Debug.Log("update score");
         ShowMenu();
     }
 

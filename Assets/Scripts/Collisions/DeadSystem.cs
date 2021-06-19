@@ -38,14 +38,24 @@ public class DeadSystem : SystemBase //really game over system currently
         int currentLevel = LevelManager.instance.currentLevelCompleted;
         //bool levelComplete = LevelManager.instance.levelSettings[currentLevel].completed;
 
-        Entities.WithoutBurst().ForEach
+        Entities.WithoutBurst().WithAll<PlayerComponent>().ForEach
         (
             (ref DeadComponent deadComponent, in Entity entity, in Animator animator) =>
             {
-                if (deadComponent.isDying
-                    && deadComponent.tag == 1)//player
+                if (deadComponent.isDead == true) return;
+
+                int state = animator.GetInteger("Dead");
+
+                if (state > 0)
                 {
                     deadComponent.isDying = false;
+                    deadComponent.isDead = true;
+                    //ecb.RemoveComponent<InputControllerComponent>(entity);
+                    //animator.speed = 0;
+                    //ecb.DestroyEntity(entity);
+                }
+                else if (deadComponent.isDying)//player
+                {
                     deadComponent.playDeadEffects = true;
                     animator.SetInteger("Dead", 1);
                     LevelManager.instance.levelSettings[currentLevel].playersDead += 1;
@@ -60,7 +70,7 @@ public class DeadSystem : SystemBase //really game over system currently
 
         bool enemyJustDead = false;
 
-        Entities.WithoutBurst().ForEach
+        Entities.WithoutBurst().WithAll<EnemyComponent>().ForEach
         (
             ( Animator animator, ref DeadComponent deadComponent, ref WinnerComponent winnerComponent, ref PhysicsVelocity pv, ref Translation translation,
             in Entity entity) =>
@@ -68,9 +78,9 @@ public class DeadSystem : SystemBase //really game over system currently
                 if (deadComponent.isDead == true) return;
 
                 int state = animator.GetInteger("Dead");
-             
 
-                if(state > 0)
+
+                if (state > 0)
                 {
                     deadComponent.isDying = false;
                     deadComponent.isDead = true;
@@ -79,7 +89,7 @@ public class DeadSystem : SystemBase //really game over system currently
                     //ecb.DestroyEntity(entity);
                 }
                 else if (deadComponent.isDying
-                    && deadComponent.tag == 2 && state == 0)//enemy
+                        && state == 0)//enemy
                 {
                     //deadComponent.isDying = false;
                     deadComponent.playDeadEffects = true;

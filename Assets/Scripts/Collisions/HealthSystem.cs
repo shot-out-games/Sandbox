@@ -14,7 +14,7 @@ public class HealthSystem : SystemBase
     private EndSimulationEntityCommandBufferSystem ecbSystem;
 
 
-    
+
 
     protected override void OnUpdate()
     {
@@ -23,6 +23,8 @@ public class HealthSystem : SystemBase
 
         bool anyEnemyDamaged = false;
         bool anyPlayerDamaged = false;
+        float allPlayerDamageTotal = 0;
+
         Entities.WithoutBurst().ForEach((
             ref LevelCompleteComponent levelCompleteComponent,
             ref DeadComponent deadComponent,
@@ -45,6 +47,7 @@ public class HealthSystem : SystemBase
                 }
 
                 healthComponent.TotalDamageReceived += damageComponent.DamageReceived;
+                allPlayerDamageTotal = allPlayerDamageTotal + healthComponent.TotalDamageReceived;
                 ecb.RemoveComponent<DamageComponent>(entity);
                 var dead = EntityManager.GetComponentData<DeadComponent>(entity);
                 if (damageComponent.DamageReceived > 0)
@@ -73,21 +76,38 @@ public class HealthSystem : SystemBase
             }
         ).Run();
 
-        if(anyEnemyDamaged == false && anyPlayerDamaged == false) return;
 
-        Entities.WithoutBurst(). ForEach((HealthBar healthUI, in HealthComponent healthComponent, in DamageComponent damage) =>
+
+
+
+        if (anyEnemyDamaged == false && anyPlayerDamaged == false) return;
+
+
+        Entities.WithoutBurst().ForEach((ref HealthComponent healthComponent) =>
         {
-            if (healthComponent.ShowText3D == ShowText3D.hitScore && healthComponent.ShowDamage == true)
+            if (healthComponent.combineDamage == true)
             {
-                healthUI.ShowText3dValue((int)damage.ScorePointsReceived);
+                healthComponent.TotalDamageReceived = allPlayerDamageTotal;
             }
-            else if (healthComponent.ShowText3D == ShowText3D.hitDamage && healthComponent.ShowDamage == true)
-            {
-                healthUI.ShowText3dValue((int)damage.DamageReceived);
-            }
-            healthUI.HealthChange();
+        }
+        ).Run();
 
-        }).Run();
+
+
+
+        Entities.WithoutBurst().ForEach((HealthBar healthUI, in HealthComponent healthComponent, in DamageComponent damage) =>
+       {
+           if (healthComponent.ShowText3D == ShowText3D.hitScore && healthComponent.ShowDamage == true)
+           {
+               healthUI.ShowText3dValue((int)damage.ScorePointsReceived);
+           }
+           else if (healthComponent.ShowText3D == ShowText3D.hitDamage && healthComponent.ShowDamage == true)
+           {
+               healthUI.ShowText3dValue((int)damage.DamageReceived);
+           }
+           healthUI.HealthChange();
+
+       }).Run();
 
         ecb.Playback(EntityManager);
         ecb.Dispose();
