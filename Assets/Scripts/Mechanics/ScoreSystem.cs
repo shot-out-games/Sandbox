@@ -79,7 +79,7 @@ public class ScoreSystem : SystemBase
 
                     float streakBonus = math.pow(score.streak * defaultScore, 2) / 100;
 
-                    float comboBonus = math.pow(score.combo * defaultScore, 2) / 100;
+                    float comboBonus = score.combo > 1 ? math.pow(score.combo * defaultScore ,2) / 1 : 0;
                     //Debug.Log("combo Bonus " + comboBonus);
 
                     score.lastPointValue = score.defaultPointsScored + (int)timeBonus + (int)streakBonus + (int)comboBonus + (int)score.addBonus;

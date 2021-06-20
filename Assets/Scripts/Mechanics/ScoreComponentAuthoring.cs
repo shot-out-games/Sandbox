@@ -11,6 +11,7 @@ using UnityEngine;
 
 public struct ScoreComponent : IComponentData
 {
+
     public int score;
     public int rank;
     public bool pointsScored;
@@ -24,6 +25,8 @@ public struct ScoreComponent : IComponentData
     public int streak;
     public int combo;
     public bool lastShotConnected;
+
+    public Entity scoringAmmoEntity;
 
     [NonSerialized]
     public Entity scoredAgainstEntity;

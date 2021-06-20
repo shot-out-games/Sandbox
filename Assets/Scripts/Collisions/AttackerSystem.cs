@@ -399,14 +399,32 @@ public class AttackerSystem : SystemBase
                     float damage = EntityManager.GetComponentData<GunComponent>(shooter).gameDamage;
                     //Debug.Log("damage " + damage);
                     ammo.AmmoDead = true;
-                    
-                    if (ammo.DamageCausedPreviously == true || ammoData.ChargeRequired == true && ammo.Charged == false  ||
+
+
+                    if (ammo.DamageCausedPreviously && ammo.frameSkipCounter > ammo.framesToSkip)//count in ammosystem
+                    {
+                        ammo.DamageCausedPreviously = false;
+                        ammo.frameSkipCounter = 0;
+                    }
+
+                    //bool skip = ammo.frameSkipCounter < ammo.framesToSkip && ammo.frameSkipCounter >= 1;
+                    //if (skip) ammo.frameSkipCounter = ammo.frameSkipCounter + 1;
+
+
+
+                    if (ammo.DamageCausedPreviously || ammoData.ChargeRequired == true && ammo.Charged == false  ||
                         isEnemyShooter == isEnemyTarget
                         )
                     {
+                        
                         damage = 0;
                     }
 
+                    if (HasComponent<DeadComponent>(collision_entity_a) == false ||
+                        EntityManager.GetComponentData<DeadComponent>(collision_entity_a).isDying)
+                    {
+                        damage = 0;
+                    }
 
 
                     ammo.DamageCausedPreviously = true;
@@ -429,6 +447,7 @@ public class AttackerSystem : SystemBase
                         {
                             scoreComponent.addBonus = scoreComponent.defaultPointsScored ;
                         }
+                        scoreComponent.scoringAmmoEntity = ammo.ammoEntity;
                         scoreComponent.pointsScored = true;
                         scoreComponent.scoredAgainstEntity = collision_entity_a;
                         EntityManager.SetComponentData(shooter, scoreComponent);

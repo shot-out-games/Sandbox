@@ -48,22 +48,43 @@ public class AmmoSystem : SystemBase
                         var score = scoreGroup[shooter];
                         Debug.Log(" last shot " + score.lastShotConnected);
                         if (score.lastShotConnected == false) score.streak = 0;
-                        //score.lastShotConnected = false;
+                        score.combo = 0;
                         scoreGroup[shooter] = score;
-                        //also can do score counter of number of connects before ammo destroyed here
+                        ammo.ammoHits = 0;
 
                     }
-
-
-
-
-                    //var bullet = EntityManager.GetComponentData<AmmoComponent>(entity);
-                    //bullet.AmmoDead = true;
-                    //bullet.AmmoTimeCounter = 0;
-                    //EntityManager.SetComponentData(entity, bullet);
                     ecb.DestroyEntity(entity);
-                    //Debug.Log("amo dead");
                 }
+                else
+                {
+                    if (ammo.DamageCausedPreviously) ammo.frameSkipCounter = ammo.frameSkipCounter + 1;
+
+                    Entity shooter = EntityManager.GetComponentData<TriggerComponent>(entity)
+                        .ParentEntity;
+
+                    if (HasComponent<ScoreComponent>(shooter))
+                    {
+                        var score = scoreGroup[shooter];
+
+
+                        if (score.pointsScored && score.scoringAmmoEntity == entity)
+                        {
+                            ammo.ammoHits += 1;
+                            Debug.Log("ammo hits1 " + ammo.ammoHits);
+                            score.combo = ammo.ammoHits;
+                            ammo.AmmoTime += ammo.comboTimeAdd;
+                        }
+
+                        scoreGroup[shooter] = score;
+
+                        //also can do score counter of number of connects before ammo destroyed here
+                    }
+
+                }
+
+
+
+
             }
         ).Run();
         ecb.Playback(EntityManager);

@@ -7,17 +7,25 @@ using UnityEngine;
 public struct AmmoComponent : IComponentData
 {
     public Entity OwnerAmmoEntity;
+    public Entity ammoEntity;
     public bool AmmoDead;
     public float AmmoTime;
     public float AmmoTimeCounter;
     public bool DamageCausedPreviously;
+    public int framesToSkip;
+    public int frameSkipCounter;
+
     public bool Charged;
     public bool rewinding;
+    public int ammoHits;//count how many hits this ammo connected before ammoTime is zero (entity destroyed by ammo system)
+    public float comboTimeAdd;
 }
 
 public class AmmoEntityTracker : MonoBehaviour, IConvertGameObjectToEntity
 {
     public float ammoTime; //????? 
+    [SerializeField] private float comboTimeAdd = 1.0f;
+    [SerializeField]int framesToSkip = 2;
     public Entity ammoEntity;
     public Entity ownerAmmoEntity;
     EntityManager manager;
@@ -43,7 +51,10 @@ public class AmmoEntityTracker : MonoBehaviour, IConvertGameObjectToEntity
                 AmmoDead = false,
                 AmmoTimeCounter = 0,
                 AmmoTime = ammoTime,
-                Charged = false
+                comboTimeAdd = comboTimeAdd,
+                Charged = false,
+                ammoEntity = entity,
+                framesToSkip = framesToSkip
             });
 
 
