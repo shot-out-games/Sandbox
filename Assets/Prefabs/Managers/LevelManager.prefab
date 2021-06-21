@@ -44,8 +44,8 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: 0.2
+  m_Pitch: 0.75
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -319,7 +319,7 @@ MonoBehaviour:
   worldName: World
   audioSourceMenu: {fileID: 171436231}
   audioSourceGame: {fileID: 1182716200}
-  menuMusic: {fileID: 8300000, guid: d29b9926613789f4ab0f51020650a4db, type: 3}
+  menuMusic: {fileID: 8300000, guid: 32b6d28772b67694f9079eb93837b000, type: 3}
   currentLevelCompleted: 0
   skipLoad: 0
   levelSettings:
@@ -334,42 +334,7 @@ MonoBehaviour:
     playersSaved: 0
     enemiesSaved: 0
     NpcSaved: 0
-  - levelName: Area II
-    levelCompleteScenario: 0
-    potentialLevelTargets: 8
-    lives: 1
-    points: 0
-    playersDead: 0
-    enemiesDead: 0
-    NpcDead: 0
-    playersSaved: 0
-    enemiesSaved: 0
-    NpcSaved: 0
-  - levelName: Area III
-    levelCompleteScenario: 0
-    potentialLevelTargets: 5
-    lives: 1
-    points: 0
-    playersDead: 0
-    enemiesDead: 0
-    NpcDead: 0
-    playersSaved: 0
-    enemiesSaved: 0
-    NpcSaved: 0
-  - levelName: AREA IV
-    levelCompleteScenario: 0
-    potentialLevelTargets: 9
-    lives: 1
-    points: 0
-    playersDead: 0
-    enemiesDead: 0
-    NpcDead: 0
-    playersSaved: 0
-    enemiesSaved: 0
-    NpcSaved: 0
   levelMediaList:
   - levelMusic: {fileID: 8300000, guid: 9843c519367ee9448b8f381ecb2f9906, type: 3}
     levelVolume: 1
-  - levelMusic: {fileID: 8300000, guid: 1a70bfcf32ff2a54ebf829bd8641dcbf, type: 3}
-    levelVolume: 0.2
   newGame: 0

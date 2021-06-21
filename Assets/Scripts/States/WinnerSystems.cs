@@ -94,7 +94,10 @@ public class ShowMenuSystem : SystemBase
                 {
                     if (winnerMenuComponent.hide == true)
                     {
-                        winnerMenuGroup.ShowMenu(showScoresOnMenu, score, rank);
+                        winnerMenuGroup.showScoreboard = showScoresOnMenu;
+                        winnerMenuGroup.score = score;
+                        winnerMenuGroup.rank = rank;
+                        winnerMenuGroup.showMenu = true;
                         winnerMenuComponent.hide = false;
                     }
                 }

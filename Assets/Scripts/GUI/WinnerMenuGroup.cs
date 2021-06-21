@@ -63,8 +63,15 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     private Button defaultButton;
     [SerializeField]
     private TextMeshProUGUI message;
+    [SerializeField] private float showTimer = 3;
+
 
     [SerializeField] private ParticleSystem winnerParticleSystem;
+
+    [HideInInspector] public bool showMenu;
+    [HideInInspector] public bool showScoreboard;
+    [HideInInspector] public int score;
+    [HideInInspector] public int rank;
 
 
     void Start()
@@ -79,9 +86,20 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
+    void Update()
+    {
+        if (showMenu && showTimer >= 0)
+        {
+            showTimer -= Time.deltaTime;
+            if (showTimer <= 0)
+            {
+                ShowMenu();
+            }
+        }
+    }
 
 
-    public void ShowMenu(bool showScoreboard, int score, int rank)
+    public void ShowMenu()
     {
         canvasGroup.alpha = 1;
         canvasGroup.interactable = true;

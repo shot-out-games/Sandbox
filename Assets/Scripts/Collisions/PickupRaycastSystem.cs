@@ -258,6 +258,8 @@ public class PickupPowerUpRaycastSystem : SystemBase
 
                         ecb.AddComponent(instanceEntity, ps);
 
+                        Debug.Log(" health " + pickedUpActor);
+
                         HealthPower healthPower = new HealthPower
                         {
                             psAttached = instanceEntity,//attached to player picking up
@@ -275,6 +277,9 @@ public class PickupPowerUpRaycastSystem : SystemBase
                     if (powerItemComponent.powerType == (int)PowerType.Speed &&
                         HasComponent<Speed>(pickedUpActor) == false && HasComponent<DestroyComponent>(entity) == false)
                     {
+
+
+
                         powerItemComponent.enabled = true;
                         Entity instanceEntity = ecb.Instantiate(powerItemComponent.particleSystemEntity);
 
@@ -285,6 +290,9 @@ public class PickupPowerUpRaycastSystem : SystemBase
                         };
 
                         ecb.AddComponent(instanceEntity, ps);
+
+                        Debug.Log(" speed " + pickedUpActor);
+
 
                         Speed speedPower = new Speed
                         {

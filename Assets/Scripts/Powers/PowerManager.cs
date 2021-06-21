@@ -226,7 +226,7 @@ public class PowersSystem : SystemBase
 
         Entities.WithoutBurst().WithAll<AudioSourceComponent>().ForEach(
             (
-                AudioSource audioSource, PowerItem powerItem,  ref PowerItemComponent powerItemComponent, in Entity e) =>
+                HealthBar healthBar, AudioSource audioSource, PowerItem powerItem,  ref PowerItemComponent powerItemComponent, in Entity e) =>
             {
                 if (audioSource.isPlaying == false
                     && powerItemComponent.enabled == true
@@ -234,9 +234,13 @@ public class PowersSystem : SystemBase
                 {
                     powerItemComponent.enabled = false;
                     audioSource.PlayOneShot(powerItem.powerEnabledAudioClip);
+                    healthBar.HealthChange();
                 }
             }
         ).Run();
+
+
+
 
 
         // Make sure that the ECB system knows about our job

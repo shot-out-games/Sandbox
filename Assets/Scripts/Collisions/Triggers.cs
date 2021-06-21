@@ -1,14 +1,10 @@
-﻿using Unity.Physics;
-using Unity.Physics.Systems;
+﻿using SandBox.Player;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Jobs;
+using Unity.Physics;
+using Unity.Physics.Systems;
 using UnityEngine;
-using Unity.Burst;
-using System;
-using SandBox.Player;
-using Unity.Collections;
-using Unity.Mathematics;
-using Unity.Transforms;
 
 public struct TriggerComponent : IComponentData
 {
@@ -99,7 +95,7 @@ public class CollisionSystem : SystemBase
 
 
 
-      
+
 
 
             bool alwaysDamageA = false;
@@ -177,7 +173,7 @@ public class CollisionSystem : SystemBase
             bool ammoBlockedA = (type_b == (int)TriggerType.Blocks) &&
                          (type_a == (int)TriggerType.Ammo);
 
-            bool ammoBlockedB = ( type_a == (int)TriggerType.Blocks) &&
+            bool ammoBlockedB = (type_a == (int)TriggerType.Blocks) &&
                          (type_b == (int)TriggerType.Ammo);
 
             //Debug.Log("aa " + ammoA + " ab " + ammoB);
@@ -185,12 +181,14 @@ public class CollisionSystem : SystemBase
             {
                 AmmoComponent ammoComponent = ammoGroup[triggerComponent_a.Entity];
                 ammoComponent.Charged = true;
+                Debug.Log("charged a");
                 ammoGroup[triggerComponent_a.Entity] = ammoComponent;
             }
             if (ammoBlockedB)
             {
                 AmmoComponent ammoComponent = ammoGroup[triggerComponent_b.Entity];
                 ammoComponent.Charged = true;
+                Debug.Log("charged b");
                 ammoGroup[triggerComponent_b.Entity] = ammoComponent;
             }
 
@@ -268,10 +266,10 @@ public class CollisionSystem : SystemBase
     EndFramePhysicsSystem endFramePhysicsSystem;
 
 
-    protected override void  OnUpdate()
+    protected override void OnUpdate()
     {
 
-        var  inputDeps = new JobHandle();
+        var inputDeps = new JobHandle();
 
         inputDeps = JobHandle.CombineDependencies(inputDeps, buildPhysicsWorldSystem.GetOutputDependency());
         inputDeps = JobHandle.CombineDependencies(inputDeps, stepPhysicsWorld.GetOutputDependency());

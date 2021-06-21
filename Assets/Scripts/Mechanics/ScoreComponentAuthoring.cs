@@ -51,22 +51,27 @@ public class ScoreComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 
     public void ShowLabelStreak(int streak)
     {
+        if (labelStreak == null) return;
         labelStreak.text = streak.ToString();
     }
 
 
     public void ShowLabelScore(int score)
     {
+        if (labelScore == null) return;
+
         labelScore.text = score.ToString();
     }
 
     public void ShowLabelCombo(int combo)
     {
+        if (labelCombo == null) return;
         labelCombo.text = combo.ToString();
     }
 
     public void ShowLabelLevel(int level)
     {
+        if (labelLevel == null) return;
         labelLevel.text= level.ToString();
     }
 
@@ -78,8 +83,6 @@ public class ScoreComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
                 defaultPointsScored = defaultPointsScored
             }
         );
-
-
 
 
     }

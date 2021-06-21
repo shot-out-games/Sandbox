@@ -428,8 +428,6 @@ public class AttackerSystem : SystemBase
 
 
                     ammo.DamageCausedPreviously = true;
-                    ecb.SetComponent<AmmoComponent>(collision_entity_b, ammo);
-
 
                     ecb.AddComponent<DamageComponent>(collision_entity_a,
                             new DamageComponent
@@ -442,10 +440,14 @@ public class AttackerSystem : SystemBase
 
 
                         var scoreComponent = EntityManager.GetComponentData<ScoreComponent>(shooter);
+                        scoreComponent.addBonus = 0;
                         //for gmtk bonus for charged (blocked)
                         if (ammo.Charged == true && isEnemyShooter == false && isEnemyTarget == true)
                         {
-                            scoreComponent.addBonus = scoreComponent.defaultPointsScored ;
+                            scoreComponent.addBonus = scoreComponent.defaultPointsScored   * 1;
+                            ammo.Charged = false;
+                            Debug.Log("ammo bonus");
+
                         }
                         scoreComponent.scoringAmmoEntity = ammo.ammoEntity;
                         scoreComponent.pointsScored = true;
@@ -453,6 +455,7 @@ public class AttackerSystem : SystemBase
                         EntityManager.SetComponentData(shooter, scoreComponent);
                     }
 
+                    ecb.SetComponent<AmmoComponent>(collision_entity_b, ammo);
 
 
                 }

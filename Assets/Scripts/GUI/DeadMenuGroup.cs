@@ -50,12 +50,12 @@ public class DeadMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     }
 
 
-   void Update()
+    void Update()
     {
         if (showMenu && showTimer >= 0)
         {
             showTimer -= Time.deltaTime;
-            if(showTimer <= 0)
+            if (showTimer <= 0)
             {
                 ShowMenu();
             }

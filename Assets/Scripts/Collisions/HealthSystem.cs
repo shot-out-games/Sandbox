@@ -96,18 +96,18 @@ public class HealthSystem : SystemBase
 
 
         Entities.WithoutBurst().ForEach((HealthBar healthUI, in HealthComponent healthComponent, in DamageComponent damage) =>
-       {
-           if (healthComponent.ShowText3D == ShowText3D.hitScore && healthComponent.ShowDamage == true)
-           {
-               healthUI.ShowText3dValue((int)damage.ScorePointsReceived);
-           }
-           else if (healthComponent.ShowText3D == ShowText3D.hitDamage && healthComponent.ShowDamage == true)
-           {
-               healthUI.ShowText3dValue((int)damage.DamageReceived);
-           }
-           healthUI.HealthChange();
+        {
+            if (healthComponent.ShowText3D == ShowText3D.hitScore && healthComponent.ShowDamage == true)
+            {
+                healthUI.ShowText3dValue((int)damage.ScorePointsReceived);
+            }
+            else if (healthComponent.ShowText3D == ShowText3D.hitDamage && healthComponent.ShowDamage == true)
+            {
+                healthUI.ShowText3dValue((int)damage.DamageReceived);
+            }
+            healthUI.HealthChange();
 
-       }).Run();
+        }).Run();
 
         ecb.Playback(EntityManager);
         ecb.Dispose();
