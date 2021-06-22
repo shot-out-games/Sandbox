@@ -82,7 +82,7 @@ public class FreezeSystem : SystemBase
         }).Run();
 
 
-        Entities.WithoutBurst().WithStructuralChanges().WithNone<Pause>().ForEach((Entity e, 
+        Entities.WithoutBurst().WithStructuralChanges().WithNone<Pause>().ForEach((Entity e,
             ref FreezeComponent freezeComponent,
             ref RatingsComponent ratingsComponent,
             ref PlayerMoveComponent playerMoveComponent,
@@ -92,7 +92,7 @@ public class FreezeSystem : SystemBase
         {
             //if (pause.value == 1) return;
             //Debug.Log("stun");
-            float  rightTriggerValue = inputController.rightTriggerValue;//freeze
+            float rightTriggerValue = inputController.rightTriggerValue;//freeze
             bool button_b_released = inputController.buttonB_Released;
 
 
@@ -100,13 +100,12 @@ public class FreezeSystem : SystemBase
 
             if (rightTriggerValue > .19)
             {
-                Debug.Log("b");
-                playerMoveComponent.currentSpeed = ratingsComponent.speed * 0;
+                playerMoveComponent.currentSpeed = ratingsComponent.speed * 0;//not required or just turbo
                 ratingsComponent.gameSpeed = 0;
             }
             else
             {
-                        playerMoveComponent.currentSpeed = currentSpeed;
+                playerMoveComponent.currentSpeed = currentSpeed;
                 ratingsComponent.gameSpeed = currentSpeed;
             }
 

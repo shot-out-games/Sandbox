@@ -14,25 +14,29 @@ public class PlayerTurboSystem : SystemBase
         Entities.WithoutBurst().WithStructuralChanges().ForEach
         (
             (
-                ref PlayerMoveComponent playerMoveComponent,
-                in RatingsComponent playerRatings,
+                ref RatingsComponent playerRatings,
+                in PlayerMoveComponent playerMoveComponent,
                 in InputController inputController,
                 in PlayerTurboComponent playerTurbo
             ) =>
             {
-                bool button_a = inputController.buttonA_held;
-                bool button_a_released = inputController.buttonA_Released;
+                bool button = inputController.buttonY_held;
+                bool button_released = inputController.buttonY_Released;
 
                 float currentSpeed = playerRatings.speed;
 
 
-                if (button_a)
+                if (button)
                 {
-                    playerMoveComponent.currentSpeed = playerRatings.speed * playerTurbo.multiplier;
+                    //playerMoveComponent.
+                        
+                    //currentSpeed = playerRatings.speed * playerTurbo.multiplier;
+                    playerRatings.gameSpeed = playerRatings.speed * playerTurbo.multiplier;
+
                 }
-                else if (button_a_released)
+                else if (button_released)
                 {
-                    playerMoveComponent.currentSpeed = currentSpeed;
+                    playerRatings.gameSpeed = playerRatings.speed;
                 }
 
 

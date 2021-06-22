@@ -16,6 +16,7 @@ public class MatchupSystem : SystemBase
 
     protected override void OnUpdate()
     {
+        var effectsGroup = GetComponentDataFromEntity<EffectsComponent>(false);
 
 
 
@@ -53,6 +54,7 @@ public class MatchupSystem : SystemBase
                 Entities.WithoutBurst().WithNone<CloseComponent>().ForEach(
                     (
                         ref GunComponent gun,
+                        ref RatingsComponent ratingsComponent,
                         in PlayerComponent playerComponent,
                         in Entity playerE,
                         in Translation playerTranslation
@@ -61,11 +63,23 @@ public class MatchupSystem : SystemBase
 
                         float distance = math.distance(playerTranslation.Value, closePlayerPosition);
                         //Debug.Log("pos " + distance);
-                        gun.ChangeAmmoStats = 0;
+                        //gun.ChangeAmmoStats = 0;
+                        ratingsComponent.gameSpeed = ratingsComponent.speed;
                         if (distance > closePlayerMaxDistance)
                         {
-                            gun.ChangeAmmoStats = distance;
-                            //Debug.Log("change write");
+                            gun.ChangeAmmoStats = distance - closePlayerMaxDistance;
+                            ratingsComponent.gameSpeed = ratingsComponent.gameSpeed *
+                                (100 - (distance - closePlayerMaxDistance)) / 100;
+                            if (ratingsComponent.gameSpeed < 1) ratingsComponent.gameSpeed = 1;
+                            //Debug.Log("rate " + gun.ChangeAmmoStats);
+                            if (HasComponent<EffectsComponent>(playerE))
+                            {
+                                var effect = GetComponent<EffectsComponent>(playerE);
+                                effect.playEffect = true;
+                                SetComponent<EffectsComponent>(playerE, effect);
+                                //    effectsGroup[playerE] = effect;
+
+                            }
 
                         }
 

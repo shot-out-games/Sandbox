@@ -11,6 +11,7 @@ public struct CloseComponent : IComponentData
     public bool active;
     public float maxDistance;
     public bool isDamaging;
+    public bool playEffects;
 
 }
 

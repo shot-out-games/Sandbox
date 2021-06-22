@@ -72,7 +72,7 @@ public struct ControlPower : IComponentData
 
 public class PowerManager : MonoBehaviour, IConvertGameObjectToEntity
 {
-    
+
 
 
 
@@ -178,6 +178,11 @@ public class PowersSystem : SystemBase
             }
         ).Run();
 
+
+       
+
+
+
         Entities.ForEach(
             (
                 ref HealthPower healthPower, ref HealthComponent healthComponent, in RatingsComponent ratings, in Entity e
@@ -186,7 +191,7 @@ public class PowersSystem : SystemBase
             {
                 if (healthPower.enabled == true)
                 {
-                    healthPower.enabled = false;
+                    //healthPower.enabled = false;
                     healthComponent.TotalDamageReceived = healthComponent.TotalDamageReceived * healthPower.healthMultiplier;
                     //Rare used if multiplier is > 1 meaning health damage increased
                     if (healthComponent.TotalDamageReceived > ratings.maxHealth)
@@ -201,6 +206,23 @@ public class PowersSystem : SystemBase
 
             }
         ).Schedule();
+
+
+        Entities.WithoutBurst().ForEach(
+            (
+                HealthBar healthBar, ref HealthPower healthPower) =>
+            {
+                if (healthPower.enabled == true)
+                {
+                    healthPower.enabled = false;
+                    healthBar.HealthChange();
+                    Debug.Log("Health Changed");
+                }
+            }
+        ).Run();
+
+
+
 
         Entities.WithoutBurst().ForEach(
             (
@@ -226,7 +248,7 @@ public class PowersSystem : SystemBase
 
         Entities.WithoutBurst().WithAll<AudioSourceComponent>().ForEach(
             (
-                HealthBar healthBar, AudioSource audioSource, PowerItem powerItem,  ref PowerItemComponent powerItemComponent, in Entity e) =>
+                AudioSource audioSource, PowerItem powerItem, ref PowerItemComponent powerItemComponent, in Entity e) =>
             {
                 if (audioSource.isPlaying == false
                     && powerItemComponent.enabled == true
@@ -234,10 +256,11 @@ public class PowersSystem : SystemBase
                 {
                     powerItemComponent.enabled = false;
                     audioSource.PlayOneShot(powerItem.powerEnabledAudioClip);
-                    healthBar.HealthChange();
                 }
             }
         ).Run();
+
+
 
 
 

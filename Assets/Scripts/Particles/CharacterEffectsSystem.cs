@@ -81,6 +81,11 @@ public class CharacterEffectsSystem : SystemBase
 
                 AudioSource audioSource = effects.audioSource;
 
+                if (effectsComponent.playEffect)
+                {
+                    Debug.Log("play effect");
+                }
+
                 if (deadComponent.playDeadEffects)
                 {
                     deadComponent.playDeadEffects = false;

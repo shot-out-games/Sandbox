@@ -10,6 +10,7 @@ public struct EffectsComponent : IComponentData
     public float timeBetween;
     public float timeActive;
     public bool soundPlaying;
+    public bool playEffect;
 }
 
 

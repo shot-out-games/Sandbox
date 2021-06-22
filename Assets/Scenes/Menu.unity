@@ -4293,7 +4293,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Instructions
+  m_text: How to Play
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1ca2a657d10d8a04c90b136837422597, type: 2}
   m_sharedMaterial: {fileID: 5492435546947484485, guid: 1ca2a657d10d8a04c90b136837422597,
@@ -4814,7 +4814,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1146058917
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4831,10 +4831,10 @@ RectTransform:
   m_Father: {fileID: 458632769}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 576, y: -89.53674}
+  m_SizeDelta: {x: 1152, y: 179.07349}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1146058918
 Animator:
@@ -7576,7 +7576,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Instructions
+  m_text: How to Play
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1ca2a657d10d8a04c90b136837422597, type: 2}
   m_sharedMaterial: {fileID: 5492435546947484485, guid: 1ca2a657d10d8a04c90b136837422597,
@@ -8816,25 +8816,57 @@ PrefabInstance:
     - target: {fileID: 8204699602833128145, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
       propertyPath: m_text
-      value: 'RIGHT CLICK Stops Your Buddy from moving but with increased risk to
-        damage
+      value: 'RIGHT CLICK Stops Your Buddy from moving
 
 '
       objectReference: {fileID: 0}
+    - target: {fileID: 8204699602833128145, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
+        type: 2}
+    - target: {fileID: 8204699602833128145, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699602833128145, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 21539420542967178, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
+        type: 2}
     - target: {fileID: 8204699603120978797, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
       propertyPath: m_text
-      value: SPACE BAR will cause your Buddy only to JUMP
+      value: SPACE BAR will cause only your Buddy to JUMP
       objectReference: {fileID: 0}
+    - target: {fileID: 8204699603120978797, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
+        type: 2}
+    - target: {fileID: 8204699603120978797, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699603120978797, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 21539420542967178, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
+        type: 2}
     - target: {fileID: 8204699603239268279, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
       propertyPath: m_text
       value: 'TIPS
 
-        STAY CLOSE TO YOUR PARTNER.
+        STAY CLOSE TO YOUR BUDDY.
 
-        YOU CAN BARELY SHOOT
-        IF YOU DO NOT.
+        KEEP BOTH OF YOU ALIVE!
 
 
 '
@@ -8844,6 +8876,23 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 48
       objectReference: {fileID: 0}
+    - target: {fileID: 8204699603239268279, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
+        type: 2}
+    - target: {fileID: 8204699603239268279, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699603239268279, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 21539420542967178, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
+        type: 2}
     - target: {fileID: 8204699603398090866, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -8879,17 +8928,36 @@ PrefabInstance:
         PARTNER
         JUMP :  Space Bar (X BUTTON X-BOX)
 
-        SHOOT : Left Click (RIGHT TRIGGER)
+        SHOOT : Left Click (LEFT TRIGGER)
 
         RIGHT
-        CLICK : Breaks the invisible chain with your partner to stop movement (B
-        BUTTON)'
+        CLICK : Breaks the connection with your buddy to stop movement (RIGHT TRIGGER)
+
+        CAM
+        ZOOM: Middle Click (D-PAD UP/DOWN)'
       objectReference: {fileID: 0}
     - target: {fileID: 8204699603439684909, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
       propertyPath: m_fontSize
-      value: 47.2
+      value: 31.45
       objectReference: {fileID: 0}
+    - target: {fileID: 8204699603439684909, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
+        type: 2}
+    - target: {fileID: 8204699603439684909, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699603439684909, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 21539420542967178, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
+        type: 2}
     - target: {fileID: 8204699603684121735, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
       propertyPath: m_text
@@ -8898,8 +8966,25 @@ PrefabInstance:
     - target: {fileID: 8204699603684121735, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
       propertyPath: m_fontSize
-      value: 24
+      value: 48
       objectReference: {fileID: 0}
+    - target: {fileID: 8204699603684121735, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
+        type: 2}
+    - target: {fileID: 8204699603684121735, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699603684121735, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 21539420542967178, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
+        type: 2}
     - target: {fileID: 8204699603711743919, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -8930,6 +9015,11 @@ PrefabInstance:
       propertyPath: eventSystem
       value: 
       objectReference: {fileID: 1587758665}
+    - target: {fileID: 8204699603925138851, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8204699603925138860, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
       propertyPath: m_Name
@@ -9078,19 +9168,35 @@ PrefabInstance:
     - target: {fileID: 8204699604335639384, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
       propertyPath: m_text
-      value: "Protect you and your partner by destroying all opposition. \nYour partner
-        moves in the same direction with you at all times but just a bit faster.
-        If your partner moves to far away you lose almost all of your SHOT POWER.
-        \nKeep him close.\nPress RIGHT CLICK to stop your partner and help you stay
-        closer but increasing risk.\nPartner can still jump out of danger.\nSCORE
-        as many points as you can. The quicker the higher you score. \nCHAIN shots
-        together and off walls for Bonus Scores."
+      value: "Protect you and your Buddy by destroying all opposition. \nYour Buddy
+        moves in the same direction with you at all times. If your Buddy moves too
+        far away you lose speed and shot rate. \nKeep your Buddy close.\nPress RIGHT
+        CLICK to stop your Buddy and help you stay closer.\nYour Buddy can still
+        jump out of danger.\nSCORE as many points as you can. Streaks and quick destruction
+        for higher scores. \nCHAIN shots together and off walls for Combo Bonuses."
       objectReference: {fileID: 0}
     - target: {fileID: 8204699604335639384, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
       propertyPath: m_fontSize
-      value: 34.95
+      value: 40.75
       objectReference: {fileID: 0}
+    - target: {fileID: 8204699604335639384, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
+        type: 2}
+    - target: {fileID: 8204699604335639384, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699604335639384, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 21539420542967178, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
+        type: 2}
     - target: {fileID: 8204699604363823225, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -9141,6 +9247,23 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8204699604366958857, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 8204699604366958857, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
+        type: 2}
+    - target: {fileID: 8204699604366958857, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 21539420542967178, guid: 4bd810f1cbcb0f446a8f5a31453e243f,
+        type: 2}
     - target: {fileID: 8204699604407054605, guid: 93b5c305eb2ac4141ad6e8bac611ce9f,
         type: 3}
       propertyPath: m_AnchorMax.y
