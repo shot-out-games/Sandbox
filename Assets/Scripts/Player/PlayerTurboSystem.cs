@@ -36,6 +36,7 @@ public class PlayerTurboSystem : SystemBase
                 }
                 else if (button_released)
                 {
+                    Debug.Log("turbo");
                     playerRatings.gameSpeed = playerRatings.speed;
                 }
 

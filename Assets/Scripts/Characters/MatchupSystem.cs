@@ -64,20 +64,39 @@ public class MatchupSystem : SystemBase
                         float distance = math.distance(playerTranslation.Value, closePlayerPosition);
                         //Debug.Log("pos " + distance);
                         //gun.ChangeAmmoStats = 0;
-                        ratingsComponent.gameSpeed = ratingsComponent.speed;
+                        //ratingsComponent.gameSpeed = ratingsComponent.speed;
+                        //skip if speed power up enabled
+                        if (HasComponent<Speed>(playerE))
+                        {
+                            if(GetComponent<Speed>(playerE).enabled) return;
+                        }
+                    
+
+
                         if (distance > closePlayerMaxDistance)
                         {
                             gun.ChangeAmmoStats = distance - closePlayerMaxDistance;
-                            ratingsComponent.gameSpeed = ratingsComponent.gameSpeed *
+                            ratingsComponent.gameSpeed = ratingsComponent.speed *
                                 (100 - (distance - closePlayerMaxDistance)) / 100;
                             if (ratingsComponent.gameSpeed < 1) ratingsComponent.gameSpeed = 1;
                             //Debug.Log("rate " + gun.ChangeAmmoStats);
                             if (HasComponent<EffectsComponent>(playerE))
                             {
                                 var effect = GetComponent<EffectsComponent>(playerE);
-                                effect.playEffect = true;
+                                effect.playEffectType = EffectType.TwoClose;
+                                effect.playEffectAllowed = true;
                                 SetComponent<EffectsComponent>(playerE, effect);
-                                //    effectsGroup[playerE] = effect;
+                            }
+
+                        }
+                        else 
+                        {
+                            if (HasComponent<EffectsComponent>(playerE))
+                            {
+                                var effect = GetComponent<EffectsComponent>(playerE);
+                                //effect.playEffectType = EffectType.None;
+                                effect.playEffectAllowed = false;
+                                SetComponent<EffectsComponent>(playerE, effect);
 
                             }
 

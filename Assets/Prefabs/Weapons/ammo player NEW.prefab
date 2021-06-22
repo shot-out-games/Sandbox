@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoTime: 1
-  comboTimeAdd: 10
+  comboTimeAdd: 6
   framesToSkip: 2
 --- !u!114 &8439595339403142612
 MonoBehaviour:

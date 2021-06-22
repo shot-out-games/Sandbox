@@ -10,7 +10,8 @@ public struct EffectsComponent : IComponentData
     public float timeBetween;
     public float timeActive;
     public bool soundPlaying;
-    public bool playEffect;
+    public bool playEffectAllowed;
+    public EffectType playEffectType;
 }
 
 
@@ -26,12 +27,16 @@ public class EffectsManager : MonoBehaviour, IConvertGameObjectToEntity
 
 
     public ParticleSystem actorDeadEffectPrefab;
-    public ParticleSystem actorDeadEffectInstance;
+    [HideInInspector] public ParticleSystem actorDeadEffectInstance;
     public AudioClip actorDeadAudioClip;
 
     public ParticleSystem actorHurtEffectPrefab;
-    public ParticleSystem actorHurtEffectInstance;
+    [HideInInspector] public ParticleSystem actorHurtEffectInstance;
     public AudioClip actorHurtAudioClip;
+
+    public ParticleSystem actorCloseEffectPrefab;
+    [HideInInspector] public ParticleSystem actorCloseEffectInstance;
+    public AudioClip actorCloseAudioClip;
 
     public AudioSource audioSource;
 
@@ -52,6 +57,14 @@ public class EffectsManager : MonoBehaviour, IConvertGameObjectToEntity
             ps.transform.parent = transform;
             ps.transform.localPosition = new Vector3(0, ps.transform.localPosition.y, 0);
             actorDeadEffectInstance = ps;
+        }
+
+        if (actorCloseEffectPrefab)
+        {
+            var ps = Instantiate(actorCloseEffectPrefab);
+            ps.transform.parent = transform;
+            ps.transform.localPosition = new Vector3(0, ps.transform.localPosition.y, 0);
+            actorCloseEffectInstance = ps;
         }
 
 

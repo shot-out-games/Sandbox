@@ -4,6 +4,17 @@ using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine;
 
+
+public enum EffectType
+{
+    None = 0,
+    Dead = 1,
+    Damaged = 2,
+    TwoClose = 3
+
+}
+
+
 [UpdateAfter(typeof(DeadSystem))]
 
 public class CharacterEffectsSystem : SystemBase
@@ -24,7 +35,8 @@ public class CharacterEffectsSystem : SystemBase
                 in Impulse impulse) =>
             {
                 if (damageComponent.DamageReceived == 0) return;
-                //impulse.impulseSourceHitReceived.GenerateImpulse();
+                Debug.Log("shake");
+                impulse.impulseSourceHitReceived.GenerateImpulse();
 
             }
         ).Run();
@@ -73,7 +85,7 @@ public class CharacterEffectsSystem : SystemBase
             (
                 Entity e,
                 ref DeadComponent deadComponent,
-                in EffectsComponent effectsComponent,
+                ref EffectsComponent effectsComponent,
                 in Animator animator,
                 in EffectsManager effects) =>
             {
@@ -81,12 +93,31 @@ public class CharacterEffectsSystem : SystemBase
 
                 AudioSource audioSource = effects.audioSource;
 
-                if (effectsComponent.playEffect)
+                if (effectsComponent.playEffectType == EffectType.TwoClose)
                 {
-                    Debug.Log("play effect");
+                    Debug.Log("play effect two close");
+                    //effectsComponent.playEffectType = EffectType.None;
+
+                    if (effects.actorCloseEffectInstance)
+                    {
+                        if (effects.actorCloseEffectInstance.isPlaying == false && effectsComponent.playEffectAllowed)
+                        {
+                            effects.actorCloseEffectInstance.Play(true);
+                        }
+                        else if(effectsComponent.playEffectAllowed == false)
+                        {
+                            effects.actorCloseEffectInstance.Stop(true);
+
+                        }
+                    }
+                    if (effects.actorCloseAudioClip)
+                    {
+                        audioSource.clip = effects.actorCloseAudioClip;
+                        audioSource.Play();
+                    }
                 }
 
-                if (deadComponent.playDeadEffects)
+                if (deadComponent.playDeadEffects)//can probably just use playEffectType in effectsComponent TO DO
                 {
                     deadComponent.playDeadEffects = false;
 

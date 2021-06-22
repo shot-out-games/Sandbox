@@ -72,7 +72,7 @@ public class GunAmmoHandlerSystem : SystemBase
                 //change based on game
                 if (gun.ChangeAmmoStats > 0)
                 {
-                    strength = strength *(100- gun.ChangeAmmoStats) / 100;
+                    strength = strength *(100- gun.ChangeAmmoStats * 2) / 100;
                     if (strength <= 0) strength = 0;
                 }
 

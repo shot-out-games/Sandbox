@@ -158,6 +158,7 @@ public class PowersSystem : SystemBase
                     speed.timer = 0;
                     ecb.AddComponent(speed.itemEntity, new DestroyComponent());
                     ratings.gameSpeed = ratings.gameSpeed * speed.multiplier;
+                    Debug.Log("game speed " + ratings.gameSpeed);
                 }
                 else if (speed.enabled && speed.timer < speed.timeOn)
                 {

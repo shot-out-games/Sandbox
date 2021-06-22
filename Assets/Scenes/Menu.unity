@@ -910,6 +910,11 @@ PrefabInstance:
       propertyPath: _userData.mouseMaps.Array.data[0].actionElementMaps.Array.data[0]._actionId
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 8366856295956140127, guid: 3764df9cde8d8314683850f5158ee0b5,
+        type: 3}
+      propertyPath: _userData.joystickMaps.Array.data[0].actionElementMaps.Array.data[11]._actionId
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8468523140163583471, guid: 3764df9cde8d8314683850f5158ee0b5,
         type: 3}
       propertyPath: m_RootOrder
@@ -8928,10 +8933,10 @@ PrefabInstance:
         PARTNER
         JUMP :  Space Bar (X BUTTON X-BOX)
 
-        SHOOT : Left Click (LEFT TRIGGER)
+        SHOOT : Left Click (RIGHT TRIGGER)
 
         RIGHT
-        CLICK : Breaks the connection with your buddy to stop movement (RIGHT TRIGGER)
+        CLICK : Breaks the connection with your buddy to stop movement (LEFT TRIGGER)
 
         CAM
         ZOOM: Middle Click (D-PAD UP/DOWN)'
