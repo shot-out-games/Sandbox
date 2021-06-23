@@ -49,6 +49,7 @@ public class ScoreComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 
     [SerializeField] private int defaultPointsScored = 100;
 
+
     public void ShowLabelStreak(int streak)
     {
         if (labelStreak == null) return;
@@ -58,9 +59,11 @@ public class ScoreComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 
     public void ShowLabelScore(int score)
     {
+
         if (labelScore == null) return;
 
         labelScore.text = score.ToString();
+        
     }
 
     public void ShowLabelCombo(int combo)
@@ -83,6 +86,9 @@ public class ScoreComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
                 defaultPointsScored = defaultPointsScored
             }
         );
+
+
+
 
 
     }

@@ -436,8 +436,6 @@ public class AttackerSystem : SystemBase
 
                     if (HasComponent<ScoreComponent>(shooter) && damage != 0)
                     {
-                        Debug.Log("score");
-
 
                         var scoreComponent = EntityManager.GetComponentData<ScoreComponent>(shooter);
                         scoreComponent.addBonus = 0;
@@ -446,9 +444,9 @@ public class AttackerSystem : SystemBase
                         {
                             scoreComponent.addBonus = scoreComponent.defaultPointsScored   * 1;
                             ammo.Charged = false;
-                            Debug.Log("ammo bonus");
 
                         }
+
                         scoreComponent.scoringAmmoEntity = ammo.ammoEntity;
                         scoreComponent.pointsScored = true;
                         scoreComponent.scoredAgainstEntity = collision_entity_a;

@@ -27,6 +27,12 @@ public class ScoreSystem : SystemBase
             in InputController inputController
 ) =>
             {
+                if (HasComponent<DamageComponent>(e))
+                {
+                    score.streak = 0;
+                    Debug.Log("streak 0");
+
+                }
 
 
                 if (score.pointsScored == true)
@@ -77,9 +83,9 @@ public class ScoreSystem : SystemBase
                     float timeBonus = (5 - score.timeSinceLastScore) * defaultScore;
                     timeBonus = math.clamp(timeBonus, -.5f * defaultScore, 2f * defaultScore);
 
-                    float streakBonus = math.pow(score.streak * defaultScore, 2) / 100;
+                    float streakBonus = math.pow(score.streak * defaultScore, 2) / 500;
 
-                    float comboBonus = score.combo > 1 ? math.pow(score.combo * defaultScore ,2) / 50 : 0;
+                    float comboBonus = score.combo > 1 ? math.pow(score.combo * defaultScore ,2) / 200 : 0;
                     //Debug.Log("combo Bonus " + comboBonus);
 
                     score.lastPointValue = score.defaultPointsScored + (int)timeBonus + (int)streakBonus + (int)comboBonus + (int)score.addBonus;
