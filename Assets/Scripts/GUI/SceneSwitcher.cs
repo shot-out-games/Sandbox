@@ -21,7 +21,7 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
         public string SceneName;
         public int CustomDuration;
     }
-    public int SceneSwitchInterval = 4;
+    public float SceneSwitchInterval = 1;
     public int CurrentSceneIndex = 0;
     private EntityManager manager;
     private Entity e;

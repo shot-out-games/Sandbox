@@ -31206,7 +31206,7 @@ MonoBehaviour:
   timeBetween: 0.1
   timeActive: 0.5
   pauseEffect: 0
-  actorDeadEffectPrefab: {fileID: 198176560502280126, guid: 21e3fa923d4f261409d83b8d0f6e81c7,
+  actorDeadEffectPrefab: {fileID: 198176560502280126, guid: ef58741ce89934145962cf0adc12b8ea,
     type: 3}
   actorDeadEffectInstance: {fileID: 0}
   actorDeadAudioClip: {fileID: 8300000, guid: 470afd54093c59242af6eb2dbb4a0026, type: 3}
