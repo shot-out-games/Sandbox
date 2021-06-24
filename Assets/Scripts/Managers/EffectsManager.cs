@@ -7,8 +7,6 @@ using UnityEngine;
 public struct EffectsComponent : IComponentData
 {
     public bool pauseEffect;
-    public float timeBetween;
-    public float timeActive;
     public bool soundPlaying;
     public bool playEffectAllowed;
     public EffectType playEffectType;
@@ -18,10 +16,6 @@ public struct EffectsComponent : IComponentData
 
 public class EffectsManager : MonoBehaviour, IConvertGameObjectToEntity
 {
-    [SerializeField]
-    private float timeBetween = .1f;
-    [SerializeField]
-    private float timeActive = .5f;
 
     [SerializeField] private bool pauseEffect;
 
@@ -76,6 +70,6 @@ public class EffectsManager : MonoBehaviour, IConvertGameObjectToEntity
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-        dstManager.AddComponentData(entity, new EffectsComponent { timeBetween = timeBetween, timeActive = timeActive, pauseEffect = pauseEffect});
+        dstManager.AddComponentData(entity, new EffectsComponent { pauseEffect = pauseEffect});
     }
 }
