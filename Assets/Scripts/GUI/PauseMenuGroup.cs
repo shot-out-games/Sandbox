@@ -98,6 +98,14 @@ public class PauseMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     {
         GameInterface.SelectClickedEvent += ShowMenu;
         SkillTreeMenuGroup.PauseGame += SkillTreeMenuPanel;
+        ScoreMenuGroup.ScoreMenuExitBackClickedEvent += ResetSelectedButton;
+    }
+
+    private void ResetSelectedButton()
+    {
+        EventSystem.current.SetSelectedGameObject(defaultButton.gameObject);
+        //defaultButton.Select();//not working
+        Debug.Log("Select");
     }
 
     private void SkillTreeMenuPanel(bool paused)
@@ -118,6 +126,7 @@ public class PauseMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     {
         GameInterface.SelectClickedEvent -= ShowMenu;
         SkillTreeMenuGroup.PauseGame -= SkillTreeMenuPanel;
+        ScoreMenuGroup.ScoreMenuExitBackClickedEvent -= ResetSelectedButton;
     }
 
 

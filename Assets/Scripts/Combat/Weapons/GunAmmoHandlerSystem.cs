@@ -124,7 +124,7 @@ public class GunAmmoHandlerSystem : SystemBase
 
                         if (bulletManager.weaponAudioClip && bulletManager.weaponAudioSource)
                         {
-                            bulletManager.weaponAudioSource.PlayOneShot(bulletManager.weaponAudioClip);
+                            bulletManager.weaponAudioSource.PlayOneShot(bulletManager.weaponAudioClip, .25f);
                         }
                         gun.Duration = 0;
 

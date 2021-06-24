@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
+using UnityEngine.Audio;
 
 
 public struct EffectsComponent : IComponentData
@@ -33,10 +34,11 @@ public class EffectsManager : MonoBehaviour, IConvertGameObjectToEntity
     public AudioClip actorCloseAudioClip;
 
     public AudioSource audioSource;
-
-
+    
     void Start()
     {
+
+
         if (actorHurtEffectPrefab)
         {
             var ps = Instantiate(actorHurtEffectPrefab);

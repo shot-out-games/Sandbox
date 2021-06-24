@@ -103,17 +103,21 @@ public class CharacterEffectsSystem : SystemBase
                         if (effects.actorCloseEffectInstance.isPlaying == false && effectsComponent.playEffectAllowed)
                         {
                             effects.actorCloseEffectInstance.Play(true);
+                            if (effects.actorCloseAudioClip)
+                            {
+                                //effectsComponent.startEffectSound = false;
+                                audioSource.clip = effects.actorCloseAudioClip;
+                                if (!audioSource.isPlaying)
+                                    audioSource.PlayOneShot(audioSource.clip, .5f);
+                                Debug.Log("play audio " + audioSource.clip);
+                            }
+
                         }
                         else if(effectsComponent.playEffectAllowed == false)
                         {
                             effects.actorCloseEffectInstance.Stop(true);
 
                         }
-                    }
-                    if (effects.actorCloseAudioClip)
-                    {
-                        audioSource.clip = effects.actorCloseAudioClip;
-                        audioSource.Play();
                     }
                 }
 
@@ -131,7 +135,7 @@ public class CharacterEffectsSystem : SystemBase
                     if (effects.actorDeadAudioClip)
                     {
                         audioSource.clip = effects.actorDeadAudioClip;
-                        audioSource.Play();
+                        audioSource.PlayOneShot(audioSource.clip);
                     }
                 }
                 else
@@ -152,7 +156,7 @@ public class CharacterEffectsSystem : SystemBase
                         if (effects.actorHurtAudioClip)
                         {
                             audioSource.clip = effects.actorHurtAudioClip;
-                            audioSource.Play();
+                            audioSource.PlayOneShot(audioSource.clip);
                         }
 
                     }

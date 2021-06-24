@@ -74,6 +74,25 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     [HideInInspector] public int rank;
 
 
+    void OnEnable()
+    {
+        ScoreMenuGroup.ScoreMenuExitBackClickedEvent += ResetSelectedButton;
+    }
+
+    void OnDisable()
+    {
+        ScoreMenuGroup.ScoreMenuExitBackClickedEvent -= ResetSelectedButton;
+    }
+
+
+    private void ResetSelectedButton()
+    {
+        EventSystem.current.SetSelectedGameObject(defaultButton.gameObject);
+        defaultButton.Select();//not working
+        Debug.Log("Select");
+    }
+
+
     void Start()
     {
 
