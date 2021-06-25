@@ -181,7 +181,7 @@ public class CollisionSystem : SystemBase
             {
                 AmmoComponent ammoComponent = ammoGroup[triggerComponent_a.Entity];
                 ammoComponent.Charged = true;
-                Debug.Log("charged a");
+                //Debug.Log("charged a");
                 ammoGroup[triggerComponent_a.Entity] = ammoComponent;
             }
             if (ammoBlockedB)

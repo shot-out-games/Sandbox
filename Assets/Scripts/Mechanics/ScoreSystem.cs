@@ -30,7 +30,7 @@ public class ScoreSystem : SystemBase
                 if (HasComponent<DamageComponent>(e))
                 {
                     score.streak = 0;
-                    Debug.Log("streak 0");
+                    //Debug.Log("streak 0");
 
                 }
 
@@ -65,10 +65,7 @@ public class ScoreSystem : SystemBase
 
 
 
-                        //standard streak scoring - if not used just turn off UI but leave this
-                        //if (score.lastShotConnected == true)
-                        //{
-                        score.streak += 1;
+                        if(score.combo > 0) score.streak += 1;
                         score.lastShotConnected = true;
 
                         //}

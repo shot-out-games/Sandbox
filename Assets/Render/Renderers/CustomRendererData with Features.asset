@@ -71,6 +71,28 @@ MonoBehaviour:
       restoreCamera: 1
       offset: {x: 0, y: 0, z: 0, w: 0}
       cameraFieldOfView: 60
+--- !u!114 &-1580138662929922301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f62c9c65cf3354c93be831c8bc075510, type: 3}
+  m_Name: NewScreenSpaceAmbientOcclusion
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  m_Shader: {fileID: 4800000, guid: 0849e84e3d62649e8882e9d6f056a017, type: 3}
+  m_Settings:
+    Downsample: 0
+    Source: 1
+    NormalSamples: 1
+    Intensity: 3
+    DirectLightingStrength: 0.25
+    Radius: 1
+    SampleCount: 6
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,7 +114,8 @@ MonoBehaviour:
   - {fileID: 8214535992997598727}
   - {fileID: 1966196141964474561}
   - {fileID: 6260104184162376091}
-  m_RendererFeatureMap: 1fab5c6be4edbfe23a10c67387191414d8115f29f6bd0a440b3fce63a14b5bc095b898ed152cea2b07564891f6e4ff71c1388948f954491b9b59ef89965be056
+  - {fileID: -1580138662929922301}
+  m_RendererFeatureMap: 1fab5c6be4edbfe23a10c67387191414d8115f29f6bd0a440b3fce63a14b5bc095b898ed152cea2b07564891f6e4ff71c1388948f954491b9b59ef89965be0560387330c423812ea
   postProcessData: {fileID: 11400000, guid: 965dc8fa9987fb24b8a967d82f854f13, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   shaders:
@@ -192,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 804bf49869d3b4315a850958d8530433, type: 3}
   m_Name: OutlinePass
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     Event: 300
     blitMaterial: {fileID: 2100000, guid: 40085b480ff98a944af12796f052956e, type: 2}

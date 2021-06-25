@@ -35,7 +35,7 @@ public class CharacterEffectsSystem : SystemBase
                 in Impulse impulse) =>
             {
                 if (damageComponent.DamageReceived == 0) return;
-                Debug.Log("shake");
+                //Debug.Log("shake");
                 impulse.impulseSourceHitReceived.GenerateImpulse();
 
             }
@@ -95,7 +95,7 @@ public class CharacterEffectsSystem : SystemBase
 
                 if (effectsComponent.playEffectType == EffectType.TwoClose)
                 {
-                    Debug.Log("play effect two close");
+                    //Debug.Log("play effect two close");
                     //effectsComponent.playEffectType = EffectType.None;
 
                     if (effects.actorCloseEffectInstance)
@@ -109,7 +109,7 @@ public class CharacterEffectsSystem : SystemBase
                                 audioSource.clip = effects.actorCloseAudioClip;
                                 if (!audioSource.isPlaying)
                                     audioSource.PlayOneShot(audioSource.clip, .5f);
-                                Debug.Log("play audio " + audioSource.clip);
+                                //Debug.Log("play audio " + audioSource.clip);
                             }
 
                         }

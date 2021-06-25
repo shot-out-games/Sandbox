@@ -46,7 +46,7 @@ public class AmmoSystem : SystemBase
                     if (HasComponent<ScoreComponent>(shooter))
                     {
                         var score = scoreGroup[shooter];
-                        Debug.Log(" last shot " + score.lastShotConnected);
+                        //Debug.Log(" last shot " + score.lastShotConnected);
                         if (score.lastShotConnected == false) score.streak = 0;
                         score.combo = 0;
                         scoreGroup[shooter] = score;

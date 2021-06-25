@@ -31,7 +31,7 @@ public class BasicLoserSystem : SystemBase
                 if (dead.isDead == true)
                 {
                     loser = true;
-                    Debug.Log("loser");
+                    //Debug.Log("loser");
                 }
             }
         ).Run();
