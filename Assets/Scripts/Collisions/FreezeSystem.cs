@@ -100,12 +100,12 @@ public class FreezeSystem : SystemBase
 
             if (rightTriggerValue > .19)
             {
-                playerMoveComponent.currentSpeed = ratingsComponent.speed * 0;//not required or just turbo
+                //playerMoveComponent.currentSpeed = ratingsComponent.speed * 0;//not required or just turbo
                 ratingsComponent.gameSpeed = 0;
             }
             else
             {
-                playerMoveComponent.currentSpeed = currentSpeed;
+                //playerMoveComponent.currentSpeed = currentSpeed;
                 ratingsComponent.gameSpeed = currentSpeed;
             }
 

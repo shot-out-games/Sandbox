@@ -181,6 +181,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             manager.AddComponent<NavMeshAgentComponent>(entity);
             agent.autoBraking = false;
             agent.updateRotation = false;
+            //agent.updatePosition = false;
             agent.autoTraverseOffMeshLink = false;
         }
 
@@ -252,10 +253,11 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         if (normalizedTime < 1.0f)
         {
-
             float yOffset = curve.Evaluate(normalizedTime);
             agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
             normalizedTime += Time.deltaTime / duration;
+            //Debug.Log("InJump " + agent.transform.position);
+
         }
         else
         {
@@ -263,6 +265,8 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             anim.SetInteger("JumpState", 0);
 
         }
+
+
 
     }
 

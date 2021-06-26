@@ -14,7 +14,7 @@ using Unity.Transforms;
 
 public struct PlayerMoveComponent : IComponentData
 {
-    public float currentSpeed;
+    //public float currentSpeed;
     public float negativeForce;
     public float rotateSpeed;
     public bool snapRotation;
@@ -129,7 +129,8 @@ namespace SandBox.Player
         dstManager.AddComponentData(entity, new PlayerMoveComponent()
             {
                 //negativeForce = negativeForce,
-                currentSpeed = startSpeed, rotateSpeed = rotateSpeed,
+                //currentSpeed = startSpeed,
+                rotateSpeed = rotateSpeed,
                 snapRotation = snapRotation,
                 dampTime = dampTime,
                 move2d = move2d,

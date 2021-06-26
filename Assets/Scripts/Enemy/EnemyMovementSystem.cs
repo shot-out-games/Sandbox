@@ -67,7 +67,7 @@ public class EnemyMovementSystem : SystemBase
                     enemyState = new EnemyStateComponent() { MoveState = MoveState };
                     //translation.Value.z = 0;
                 }
-                translation.Value.y = 0;//only if no jumping enemy temp
+                //translation.Value.y = 0;//only if no jumping enemy temp
             }
         ).Run();
 
