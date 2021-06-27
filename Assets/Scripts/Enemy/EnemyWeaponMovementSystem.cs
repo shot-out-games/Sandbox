@@ -25,6 +25,7 @@ public class EnemyWeaponMovementSystem :  SystemBase
                 if (dead.isDead) return;
                 if (enemyMovementComponent.enabled == false) return;
 
+
                 if (enemyMove.target != null)
                 {
                     enemyMove.speedMultiple = 1;
@@ -64,6 +65,7 @@ public class EnemyWeaponMovementSystem :  SystemBase
                     }
                     else if (dist >= chaseRange && role == EnemyRoles.Patrol)
                     {
+                        //Debug.Log("zone 1 weapon");
                         animator.SetInteger("Zone", 1);
                         MoveState = MoveStates.Patrol;
                         enemyMove.Patrol();

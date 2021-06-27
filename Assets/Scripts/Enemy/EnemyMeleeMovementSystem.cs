@@ -72,6 +72,7 @@ public class EnemyMeleeMovementSystem : SystemBase
                 {
                     MoveState = MoveStates.Default;
                     animator.SetInteger("Zone", 3);
+                    Debug.Log("zone 1 strike move");
                     enemyMove.SetDestination();
                     enemyMove.FacePlayer();
 
@@ -87,6 +88,7 @@ public class EnemyMeleeMovementSystem : SystemBase
                 else if (dist < enemyMove.combatRangeDistance)
                 {
                     MoveState = MoveStates.Default;
+                    Debug.Log("zone 1 melee move");
                     animator.SetInteger("Zone", 2);
                     enemyMove.SetDestination();
                     enemyMove.FacePlayer();
@@ -96,6 +98,7 @@ public class EnemyMeleeMovementSystem : SystemBase
                 {
                     animator.GetComponent<EnemyMelee>().currentStrikeDistanceAdjustment = 1;//reset when out of strike range
                     MoveState = MoveStates.Chase;
+                    Debug.Log("zone 1 melee");
                     animator.SetInteger("Zone", 1);
                     enemyMove.SetDestination();
                     enemyMove.FacePlayer();

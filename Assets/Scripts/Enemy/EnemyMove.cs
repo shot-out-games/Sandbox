@@ -114,8 +114,8 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     private int currentWayPointIndex = 0;
     [SerializeField]
     private WayPoint currentWayPoint;
-    [SerializeField]
-    private bool isCurrentWayPointJump;
+    //[SerializeField]
+    //private bool isCurrentWayPointJump;
 
     public bool randomWayPoints = false;
     public EnemyRoles enemyRole;
@@ -199,6 +199,9 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     public void SetWaypoints(bool _randomWayPoints)
     {
+        //waypoint 0 is initial so no matter where located travels there then never used again
+        //waypoint 1 is where it goes next then cycles to last waypoint back to waypoint 1
+
         for (int i = 0; i < wayPoints.Count; i++)
         {
             WayPoint wayPoint = wayPoints[i];
@@ -215,28 +218,44 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         if (wayPoints.Count == 0 | agent.enabled == false)
             return;
 
-        float distance = isCurrentWayPointJump ? .0003f : .5f;
+        bool isCurrentWayPointJump = wayPoints[currentWayPointIndex].action == WayPointAction.Jump;
+        float distance = isCurrentWayPointJump ? .5f : .5f;
+        if (currentWayPointIndex == 0) distance = math.INFINITY;
 
-
-        if (agent.pathPending == false && agent.remainingDistance < distance)
+        if (agent.pathPending == false && agent.remainingDistance <= distance && isCurrentWayPointJump == false)
         {
             anim.SetInteger("JumpState", 0);
             agent.destination = wayPoints[currentWayPointIndex].targetPosition;
-            isCurrentWayPointJump = wayPoints[currentWayPointIndex].action == WayPointAction.Jump;
 
-            if (isCurrentWayPointJump)
-            {
-                anim.SetInteger("JumpState", 1);
-                normalizedTime = 0.0f;
-                startPos = agent.transform.position;
-                endPos = wayPoints[currentWayPointIndex].targetPosition + Vector3.up * agent.baseOffset;
-            }
+            //if (isCurrentWayPointJump)
+            //{
+            //  anim.SetInteger("JumpState", 1);
+            //                normalizedTime = 0.0f;
+            //startPos = agent.transform.position;
+            //endPos = wayPoints[currentWayPointIndex].targetPosition + Vector3.up * agent.baseOffset;
+            //}
+            //else
+            //{
+            currentWayPointIndex++;
+            if (currentWayPointIndex > wayPoints.Count - 1) currentWayPointIndex = 1;
+
+            //}
 
 
-            currentWayPointIndex = (currentWayPointIndex + 1) % wayPoints.Count;
+            // currentWayPointIndex = (currentWayPointIndex + 1) % wayPoints.Count;
 
 
         }
+
+
+        if (agent.pathPending == false && agent.remainingDistance <= distance && isCurrentWayPointJump == true)
+        {
+            anim.SetInteger("JumpState", 1);
+            normalizedTime = 0.0f;
+            startPos = agent.transform.position;
+            endPos = wayPoints[currentWayPointIndex].targetPosition + Vector3.up * agent.baseOffset;
+        }
+
 
 
         if (isCurrentWayPointJump == false)
@@ -251,6 +270,8 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     void Curve()
     {
 
+
+
         if (normalizedTime < 1.0f)
         {
             float yOffset = curve.Evaluate(normalizedTime);
@@ -261,8 +282,11 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         }
         else
         {
-            isCurrentWayPointJump = false;
+            //isCurrentWayPointJump = false;
             anim.SetInteger("JumpState", 0);
+            currentWayPointIndex++;
+            if (currentWayPointIndex > wayPoints.Count - 1) currentWayPointIndex = 1;
+
 
         }
 
@@ -299,8 +323,8 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     public void FacePlayer()
     {
-        if(!agent) return;
-        
+        if (!agent) return;
+
 
         if (!agent.enabled) return;
 
@@ -332,6 +356,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         if (agent.enabled)
         {
+            Debug.Log("pos " + target.position);
             Vector3 nextPosition = target.position;
             agent.destination = nextPosition;
             AnimationMovement();
@@ -347,6 +372,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     {
 
         if (target == null || anim == null) return;
+
 
 
         if (agent)
@@ -392,6 +418,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     {
 
         if (agent == null) return;
+        bool isCurrentWayPointJump = wayPoints[currentWayPointIndex].action == WayPointAction.Jump;
         if (isCurrentWayPointJump == false)
         {
             agent.updatePosition = true;
@@ -399,10 +426,9 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         }
         else if (isCurrentWayPointJump)
         {
+            agent.updatePosition = false;
             Curve();
         }
-
-
 
     }
 

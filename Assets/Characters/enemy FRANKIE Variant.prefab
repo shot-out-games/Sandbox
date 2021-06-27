@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 1749859791491915913, guid: 0c6ed5876210c3e4aad3db559cbab03e,
         type: 3}
       propertyPath: m_Name
-      value: enemy FRANKIE
+      value: enemy FRANKIE Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1749859791491915930, guid: 0c6ed5876210c3e4aad3db559cbab03e,
         type: 3}
