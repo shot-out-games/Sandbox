@@ -143,11 +143,14 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField]
     float duration = 3.0f;
     float normalizedTime = 0.0f;
+    [SerializeField]
     Vector3 startPos;
+    [SerializeField]
     Vector3 endPos;
-
+    //bool jumpTrigger;
+    //bool wayPointComplete;
     public AnimationCurve curve = new AnimationCurve();
-
+    bool jumpLanded;
 
     void Init()
     {
@@ -209,6 +212,24 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             wayPoint.action = wayPoints[i].action;
             wayPoints[i] = wayPoint;
         }
+        if (agent == null || agent.enabled == false) return;
+
+        startPos = agent.transform.position;
+
+
+        agent.destination = wayPoints[0].targetPosition;//goes to first waypoint just once at start;
+
+        currentWayPointIndex = 0;
+        bool isCurrentWayPointJump = wayPoints[currentWayPointIndex].action == WayPointAction.Jump;
+        if (isCurrentWayPointJump == true)
+        {
+            anim.SetInteger("JumpState", 1);
+            normalizedTime = 0.0f;
+            endPos = wayPoints[0].targetPosition + Vector3.up * agent.baseOffset;
+        }
+
+        currentWayPointIndex = 0;
+
 
     }
 
@@ -219,41 +240,61 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             return;
 
         bool isCurrentWayPointJump = wayPoints[currentWayPointIndex].action == WayPointAction.Jump;
-        float distance = isCurrentWayPointJump ? .5f : .5f;
-        if (currentWayPointIndex == 0) distance = math.INFINITY;
+        //float distance = .5f;
+        float distance = isCurrentWayPointJump ? .003f : .003f;
+
+        //if (jumpTrigger == true )
+        //{
+        //  anim.SetInteger("JumpState", 1);
+        //            normalizedTime = 0.0f;
+        //startPos = agent.transform.position;
+        //endPos = wayPoints[currentWayPointIndex].targetPosition + Vector3.up * agent.baseOffset;
+        //return;
+        //}
+
+
+        //if (currentWayPointIndex == 0) distance = math.INFINITY;
 
         if (agent.pathPending == false && agent.remainingDistance <= distance && isCurrentWayPointJump == false)
         {
-            anim.SetInteger("JumpState", 0);
-            agent.destination = wayPoints[currentWayPointIndex].targetPosition;
-
-            //if (isCurrentWayPointJump)
-            //{
-            //  anim.SetInteger("JumpState", 1);
-            //                normalizedTime = 0.0f;
-            //startPos = agent.transform.position;
-            //endPos = wayPoints[currentWayPointIndex].targetPosition + Vector3.up * agent.baseOffset;
-            //}
-            //else
-            //{
+            //  jumpTrigger = false;
+            //Debug.Log("reached  " + agent.transform.position + " " + currentWayPointIndex);
             currentWayPointIndex++;
             if (currentWayPointIndex > wayPoints.Count - 1) currentWayPointIndex = 1;
-
-            //}
-
-
-            // currentWayPointIndex = (currentWayPointIndex + 1) % wayPoints.Count;
-
+            agent.destination = wayPoints[currentWayPointIndex].targetPosition;
+            if (wayPoints[currentWayPointIndex].action == WayPointAction.Jump)
+            {
+                startPos = agent.transform.position;
+                anim.SetInteger("JumpState", 1);
+                normalizedTime = 0.0f;
+                endPos = wayPoints[currentWayPointIndex].targetPosition + Vector3.up * agent.baseOffset;
+            }
 
         }
-
-
-        if (agent.pathPending == false && agent.remainingDistance <= distance && isCurrentWayPointJump == true)
+        else if (agent.pathPending == false && agent.remainingDistance <= distance && isCurrentWayPointJump == true 
+            && jumpLanded == true)
         {
-            anim.SetInteger("JumpState", 1);
-            normalizedTime = 0.0f;
-            startPos = agent.transform.position;
-            endPos = wayPoints[currentWayPointIndex].targetPosition + Vector3.up * agent.baseOffset;
+            //Debug.Log("reached  " + agent.transform.position + " " + currentWayPointIndex);
+            anim.SetInteger("JumpState", 0);
+
+            jumpLanded = false;
+            currentWayPointIndex++;
+            if (currentWayPointIndex > wayPoints.Count - 1) currentWayPointIndex = 1;
+            agent.destination = wayPoints[currentWayPointIndex].targetPosition;
+
+            if (wayPoints[currentWayPointIndex].action == WayPointAction.Jump)
+            {
+                startPos = agent.transform.position;
+                //Debug.Log("InJump Start " + agent.transform.position);
+                anim.SetInteger("JumpState", 1);
+                normalizedTime = 0.0f;
+                endPos = wayPoints[currentWayPointIndex].targetPosition + Vector3.up * agent.baseOffset;
+            }
+
+
+            //agent.destination = wayPoints[currentWayPointIndex].targetPosition;
+            //if (wayPoints[currentWayPointIndex].action == WayPointAction.Jump) jumpTrigger = true;//start a new jump
+
         }
 
 
@@ -274,6 +315,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         if (normalizedTime < 1.0f)
         {
+            //jumpTrigger = false;
             float yOffset = curve.Evaluate(normalizedTime);
             agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
             normalizedTime += Time.deltaTime / duration;
@@ -284,9 +326,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         {
             //isCurrentWayPointJump = false;
             anim.SetInteger("JumpState", 0);
-            currentWayPointIndex++;
-            if (currentWayPointIndex > wayPoints.Count - 1) currentWayPointIndex = 1;
-
+            jumpLanded = true;
 
         }
 
@@ -356,7 +396,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         if (agent.enabled)
         {
-            Debug.Log("pos " + target.position);
+            //Debug.Log("pos " + target.position);
             Vector3 nextPosition = target.position;
             agent.destination = nextPosition;
             AnimationMovement();

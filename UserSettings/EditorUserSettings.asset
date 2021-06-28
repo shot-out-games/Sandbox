@@ -12,34 +12,34 @@ EditorUserSettings:
       value: 183b144645154b790c0d07271e271d4a564654406c6866706f0d1420f2ec3521c1e83bf9e8343a322d36f62c017c5b7ff40b0518f36117
       flags: 0
     RecentlyUsedScenePath-0:
-      value: 22424703114646680e0b0227036c55111b590d24253c3f
-      flags: 0
-    RecentlyUsedScenePath-1:
       value: 22424703114646680e0b0227036c511f185708262d3123226d2a1532f0e1372ce7f525a7f234362820
       flags: 0
-    RecentlyUsedScenePath-2:
+    RecentlyUsedScenePath-1:
       value: 22424703114646680e0b0227036c58111b12563f22213229
       flags: 0
-    RecentlyUsedScenePath-3:
+    RecentlyUsedScenePath-2:
       value: 22424703114646680e0b0227036c5314580216233831
       flags: 0
-    RecentlyUsedScenePath-4:
+    RecentlyUsedScenePath-3:
       value: 22424703114646680e0b0227036c531500121478623d28393930
       flags: 0
-    RecentlyUsedScenePath-5:
+    RecentlyUsedScenePath-4:
       value: 22424703114646680e0b0227036c53150012147b623d28393930
       flags: 0
-    RecentlyUsedScenePath-6:
+    RecentlyUsedScenePath-5:
       value: 22424703114646680e0b0227036c48190645563f22213229
       flags: 0
-    RecentlyUsedScenePath-7:
+    RecentlyUsedScenePath-6:
       value: 22424703114646680e0b0227036c731f17131d38623d28393930
       flags: 0
-    RecentlyUsedScenePath-8:
+    RecentlyUsedScenePath-7:
       value: 22424703114646680e0b0227036c72151802563f22213229
       flags: 0
-    RecentlyUsedScenePath-9:
+    RecentlyUsedScenePath-8:
       value: 22424703114646680e0b0227036c481906590d24253c3f
+      flags: 0
+    RecentlyUsedScenePath-9:
+      value: 0007555403055a0e0f575d751376084442164b787a702462282a1b64e6b4673d
       flags: 0
     UnityEditor.ShaderGraph.Blackboard:
       value: 18135939215a0a5004000b0e15254b524c030a3f2964643d120d1230e9e93a3fd6e826abbd2e2d293c4ead313b08042de6030a0afa240c0d020be94c4ba75e435d8715fa32c70d15d11612dacc11fee5d3c5d1fe9ab1b0968786f9abada9bbaaa6a0f3a9f2fcae8ce8a2c182a6d8c2869bd1f5dc8e9c9b9fea9c819ffcca90898d86d598899ac5
@@ -57,7 +57,7 @@ EditorUserSettings:
       value: 53
       flags: 0
     unity-properties__ui-persistent-state:
-      value: 183b144645154b7d0202082d05376c0417031d6876681d5a6d695d73a2a07478f98d76a9a77a7f7c7942af7c447e4314f7134b51b6465b5e495bac5f43ac454b5daf58855a885f5c8b595c8e8d5d93d5d4dac1ef9ab1a7cccccaa598b4b0aeb8b5b1e5bbb7e49680eaefbef1ef8287dfab8af7848c868987fa929193fe91f9d6c094df9694d6818f89daf4d4f7c5f0e8f9e1e4d6d5e5d9ebdddedcf220f199616a726df8e6f8a292a8bc07c33230c4c83237c6643be0cfccc9d23fccd4ce8ae502dad9db06dbdadb21de0dde2364657a230f28183b013b3c0c3d350708396d196566643a683b37686e6f700206767f44504477117a2c5e453f550e417f121714111a1a18361619174a6261634e384863696655666957686b695d705f19e52e76b97179b7bc61b96cb8bebf57a14f55b0b6b7b84a4c4846504d49bd51f4c1180dc7854c89d3080a1973a28f5ca45ea15f92f783ab96abaad6bd849daeb19fb2c3f0a2f1abfbbcf6f3a5cae8afb9f8f399f58d89a0a5
+      value: 183b144645154b7d0202082d05376c0417031d6876681d5a6d695d73a2a07478f98d76a9a77a7f7c7942af7c447e4314f7134b51b6465b5e495bac5f43ac454b5daf58855a885f5c8b595c8e8d5d93d5d4dac1ef9ab1a7cccccaa598b4b0aeb8b5b1e5bbb7e49680eaefbef1ef8287dfab8af7848c868987fa929193fe91f9d6c094df9694d6818f89daf4d4f7c5f0e8f9e1e4d6d5e5d9ebdddedcf220f199616a726df8e6f8a292a8bc07c33230c4c83237c6643be0cfccc9d23fccd4ce8ae502dad9db06dbdadb21de0dde2364657a230f28183b013b3c0c3d350708396d196566643a683b37686e6f700206767f44504477117a2c5e453f550e417f121714111a1a18361619174a6261634e384863696655666957686b695d705f19e52e76b97179b7bc61b96cb8bebf57a14f55b0b6b7b84a4c4846504d49bd51f4c1180dc7854c89d3080a1973a28f5ca45ea15f92f7a58196abaaabb1ae9daeeab5b0b3b1e5b8e5bae8bfbcebb9be85a8e4f399f5fbe39aec9d9fedecefd69ebe908e989591c59bcac89ce0cacde89083b7a2e6fbea83b6b9a3c3e7daf2f1f3def3f2aed3f625f6f95af4d1f92dc02dc04086837a8f85627c8a77b8697f689702c9cf7b7b2d55
       flags: 0
     vcSharedLogLevel:
       value: 0d5e400f0650
@@ -67,9 +67,11 @@ EditorUserSettings:
   m_VCDebugCmd: 0
   m_VCDebugOut: 0
   m_SemanticMergeMode: 2
+  m_DesiredImportWorkerCount: 0
   m_VCShowFailedCheckout: 1
   m_VCOverwriteFailedCheckoutAssets: 1
   m_VCProjectOverlayIcons: 1
   m_VCHierarchyOverlayIcons: 1
   m_VCOtherOverlayIcons: 1
   m_VCAllowAsyncUpdate: 0
+  m_ArtifactGarbageCollection: 1

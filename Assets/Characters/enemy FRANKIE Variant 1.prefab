@@ -108,6 +108,16 @@ PrefabInstance:
       propertyPath: m_AgentTypeID
       value: -1372625422
       objectReference: {fileID: 0}
+    - target: {fileID: 2381019530032338460, guid: 0c6ed5876210c3e4aad3db559cbab03e,
+        type: 3}
+      propertyPath: m_Acceleration
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 2381019530032338460, guid: 0c6ed5876210c3e4aad3db559cbab03e,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 360
+      objectReference: {fileID: 0}
     - target: {fileID: 2906216246465395444, guid: 0c6ed5876210c3e4aad3db559cbab03e,
         type: 3}
       propertyPath: switchUp
@@ -211,7 +221,7 @@ PrefabInstance:
     - target: {fileID: 8462860532054484033, guid: 0c6ed5876210c3e4aad3db559cbab03e,
         type: 3}
       propertyPath: wayPoints.Array.data[1].action
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8462860532054484033, guid: 0c6ed5876210c3e4aad3db559cbab03e,
         type: 3}
@@ -236,7 +246,7 @@ PrefabInstance:
     - target: {fileID: 8462860532054484033, guid: 0c6ed5876210c3e4aad3db559cbab03e,
         type: 3}
       propertyPath: wayPoints.Array.data[0].offset.x
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8462860532054484033, guid: 0c6ed5876210c3e4aad3db559cbab03e,
         type: 3}
@@ -246,12 +256,12 @@ PrefabInstance:
     - target: {fileID: 8462860532054484033, guid: 0c6ed5876210c3e4aad3db559cbab03e,
         type: 3}
       propertyPath: wayPoints.Array.data[1].offset.x
-      value: -6
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 8462860532054484033, guid: 0c6ed5876210c3e4aad3db559cbab03e,
         type: 3}
       propertyPath: wayPoints.Array.data[2].offset.x
-      value: -12
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 8462860532054484033, guid: 0c6ed5876210c3e4aad3db559cbab03e,
         type: 3}
