@@ -59,6 +59,7 @@ public class EnemyMovementSystem : SystemBase
                     }
                     else if (dist >= chaseRange && role == EnemyRoles.Patrol)
                     {
+                        Debug.Log("patrol");
                         animator.SetInteger("Zone", 1);
                         MoveState = MoveStates.Patrol;
                         enemyMove.Patrol();
