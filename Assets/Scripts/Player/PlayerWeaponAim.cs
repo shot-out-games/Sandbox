@@ -230,8 +230,13 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
             Vector3 v = r.GetPoint(d);
             return v;
         }
-
-        throw new UnityException("Mouse position ray not intersecting launcher plane");
+        else
+        {
+            Vector3 v = Vector3.forward; 
+            Debug.Log("ray " + v);
+            return v;
+        }
+        //throw new UnityException("Mouse position ray not intersecting launcher plane");
     }
 
     Vector3 GetMousePositionThirdPersonPlane()

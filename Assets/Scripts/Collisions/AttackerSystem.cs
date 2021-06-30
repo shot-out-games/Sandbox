@@ -48,6 +48,8 @@ public class AttackerSystem : SystemBase
 
 
 
+        #region MyRegion
+
         //        Entities.WithoutBurst().ForEach(
         //        //(HealthBar healthBar, DynamicBuffer<CollisionComponent> collisionComponent,
         //        (
@@ -300,6 +302,8 @@ public class AttackerSystem : SystemBase
 
         //}
 
+        #endregion
+
 
 
 
@@ -328,10 +332,10 @@ public class AttackerSystem : SystemBase
             Entity entityA = collision_entity_a;
             Entity entityB = collision_entity_b;
 
-            bool playerA = EntityManager.HasComponent(collision_entity_a, typeof(PlayerComponent));
-            bool playerB = EntityManager.HasComponent(collision_entity_b, typeof(PlayerComponent));
-            bool enemyA = EntityManager.HasComponent(collision_entity_a, typeof(EnemyComponent));
-            bool enemyB = EntityManager.HasComponent(collision_entity_b, typeof(EnemyComponent));
+            bool playerA = HasComponent<PlayerComponent>(collision_entity_a);
+            bool playerB = HasComponent<PlayerComponent>(collision_entity_b);
+            bool enemyA = HasComponent<EnemyComponent>(collision_entity_a);
+            bool enemyB = HasComponent<EnemyComponent>(collision_entity_b);
 
             bool check = false;
 
@@ -341,18 +345,14 @@ public class AttackerSystem : SystemBase
             if (check == true)
             {
 
-                var trigger_a = EntityManager.GetComponentData<CheckedComponent>(entityA);
+                var trigger_a = GetComponent<CheckedComponent>(entityA);
 
-                bool triggerChecked_a = trigger_a.collisionChecked;
                 float hitPower = 1;
                 float WeaponPower = 1;
                 float damage = hitPower * hw;
 
                 ecb.AddComponent<DamageComponent>(entityB,
                     new DamageComponent { DamageLanded = 0, DamageReceived = damage });
-
-
-                bool isDead = EntityManager.GetComponentData<DeadComponent>(entityB).isDead;
 
 
                 trigger_a.collisionChecked = true;
@@ -370,7 +370,7 @@ public class AttackerSystem : SystemBase
                 Entity shooter = Entity.Null;
                 //if (EntityManager.HasComponent<AmmoComponent>(collision_entity_b)) //ammo entity not character if true
                 //{
-                shooter = EntityManager.GetComponentData<TriggerComponent>(collision_entity_b)
+                shooter = GetComponent<TriggerComponent>(collision_entity_b)
                     .ParentEntity;
                 //}
 
@@ -382,21 +382,21 @@ public class AttackerSystem : SystemBase
 
                 if (shooter != Entity.Null)
                 {
-                    bool isEnemyShooter = (EntityManager.HasComponent(shooter, typeof(EnemyComponent)));
-                    Entity target = EntityManager.GetComponentData<TriggerComponent>(collision_entity_a)
+                    bool isEnemyShooter = HasComponent<EnemyComponent>(shooter);
+                    Entity target = GetComponent<TriggerComponent>(collision_entity_a)
                         .ParentEntity;
-                    bool isEnemyTarget = (EntityManager.HasComponent(target, typeof(EnemyComponent)));
+                    bool isEnemyTarget = HasComponent<EnemyComponent>(target);
 
                     //Debug.Log("es " + isEnemyShooter + " et " + isEnemyTarget);
 
 
                     AmmoComponent ammo =
-                        EntityManager.GetComponentData<AmmoComponent>(collision_entity_b);
+                        GetComponent<AmmoComponent>(collision_entity_b);
 
                     AmmoDataComponent ammoData =
-                        EntityManager.GetComponentData<AmmoDataComponent>(collision_entity_b);
+                        GetComponent<AmmoDataComponent>(collision_entity_b);
 
-                    float damage = EntityManager.GetComponentData<GunComponent>(shooter).gameDamage;
+                    float damage = GetComponent<GunComponent>(shooter).gameDamage;
                     //Debug.Log("damage " + damage);
                     ammo.AmmoDead = true;
 
@@ -421,7 +421,7 @@ public class AttackerSystem : SystemBase
                     }
 
                     if (HasComponent<DeadComponent>(collision_entity_a) == false ||
-                        EntityManager.GetComponentData<DeadComponent>(collision_entity_a).isDying)
+                        GetComponent<DeadComponent>(collision_entity_a).isDying)
                     {
                         damage = 0;
                     }
@@ -437,7 +437,7 @@ public class AttackerSystem : SystemBase
                     if (HasComponent<ScoreComponent>(shooter) && damage != 0)
                     {
 
-                        var scoreComponent = EntityManager.GetComponentData<ScoreComponent>(shooter);
+                        var scoreComponent = GetComponent<ScoreComponent>(shooter);
                         scoreComponent.addBonus = 0;
                         //for gmtk bonus for charged (blocked)
                         if (ammo.Charged == true && isEnemyShooter == false && isEnemyTarget == true)
@@ -450,7 +450,7 @@ public class AttackerSystem : SystemBase
                         scoreComponent.scoringAmmoEntity = ammo.ammoEntity;
                         scoreComponent.pointsScored = true;
                         scoreComponent.scoredAgainstEntity = collision_entity_a;
-                        EntityManager.SetComponentData(shooter, scoreComponent);
+                        SetComponent(shooter, scoreComponent);
                     }
 
                     ecb.SetComponent<AmmoComponent>(collision_entity_b, ammo);

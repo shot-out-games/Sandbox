@@ -50,6 +50,7 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
         agent = GetComponent<NavMeshAgent>();
 
         ik = GetComponent<FullBodyBipedIK>();
+        if(!movesInspector) return;
 
         for (int i = 0; i < movesInspector.Moves.Count; i++)
         {
@@ -127,11 +128,11 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
     public void StartAimIK()
     {
-        if (moveUsing.usingAim)
+        if (moveUsing.usingAim && aim)
         {
             aim.enabled = true;
         }
-        if (moveUsing.usingLimb)
+        if (moveUsing.usingLimb && limb)
         {
             limb.enabled = true;
         }
@@ -139,11 +140,11 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
     public void StopAimIK()
     {
-        if (moveUsing.usingAim)
+        if (moveUsing.usingAim && aim)
         {
             aim.enabled = false;
         }
-        if (moveUsing.usingLimb)
+        if (moveUsing.usingLimb && limb)
         {
             limb.enabled = false;
         }
@@ -152,7 +153,7 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
     public void StartIK()
     {
-        if (moveUsing.usingFbb)
+        if (moveUsing.usingFbb && ik)
         {
             ik.enabled = true;
         }
@@ -162,7 +163,7 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
     public void StopIK()
     {
-        if (moveUsing.usingFbb)
+        if (moveUsing.usingFbb && ik)
         {
 
             ik.enabled = false;

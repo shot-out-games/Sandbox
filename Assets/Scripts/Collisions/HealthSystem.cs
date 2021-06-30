@@ -35,7 +35,7 @@ public class HealthSystem : SystemBase
                 healthComponent.ShowDamage = false;
                 if (EntityManager.HasComponent(entity, typeof(EnemyComponent)))
                 {
-                    if (EntityManager.GetComponentData<EnemyComponent>(entity).invincible == true)
+                    if (GetComponent<EnemyComponent>(entity).invincible == true)
                     {
                         damageComponent.DamageReceived = 0;
                     }

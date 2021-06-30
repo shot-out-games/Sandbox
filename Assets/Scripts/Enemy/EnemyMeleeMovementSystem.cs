@@ -1,7 +1,9 @@
 ﻿using Unity.Entities;
 using UnityEngine;
 using Unity.Jobs;
+using Unity.Mathematics;
 using Unity.Transforms;
+using Random = UnityEngine.Random;
 
 public class EnemyMeleeMovementSystem : SystemBase
 {
@@ -51,7 +53,7 @@ public class EnemyMeleeMovementSystem : SystemBase
                 }
                 else if (dist >= backupZoneClose && dist <= backupZoneFar)
                 {
-                    enemyMove.speedMultiple = (dist - backupZoneClose) / (backupZoneFar - backupZoneClose);
+                    enemyMove.speedMultiple = math.sqrt( (dist - backupZoneClose) / (backupZoneFar - backupZoneClose));
                     MoveState = MoveStates.Default;
                     int n = Random.Range(0, 10);
                     if (enemyMove.backup == true && n <= 2)

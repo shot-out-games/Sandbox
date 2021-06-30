@@ -148,6 +148,9 @@ public class CollisionSystem : SystemBase
             bool meleeB = (type_a == (int)TriggerType.Base || type_a == (int)TriggerType.Head) &&
     (type_b == (int)TriggerType.Melee);//doubt this will be needed
 
+            Debug.Log("mel a " + meleeA);
+            Debug.Log("mel b " + meleeB);
+
 
 
             punchingA = (type_b == (int)TriggerType.Base || type_b == (int)TriggerType.Head) &&
@@ -227,35 +230,35 @@ public class CollisionSystem : SystemBase
                     };
                 CommandBuffer.AddComponent(triggerComponent_b.ParentEntity, collisionComponent);
             }
-            //else if (punchingA || ammoB || meleeA || alwaysDamageB)
-            //{
-            //    //Debug.Log("c b " + ch_b + " c a " + ch_a);
-            //    CollisionComponent collisionComponent =
-            //        new CollisionComponent()
-            //        {
-            //            Part_entity = triggerComponent_a.Type,
-            //            Part_other_entity = triggerComponent_b.Type,
-            //            Character_entity = ch_a,
-            //            Character_other_entity = ch_b,
-            //            isMelee = meleeA
-            //        };
-            //    CommandBuffer.AddComponent(ch_a, collisionComponent);
-            //}
-            //else if (punchingB || ammoA || meleeB || alwaysDamageA)
-            //{
+            else if (punchingA || ammoB || meleeA || alwaysDamageB)
+            {
+                //Debug.Log("c b " + ch_b + " c a " + ch_a);
+                CollisionComponent collisionComponent =
+                    new CollisionComponent()
+                    {
+                        Part_entity = triggerComponent_a.Type,
+                        Part_other_entity = triggerComponent_b.Type,
+                        Character_entity = ch_a,
+                        Character_other_entity = ch_b,
+                        isMelee = meleeA
+                    };
+                CommandBuffer.AddComponent(ch_a, collisionComponent);
+            }
+            else if (punchingB || ammoA || meleeB || alwaysDamageA)
+            {
 
-            //    CollisionComponent collisionComponent =
-            //        new CollisionComponent()
-            //        {
-            //            Part_entity = triggerComponent_b.Type,
-            //            Part_other_entity = triggerComponent_a.Type,
-            //            Character_entity = ch_b,
-            //            Character_other_entity = ch_a,
-            //            isMelee = meleeB
+                CollisionComponent collisionComponent =
+                    new CollisionComponent()
+                    {
+                        Part_entity = triggerComponent_b.Type,
+                        Part_other_entity = triggerComponent_a.Type,
+                        Character_entity = ch_b,
+                        Character_other_entity = ch_a,
+                        isMelee = meleeB
 
-            //        };
-            //    CommandBuffer.AddComponent(ch_b, collisionComponent);
-            //}
+                    };
+                CommandBuffer.AddComponent(ch_b, collisionComponent);
+            }
 
         }
     }

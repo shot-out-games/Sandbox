@@ -458,7 +458,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             }
 
             velz = velz * speedMultiple;
-            Debug.Log("velz " + velz);
+            //Debug.Log("speed x " + speedMultiple);
             anim.SetFloat("velz", velz);
         }
 
