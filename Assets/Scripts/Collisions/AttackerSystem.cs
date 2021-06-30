@@ -346,17 +346,22 @@ public class AttackerSystem : SystemBase
             {
 
                 var trigger_a = GetComponent<CheckedComponent>(entityA);
+                if (trigger_a.collisionChecked == false)
+                {
 
-                float hitPower = 1;
-                float WeaponPower = 1;
-                float damage = hitPower * hw;
+                    float hitPower = 1;
+                    float WeaponPower = 1;
+                    float damage = hitPower * hw;
 
-                ecb.AddComponent<DamageComponent>(entityB,
-                    new DamageComponent { DamageLanded = 0, DamageReceived = damage });
+                    ecb.AddComponent<DamageComponent>(entityB,
+                        new DamageComponent { DamageLanded = 0, DamageReceived = damage });
+
+                    Debug.Log("damage " + damage);
 
 
-                trigger_a.collisionChecked = true;
-                ecb.SetComponent<CheckedComponent>(entityA, trigger_a);
+                    trigger_a.collisionChecked = true;
+                    ecb.SetComponent<CheckedComponent>(entityA, trigger_a);
+                }
 
 
             }

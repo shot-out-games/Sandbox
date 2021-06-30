@@ -54,14 +54,46 @@ public struct PowerTriggerComponent : IComponentData
 
 public class CollisionSystem : SystemBase
 {
-    EndSimulationEntityCommandBufferSystem m_EntityCommandBufferSystem;
+    EndSimulationEntityCommandBufferSystem m_ecbSystem;
+    BuildPhysicsWorld buildPhysicsWorldSystem;
+    StepPhysicsWorld stepPhysicsWorld;
+    EndFramePhysicsSystem endFramePhysicsSystem;
+
     protected override void OnCreate()
     {
-        m_EntityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        m_ecbSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         buildPhysicsWorldSystem = World.GetOrCreateSystem<BuildPhysicsWorld>();
         stepPhysicsWorld = World.GetOrCreateSystem<StepPhysicsWorld>();
 
     }
+
+
+    protected override void OnUpdate()
+    {
+
+        var inputDeps = new JobHandle();
+
+        inputDeps = JobHandle.CombineDependencies(inputDeps, buildPhysicsWorldSystem.GetOutputDependency());
+        inputDeps = JobHandle.CombineDependencies(inputDeps, stepPhysicsWorld.GetOutputDependency());
+        var physicsWorld = buildPhysicsWorldSystem.PhysicsWorld;
+        var collisionJob = new CollisionJob
+        {
+            physicsWorld = physicsWorld,
+            ecb = m_ecbSystem.CreateCommandBuffer(),
+            triggerGroup = GetComponentDataFromEntity<TriggerComponent>(true),
+            healthGroup = GetComponentDataFromEntity<HealthComponent>(true),
+            ammoGroup = GetComponentDataFromEntity<AmmoComponent>(false)
+        };
+        JobHandle collisionHandle = collisionJob.Schedule(stepPhysicsWorld.Simulation, ref physicsWorld, inputDeps);
+        m_ecbSystem.AddJobHandleForProducer(this.Dependency);
+
+        //m_EntityCommandBufferSystem.AddJobHandleForProducer(collisionHandle);
+        collisionHandle.Complete();
+
+
+
+        //return collisionHandle;
+    } // OnUpdate
 
 
     struct CollisionJob : ICollisionEventsJob
@@ -70,7 +102,7 @@ public class CollisionSystem : SystemBase
         [ReadOnly] public ComponentDataFromEntity<TriggerComponent> triggerGroup;
         [ReadOnly] public ComponentDataFromEntity<HealthComponent> healthGroup;
         public ComponentDataFromEntity<AmmoComponent> ammoGroup;
-        public EntityCommandBuffer CommandBuffer;
+        public EntityCommandBuffer ecb;
         public void Execute(CollisionEvent ev) // this is never called
         {
             Entity a = ev.EntityA;
@@ -148,8 +180,6 @@ public class CollisionSystem : SystemBase
             bool meleeB = (type_a == (int)TriggerType.Base || type_a == (int)TriggerType.Head) &&
     (type_b == (int)TriggerType.Melee);//doubt this will be needed
 
-            Debug.Log("mel a " + meleeA);
-            Debug.Log("mel b " + meleeB);
 
 
 
@@ -191,7 +221,7 @@ public class CollisionSystem : SystemBase
             {
                 AmmoComponent ammoComponent = ammoGroup[triggerComponent_b.Entity];
                 ammoComponent.Charged = true;
-                Debug.Log("charged b");
+                //Debug.Log("charged b");
                 ammoGroup[triggerComponent_b.Entity] = ammoComponent;
             }
 
@@ -212,7 +242,7 @@ public class CollisionSystem : SystemBase
                         Character_other_entity = triggerComponent_a.Entity,
                         isMelee = meleeA
                     };
-                CommandBuffer.AddComponent(triggerComponent_a.ParentEntity, collisionComponent);
+                ecb.AddComponent(triggerComponent_a.ParentEntity, collisionComponent);
             }
             if (ammoB)
             {
@@ -228,7 +258,7 @@ public class CollisionSystem : SystemBase
                         isMelee = meleeB
 
                     };
-                CommandBuffer.AddComponent(triggerComponent_b.ParentEntity, collisionComponent);
+                ecb.AddComponent(triggerComponent_b.ParentEntity, collisionComponent);
             }
             else if (punchingA || ammoB || meleeA || alwaysDamageB)
             {
@@ -242,7 +272,7 @@ public class CollisionSystem : SystemBase
                         Character_other_entity = ch_b,
                         isMelee = meleeA
                     };
-                CommandBuffer.AddComponent(ch_a, collisionComponent);
+                ecb.AddComponent(ch_a, collisionComponent);
             }
             else if (punchingB || ammoA || meleeB || alwaysDamageA)
             {
@@ -257,38 +287,15 @@ public class CollisionSystem : SystemBase
                         isMelee = meleeB
 
                     };
-                CommandBuffer.AddComponent(ch_b, collisionComponent);
+                ecb.AddComponent(ch_b, collisionComponent);
             }
 
         }
     }
 
 
-    BuildPhysicsWorld buildPhysicsWorldSystem;
-    StepPhysicsWorld stepPhysicsWorld;
-    EndFramePhysicsSystem endFramePhysicsSystem;
 
 
-    protected override void OnUpdate()
-    {
-
-        var inputDeps = new JobHandle();
-
-        inputDeps = JobHandle.CombineDependencies(inputDeps, buildPhysicsWorldSystem.GetOutputDependency());
-        inputDeps = JobHandle.CombineDependencies(inputDeps, stepPhysicsWorld.GetOutputDependency());
-        var physicsWorld = buildPhysicsWorldSystem.PhysicsWorld;
-        var collisionJob = new CollisionJob
-        {
-            physicsWorld = physicsWorld,
-            CommandBuffer = m_EntityCommandBufferSystem.CreateCommandBuffer(),
-            triggerGroup = GetComponentDataFromEntity<TriggerComponent>(true),
-            healthGroup = GetComponentDataFromEntity<HealthComponent>(true),
-            ammoGroup = GetComponentDataFromEntity<AmmoComponent>(false)
-        };
-        JobHandle collisionHandle = collisionJob.Schedule(stepPhysicsWorld.Simulation, ref physicsWorld, inputDeps);
-        collisionHandle.Complete();
-        //return collisionHandle;
-    } // OnUpdate
 
 
 

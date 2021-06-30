@@ -61,7 +61,7 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
                 AimTransform = move.aimTransform;
                 if (AimTransform == null)
                 {
-                    Debug.Log("aim ik auto bone ENEMY ");
+                    Debug.Log("aim ik auto bone ENEMY " + aim.solver.bones.Length);
                     int boneCount = aim.solver.bones.Length;
                     AimTransform = aim.solver.bones[boneCount - 1].transform;
                 }
