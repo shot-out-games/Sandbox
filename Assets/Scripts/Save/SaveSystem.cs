@@ -124,7 +124,7 @@ public class SaveSystem : SystemBase
             SaveManager.instance.saveData.saveGames[slot].saveEnemies.Add(en);
         }
 
-        SaveManager.instance.SaveGameData();
+        //   SaveManager.instance.SaveGameData();
 
 
         PlayerEntities.Dispose();

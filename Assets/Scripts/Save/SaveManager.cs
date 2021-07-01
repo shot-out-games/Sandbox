@@ -33,11 +33,17 @@ public class SaveManager : MonoBehaviour
 
         saveWorld = LoadSaveWorld();
         saveData = LoadSaveData();
+        //SaveManager.instance.SaveGameData();
         DontDestroyOnLoad(gameObject);
 
 
     }
 
+
+    void Start()
+    {
+
+    }
 
     public void SaveCurrentLevelCompleted(int level)
     {
@@ -100,6 +106,14 @@ public class SaveManager : MonoBehaviour
             sd = new SaveData();
             bf.Serialize(file, sd);
             file.Close();
+        }
+
+
+        if (sd.saveGames.Count == 0)
+        {
+            sd.saveGames.Add(new SaveGames());
+            sd.saveGames.Add(new SaveGames());
+            sd.saveGames.Add(new SaveGames());
         }
 
         return sd;

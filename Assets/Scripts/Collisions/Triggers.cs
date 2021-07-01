@@ -67,7 +67,6 @@ public class CollisionSystem : SystemBase
 
     }
 
-
     protected override void OnUpdate()
     {
 
@@ -85,11 +84,12 @@ public class CollisionSystem : SystemBase
             ammoGroup = GetComponentDataFromEntity<AmmoComponent>(false)
         };
         JobHandle collisionHandle = collisionJob.Schedule(stepPhysicsWorld.Simulation, ref physicsWorld, inputDeps);
-        m_ecbSystem.AddJobHandleForProducer(this.Dependency);
+        //m_ecbSystem.AddJobHandleForProducer(this.Dependency);
 
-        //m_EntityCommandBufferSystem.AddJobHandleForProducer(collisionHandle);
+        //m_ecbSystem.AddJobHandleForProducer(collisionHandle);
         collisionHandle.Complete();
 
+      
 
 
         //return collisionHandle;
@@ -258,6 +258,7 @@ public class CollisionSystem : SystemBase
                         isMelee = meleeB
 
                     };
+
                 ecb.AddComponent(triggerComponent_b.ParentEntity, collisionComponent);
             }
             else if (punchingA || ammoB || meleeA || alwaysDamageB)
@@ -289,6 +290,8 @@ public class CollisionSystem : SystemBase
                     };
                 ecb.AddComponent(ch_b, collisionComponent);
             }
+
+
 
         }
     }
