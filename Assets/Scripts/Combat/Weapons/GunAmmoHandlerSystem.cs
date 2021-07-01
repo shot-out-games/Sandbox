@@ -111,6 +111,8 @@ public class GunAmmoHandlerSystem : SystemBase
                         //velocity.Linear = worldDirection * strength;
 
                         //if (playerWeaponAimComponent.weapon2d) velocity.Linear.z = 0;
+                        //velocity.Linear.y = 0;
+
 
                         EntityManager.SetComponentData(e, translation);
                         EntityManager.SetComponentData(e, rotation);

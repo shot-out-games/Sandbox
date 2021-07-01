@@ -50,18 +50,22 @@ public struct PowerTriggerComponent : IComponentData
 }
 
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+[UpdateAfter(typeof(EndFramePhysicsSystem))]
 [UpdateBefore(typeof(PlayerMoveSystem))]
+
 
 public class CollisionSystem : SystemBase
 {
-    EndSimulationEntityCommandBufferSystem m_ecbSystem;
+    //EndSimulationEntityCommandBufferSystem m_ecbSystem;
+    EndFixedStepSimulationEntityCommandBufferSystem m_ecbSystem;
     BuildPhysicsWorld buildPhysicsWorldSystem;
     StepPhysicsWorld stepPhysicsWorld;
     EndFramePhysicsSystem endFramePhysicsSystem;
 
     protected override void OnCreate()
     {
-        m_ecbSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        //m_ecbSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        m_ecbSystem = World.GetOrCreateSystem<EndFixedStepSimulationEntityCommandBufferSystem>();
         buildPhysicsWorldSystem = World.GetOrCreateSystem<BuildPhysicsWorld>();
         stepPhysicsWorld = World.GetOrCreateSystem<StepPhysicsWorld>();
 
@@ -89,7 +93,7 @@ public class CollisionSystem : SystemBase
         //m_ecbSystem.AddJobHandleForProducer(collisionHandle);
         collisionHandle.Complete();
 
-      
+
 
 
         //return collisionHandle;

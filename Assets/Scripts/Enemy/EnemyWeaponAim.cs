@@ -25,7 +25,11 @@ public class EnemyWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     //public bool weaponRaisedEndState { get; private set; }
     void Start()
     {
-        if (aim == null) return;
+        if (aim == null) 
+        {
+            Debug.LogWarning("AimIK required");
+            return;
+        }
         aimTransform = aim.solver.transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
@@ -59,7 +63,7 @@ public class EnemyWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         {
             animator.SetLayerWeight(0, 0);
             animator.SetLayerWeight(1, 1); //1 is weapon layer
-            //animator.SetBool("Aim", true);
+            animator.SetBool("Aim", true);
         }
         else if (!weaponRaised)
         {
@@ -70,7 +74,7 @@ public class EnemyWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
             }
             animator.SetLayerWeight(0, 1);
             animator.SetLayerWeight(1, 0);
-            //animator.SetBool("Aim", false);
+            animator.SetBool("Aim", false);
         }
     }
 
