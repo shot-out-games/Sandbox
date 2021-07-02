@@ -48,12 +48,12 @@ public class SaveSystem : SystemBase
 
         int slot = 0;
         int savedGames = SaveManager.instance.saveData.saveGames.Count;
-        if (savedGames == 0)
+        if (savedGames == 0 || savedGames > 1)//added > savegames 1 to clean up save since we only save one slot now
         {
             SaveManager.instance.saveData.saveGames.Clear();
             SaveManager.instance.saveData.saveGames.Add(new SaveGames()); //slot 0
-            SaveManager.instance.saveData.saveGames.Add(new SaveGames()); // slot 1
-            SaveManager.instance.saveData.saveGames.Add(new SaveGames()); // slot 2
+            //SaveManager.instance.saveData.saveGames.Add(new SaveGames()); // slot 1
+            //SaveManager.instance.saveData.saveGames.Add(new SaveGames()); // slot 2
         }
 
         SaveManager.instance.saveData.saveGames[slot].savePlayers.Clear();
@@ -124,7 +124,6 @@ public class SaveSystem : SystemBase
             SaveManager.instance.saveData.saveGames[slot].saveEnemies.Add(en);
         }
 
-        //   SaveManager.instance.SaveGameData();
 
 
         PlayerEntities.Dispose();
@@ -133,6 +132,7 @@ public class SaveSystem : SystemBase
         ecb.Playback(EntityManager);
         ecb.Dispose();
 
+        SaveManager.instance.SaveGameData();
 
     }
 

@@ -358,7 +358,7 @@ public class AttackerSystem : SystemBase
                     ecb.AddComponent<DamageComponent>(entityB,
                         new DamageComponent { DamageLanded = 0, DamageReceived = damage });
 
-                    Debug.Log("damage " + damage);
+                    Debug.Log("damage ");
 
 
                     trigger_a.collisionChecked = true;

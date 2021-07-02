@@ -37,7 +37,7 @@ namespace SandBox.Player
                     }
                     else if (allowKick)//kick
                     {
-                        Debug.Log("allow kick");
+                        //Debug.Log("allow kick");
                         playerCombat.SelectMove(2);
                     }
 

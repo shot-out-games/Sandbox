@@ -144,13 +144,18 @@ PrefabInstance:
     - target: {fileID: 624808316208475832, guid: 773e4563cf711c544b646ff0032169a9,
         type: 3}
       propertyPath: switchUp
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 624808316208475832, guid: 773e4563cf711c544b646ff0032169a9,
         type: 3}
       propertyPath: navigationStates
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 624808316297578717, guid: 773e4563cf711c544b646ff0032169a9,
+        type: 3}
+      propertyPath: aim
+      value: 
+      objectReference: {fileID: 4618390881229449311}
     - target: {fileID: 624808316297578717, guid: 773e4563cf711c544b646ff0032169a9,
         type: 3}
       propertyPath: m_Enabled
@@ -371,6 +376,11 @@ PrefabInstance:
       propertyPath: Moves.Array.data[1].animationType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4087007490854247682, guid: 773e4563cf711c544b646ff0032169a9,
+        type: 3}
+      propertyPath: solver.transform
+      value: 
+      objectReference: {fileID: 2000882438087324140}
     - target: {fileID: 4087007490854247682, guid: 773e4563cf711c544b646ff0032169a9,
         type: 3}
       propertyPath: solver.bones.Array.size
@@ -675,6 +685,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8691988655103800669}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4618390881229449311 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4087007490854247682, guid: 773e4563cf711c544b646ff0032169a9,
+    type: 3}
+  m_PrefabInstance: {fileID: 8691988655103800669}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4618390881229449305}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5013856973b27429d937d256dc082f2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4618390881701895194 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4087007490247584071, guid: 773e4563cf711c544b646ff0032169a9,
@@ -699,6 +721,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5013856973b27429d937d256dc082f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &2000882438087324140 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7162036606062085297, guid: 773e4563cf711c544b646ff0032169a9,
+    type: 3}
+  m_PrefabInstance: {fileID: 8691988655103800669}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7615939497301083480 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1229875490686267397, guid: 773e4563cf711c544b646ff0032169a9,

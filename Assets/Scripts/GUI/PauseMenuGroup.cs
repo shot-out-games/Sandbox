@@ -105,7 +105,7 @@ public class PauseMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     {
         EventSystem.current.SetSelectedGameObject(defaultButton.gameObject);
         //defaultButton.Select();//not working
-        Debug.Log("Select");
+        //Debug.Log("Select");
     }
 
     private void SkillTreeMenuPanel(bool paused)

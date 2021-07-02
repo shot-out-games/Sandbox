@@ -302,7 +302,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
 
         isCurrentWayPointJump = wayPoints[currentWayPointIndex].action == WayPointAction.Jump;
-        Debug.Log("current pt " + currentWayPointIndex);
+        //Debug.Log("current pt " + currentWayPointIndex);
         //if (isCurrentWayPointJump == false)
         //{
         AnimationMovement();
@@ -323,7 +323,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             float yOffset = curve.Evaluate(normalizedTime);
             agent.transform.position = Vector3.Lerp(startPos, endPos, normalizedTime) + yOffset * Vector3.up;
             normalizedTime += Time.deltaTime / duration;
-            Debug.Log("InJump ");
+            //Debug.Log("InJump ");
             anim.SetInteger("JumpState", 1);
 
 
@@ -333,7 +333,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             //isCurrentWayPointJump = false;
             //anim.SetInteger("JumpState", 0);
             //anim.SetInteger("Zone", 0);
-            Debug.Log("jump landed");
+            //Debug.Log("jump landed");
             jumpLanded = true;
             anim.SetInteger("JumpState", 0);
 

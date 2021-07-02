@@ -94,7 +94,7 @@ public class ScoreMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     public void OnExitButtonClicked()//saved in memory
     {
 
-        Debug.Log("exit hi");
+        //Debug.Log("exit hi");
         ScoreMenuExitBackClickedEvent?.Invoke();
     }
 

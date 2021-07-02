@@ -8,12 +8,12 @@ public class MovesManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("moves " + Moves.Count +  " " + transform.parent.name);
+        //Debug.Log("moves " + Moves.Count +  " " + transform.parent.name);
 
         for (int i = 0; i < Moves.Count; i++)
         {
             Moves move = Moves[i];
-            Debug.Log("move " + move.animationType);
+            //Debug.Log("move " + move.animationType);
         }
         //SelectMove();
 

@@ -108,9 +108,6 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
         LevelManager.instance.loadGame = false;
         //LevelManager.instance.skipLoad = true;
         SaveManager.instance.SaveCurrentLevelCompleted(0);
-
-        //SaveManager.instance.SaveGameData();
-
         StartCoroutine(LoadYourAsyncScene(2));
 
     }
@@ -124,9 +121,8 @@ public class SceneSwitcher : MonoBehaviour, IConvertGameObjectToEntity
         SaveManager.instance.saveMainGame = true;
         SaveManager.instance.saveWorld.isSlotSaved[0] = true;
         SaveManager.instance.SaveWorldSettings();
+        //Debug.Log("save and exit " + LevelManager.instance.currentLevelCompleted);
         SaveManager.instance.SaveCurrentLevelCompleted(LevelManager.instance.currentLevelCompleted);
-        Debug.Log("save and exit " + LevelManager.instance.currentLevelCompleted);
-        //SaveManager.instance.SaveGameData();
         SaveLevelManager.instance.saveScene = true;
         StartCoroutine(LoadYourAsyncScene(1));
 

@@ -47,6 +47,10 @@ public class SaveManager : MonoBehaviour
 
     public void SaveCurrentLevelCompleted(int level)
     {
+        if (saveData.saveGames.Count == 0)
+        {
+            saveData.saveGames.Add(new SaveGames());
+        }
         saveData.saveGames[0].currentLevel = level;
     }
 
@@ -94,9 +98,19 @@ public class SaveManager : MonoBehaviour
         {
             //Debug.Log(path + " exists");
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(path, FileMode.Open);
-            sd = bf.Deserialize(file) as SaveData;
-            file.Close();
+
+            try
+            {
+                FileStream file = File.Open(path, FileMode.Open);
+                sd = bf.Deserialize(file) as SaveData;
+                file.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("user exception " + e);
+                sd = new SaveData();
+                //file.Close();
+            }
         }
         else
         {
@@ -112,8 +126,8 @@ public class SaveManager : MonoBehaviour
         if (sd.saveGames.Count == 0)
         {
             sd.saveGames.Add(new SaveGames());
-            sd.saveGames.Add(new SaveGames());
-            sd.saveGames.Add(new SaveGames());
+            //sd.saveGames.Add(new SaveGames());
+            //sd.saveGames.Add(new SaveGames());
         }
 
         return sd;
@@ -127,7 +141,15 @@ public class SaveManager : MonoBehaviour
         string fileName = Application.persistentDataPath + "/savedGames" + ".sog";
         FileStream file = File.Create(fileName);
         Debug.Log(Application.persistentDataPath);
-        bf.Serialize(file, saveData);
+
+        try
+        {
+            bf.Serialize(file, saveData);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("save game data " + e);
+        }
         file.Close();
     }
 
@@ -148,7 +170,7 @@ public class SaveManager : MonoBehaviour
 
 
 
-    public void DeleteGameData(int slot)
+    public void DeleteGameData(int slot)//always 1 now
     {
         saveWorld.isSlotSaved[slot-1] = false;
      

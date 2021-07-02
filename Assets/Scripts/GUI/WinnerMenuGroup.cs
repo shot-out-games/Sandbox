@@ -89,7 +89,7 @@ public class WinnerMenuGroup : MonoBehaviour, IConvertGameObjectToEntity
     {
         EventSystem.current.SetSelectedGameObject(defaultButton.gameObject);
         defaultButton.Select();//not working
-        Debug.Log("Select");
+        //Debug.Log("Select");
     }
 
 
