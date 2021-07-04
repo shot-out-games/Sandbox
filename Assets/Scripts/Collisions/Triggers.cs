@@ -157,7 +157,7 @@ public class CollisionSystem : SystemBase
 
             //Debug.Log("ta " + triggerComponent_a.Type);
             //Debug.Log("tb " + triggerComponent_b.Type);
-
+            //Debug.Log("always a " + alwaysDamageA + " always b " + alwaysDamageB + " cha " + ch_a + " chb " + ch_b);
 
 
             bool punchingA = false;
@@ -266,9 +266,11 @@ public class CollisionSystem : SystemBase
 
                 ecb.AddComponent(triggerComponent_b.ParentEntity, collisionComponent);
             }
-            else if (punchingA || ammoB || meleeA || alwaysDamageB)
+            else if (punchingA || ammoB || meleeA || alwaysDamageA)
             {
                 //Debug.Log("c b " + ch_b + " c a " + ch_a);
+                //Debug.Log("always a " + alwaysDamageA + " always b " + alwaysDamageB + " cha " + ch_a + " chb " + ch_b);
+
                 CollisionComponent collisionComponent =
                     new CollisionComponent()
                     {
@@ -280,8 +282,9 @@ public class CollisionSystem : SystemBase
                     };
                 ecb.AddComponent(ch_a, collisionComponent);
             }
-            else if (punchingB || ammoA || meleeB || alwaysDamageA)
+            else if (punchingB || ammoA || meleeB || alwaysDamageB)
             {
+                //Debug.Log("always a " + alwaysDamageA + " always b " + alwaysDamageB + " cha " + ch_a + " chb " + ch_b);
 
                 CollisionComponent collisionComponent =
                     new CollisionComponent()

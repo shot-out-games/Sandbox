@@ -357,9 +357,15 @@ public class AttackerSystem : SystemBase
                 {
 
                     float hitPower = 10;//need to be able to change eventually
-                    if(HasComponent<RatingsComponent>(entityA))
+                    if (HasComponent<RatingsComponent>(entityA))
                     {
                         hitPower = GetComponent<RatingsComponent>(entityA).hitPower;
+                        Debug.Log("hit power " + hitPower);
+                    }
+                    if (HasComponent<HealthComponent>(entityA))
+                    {
+                        bool alwaysDamage = GetComponent<HealthComponent>(entityA).AlwaysDamage;
+                        if (alwaysDamage) hw = 1;//
                         Debug.Log("hit power " + hitPower);
                     }
 

@@ -5,6 +5,12 @@ using Unity.Entities;
 
 
 
+public struct EnemyBehaviourComponent : IComponentData
+{
+    public bool breakRoute;
+    public bool useDistanceFromStation;
+
+}
 public struct EnemyWeaponMovementComponent : IComponentData, IMovement
 {
     public float speedMultiple;
@@ -16,7 +22,6 @@ public struct EnemyWeaponMovementComponent : IComponentData, IMovement
     public bool enabled;//true if currently active movement state
 
     //change to enemy behavior component ??
-    public bool useDistanceFromStation;
     public bool switchUp; //if true enemy will change states when tracking
     public float switchUpTimer;
 
@@ -40,7 +45,6 @@ public struct EnemyMeleeMovementComponent : IComponentData
     public bool enabled;//true if currently active movement state
 
     //change to enemy behavior component ??
-    public bool useDistanceFromStation;
     public bool switchUp; //if true enemy will change states when tracking
     public float switchUpTimer;
 
@@ -68,7 +72,7 @@ public struct EnemyMovementComponent : IComponentData
 
 
     //change to enemy behavior component ??
-    public bool useDistanceFromStation; //if true distance from original station is used to decide chase or not
+    //public bool useDistanceFromStation; //if true distance from original station is used to decide chase or not
     public bool switchUp; //if true enemy will change states when tracking
     public float switchUpTimer;
 
@@ -89,6 +93,9 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
     public bool switchUp; //if true enemy will change states when tracking
     public float switchUpTime = 6.0f;
     [SerializeField] bool canFreeze;
+    [SerializeField]
+    bool breakRoute = true;
+
 
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
@@ -110,6 +117,14 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
         {
             weaponMovement = true;
         }
+        dstManager.AddComponentData(entity, new EnemyBehaviourComponent
+        {
+            breakRoute = breakRoute,
+            useDistanceFromStation = useDistanceFromStation,
+
+
+        });
+
         dstManager.AddComponentData(entity, new EnemyMovementComponent { speedMultiple = 1.0f });
         dstManager.AddComponentData(entity,
             new EnemyMovementComponent
@@ -117,7 +132,6 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
                 speedMultiple = 1.0f,
                 combatStrikeDistanceZoneBegin = GetComponent<EnemyRatings>().Ratings.combatStrikeDistanceZoneBegin,
                 combatStrikeDistanceZoneEnd = GetComponent<EnemyRatings>().Ratings.combatStrikeDistanceZoneEnd,
-                useDistanceFromStation = useDistanceFromStation,
                 originalPosition = transform.position,
                 switchUp = switchUp,
                 originalSwitchUpTime = switchUpTime,
@@ -131,7 +145,6 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
             speedMultiple = 1.0f,
             combatStrikeDistanceZoneBegin = GetComponent<EnemyRatings>().Ratings.combatStrikeDistanceZoneBegin,
             combatStrikeDistanceZoneEnd = GetComponent<EnemyRatings>().Ratings.combatStrikeDistanceZoneEnd,
-            useDistanceFromStation = useDistanceFromStation,
             originalPosition = transform.position,
             switchUp = switchUp,
             originalSwitchUpTime = switchUpTime,
@@ -145,7 +158,6 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
                 speedMultiple = 1.0f,
                 combatStrikeDistanceZoneBegin = GetComponent<EnemyRatings>().Ratings.combatStrikeDistanceZoneBegin,
                 combatStrikeDistanceZoneEnd = GetComponent<EnemyRatings>().Ratings.combatStrikeDistanceZoneEnd,
-                useDistanceFromStation = useDistanceFromStation,
                 originalPosition = transform.position,
                 switchUp = switchUp,
                 originalSwitchUpTime = switchUpTime,

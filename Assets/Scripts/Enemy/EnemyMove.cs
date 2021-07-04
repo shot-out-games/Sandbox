@@ -143,9 +143,9 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField]
     float duration = 3.0f;
     float normalizedTime = 0.0f;
-    [SerializeField]
+    //[SerializeField]
     Vector3 startPos;
-    [SerializeField]
+    //[SerializeField]
     Vector3 endPos;
     //bool jumpTrigger;
     //bool wayPointComplete;
