@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c63336138e98c764c920ab51a8d2074f, type: 3}
   m_Name: Enemy Data BASIC 1
   m_EditorClassIdentifier: 
-  speed: 7
+  speed: 4
   combatStrikeDistanceZoneBegin: 2
   combatStrikeDistanceZoneEnd: 4
   combatRangeDistance: 8
-  shootRangeDistance: 14
-  chaseRange: 20
+  shootRangeDistance: 10
+  chaseRange: 24
   aggression: 50
   maxHealth: 20

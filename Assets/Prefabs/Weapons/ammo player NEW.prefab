@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomize: 0
-  AmmoTime: 5
+  AmmoTime: 0
   Strength: 50
   Damage: 5
   Rate: 0.25

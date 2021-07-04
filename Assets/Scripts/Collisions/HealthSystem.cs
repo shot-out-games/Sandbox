@@ -8,6 +8,9 @@ using System;
 using Unity.Collections;
 using Unity.Rendering;
 
+
+[UpdateAfter(typeof(CharacterEffectsSystem))]
+
 public class HealthSystem : SystemBase
 {
 

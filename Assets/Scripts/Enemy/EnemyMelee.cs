@@ -193,7 +193,7 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
 
         if (ik == null || aim == null || moveUsing.target == null) return;
         //if (aim == null || !ik.enabled || !aim.enabled) return;
-        if (moveUsing.usingAim && aim.enabled)
+        if (moveUsing.usingAim && aim.enabled && moveUsing.pin)
         {
             aim.solver.transform = AimTransform;
             aim.solver.transform.LookAt(moveUsing.pin.position);

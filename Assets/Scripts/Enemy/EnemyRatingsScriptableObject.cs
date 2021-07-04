@@ -13,7 +13,7 @@ public class EnemyRatingsScriptableObject : ScriptableObject
     public float chaseRange = 18.4f;
     public float aggression = 50;
     public float maxHealth = 100;
-
+    public float hitPower = 10;
 
 }
 

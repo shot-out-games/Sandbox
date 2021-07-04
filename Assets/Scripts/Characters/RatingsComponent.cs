@@ -8,7 +8,7 @@ public struct RatingsComponent : IComponentData
 {
     public int tag;
     public float speed;
-    public float power;
+    public float hitPower;
     public float maxHealth;
     public float shootRangeDistance;
     public float chaseRangeDistance;

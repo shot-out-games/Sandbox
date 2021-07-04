@@ -6,6 +6,7 @@ using Unity.Entities;
 public class EnemyRatings : MonoBehaviour, IConvertGameObjectToEntity
 {
     [SerializeField] bool randomize;
+    [SerializeField] float hitPower = 10;
     public EnemyRatingsScriptableObject Ratings;
     EntityManager manager;
     Entity e;
@@ -15,7 +16,8 @@ public class EnemyRatings : MonoBehaviour, IConvertGameObjectToEntity
         float multiplier = .5f;
         RatingsComponent ratings = manager.GetComponentData<RatingsComponent>(e);
         ratings.speed = Random.Range(ratings.speed * multiplier, ratings.speed * (2 - multiplier)) ;
-        //ratings.shootRangeDistance = Random.Range(ratings.shootRangeDistance * multiplier, ratings.shootRangeDistance* (2 - multiplier));
+        ratings.shootRangeDistance = Random.Range(ratings.shootRangeDistance * multiplier, ratings.shootRangeDistance * (2 - multiplier));
+        ratings.chaseRangeDistance = Random.Range(ratings.chaseRangeDistance * multiplier, ratings.chaseRangeDistance * (2 - multiplier));
 
 
 
@@ -35,8 +37,7 @@ public class EnemyRatings : MonoBehaviour, IConvertGameObjectToEntity
                 shootRangeDistance = Ratings.shootRangeDistance,
                 chaseRangeDistance = Ratings.chaseRange,
                 combatRangeDistance = Ratings.combatRangeDistance,
-                WeaponPower = 1,
-                gameWeaponPower = 1
+                hitPower = hitPower
             });
 
         e = entity;

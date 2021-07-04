@@ -105,7 +105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoTime: 1
-  comboTimeAdd: 1
+  comboTimeAdd: 2
   framesToSkip: 2
 --- !u!114 &8439595339403142612
 MonoBehaviour:
@@ -342,9 +342,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomize: 0
   AmmoTime: 1
-  Strength: 30
+  Strength: 50
   Damage: 5
-  Rate: 1
+  Rate: 0.75
   ChargeRequired: 0
 --- !u!1001 &1155093784678171370
 PrefabInstance:

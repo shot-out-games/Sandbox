@@ -24,6 +24,7 @@ public class AmmoData : MonoBehaviour, IConvertGameObjectToEntity
     [Header("Ammo Ratings")]
     [SerializeField]
     bool randomize;
+    [HideInInspector]
     public float AmmoTime;
     public float Strength;
     public float Damage;

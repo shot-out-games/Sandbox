@@ -6,6 +6,7 @@ public class PlayerRatings : MonoBehaviour, IConvertGameObjectToEntity
 
     public PlayerRatingsScriptableObject Ratings;
     public float meleeWeaponPower = 1;
+    public float hitPower = 10;//punch kick
 
 
 
@@ -18,7 +19,8 @@ public class PlayerRatings : MonoBehaviour, IConvertGameObjectToEntity
                 speed = Ratings.speed,
                 gameSpeed =  Ratings.speed,
                 gameWeaponPower = meleeWeaponPower,
-                WeaponPower = meleeWeaponPower
+                WeaponPower = meleeWeaponPower,
+                hitPower = hitPower
             })
             ;
     }

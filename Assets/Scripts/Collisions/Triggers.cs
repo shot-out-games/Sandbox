@@ -248,6 +248,7 @@ public class CollisionSystem : SystemBase
                     };
                 ecb.AddComponent(triggerComponent_a.ParentEntity, collisionComponent);
             }
+
             if (ammoB)
             {
                 //Debug.Log("ab " + ammoB + " pe " + triggerComponent_a.Type + "  ce " + ch_a);

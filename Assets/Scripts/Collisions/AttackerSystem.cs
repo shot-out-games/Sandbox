@@ -4,6 +4,11 @@ using Unity.Jobs;
 using UnityEngine;
 using Unity.Collections;
 using Unity.Physics;
+using Unity.Physics.Systems;
+
+[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+//[UpdateAfter(typeof(EndFramePhysicsSystem))]
+//[UpdateBefore(typeof(CollisionSystem))]
 
 
 
@@ -351,14 +356,22 @@ public class AttackerSystem : SystemBase
                 if (trigger_a.collisionChecked == false)
                 {
 
-                    float hitPower = 1;
+                    float hitPower = 10;//need to be able to change eventually
+                    if(HasComponent<RatingsComponent>(entityA))
+                    {
+                        hitPower = GetComponent<RatingsComponent>(entityA).hitPower;
+                        Debug.Log("hit power " + hitPower);
+                    }
+
                     float WeaponPower = 1;
                     float damage = hitPower * hw;
+
+
 
                     ecb.AddComponent<DamageComponent>(entityB,
                         new DamageComponent { DamageLanded = 0, DamageReceived = damage });
 
-                    Debug.Log("damage ");
+                    Debug.Log("damage " + damage);
 
 
                     trigger_a.collisionChecked = true;
