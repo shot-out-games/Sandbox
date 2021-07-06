@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: P1 Data
   m_EditorClassIdentifier: 
   speed: 20
-  power: -1
+  power: 10
   maxHealth: 200
   startJumpGravityForce: 16
   addedNegativeForce: -1

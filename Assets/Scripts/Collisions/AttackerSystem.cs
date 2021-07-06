@@ -369,7 +369,7 @@ public class AttackerSystem : SystemBase
                         Debug.Log("hit power " + hitPower);
                     }
 
-                    float WeaponPower = 1;
+                    //float WeaponPower = 1;
                     float damage = hitPower * hw;
 
 
@@ -377,7 +377,13 @@ public class AttackerSystem : SystemBase
                     ecb.AddComponent<DamageComponent>(entityB,
                         new DamageComponent { DamageLanded = 0, DamageReceived = damage });
 
-                    Debug.Log("damage " + damage);
+                    if (HasComponent<SkillTreeComponent>(entityA))
+                    {
+                        var skill = GetComponent<SkillTreeComponent>(entityA);
+                        skill.CurrentLevelXp += damage;
+                        Debug.Log("xp " + skill.CurrentLevelXp);
+                        SetComponent<SkillTreeComponent>(entityA, skill);
+                    }
 
 
                     trigger_a.collisionChecked = true;
@@ -458,6 +464,15 @@ public class AttackerSystem : SystemBase
                     ecb.AddComponent<DamageComponent>(collision_entity_a,
                             new DamageComponent
                             { DamageLanded = 0, DamageReceived = damage, StunLanded = damage });
+
+                    if (HasComponent<SkillTreeComponent>(shooter))
+                    {
+                        var skill = GetComponent<SkillTreeComponent>(shooter);
+                        skill.CurrentLevelXp += damage;
+                        Debug.Log("xp " + skill.CurrentLevelXp);
+                        SetComponent<SkillTreeComponent>(shooter, skill);
+                    }
+
 
 
                     if (HasComponent<ScoreComponent>(shooter) && damage != 0)
