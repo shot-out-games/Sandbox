@@ -425,7 +425,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
 
 
-        if (agent)
+        if (agent && manager.HasComponent<Pause>(entity) == false)
         {
 
             if (backup == false)
@@ -461,6 +461,10 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             //Debug.Log("speed x " + speedMultiple);
             anim.SetFloat("velz", velz);
         }
+        else
+        {
+            agent.speed = 0;
+        }
 
     }
 
@@ -469,6 +473,15 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     {
 
         if (agent == null) return;
+        if (manager.HasComponent<Pause>(entity) == true)
+        {
+            agent.speed = 0;
+            anim.speed = 0;
+            return;
+        }
+
+        anim.speed = 1;
+
         bool isCurrentWayPointJump = wayPoints[currentWayPointIndex].action == WayPointAction.Jump;
         if (isCurrentWayPointJump == false)
         {

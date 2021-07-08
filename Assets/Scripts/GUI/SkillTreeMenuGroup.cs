@@ -255,7 +255,8 @@ public class SkillTreeSystem : SystemBase
 
             ) =>
             {
-                playerSkillSets[0] = skillTreeGroup[e];
+                if (playerComponent.index == 1)//p1
+                    playerSkillSets[0] = skillTreeGroup[e];
             }
         ).Schedule(this.Dependency);
 

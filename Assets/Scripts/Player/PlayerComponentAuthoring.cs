@@ -36,7 +36,7 @@ public struct SkillTreeComponent : IComponentData
 [System.Serializable]
 public struct PlayerComponent : IComponentData
 {
-    public int index;
+    public int index;//1 is p1 2 is p2 etc 1 is required for skill tree group
     public int keys;
     public int tag;
     public float speed;
@@ -56,6 +56,8 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
     public EntityManager manager;
     private Animator animator;
 
+    [SerializeField]
+    int player_index = 0;
 
     [SerializeField]
     private bool checkWinCondition = true;
@@ -101,7 +103,7 @@ public class PlayerComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntit
         dstManager.AddComponentData(entity, new PlayerComponent
         {
 
-
+            index = player_index,
             threeD = threeD,
             startPosition = manager.GetComponentData<Translation>(entity).Value
         }
