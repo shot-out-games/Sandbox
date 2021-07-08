@@ -26,6 +26,10 @@ public struct InputControllerComponent : IComponentData
     public float leftTriggerChange;
     public float rightTriggerChange;
 
+    public bool leftTriggerDown;
+    public bool rightTriggerDown;
+
+
 
     public bool leftBumperPressed;
     public bool leftBumperReleased;
@@ -277,8 +281,13 @@ public class InputController : MonoBehaviour, IConvertGameObjectToEntity
         inputControllerComponent.leftTriggerLast = leftTriggerLast;
         inputControllerComponent.rightTriggerLast = rightTriggerLast;
 
+
+
         inputControllerComponent.leftTriggerPressed = leftTriggerPressed;
         inputControllerComponent.rightTriggerPressed = rightTriggerPressed;
+
+        inputControllerComponent.leftTriggerDown = leftTriggerDown;
+        inputControllerComponent.rightTriggerDown = rightTriggerDown;
 
         inputControllerComponent.leftTriggerChange = leftTriggerChange;
         inputControllerComponent.rightTriggerChange = rightTriggerChange;

@@ -10,8 +10,8 @@ using Unity.Transforms;
 using UnityEngine;
 
 
-//[UpdateInGroup(typeof(PresentationSystemGroup))]
-[UpdateInGroup(typeof(TransformSystemGroup))]
+[UpdateInGroup(typeof(LateSimulationSystemGroup))]
+//[UpdateInGroup(typeof(TransformSystemGroup))]
 
 //[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
@@ -29,6 +29,8 @@ public class GunAmmoHandlerSystem : SystemBase
         //var ecb = barrier.CreateCommandBuffer().AsParallelWriter();
         //var ecb = barrier.CreateCommandBuffer();
         float dt = UnityEngine.Time.fixedDeltaTime;//gun duration
+
+        int co = 0;
 
         Entities.WithoutBurst().WithStructuralChanges().WithNone<Pause>().ForEach(
             (
@@ -48,6 +50,7 @@ public class GunAmmoHandlerSystem : SystemBase
                     )
                 {
                     gun.Duration = 0;
+                    gun.IsFiring = 0;
                     return;
                 }
 
@@ -80,11 +83,15 @@ public class GunAmmoHandlerSystem : SystemBase
                 gun.Duration += dt;
                 if ((gun.Duration > rate) && (gun.IsFiring == 1))
                 {
+                    gun.Duration = 0;
+                    gun.IsFiring = 0;
 
                     if (gun.PrimaryAmmo != null &&
                         (actorWeaponAimComponent.weaponRaised == WeaponMotion.Raised || isEnemy))
                     {
-                        gun.IsFiring = 0;
+                        Debug.Log("bullet " + entity);
+                        co++;
+                        //gun.IsFiring = 0;
                         statsComponent.shotsFired += 1;
                         //gun.gameDamage = strength;//current gun strength used by attacker handler collision system
                         Entity e = EntityManager.Instantiate(gun.PrimaryAmmo);
@@ -128,7 +135,7 @@ public class GunAmmoHandlerSystem : SystemBase
                         {
                             bulletManager.weaponAudioSource.PlayOneShot(bulletManager.weaponAudioClip, .25f);
                         }
-                        gun.Duration = 0;
+                        //gun.Duration = 0;
 
 
 
@@ -146,6 +153,8 @@ public class GunAmmoHandlerSystem : SystemBase
             }
         ).Run();
 
+
+        Debug.Log("co " + co);
         //ecb.Playback(EntityManager);
         //ecb.Dispose();
 

@@ -38,7 +38,7 @@ public class PlayerInputAmmoSystem : SystemBase
                 float dpadY = inputController.dpadY;
                 WeaponMotion currentWeaponMotion =  (WeaponMotion)animator.GetInteger("WeaponRaised");
                 playerWeaponAimComponent.weaponRaised = currentWeaponMotion;
-                bool ltPressed = inputController.leftTriggerPressed;
+                bool ltPressed = inputController.leftTriggerDown;
 
                 if (
                     attachWeapon.attachWeaponType == (int)WeaponType.Gun && ltPressed == true ||
@@ -59,12 +59,12 @@ public class PlayerInputAmmoSystem : SystemBase
 
                 SetComponent(entity, gunComponent);
 
-                if (dpadY > .000001 && playerWeaponAimComponent.weaponRaised == WeaponMotion.None)
-                {
-                    playerWeaponAimComponent.weaponRaised = WeaponMotion.Started;
-                    SetAnimationLayerWeights(animator, WeaponMotion.Started);
-                }
-                else if (playerWeaponAimComponent.weaponRaised == WeaponMotion.None)
+                //if (dpadY > .000001 && playerWeaponAimComponent.weaponRaised == WeaponMotion.None)
+                //{
+                  //  playerWeaponAimComponent.weaponRaised = WeaponMotion.Started;
+                    //SetAnimationLayerWeights(animator, WeaponMotion.Started);
+                //}
+                if (playerWeaponAimComponent.weaponRaised == WeaponMotion.None)
                 {
                     SetAnimationLayerWeights(animator, WeaponMotion.None);
                 }
