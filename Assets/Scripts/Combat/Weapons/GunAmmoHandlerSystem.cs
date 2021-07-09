@@ -91,10 +91,10 @@ public class GunAmmoHandlerSystem : SystemBase
                     attachWeapon.attachSecondaryWeaponType != (int)WeaponType.Gun
                     )
                 {
-                    //gun.Duration = 0;
+                    gun.Duration = 0;
 
-                    //gun.IsFiring = 0;
-                    //return;
+                    gun.IsFiring = 0;
+                    return;
                 }
 
 
@@ -105,7 +105,7 @@ public class GunAmmoHandlerSystem : SystemBase
                 {
                     if (HasComponent<EnemyWeaponMovementComponent>(entity) == false)
                     {
-                  //      return;
+                        return;
                     }
                 }
 
@@ -121,10 +121,17 @@ public class GunAmmoHandlerSystem : SystemBase
                     if (strength <= 0) strength = 0;
                 }
 
+                //var e = commandBuffer.Instantiate(entityInQueryIndex, gun.PrimaryAmmo);
+
+                ////Translation translation = new Translation() { Value = bulletManager.AmmoStartLocation.position };//use bone mb transform
+
+
+
 
                 gun.Duration += dt;
                 if ((gun.Duration > rate) && (gun.IsFiring == 1))
                 {
+
                     gun.Duration = 0;
                     gun.IsFiring = 0;
 
@@ -133,54 +140,52 @@ public class GunAmmoHandlerSystem : SystemBase
                     {
                         //Debug.Log("bullet " + entity);
 
-                        //gun.IsFiring = 0;
+
+                        gun.IsFiring = 0;
                         //statsComponent.shotsFired += 1;
-                        //gun.gameDamage = strength;//current gun strength used by attacker handler collision system
                         var e = commandBuffer.Instantiate(entityInQueryIndex, gun.PrimaryAmmo);
 
-                        //Translation translation = new Translation() { Value = bulletManager.AmmoStartLocation.position };//use bone mb transform
-                        Translation translation = new Translation() { Value = gun.AmmoStartPosition.Value };//use bone mb transform
+
+                        ////float3 forward = bulletManager.AmmoStartLocation.transform.forward;
+                        //float3 forward = gun.AmmoStartPosition.Value;
+                        ////float3 forward = Vector3.forward;
 
 
-                        Rotation rotation = new Rotation() { Value = gun.AmmoStartRotation.Value };
-                        var playerVelocity = GetComponent<PhysicsVelocity>(entity);
-                        var velocity = GetComponent<PhysicsVelocity>(e);
-
-                        //float3 forward = bulletManager.AmmoStartLocation.transform.forward;
-                        float3 forward = gun.AmmoStartPosition.Value;
-                        //float3 forward = Vector3.forward;
-
-
-                        if (actorWeaponAimComponent.weaponCamera == CameraType.TopDown)
-                        {
-                            velocity.Linear = forward * strength + playerVelocity.Linear;
-                        }
-                        else
-                        {
-                            velocity.Linear = forward * strength;
-                        }
+                        //if (actorWeaponAimComponent.weaponCamera == CameraType.TopDown)
+                        //{
+                        //    velocity.Linear = forward * strength + playerVelocity.Linear;
+                        //}
+                        //else
+                        //{
+                        //    velocity.Linear = forward * strength;
+                        //}
 
 
+                        //var translation = new Translation() { Value = gun.AmmoStartPosition.Value };//use bone mb transform
+                        //Rotation rotation = new Rotation() { Value = gun.AmmoStartRotation.Value };
+                        //var playerVelocity = GetComponent<PhysicsVelocity>(entity);
+                        //var velocity = GetComponent<PhysicsVelocity>(e);
+
+                        var translation = new Translation() { Value = gun.AmmoStartPosition.Value };//use bone mb transform
+                                                                                                    //Rotation rotation = new Rotation() { Value = gun.AmmoStartRotation.Value };
+                                                                                                    //var playerVelocity = GetComponent<PhysicsVelocity>(entity);
+                        //var velocity = GetComponent<PhysicsVelocity>(e);
 
 
 
-
-                        commandBuffer.SetComponent(entityInQueryIndex, e, translation);
-                        commandBuffer.SetComponent(entityInQueryIndex, e, rotation);
-                        commandBuffer.SetComponent(entityInQueryIndex, e, velocity);
-                        var ammoComponent = GetComponent<AmmoComponent>(e);
-                        ammoComponent.OwnerAmmoEntity = entity;//may not need use trigger instead
-                        var triggerComponent = GetComponent<TriggerComponent>(e);
-                        triggerComponent.ParentEntity = entity;
-                        commandBuffer.SetComponent(entityInQueryIndex, e, ammoComponent);
-                        commandBuffer.SetComponent(entityInQueryIndex, e, triggerComponent);
+                        //var ammoComponent = GetComponent<AmmoComponent>(e);
+                        //ammoComponent.OwnerAmmoEntity = entity;//may not need use trigger instead
+                        //var triggerComponent = GetComponent<TriggerComponent>(e);
+                        //triggerComponent.ParentEntity = entity;
+                        //commandBuffer.SetComponent(entityInQueryIndex, e, ammoComponent);
+                        //commandBuffer.SetComponent(entityInQueryIndex, e, triggerComponent);
 
                         //if (bulletManager.weaponAudioClip && bulletManager.weaponAudioSource)
                         //{
                         //  bulletManager.weaponAudioSource.PlayOneShot(bulletManager.weaponAudioClip, .25f);
                         //}
 
-                        //gun.Duration = 0;
+                        gun.Duration = 0;
 
 
 
@@ -192,6 +197,9 @@ public class GunAmmoHandlerSystem : SystemBase
                         //}
 
 
+                        //commandBuffer.SetComponent(entityInQueryIndex, entity, translation);
+                        //commandBuffer.SetComponent(entityInQueryIndex, e, rotation);
+                        //commandBuffer.SetComponent(entityInQueryIndex, entity, velocity);
 
 
                     }
@@ -204,6 +212,8 @@ public class GunAmmoHandlerSystem : SystemBase
             }
         ).ScheduleParallel();
 
+
+    
 
         // SpawnJob runs in parallel with no sync point until the barrier system executes.
         // When the barrier system executes we want to complete the SpawnJob and then play back the commands (Creating the entities and placing them).
