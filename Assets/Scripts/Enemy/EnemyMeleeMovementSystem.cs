@@ -55,7 +55,7 @@ public class EnemyMeleeMovementSystem : SystemBase
                 {
                     MoveState = MoveStates.Default;
                     enemyMove.backup = true;//only time to turn on 
-                    enemyMove.speedMultiple = dist / backupZoneClose;
+                    enemyMove.speedMultiple = dist / backupZoneClose;//try zero
                     strike = true;
                 }
 
@@ -73,11 +73,22 @@ public class EnemyMeleeMovementSystem : SystemBase
                     //if (enemyMove.backup == true && n <= 2)
                     //{
                         strike = true;
+                        //enemyMove.backup = false;//try
+
                     //}
                     //else if (enemyMove.backup == false && n <= 5)
                     //{
-                      //  strike = true;
+                    //  strike = true;
                     //}
+
+
+                    //try below
+                    //if (n <= 5)
+                    //{
+                    //  strike = true;
+                    //enemyMove.backup = false;
+                    //}
+
                 }
 
 

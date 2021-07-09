@@ -78,7 +78,7 @@ public class MatchupSystem : SystemBase
                             gun.ChangeAmmoStats = distance - closePlayerMaxDistance;
                             ratingsComponent.gameSpeed = ratingsComponent.speed *
                                 (100 - (distance - closePlayerMaxDistance)) / 100;
-                            if (ratingsComponent.gameSpeed < 1) ratingsComponent.gameSpeed = 1;
+                            if (ratingsComponent.gameSpeed < 4) ratingsComponent.gameSpeed = 4;
                             //Debug.Log("rate " + gun.ChangeAmmoStats);
                             if (HasComponent<EffectsComponent>(playerE))
                             {

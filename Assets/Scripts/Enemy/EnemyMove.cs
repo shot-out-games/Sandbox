@@ -394,7 +394,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         if (agent.enabled)
         {
             Vector3 nextPosition = target.position;
-            Vector3 offset = transform.forward * Time.deltaTime * moveSpeed * 2;
+            Vector3 offset = transform.forward * Time.deltaTime * moveSpeed * 2;//try * 1
             agent.Move(-offset);
             AnimationMovement();
         }
