@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -7,6 +8,7 @@ using Unity.Transforms;
 using UnityEngine;
 using Unity.Jobs;
 using Unity.Physics.Extensions;
+using UnityEngine.Jobs;
 
 
 public struct GunComponent : IComponentData
@@ -25,6 +27,7 @@ public struct GunComponent : IComponentData
     public float Duration;//rate counter for job
     public int WasFiring;
     public int IsFiring;
+    public LocalToWorld AmmoStartLocalToWorld;
     public Translation AmmoStartPosition;
     public Rotation AmmoStartRotation;
     public bool Disable;
@@ -92,14 +95,36 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
 
 
 
+    void Update()
+    {
+        //if (manager == default) return;
+
+        //if (!manager.HasComponent(entity, typeof(GunComponent))) return;
+
+        //var tracker = manager.GetComponentData<TrackerComponent>(entity);
+        //tracker.Position = track.transform.position;
+        //tracker.Rotation = track.transform.rotation;
+        //manager.SetComponentData(entity, tracker);
+
+    }
+
+
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
             Generate(false);
+
+
+            var localToWorld = new LocalToWorld
+            {
+                Value = float4x4.TRS(AmmoStartLocation.position, AmmoStartLocation.rotation, Vector3.one)
+            };
+
 
         dstManager.AddComponentData<GunComponent>(
             entity,
             new GunComponent()
             {
+                AmmoStartLocalToWorld = localToWorld,
                 AmmoStartPosition = new Translation(){Value = AmmoStartLocation.position},//not used because cant track bone 
                 AmmoStartRotation = new Rotation(){Value = AmmoStartLocation.rotation},
                 PrimaryAmmo = conversionSystem.GetPrimaryEntity(PrimaryAmmoPrefab),
@@ -124,3 +149,68 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
 }
 
 
+
+[UpdateInGroup(typeof(TransformSystemGroup))]
+[UpdateAfter(typeof(EndFrameLocalToParentSystem))]
+//[UpdateAfter(typeof(FollowTriggerComponent))]
+//[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+
+
+class SynchronizeGameObjectTransformsGunEntities : SystemBase
+{
+    //[NativeDisableParallelForRestriction] private EndSimulationEntityCommandBufferSystem m_EntityCommandBufferSystem;
+    //EntityQuery m_Query;
+
+    protected override void OnCreate()
+    {
+        base.OnCreate();
+        //m_EntityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        //m_Query = GetEntityQuery(new EntityQueryDesc
+        //{
+        //    All = new ComponentType[]
+        //    {
+        //        typeof(GunComponent),
+        //        typeof(Transform),
+        //        typeof(LocalToWorld)
+        //    }
+        //});
+
+
+
+    }
+
+    protected override void OnUpdate()
+    {
+        //var localToWorlds = m_Query.ToComponentDataArrayAsync<LocalToWorld>(Allocator.TempJob, out var jobHandle);
+        //var gunComponents = m_Query.ToComponentDataArray<GunComponent>(Allocator.TempJob);
+        //var localToWorlds = m_Query.ToComponentDataArray<LocalToWorld>(Allocator.TempJob);
+
+        //var entities = m_Query.ToEntityArray(Allocator.Temp);
+
+        Entities.WithoutBurst().ForEach(
+            (BulletManager bulletManager, ref GunComponent gunComponent) =>
+            {
+                var localToWorld = new LocalToWorld
+                {
+                    Value = float4x4.TRS(bulletManager.AmmoStartLocation.position, bulletManager.AmmoStartLocation.rotation, Vector3.one)
+                };
+
+
+                gunComponent.AmmoStartLocalToWorld = localToWorld;
+                gunComponent.AmmoStartPosition.Value = bulletManager.AmmoStartLocation.position;
+                gunComponent.AmmoStartRotation.Value = bulletManager.AmmoStartLocation.rotation;
+            }
+        ).Run();
+
+
+
+        //Dependency.Complete();
+
+        //m_Query.Dispose();
+        //trackerComponents.Dispose();
+        //localToWorlds.Dispose();
+        //jobHandle.Complete();
+    }
+}
+
+  
