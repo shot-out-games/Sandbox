@@ -65,7 +65,7 @@ public class ScoreSystem : SystemBase
 
 
 
-                        if(score.combo > 0) score.streak += 1;
+                        if(score.combo == 1) score.streak += 1;//add only when combo is 1
                         score.lastShotConnected = true;
 
                         //}
@@ -103,11 +103,11 @@ public class ScoreSystem : SystemBase
                 else
                 {
 
-                    if (inputController.leftTriggerPressed)
-                    {
-                      //if (score.lastShotConnected == false) score.streak = 0;
-                      score.lastShotConnected = false;
-                    }
+                    //if (inputController.leftTriggerPressed)
+                    //{
+                    //  //if (score.lastShotConnected == false) score.streak = 0;
+                    //  score.lastShotConnected = false;
+                    //}
 
 
                     score.timeSinceLastScore += Time.DeltaTime;

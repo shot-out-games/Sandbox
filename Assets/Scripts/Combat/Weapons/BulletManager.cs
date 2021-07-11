@@ -35,6 +35,13 @@ public struct GunComponent : IComponentData
     //public Translation firingPosition;
 }
 
+public struct BulletManagerComponent : IComponentData //used for managed components - read and then call methods from MB
+{
+    public bool playSound;
+    public bool setAnimationLayer;
+}
+
+
 
 public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertGameObjectToEntity
 {
@@ -111,13 +118,13 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
-            Generate(false);
+        Generate(false);
 
 
-            var localToWorld = new LocalToWorld
-            {
-                Value = float4x4.TRS(AmmoStartLocation.position, AmmoStartLocation.rotation, Vector3.one)
-            };
+        var localToWorld = new LocalToWorld
+        {
+            Value = float4x4.TRS(AmmoStartLocation.position, AmmoStartLocation.rotation, Vector3.one)
+        };
 
 
         dstManager.AddComponentData<GunComponent>(
@@ -125,8 +132,8 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
             new GunComponent()
             {
                 AmmoStartLocalToWorld = localToWorld,
-                AmmoStartPosition = new Translation(){Value = AmmoStartLocation.position},//not used because cant track bone 
-                AmmoStartRotation = new Rotation(){Value = AmmoStartLocation.rotation},
+                AmmoStartPosition = new Translation() { Value = AmmoStartLocation.position },//not used because cant track bone 
+                AmmoStartRotation = new Rotation() { Value = AmmoStartLocation.rotation },
                 PrimaryAmmo = conversionSystem.GetPrimaryEntity(PrimaryAmmoPrefab),
                 SecondaryAmmo = conversionSystem.GetPrimaryEntity(SecondaryAmmoPrefab),
                 //Weapon = conversionSystem.GetPrimaryEntity(WeaponPrefab),
@@ -140,12 +147,14 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
                 IsFiring = 0
 
             });
+
+        dstManager.AddComponent(entity, typeof(BulletManagerComponent));
         manager = dstManager;
         this.entity = entity;
 
     }
 
-   
+
 }
 
 
@@ -213,4 +222,46 @@ class SynchronizeGameObjectTransformsGunEntities : SystemBase
     }
 }
 
-  
+
+
+public class BulletManagerSystem : SystemBase
+{
+
+
+    protected override void OnUpdate()
+    {
+
+
+
+        Entities.WithoutBurst().ForEach(
+            (
+                 Entity e,
+                 BulletManager bulletManager,
+                 Animator animator,
+                 ref BulletManagerComponent bulletManagerComponent
+                 ) =>
+            {
+
+
+
+                if (bulletManager.weaponAudioClip && bulletManager.weaponAudioSource && bulletManagerComponent.playSound)
+                {
+                    bulletManager.weaponAudioSource.PlayOneShot(bulletManager.weaponAudioClip, .25f);
+                    bulletManagerComponent.playSound = false;
+                }
+
+                if (bulletManagerComponent.setAnimationLayer)
+                {
+                    animator.SetLayerWeight(0, 0);
+                    bulletManagerComponent.setAnimationLayer = false;
+                }
+
+
+
+            }
+        ).Run();
+
+
+    }
+
+}

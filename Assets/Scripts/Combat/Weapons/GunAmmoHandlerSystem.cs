@@ -12,48 +12,18 @@ using UnityEngine;
 
 
 
-public class AmmoParentSystem : SystemBase
-{
+
+[UpdateInGroup(typeof(LateSimulationSystemGroup))]
+//[UpdateInGroup(typeof(TransformSystemGroup))]
+[UpdateAfter(typeof(FinalIkSystem))]
 
 
-    protected override void OnUpdate()
-    {
+//[UpdateInGroup(typeof(PresentationSystemGroup))]
+
+//[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 
 
-
-        Entities.WithoutBurst().ForEach(
-            (
-                 //Entity e,
-                 ref TriggerComponent triggerComponent
-                 ) =>
-            {
-
-                if (triggerComponent.Type == (int)TriggerType.Ammo)
-                {
-                    //triggerComponent.ParentEntity = entityShooterArray[0];
-                    //Debug.Log("e shooter " + entityShooterArray[0]);
-                }
-
-
-
-
-
-            }
-        ).Run();
-
-
-    }
-
-}
-
-
-        [UpdateInGroup(typeof(LateSimulationSystemGroup))]
-        //[UpdateInGroup(typeof(TransformSystemGroup))]
-
-        //[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
-
-
-        public class GunAmmoHandlerSystem : SystemBase
+public class GunAmmoHandlerSystem : SystemBase
 {
 
     // BeginInitializationEntityCommandBufferSystem is used to create a command buffer which will then be played back
@@ -63,12 +33,15 @@ public class AmmoParentSystem : SystemBase
     // to run on the newly-spawned entities before they're rendered for the first time, the SpawnerSystem_FromEntity
     // will use the BeginSimulationEntityCommandBufferSystem to play back its commands. This introduces a one-frame lag
     // between recording the commands and instantiating the entities, but in practice this is usually not noticeable.
-    BeginInitializationEntityCommandBufferSystem m_EntityCommandBufferSystem;
+
+    //BeginInitializationEntityCommandBufferSystem m_EntityCommandBufferSystem;
+    EndSimulationEntityCommandBufferSystem m_EntityCommandBufferSystem;
 
     protected override void OnCreate()
     {
         // Cache the BeginInitializationEntityCommandBufferSystem in a field, so we don't have to create it every frame
-        m_EntityCommandBufferSystem = World.GetOrCreateSystem<BeginInitializationEntityCommandBufferSystem>();
+        //m_EntityCommandBufferSystem = World.GetOrCreateSystem<BeginInitializationEntityCommandBufferSystem>();
+        m_EntityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
     }
     protected override void OnUpdate()
     {
@@ -111,7 +84,8 @@ public class AmmoParentSystem : SystemBase
                  //BulletManager bulletManager,
                  Entity entity,
                  int entityInQueryIndex,
-                in  DeadComponent dead,
+                 ref BulletManagerComponent bulletManagerComponent,
+                in DeadComponent dead,
                  in PhysicsVelocity playerVelocity,
                 in AttachWeaponComponent attachWeapon,
                  in ActorWeaponAimComponent actorWeaponAimComponent
@@ -161,7 +135,7 @@ public class AmmoParentSystem : SystemBase
 
 
 
-                gun.Duration += dt;
+                if(gun.IsFiring == 1) gun.Duration += dt;
                 if ((gun.Duration > rate) && (gun.IsFiring == 1))
                 {
 
@@ -170,13 +144,15 @@ public class AmmoParentSystem : SystemBase
 
                     if (actorWeaponAimComponent.weaponRaised == WeaponMotion.Raised || isEnemy)
                     {
-                        gun.Duration = 0;
-                        gun.IsFiring = 0;
+                        //gun.Duration = 0;
+                        //gun.IsFiring = 0;
                         var e = commandBuffer.Instantiate(entityInQueryIndex, gun.PrimaryAmmo);
-                        float3 forward = gun.AmmoStartLocalToWorld.Forward;
                         var translation = new Translation() { Value = gun.AmmoStartLocalToWorld.Position };//use bone mb transform
                         var rotation = new Rotation() { Value = gun.AmmoStartLocalToWorld.Rotation };
                         var velocity = new PhysicsVelocity();
+                        float3 forward = gun.AmmoStartLocalToWorld.Forward;
+                        //float3 forward = math.forward(rotation.Value);
+
 
                         if (actorWeaponAimComponent.weaponCamera == CameraType.TopDown)
                         {
@@ -189,7 +165,8 @@ public class AmmoParentSystem : SystemBase
                         }
 
 
-
+                        bulletManagerComponent.playSound = true;
+                        bulletManagerComponent.setAnimationLayer = true;
 
                         //if (bulletManager.weaponAudioClip && bulletManager.weaponAudioSource)
                         //{
@@ -228,8 +205,21 @@ public class AmmoParentSystem : SystemBase
         //inputDeps.Complete();
 
 
+        Entities.WithoutBurst().ForEach((in GunComponent gun) =>
+        {
+            Entity primaryAmmoEntity = gun.PrimaryAmmo;
+            var ammoDataComponent = GetComponent<AmmoDataComponent>(primaryAmmoEntity);
+            float rate = ammoDataComponent.GameRate;
 
 
+
+            if (gun.IsFiring == 1 && gun.Duration > rate)
+            {
+                Debug.Log(" fired ");
+            }    
+            
+        
+        }).Run();
 
         // SpawnJob runs in parallel with no sync point until the barrier system executes.
         // When the barrier system executes we want to complete the SpawnJob and then play back the commands (Creating the entities and placing them).

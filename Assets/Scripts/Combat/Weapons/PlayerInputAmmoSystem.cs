@@ -7,10 +7,11 @@ using Unity.Transforms;
 using UnityEngine;
 
 
-[UpdateBefore(typeof(GunAmmoHandlerSystem))]
 //[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 //[UpdateInGroup(typeof(PresentationSystemGroup))]
-[UpdateInGroup(typeof(TransformSystemGroup))]
+[UpdateInGroup(typeof(SimulationSystemGroup))]
+//[UpdateInGroup(typeof(TransformSystemGroup))]
+//[UpdateBefore(typeof(GunAmmoHandlerSystem))]
 
 
 
@@ -22,6 +23,9 @@ public class PlayerInputAmmoSystem : SystemBase
 
         //EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
         //bool lt_released = false;
+
+        var check = new NativeArray<int>(1, Allocator.TempJob);
+
 
         Entities.WithoutBurst().ForEach
         (
@@ -42,12 +46,14 @@ public class PlayerInputAmmoSystem : SystemBase
                 bool ltPressed = inputController.leftTriggerDown;
 
                 if (
-                    attachWeapon.attachWeaponType == (int)WeaponType.Gun && ltPressed == true ||
-                attachWeapon.attachSecondaryWeaponType == (int)WeaponType.Gun && ltPressed == true
+                    //gunComponent.Duration > 0 &&
+                    (attachWeapon.attachWeaponType == (int)WeaponType.Gun && ltPressed == true ||
+                        attachWeapon.attachSecondaryWeaponType == (int)WeaponType.Gun && ltPressed == true)
                     )
                 {
 
                     gunComponent.IsFiring = 1;
+                    Debug.Log("firing " + entity);
                     playerWeaponAimComponent.weaponUpTimer = 0;
                     if (playerWeaponAimComponent.weaponRaised == WeaponMotion.None)
                     {
@@ -56,31 +62,24 @@ public class PlayerInputAmmoSystem : SystemBase
                         SetAnimationLayerWeights(animator, WeaponMotion.Started);
                     }
 
+                    if (HasComponent<ScoreComponent>(entity))
+                    {
+                        var scoreComponent = GetComponent<ScoreComponent>(entity);
+                        scoreComponent.lastShotConnected = false;
+                        SetComponent<ScoreComponent>(entity, scoreComponent);
+
+                    }
 
 
 
 
-                    //if (bulletManager.weaponAudioClip && bulletManager.weaponAudioSource)
-                    //{
-                    //    bulletManager.weaponAudioSource.PlayOneShot(bulletManager.weaponAudioClip, .25f);
-                    //}
-
-
-                    //if (EntityManager.HasComponent<Animator>(entity))
-                    //{
-                    //    bulletManager.GetComponent<Animator>().SetLayerWeight(0, 0);
-                    //}
-
-
-
-
-
+                    check[0] = 1;
 
 
 
                 }
 
-                SetComponent(entity, gunComponent);
+                //SetComponent(entity, gunComponent);
 
                 //if (dpadY > .000001 && playerWeaponAimComponent.weaponRaised == WeaponMotion.None)
                 //{
@@ -105,6 +104,9 @@ public class PlayerInputAmmoSystem : SystemBase
 
             }
         ).Run();
+
+
+        if (check[0] == 1) Debug.Log("done");
 
 
     }
