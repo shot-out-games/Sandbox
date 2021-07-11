@@ -11,13 +11,49 @@ using Unity.Transforms;
 using UnityEngine;
 
 
-[UpdateInGroup(typeof(LateSimulationSystemGroup))]
-//[UpdateInGroup(typeof(TransformSystemGroup))]
 
-//[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+public class AmmoParentSystem : SystemBase
+{
 
 
-public class GunAmmoHandlerSystem : SystemBase
+    protected override void OnUpdate()
+    {
+
+
+
+        Entities.WithoutBurst().ForEach(
+            (
+                 //Entity e,
+                 ref TriggerComponent triggerComponent
+                 ) =>
+            {
+
+                if (triggerComponent.Type == (int)TriggerType.Ammo)
+                {
+                    //triggerComponent.ParentEntity = entityShooterArray[0];
+                    //Debug.Log("e shooter " + entityShooterArray[0]);
+                }
+
+
+
+
+
+            }
+        ).Run();
+
+
+    }
+
+}
+
+
+        [UpdateInGroup(typeof(LateSimulationSystemGroup))]
+        //[UpdateInGroup(typeof(TransformSystemGroup))]
+
+        //[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+
+
+        public class GunAmmoHandlerSystem : SystemBase
 {
 
     // BeginInitializationEntityCommandBufferSystem is used to create a command buffer which will then be played back
@@ -39,7 +75,7 @@ public class GunAmmoHandlerSystem : SystemBase
 
         if (LevelManager.instance.endGame == true) return;
 
-        var triggerGroup = new NativeArray<TriggerComponent>(8, Allocator.TempJob);
+        //var triggerGroup = new NativeArray<TriggerComponent>(8, Allocator.TempJob);
 
 
         //EntityCommandBuffer commandBuffer = new EntityCommandBuffer(Allocator.Temp);
@@ -60,14 +96,16 @@ public class GunAmmoHandlerSystem : SystemBase
 
 
         // Update the target position (must pass isReadOnly=false)
-        //var gun = GetComponentDataFromEntity<GunComponent>(false);
+        var ammoGroup = GetComponentDataFromEntity<AmmoComponent>(false);
 
 
+        //var entityShooterArray = new NativeArray<Entity>(1, Allocator.Persistent);
 
         // Schedule the Entities.ForEach lambda job that will add Instantiate commands to the EntityCommandBuffer.
         // Since this job only runs on the first frame, we want to ensure Burst compiles it before running to get the best performance (3rd parameter of WithBurst)
         // The actual job will be cached once it is compiled (it will only get Burst compiled once).
 
+        //Entities.WithBurst(FloatMode.Default, FloatPrecision.Standard, true).WithNone<Pause>().WithNativeDisableContainerSafetyRestriction(ammoGroup).WithNativeDisableParallelForRestriction(ammoGroup).ForEach(
         Entities.WithBurst(FloatMode.Default, FloatPrecision.Standard, true).WithNone<Pause>().ForEach(
             (
                  //BulletManager bulletManager,
@@ -150,24 +188,13 @@ public class GunAmmoHandlerSystem : SystemBase
                             velocity.Linear = forward * strength;
                         }
 
-                        triggerGroup[0].ParentEntity = entity;
 
 
-                        //var ammoComponent = GetComponent<AmmoComponent>(e);
-                        //ammoComponent.OwnerAmmoEntity = entity;//may not need use trigger instead
-                        //var triggerComponent = GetComponent<TriggerComponent>(e);
-                        //triggerComponent.ParentEntity = entity;
-                        //commandBuffer.SetComponent(entityInQueryIndex, e, ammoComponent);
-                        //commandBuffer.SetComponent(entityInQueryIndex, e, triggerComponent);
 
                         //if (bulletManager.weaponAudioClip && bulletManager.weaponAudioSource)
                         //{
                         //  bulletManager.weaponAudioSource.PlayOneShot(bulletManager.weaponAudioClip, .25f);
                         //}
-
-
-
-
 
 
                         //if (EntityManager.HasComponent<Animator>(entity))
@@ -176,6 +203,8 @@ public class GunAmmoHandlerSystem : SystemBase
                         //}
 
 
+                        commandBuffer.SetComponent(entityInQueryIndex, e, new TriggerComponent
+                        { Type = (int)TriggerType.Ammo, ParentEntity = entity, Entity = e, Active = true });
                         commandBuffer.SetComponent(entityInQueryIndex, e, translation);
                         commandBuffer.SetComponent(entityInQueryIndex, e, rotation);
                         commandBuffer.SetComponent(entityInQueryIndex, e, velocity);
@@ -191,38 +220,12 @@ public class GunAmmoHandlerSystem : SystemBase
             }
         ).ScheduleParallel();
 
-        Entities.WithBurst().WithNone<Pause>().ForEach(
-            (
-                 Entity e,
-                 int entityInQueryIndex
-                 ) =>
-            {
 
 
-                //var ammoDataComponent = GetComponent<AmmoDataComponent>(e);
-                        //var ammoComponent = GetComponent<AmmoComponent>(e);
-                        //ammoComponent.OwnerAmmoEntity = entity;//may not need use trigger instead
-
-                        //var triggerComponent = GetComponent<TriggerComponent>(e);
-                        //triggerComponent.ParentEntity = entity;
-                        //commandBuffer.SetComponent(entityInQueryIndex, e, ammoComponent);
-                        //commandBuffer.SetComponent(entityInQueryIndex, e, triggerComponent);
-
-                        //if (bulletManager.weaponAudioClip && bulletManager.weaponAudioSource)
-                        //{
-                        //  bulletManager.weaponAudioSource.PlayOneShot(bulletManager.weaponAudioClip, .25f);
-                        //}
+        //Debug.Log("e " + entityShooterArray[0]);
 
 
-
-                    
-
-
-
-
-            }
-        ).ScheduleParallel();
-
+        //inputDeps.Complete();
 
 
 
@@ -236,6 +239,9 @@ public class GunAmmoHandlerSystem : SystemBase
         //commandBuffer.Dispose();
         //ecb.Playback(EntityManager);
         //ecb.Dispose();
+        //entityShooterArray.Dispose();
+        //entityAmmoArray.Dispose();
+
 
 
     }

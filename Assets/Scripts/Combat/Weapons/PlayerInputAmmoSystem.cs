@@ -27,6 +27,7 @@ public class PlayerInputAmmoSystem : SystemBase
         (
             (
                 Animator animator,
+                BulletManager bulletManager,
                 ref GunComponent gunComponent,
                 ref ActorWeaponAimComponent playerWeaponAimComponent,
                 in Entity entity,
@@ -36,7 +37,7 @@ public class PlayerInputAmmoSystem : SystemBase
             {
                 //lt mapped to 1 on keyboard when LT is not used for shooting - if not map to left mouse
                 float dpadY = inputController.dpadY;
-                WeaponMotion currentWeaponMotion =  (WeaponMotion)animator.GetInteger("WeaponRaised");
+                WeaponMotion currentWeaponMotion = (WeaponMotion)animator.GetInteger("WeaponRaised");
                 playerWeaponAimComponent.weaponRaised = currentWeaponMotion;
                 bool ltPressed = inputController.leftTriggerDown;
 
@@ -55,14 +56,36 @@ public class PlayerInputAmmoSystem : SystemBase
                         SetAnimationLayerWeights(animator, WeaponMotion.Started);
                     }
 
+
+
+
+
+                    //if (bulletManager.weaponAudioClip && bulletManager.weaponAudioSource)
+                    //{
+                    //    bulletManager.weaponAudioSource.PlayOneShot(bulletManager.weaponAudioClip, .25f);
+                    //}
+
+
+                    //if (EntityManager.HasComponent<Animator>(entity))
+                    //{
+                    //    bulletManager.GetComponent<Animator>().SetLayerWeight(0, 0);
+                    //}
+
+
+
+
+
+
+
+
                 }
 
                 SetComponent(entity, gunComponent);
 
                 //if (dpadY > .000001 && playerWeaponAimComponent.weaponRaised == WeaponMotion.None)
                 //{
-                  //  playerWeaponAimComponent.weaponRaised = WeaponMotion.Started;
-                    //SetAnimationLayerWeights(animator, WeaponMotion.Started);
+                //  playerWeaponAimComponent.weaponRaised = WeaponMotion.Started;
+                //SetAnimationLayerWeights(animator, WeaponMotion.Started);
                 //}
                 if (playerWeaponAimComponent.weaponRaised == WeaponMotion.None)
                 {
