@@ -222,7 +222,7 @@ public class GunAmmoHandlerSystem : SystemBase
 
             if (gun.IsFiring == 1)
             {
-                Debug.Log(" fired " + physicsVelocity.Linear);
+                //Debug.Log(" fired " + physicsVelocity.Linear);
             }    
             
         

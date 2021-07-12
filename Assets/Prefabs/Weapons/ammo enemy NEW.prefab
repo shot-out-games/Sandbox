@@ -342,9 +342,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomize: 0
   AmmoTime: 1
-  Strength: 50
+  Strength: 25
   Damage: 5
-  Rate: 0.75
+  Rate: 0.5
   ChargeRequired: 0
 --- !u!1001 &1155093784678171370
 PrefabInstance:
