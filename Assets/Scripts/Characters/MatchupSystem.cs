@@ -29,12 +29,6 @@ public class MatchupSystem : SystemBase
             ) =>
             {
 
-                float closestDistance = math.INFINITY;
-                GameObject enemy = enemyTransform.gameObject;
-                GameObject player = null;
-                GameObject closestPlayer = null;
-                bool enemyDead = GetComponent<DeadComponent>(enemyEntity).isDead;
-
 
                 //CloseComponent added to npc only too far away (1 only because no time to figure more)
                 float3 closePlayerPosition = float3.zero;
@@ -104,8 +98,17 @@ public class MatchupSystem : SystemBase
 
 
                     }).Run();
+                //end close component
 
 
+
+
+
+                float closestDistance = math.INFINITY;
+                GameObject enemy = enemyTransform.gameObject;
+                GameObject player = null;
+                GameObject closestPlayer = null;
+                bool enemyDead = GetComponent<DeadComponent>(enemyEntity).isDead;
 
 
 
