@@ -25,7 +25,7 @@ public struct GunComponent : IComponentData
     public float Damage;
     public float Rate;
     public float Duration;//rate counter for job
-    public int WasFiring;
+    public bool CanFire;
     public int IsFiring;
     public LocalToWorld AmmoStartLocalToWorld;
     public Translation AmmoStartPosition;
@@ -143,7 +143,7 @@ public class BulletManager : MonoBehaviour, IDeclareReferencedPrefabs, IConvertG
                 Rate = Rate,
                 gameDamage = Damage,
                 gameRate = Rate,
-                WasFiring = 0,
+                CanFire = true,
                 IsFiring = 0
 
             });

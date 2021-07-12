@@ -34,14 +34,14 @@ public class GunAmmoHandlerSystem : SystemBase
     // will use the BeginSimulationEntityCommandBufferSystem to play back its commands. This introduces a one-frame lag
     // between recording the commands and instantiating the entities, but in practice this is usually not noticeable.
 
-    //BeginInitializationEntityCommandBufferSystem m_EntityCommandBufferSystem;
-    EndSimulationEntityCommandBufferSystem m_EntityCommandBufferSystem;
+    BeginInitializationEntityCommandBufferSystem m_EntityCommandBufferSystem;
+    //EndSimulationEntityCommandBufferSystem m_EntityCommandBufferSystem;
 
     protected override void OnCreate()
     {
         // Cache the BeginInitializationEntityCommandBufferSystem in a field, so we don't have to create it every frame
-        //m_EntityCommandBufferSystem = World.GetOrCreateSystem<BeginInitializationEntityCommandBufferSystem>();
-        m_EntityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        m_EntityCommandBufferSystem = World.GetOrCreateSystem<BeginInitializationEntityCommandBufferSystem>();
+        //m_EntityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
     }
     protected override void OnUpdate()
     {
@@ -136,14 +136,21 @@ public class GunAmmoHandlerSystem : SystemBase
 
 
                 if(gun.IsFiring == 1) gun.Duration += dt;
+
                 if ((gun.Duration > rate) && (gun.IsFiring == 1))
                 {
-
                     gun.Duration = 0;
                     gun.IsFiring = 0;
+                    gun.CanFire = true;
+                }
+
+                if (gun.CanFire == true)
+                {
+
 
                     if (actorWeaponAimComponent.weaponRaised == WeaponMotion.Raised || isEnemy)
                     {
+                        gun.CanFire = false;
                         //gun.Duration = 0;
                         //gun.IsFiring = 0;
                         var e = commandBuffer.Instantiate(entityInQueryIndex, gun.PrimaryAmmo);
@@ -156,8 +163,8 @@ public class GunAmmoHandlerSystem : SystemBase
 
                         if (actorWeaponAimComponent.weaponCamera == CameraType.TopDown)
                         {
-                            //velocity.Linear = forward * strength + playerVelocity.Linear;
-                            velocity.Linear = forward * strength;
+                            //velocity.Linear = forward * strength;
+                            velocity.Linear = forward * strength + playerVelocity.Linear;
                         }
                         else
                         {
@@ -205,7 +212,7 @@ public class GunAmmoHandlerSystem : SystemBase
         //inputDeps.Complete();
 
 
-        Entities.WithoutBurst().ForEach((in GunComponent gun) =>
+        Entities.WithoutBurst().ForEach((in GunComponent gun, in PhysicsVelocity physicsVelocity) =>
         {
             Entity primaryAmmoEntity = gun.PrimaryAmmo;
             var ammoDataComponent = GetComponent<AmmoDataComponent>(primaryAmmoEntity);
@@ -213,9 +220,9 @@ public class GunAmmoHandlerSystem : SystemBase
 
 
 
-            if (gun.IsFiring == 1 && gun.Duration > rate)
+            if (gun.IsFiring == 1)
             {
-                Debug.Log(" fired ");
+                Debug.Log(" fired " + physicsVelocity.Linear);
             }    
             
         

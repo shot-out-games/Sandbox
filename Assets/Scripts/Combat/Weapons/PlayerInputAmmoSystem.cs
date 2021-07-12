@@ -43,7 +43,7 @@ public class PlayerInputAmmoSystem : SystemBase
                 float dpadY = inputController.dpadY;
                 WeaponMotion currentWeaponMotion = (WeaponMotion)animator.GetInteger("WeaponRaised");
                 playerWeaponAimComponent.weaponRaised = currentWeaponMotion;
-                bool ltPressed = inputController.leftTriggerDown;
+                bool ltPressed = inputController.leftTriggerDown || inputController.leftTriggerPressed;
 
                 if (
                     //gunComponent.Duration > 0 &&
@@ -53,7 +53,7 @@ public class PlayerInputAmmoSystem : SystemBase
                 {
 
                     gunComponent.IsFiring = 1;
-                    Debug.Log("firing " + entity);
+                    //Debug.Log("firing " + entity);
                     playerWeaponAimComponent.weaponUpTimer = 0;
                     if (playerWeaponAimComponent.weaponRaised == WeaponMotion.None)
                     {
@@ -106,7 +106,7 @@ public class PlayerInputAmmoSystem : SystemBase
         ).Run();
 
 
-        if (check[0] == 1) Debug.Log("done");
+        //if (check[0] == 1) Debug.Log("done");
 
 
     }

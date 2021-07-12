@@ -360,13 +360,13 @@ public class AttackerSystem : SystemBase
                     if (HasComponent<RatingsComponent>(entityA))
                     {
                         hitPower = GetComponent<RatingsComponent>(entityA).hitPower;
-                        Debug.Log("hit power " + hitPower);
+                        //Debug.Log("hit power " + hitPower);
                     }
                     if (HasComponent<HealthComponent>(entityA))
                     {
                         bool alwaysDamage = GetComponent<HealthComponent>(entityA).AlwaysDamage;
                         if (alwaysDamage) hw = 1;//
-                        Debug.Log("hit power " + hitPower);
+                        //Debug.Log("hit power " + hitPower);
                     }
 
                     //float WeaponPower = 1;
@@ -381,7 +381,7 @@ public class AttackerSystem : SystemBase
                     {
                         var skill = GetComponent<SkillTreeComponent>(entityA);
                         skill.CurrentLevelXp += damage;
-                        Debug.Log("xp " + skill.CurrentLevelXp);
+                        //Debug.Log("xp " + skill.CurrentLevelXp);
                         SetComponent<SkillTreeComponent>(entityA, skill);
                     }
 

@@ -104,9 +104,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cdd53f33bd0c534bb8c104a33146205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoTime: 1
+  ammoTime: 2
   comboTimeAdd: 6
-  framesToSkip: 0
+  framesToSkip: 1
 --- !u!114 &8439595339403142612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,7 +283,7 @@ MonoBehaviour:
     m_CollidesWithCategories:
       m_Override: 0
       m_Value:
-        Category00: 1
+        Category00: 0
         Category01: 1
         Category02: 1
         Category03: 1

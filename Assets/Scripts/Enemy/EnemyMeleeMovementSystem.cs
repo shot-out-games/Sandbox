@@ -126,7 +126,7 @@ public class EnemyMeleeMovementSystem : SystemBase
                 {
                     animator.GetComponent<EnemyMelee>().currentStrikeDistanceAdjustment = 1;//reset when out of strike range
                     MoveState = MoveStates.Chase;
-                    Debug.Log("zone 1 melee");
+                    //Debug.Log("zone 1 melee");
                     animator.SetInteger("Zone", 1);
                     enemyMove.SetDestination();
                     enemyMove.FacePlayer();
