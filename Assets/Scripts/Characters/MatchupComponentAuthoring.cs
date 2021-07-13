@@ -9,7 +9,9 @@ public struct MatchupComponent : IComponentData
 {
     public bool matchupClosest;
     public bool leader;
-
+    public float AngleRadians;
+    public float ViewDistanceSQ;
+    public bool View360;
 }
 
 //public struct CloseComponent : IComponentData
@@ -34,7 +36,11 @@ public class MatchupComponentAuthoring : MonoBehaviour, IConvertGameObjectToEnti
     // For example,
     public bool matchupClosest = true;
     public bool leader = false;
-    
+
+    public float AngleRadians = 180;
+    public float ViewDistanceSQ = 100;
+
+    public bool View360 = false;
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
@@ -46,7 +52,12 @@ public class MatchupComponentAuthoring : MonoBehaviour, IConvertGameObjectToEnti
         //   to do it, instead of adding entities through 'dstManager' directly.
         //
         // For example,
-         dstManager.AddComponentData(entity, new MatchupComponent {matchupClosest = matchupClosest, leader = leader});
+         dstManager.AddComponentData(entity, 
+             new MatchupComponent
+             {
+                 matchupClosest = matchupClosest, leader = leader, AngleRadians = AngleRadians, ViewDistanceSQ = ViewDistanceSQ,
+                 View360 = View360
+             });
         
         
     }

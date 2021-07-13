@@ -55,7 +55,7 @@ public class EnemyMovementSystem : SystemBase
                         animator.SetInteger("Zone", 1);
                         MoveState = MoveStates.Idle;
                         enemyMove.AnimationMovement(); //dont chase just idle animation - sets animation param Z=0
-                        enemyMove.FacePlayer();
+                        enemyMove.FaceWaypoint();
                     }
                     else if (dist >= chaseRange && role == EnemyRoles.Patrol)
                     {

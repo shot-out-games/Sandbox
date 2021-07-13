@@ -125,7 +125,7 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
 
         });
 
-        dstManager.AddComponentData(entity, new EnemyMovementComponent { speedMultiple = 1.0f });
+        //dstManager.AddComponentData(entity, new EnemyMovementComponent { speedMultiple = 1.0f });
         dstManager.AddComponentData(entity,
             new EnemyMovementComponent
             {

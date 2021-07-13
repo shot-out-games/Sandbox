@@ -62,9 +62,9 @@ public class MatchupSystem : SystemBase
                         //skip if speed power up enabled
                         if (HasComponent<Speed>(playerE))
                         {
-                            if(GetComponent<Speed>(playerE).enabled) return;
+                            if (GetComponent<Speed>(playerE).enabled) return;
                         }
-                    
+
 
 
                         if (distance > closePlayerMaxDistance)
@@ -83,7 +83,7 @@ public class MatchupSystem : SystemBase
                             }
 
                         }
-                        else 
+                        else
                         {
                             if (HasComponent<EffectsComponent>(playerE))
                             {
@@ -114,7 +114,7 @@ public class MatchupSystem : SystemBase
 
 
 
-                Entities.WithAll<DeadComponent>().WithAll<PlayerComponent>().WithNone<SkipMatchupComponent>().WithoutBurst().ForEach
+                Entities.WithAll<DeadComponent>().WithAll<PlayerComponent>().WithoutBurst().ForEach
                 (
                     (
                         Transform playerTransform,//find closest player
@@ -126,8 +126,42 @@ public class MatchupSystem : SystemBase
 
                         if (playerDead == false && enemyDead == false)
                         {
-                            float distance = Vector3.Distance(playerTransform.position, enemyTransform.position);
-                            if (distance < closestDistance)
+                            float distance = math.distance(playerTransform.position, enemyTransform.position);
+
+
+
+                            // Get a normalized vector from the guard to the player
+                            var forwardVector = math.forward(enemyTransform.rotation);
+                            var vectorToPlayer = playerTransform.position - enemyTransform.position;
+                            var unitVecToPlayer = math.normalize(vectorToPlayer);
+
+
+                            float AngleRadians = math.INFINITY;
+                            float ViewDistanceSQ = math.INFINITY;
+                            var dot = 1.0;
+                            bool View360 = true;
+                            if (HasComponent<MatchupComponent>(enemyEntity))
+                            {
+                                AngleRadians = GetComponent<MatchupComponent>(enemyEntity).AngleRadians;
+                                ViewDistanceSQ = GetComponent<MatchupComponent>(enemyEntity).ViewDistanceSQ;
+                                dot = math.dot(forwardVector, unitVecToPlayer);
+                                // Use the dot product to determine if the player is within our vision cone
+                                View360 = GetComponent<MatchupComponent>(enemyEntity).View360;
+                            }
+
+                            //Debug.Log("rads " + math.degrees( math.abs(math.acos(dot))));
+                            var canSeePlayer = (dot > 0.0f || View360) && // player is in front of us
+                                math.degrees(math.abs(math.acos(dot))) < AngleRadians &&            // player is within the cone angle bounds
+                                math.length(vectorToPlayer) < ViewDistanceSQ;            // player is within vision distance (we use Squared Distance to avoid sqrt calculation)
+
+
+
+                            //float ck = math.lengthsq(vectorToPlayer);
+                            //Debug.Log("ck " + ck);
+
+
+
+                            if (distance < closestDistance && canSeePlayer)
                             {
                                 closestPlayer = player;
                                 closestDistance = distance;

@@ -105,7 +105,7 @@ public class PlayerInputAmmoSystem : SystemBase
             }
         ).Run();
 
-
+        check.Dispose();
         //if (check[0] == 1) Debug.Log("done");
 
 
