@@ -174,6 +174,7 @@ public class MatchupSystem : SystemBase
 
                 if (closestPlayer != null)
                 {
+
                     if (enemy.GetComponent<EnemyWeaponAim>())
                     {
                         enemy.GetComponent<EnemyWeaponAim>().target =
@@ -189,7 +190,25 @@ public class MatchupSystem : SystemBase
                         enemy.GetComponent<EnemyMove>().target =
                             closestPlayer.transform;
                     }
+                }
+                else
+                {
 
+                    if (enemy.GetComponent<EnemyWeaponAim>())
+                    {
+                        enemy.GetComponent<EnemyWeaponAim>().target =
+                            null;
+                    }
+                    if (enemy.GetComponent<EnemyMelee>())
+                    {
+                        enemy.GetComponent<EnemyMelee>().moveUsing.target =
+                            null;
+                    }
+                    if (enemy.GetComponent<EnemyMove>())
+                    {
+                        enemy.GetComponent<EnemyMove>().target =
+                            null;
+                    }
                 }
 
             }

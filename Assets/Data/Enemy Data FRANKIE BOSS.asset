@@ -17,7 +17,7 @@ MonoBehaviour:
   combatStrikeDistanceZoneEnd: 3.5
   combatRangeDistance: 14
   shootRangeDistance: 16
-  chaseRange: 20
+  chaseRange: 100
   aggression: 50
   maxHealth: 150
   hitPower: 100

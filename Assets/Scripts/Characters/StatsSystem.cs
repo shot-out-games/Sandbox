@@ -21,7 +21,7 @@ public class StatsSystem : SystemBase
                  
             ) =>
             {
-                Debug.Log("pts " + skillTree.PointsNextLevel + " lvl " + skillTree.CurrentLevel);
+                //Debug.Log("pts " + skillTree.PointsNextLevel + " lvl " + skillTree.CurrentLevel);
 
                 int pointsNeeded = skillTree.PointsNextLevel * skillTree.CurrentLevel;
 

@@ -421,7 +421,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     public void AnimationMovement()
     {
 
-        if (target == null || anim == null) return;
+        if (anim == null) return;
 
 
 

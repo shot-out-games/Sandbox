@@ -3137,6 +3137,7 @@ namespace Rewired.UI.ControlMapper
         }
 
         private void ClearCompletely() {
+            Clear();
             ClearSpawnedObjects();
             ClearAllVars();
         }

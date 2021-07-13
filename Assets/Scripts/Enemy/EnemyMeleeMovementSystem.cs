@@ -29,11 +29,12 @@ public class EnemyMeleeMovementSystem : SystemBase
             if (dead.isDead) return;
             if (enemyMovementComponent.enabled == false) return;
 
+            enemyMove.speedMultiple = 1;
+            MoveStates MoveState = enemyState.MoveState;
+            EnemyRoles role = enemyMove.enemyRole;
+
             if (enemyMove.target != null)
             {
-                enemyMove.speedMultiple = 1;
-                MoveStates MoveState = enemyState.MoveState;
-                EnemyRoles role = enemyMove.enemyRole;
 
                 Vector3 enemyPosition = animator.transform.position;
                 Vector3 homePosition = enemyMove.originalPosition;
@@ -152,6 +153,17 @@ public class EnemyMeleeMovementSystem : SystemBase
                 enemyState = new EnemyStateComponent() { MoveState = MoveState };
 
             }
+            else if (role == EnemyRoles.Patrol)
+            {
+                animator.SetInteger("Zone", 1);
+                MoveState = MoveStates.Patrol;
+                enemyMove.Patrol();
+                enemyMove.FaceWaypoint();
+
+            }
+
+            //enemyState = new EnemyStateComponent() { MoveState = MoveState };
+
 
         }
         ).Run();

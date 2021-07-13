@@ -1,3 +1,13 @@
+1.1.39.3:
+
+    Changes:
+      - WebGL builds work again after changes to compiler in Unity 2020.2.0 to that caused builds to throw an error on launch.
+      - Updated UFE2 integration to change auto show/hide of touch controls to toggle based on a screen touch and a controller press instead of toggling based on the presence of a controller due to problems with phantom joysticks that appear on some Android devices.
+      - Control Mapper: Focus is now reset when calling Reset while windows are open.
+   
+    Bug Fixes:
+      - ControllerMap.hardwareGuid is now correctly set for MouseMap, KeyboardMap, and CustomControllerMap.
+
 1.1.39.2:
     
     Changes:
@@ -8,7 +18,7 @@
     
     Bug Fixes:
       - Windows Standalone, Native Mouse Handling: Virtual desktop mouse delta value is no longer ~1/2 size of local mouse delta.
-      - Fixd missing stick buttons mappings for Steam Controller (emulated) in Gamepad Template.
+      - Fixed missing stick buttons mappings for Steam Controller (emulated) in Gamepad Template.
 
 1.1.39.1:
   
