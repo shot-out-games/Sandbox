@@ -10,7 +10,7 @@ using Unity.Jobs;
 
 
 
-//[UpdateAfter(typeof(GunAmmoHandlerSystem))]//gunammohandler makes the  bullet first
+[UpdateAfter(typeof(GunAmmoHandlerSystem))]//gunammohandler makes the  bullet first
 //[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 public class AmmoSystem : SystemBase
 {

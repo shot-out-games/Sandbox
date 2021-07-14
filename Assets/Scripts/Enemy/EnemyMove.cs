@@ -104,9 +104,9 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     public NavMeshAgent agent;
     private Animator anim;
 
-    public float chaseRange;
-    public float combatRangeDistance;
-    public float shootRangeDistance;
+    //public float chaseRange;
+    //public float combatRangeDistance;
+    //public float shootRangeDistance;
 
     //[HideInInspector]
     public List<WayPoint> wayPoints = new List<WayPoint>();
@@ -155,9 +155,9 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     void Init()
     {
         enemyRatings = GetComponent<EnemyRatings>();
-        chaseRange = 18;
-        combatRangeDistance = 6;
-        shootRangeDistance = 8;
+        //chaseRange = 18;
+        //combatRangeDistance = 6;
+        //shootRangeDistance = 8;
 
         agent = GetComponent<NavMeshAgent>();
         moveSpeed = 3.5f;
@@ -165,9 +165,9 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         RatingsComponent ratings = manager.GetComponentData<RatingsComponent>(entity);
         if (enemyRatings)
         {
-            chaseRange = ratings.chaseRangeDistance;
-            combatRangeDistance = ratings.combatRangeDistance;
-            shootRangeDistance = ratings.shootRangeDistance;
+            //chaseRange = ratings.chaseRangeDistance;
+            //combatRangeDistance = ratings.combatRangeDistance;
+            //shootRangeDistance = ratings.shootRangeDistance;
             if (agent)
             {
                 agent.speed = ratings.speed;

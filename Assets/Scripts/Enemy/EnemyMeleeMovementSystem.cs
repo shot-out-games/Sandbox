@@ -11,29 +11,39 @@ public class EnemyMeleeMovementSystem : SystemBase
     protected override void OnUpdate()
     {
 
-        Entities.WithoutBurst().WithNone<Pause>().WithAll<EnemyComponent>().WithStructuralChanges().ForEach
+        Entities.WithoutBurst().WithNone<Pause>().WithAll<EnemyComponent>().WithAll<EnemyMovementComponent>().
+            WithAll<EnemyMeleeMovementComponent>().WithAll<EnemyWeaponMovementComponent>().WithStructuralChanges().ForEach
         (
         (
-            ref EnemyMeleeMovementComponent enemyMovementComponent,
+
+            Animator animator,
+            EnemyMove enemyMove,
+            EnemyWeaponAim aim,
+            Entity e,
             ref EnemyStateComponent enemyState,
-            ref Translation translation,
-            in Entity entity,
-            in DeadComponent dead,
-            in Animator animator,
-            in EnemyMove enemyMove,
-            in EnemyBehaviourComponent enemyBehaviourComponent
+            ref GunComponent gun,
+            in EnemyBehaviourComponent enemyBehaviourComponent,
+            in DeadComponent dead
 
 
         ) =>
         {
             if (dead.isDead) return;
-            if (enemyMovementComponent.enabled == false) return;
+            //if (enemyMovementComponent.enabled == false) return;
+            var EnemyBasicMovementComponent = GetComponent<EnemyMovementComponent>(e);
+            var EnemyMeleeMovementComponent = GetComponent<EnemyMeleeMovementComponent>(e);
+            var EnemyWeaponMovementComponent = GetComponent<EnemyWeaponMovementComponent>(e);
+
+
+            bool basicMovement = EnemyBasicMovementComponent.enabled;
+            bool meleeMovement = EnemyMeleeMovementComponent.enabled;
+            bool weaponMovement = EnemyWeaponMovementComponent.enabled;
 
             enemyMove.speedMultiple = 1;
             MoveStates MoveState = enemyState.MoveState;
             EnemyRoles role = enemyMove.enemyRole;
 
-            if (enemyMove.target != null)
+            if (enemyMove.target != null && enemyMove.enemyRole != EnemyRoles.None)
             {
 
                 Vector3 enemyPosition = animator.transform.position;
@@ -41,18 +51,30 @@ public class EnemyMeleeMovementSystem : SystemBase
                 bool stayHome = enemyBehaviourComponent.useDistanceFromStation;
                 float dist = Vector3.Distance(enemyMove.target.position, enemyPosition);
                 float distFromStation = Vector3.Distance(homePosition, enemyPosition);
-
-
+                float chaseRange = enemyBehaviourComponent.chaseRange;
+                if (weaponMovement)
+                {
+                    aim.weaponRaised = false;
+                    aim.SetAnimationLayerWeights();
+                    aim.weaponRaised = false;
+                    gun.IsFiring = 0;
+                    if (dist < EnemyWeaponMovementComponent.shootRangeDistance)
+                    {
+                        aim.weaponRaised = true;
+                        gun.IsFiring = 1;
+                        MoveState = MoveStates.Idle;//need new state for when shooting then animation movement adjust to this
+                        enemyMove.AnimationMovement();
+                        enemyMove.FacePlayer();
+                    }
+                }
 
 
                 //float backupZoneClose = animator.GetComponent<EnemyMelee>().currentStrikeDistanceZoneBegin;
-                float backupZoneClose = enemyMovementComponent.combatStrikeDistanceZoneBegin;
-                float backupZoneFar = enemyMovementComponent.combatStrikeDistanceZoneEnd;
-                float chaseRange = enemyMove.chaseRange;
-
+                float backupZoneClose = EnemyMeleeMovementComponent.combatStrikeDistanceZoneBegin;
+                float backupZoneFar = EnemyMeleeMovementComponent.combatStrikeDistanceZoneEnd;
 
                 bool strike = false;
-                if (dist < backupZoneClose)
+                if (dist < backupZoneClose && meleeMovement)
                 {
                     MoveState = MoveStates.Default;
                     enemyMove.backup = true;//only time to turn on 
@@ -60,12 +82,12 @@ public class EnemyMeleeMovementSystem : SystemBase
                     strike = true;
                 }
 
-                if (enemyMove.backup && dist > backupZoneFar)
+                if (enemyMove.backup && dist > backupZoneFar && meleeMovement)
                 {
                     MoveState = MoveStates.Default;
                     enemyMove.backup = false;//only time to turn off
                 }
-                else if (dist >= backupZoneClose && dist <= backupZoneFar)
+                else if (dist >= backupZoneClose && dist <= backupZoneFar && meleeMovement)
                 {
                     enemyMove.speedMultiple = math.sqrt((dist - backupZoneClose) / (backupZoneFar - backupZoneClose));
                     enemyMove.speedMultiple = 1;
@@ -73,8 +95,8 @@ public class EnemyMeleeMovementSystem : SystemBase
                     int n = Random.Range(0, 10);
                     //if (enemyMove.backup == true && n <= 2)
                     //{
-                        strike = true;
-                        //enemyMove.backup = false;//try
+                    strike = true;
+                    //enemyMove.backup = false;//try
 
                     //}
                     //else if (enemyMove.backup == false && n <= 5)
@@ -97,7 +119,7 @@ public class EnemyMeleeMovementSystem : SystemBase
                 if (stayHome && distFromStation > chaseRange) chaseRange = 0;
 
 
-                if (strike && dist < chaseRange)
+                if (strike && dist < chaseRange && meleeMovement)
                 {
                     MoveState = MoveStates.Default;
                     animator.SetInteger("Zone", 3);
@@ -106,7 +128,7 @@ public class EnemyMeleeMovementSystem : SystemBase
                     enemyMove.FacePlayer();
 
                 }
-                else if (backup && dist < chaseRange)
+                else if (backup && dist < chaseRange && meleeMovement)
                 {
                     MoveState = MoveStates.Default;
                     animator.SetInteger("Zone", 2);
@@ -114,7 +136,7 @@ public class EnemyMeleeMovementSystem : SystemBase
                     enemyMove.FacePlayer();
 
                 }
-                else if (dist < enemyMove.combatRangeDistance && dist < chaseRange)
+                else if (dist < EnemyMeleeMovementComponent.combatRangeDistance && dist < chaseRange && meleeMovement)
                 {
                     MoveState = MoveStates.Default;
                     //Debug.Log("zone 1 melee move");
@@ -125,7 +147,11 @@ public class EnemyMeleeMovementSystem : SystemBase
                 }
                 else if (dist < chaseRange)
                 {
-                    animator.GetComponent<EnemyMelee>().currentStrikeDistanceAdjustment = 1;//reset when out of strike range
+                    if (animator.GetComponent<EnemyMelee>())
+                    {
+                        animator.GetComponent<EnemyMelee>().currentStrikeDistanceAdjustment = 1; //reset when out of strike range
+                    }
+
                     MoveState = MoveStates.Chase;
                     //Debug.Log("zone 1 melee");
                     animator.SetInteger("Zone", 1);

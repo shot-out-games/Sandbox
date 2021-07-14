@@ -7,17 +7,19 @@ using Unity.Entities;
 
 public struct EnemyBehaviourComponent : IComponentData
 {
+    public float speedMultiple;
+    public float speed;
     public bool breakRoute;
     public bool useDistanceFromStation;
+    public float chaseRange;
+    public float aggression;
+    public float maxHealth;
+
 
 }
 public struct EnemyWeaponMovementComponent : IComponentData, IMovement
 {
-    public float speedMultiple;
-    public float speed;
-    public float combatStrikeDistanceZoneBegin;
-    public float combatStrikeDistanceZoneEnd;
-    public float chaseRange;
+    //public float speedMultiple;
     public Vector3 originalPosition;
     public bool enabled;//true if currently active movement state
 
@@ -28,18 +30,18 @@ public struct EnemyWeaponMovementComponent : IComponentData, IMovement
     public float originalSwitchUpTime;
     public float currentSwitchUpTime;
 
+    public float shootRangeDistance;
+
 }
 
 public struct EnemyMeleeMovementComponent : IComponentData
 {
-    public float speed;
     public float combatStrikeDistanceZoneBegin;
     public float combatStrikeDistanceZoneEnd;
     public float combatRangeDistance;
-    public float chaseRange;
-    public float aggression;
-    public float maxHealth;
-    public float speedMultiple;
+    //public float aggression;
+    //public float maxHealth;
+    //public float speedMultiple;
     public bool backup;
     public Vector3 originalPosition;
     public bool enabled;//true if currently active movement state
@@ -56,16 +58,10 @@ public struct EnemyMeleeMovementComponent : IComponentData
 }
 
 
+
+
 public struct EnemyMovementComponent : IComponentData
 {
-    public float speedMultiple;
-    public float speed;
-    public float combatStrikeDistanceZoneBegin;
-    public float combatStrikeDistanceZoneEnd;
-    public float combatRangeDistance;
-    public float chaseRange;
-    public float aggression;
-    public float maxHealth;
     public bool backup;
     public Vector3 originalPosition;
     public bool enabled;//true if currently active movement state
@@ -81,8 +77,8 @@ public struct EnemyMovementComponent : IComponentData
 
 
 
-
 }
+
 
 
 
@@ -96,7 +92,9 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField]
     bool breakRoute = true;
 
-
+    //public float chaseRange;
+    //public float combatRangeDistance;
+    //public float shootRangeDistance;
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
@@ -121,6 +119,8 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
         {
             breakRoute = breakRoute,
             useDistanceFromStation = useDistanceFromStation,
+            chaseRange = GetComponent<EnemyRatings>().Ratings.chaseRange,
+            speedMultiple = 1.0f
 
 
         });
@@ -129,9 +129,6 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
         dstManager.AddComponentData(entity,
             new EnemyMovementComponent
             {
-                speedMultiple = 1.0f,
-                combatStrikeDistanceZoneBegin = GetComponent<EnemyRatings>().Ratings.combatStrikeDistanceZoneBegin,
-                combatStrikeDistanceZoneEnd = GetComponent<EnemyRatings>().Ratings.combatStrikeDistanceZoneEnd,
                 originalPosition = transform.position,
                 switchUp = switchUp,
                 originalSwitchUpTime = switchUpTime,
@@ -142,26 +139,24 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
 
         dstManager.AddComponentData(entity, new EnemyMeleeMovementComponent
         {
-            speedMultiple = 1.0f,
             combatStrikeDistanceZoneBegin = GetComponent<EnemyRatings>().Ratings.combatStrikeDistanceZoneBegin,
             combatStrikeDistanceZoneEnd = GetComponent<EnemyRatings>().Ratings.combatStrikeDistanceZoneEnd,
             originalPosition = transform.position,
             switchUp = switchUp,
             originalSwitchUpTime = switchUpTime,
             currentSwitchUpTime = switchUpTime,
+            combatRangeDistance = GetComponent<EnemyRatings>().Ratings.combatRangeDistance,
             enabled = meleeMovement
 
         });
         dstManager.AddComponentData(entity,
             new EnemyWeaponMovementComponent
             {
-                speedMultiple = 1.0f,
-                combatStrikeDistanceZoneBegin = GetComponent<EnemyRatings>().Ratings.combatStrikeDistanceZoneBegin,
-                combatStrikeDistanceZoneEnd = GetComponent<EnemyRatings>().Ratings.combatStrikeDistanceZoneEnd,
                 originalPosition = transform.position,
                 switchUp = switchUp,
                 originalSwitchUpTime = switchUpTime,
                 currentSwitchUpTime = switchUpTime,
+                shootRangeDistance = GetComponent<EnemyRatings>().Ratings.shootRangeDistance,
                 enabled = weaponMovement
             }
         );

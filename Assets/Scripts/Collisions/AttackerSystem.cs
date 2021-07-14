@@ -8,7 +8,7 @@ using Unity.Physics.Systems;
 
 [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
 //[UpdateAfter(typeof(EndFramePhysicsSystem))]
-//[UpdateBefore(typeof(CollisionSystem))]
+[UpdateBefore(typeof(CollisionSystem))]
 
 
 
@@ -395,9 +395,10 @@ public class AttackerSystem : SystemBase
 
 
 
+            Debug.Log("ty b " + type_b + " ty a " + type_a);
 
-
-            if (type_b == (int)TriggerType.Ammo && HasComponent<TriggerComponent>(collision_entity_a) && HasComponent<TriggerComponent>(collision_entity_b)) //b is ammo so causes damage to entity
+            if (type_b == (int)TriggerType.Ammo && HasComponent<TriggerComponent>(collision_entity_a)
+                                                && HasComponent<TriggerComponent>(collision_entity_b)) //b is ammo so causes damage to entity
             {
                 Entity shooter = Entity.Null;
                 //if (EntityManager.HasComponent<AmmoComponent>(collision_entity_b)) //ammo entity not character if true
@@ -410,7 +411,7 @@ public class AttackerSystem : SystemBase
 
                 //Debug.Log("ta " + type_a + " tb " + type_b);
                 //Debug.Log("ea " + collision_entity_a + " eb " + collision_entity_b);
-                //Debug.Log("shooter " + shooter);
+                Debug.Log("shooter " + shooter);
 
                 if (shooter != Entity.Null)
                 {
@@ -419,7 +420,7 @@ public class AttackerSystem : SystemBase
                         .ParentEntity;
                     bool isEnemyTarget = HasComponent<EnemyComponent>(target);
 
-                    //Debug.Log("es " + isEnemyShooter + " et " + isEnemyTarget);
+                    Debug.Log("es " + isEnemyShooter + " et " + isEnemyTarget);
 
 
                     AmmoComponent ammo =
@@ -429,7 +430,7 @@ public class AttackerSystem : SystemBase
                         GetComponent<AmmoDataComponent>(collision_entity_b);
 
                     float damage = GetComponent<GunComponent>(shooter).gameDamage;
-                    //Debug.Log("damage " + damage);
+                    Debug.Log("damage " + damage);
                     ammo.AmmoDead = true;
 
 

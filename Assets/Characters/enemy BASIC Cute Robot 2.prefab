@@ -31893,9 +31893,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
-  chaseRange: 0
-  combatRangeDistance: 0
-  shootRangeDistance: 0
   wayPoints:
   - targetPosition: {x: 0, y: 0, z: 0}
     offset: {x: 0, y: 0, z: 0}
@@ -31921,8 +31918,6 @@ MonoBehaviour:
   ps: {fileID: 0}
   stunEffect: {fileID: 0}
   duration: 3
-  startPos: {x: 0, y: 0, z: 0}
-  endPos: {x: 0, y: 0, z: 0}
   curve:
     serializedVersion: 2
     m_Curve:
@@ -31982,10 +31977,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navigationStates: 3
-  useDistanceFromStation: 0
+  useDistanceFromStation: 1
   switchUp: 0
   switchUpTime: 6
   canFreeze: 0
+  breakRoute: 1
 --- !u!114 &8579106213494553392
 MonoBehaviour:
   m_ObjectHideFlags: 0
