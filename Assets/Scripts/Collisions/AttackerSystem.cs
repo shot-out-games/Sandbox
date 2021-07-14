@@ -395,7 +395,7 @@ public class AttackerSystem : SystemBase
 
 
 
-            Debug.Log("ty b " + type_b + " ty a " + type_a);
+            //Debug.Log("ty b " + type_b + " ty a " + type_a);
 
             if (type_b == (int)TriggerType.Ammo && HasComponent<TriggerComponent>(collision_entity_a)
                                                 && HasComponent<TriggerComponent>(collision_entity_b)) //b is ammo so causes damage to entity
@@ -420,7 +420,7 @@ public class AttackerSystem : SystemBase
                         .ParentEntity;
                     bool isEnemyTarget = HasComponent<EnemyComponent>(target);
 
-                    Debug.Log("es " + isEnemyShooter + " et " + isEnemyTarget);
+                    //Debug.Log("es " + isEnemyShooter + " et " + isEnemyTarget);
 
 
                     AmmoComponent ammo =
@@ -430,7 +430,7 @@ public class AttackerSystem : SystemBase
                         GetComponent<AmmoDataComponent>(collision_entity_b);
 
                     float damage = GetComponent<GunComponent>(shooter).gameDamage;
-                    Debug.Log("damage " + damage);
+                    //Debug.Log("damage " + damage);
                     ammo.AmmoDead = true;
 
 
@@ -470,7 +470,7 @@ public class AttackerSystem : SystemBase
                     {
                         var skill = GetComponent<SkillTreeComponent>(shooter);
                         skill.CurrentLevelXp += damage;
-                        Debug.Log("xp " + skill.CurrentLevelXp);
+                        //Debug.Log("xp " + skill.CurrentLevelXp);
                         SetComponent<SkillTreeComponent>(shooter, skill);
                     }
 

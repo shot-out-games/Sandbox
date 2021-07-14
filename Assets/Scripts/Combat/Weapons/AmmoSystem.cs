@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿
+
+
+
+using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -27,6 +31,51 @@ public class AmmoSystem : SystemBase
         float dt = Time.fixedDeltaTime;//bullet duration
 
         var scoreGroup = GetComponentDataFromEntity<ScoreComponent>(false);
+
+
+        //var triggerGroup = GetComponentDataFromEntity<TriggerComponent>(false);
+        EntityQuery triggerQuery = GetEntityQuery(ComponentType.ReadOnly<TriggerComponent>());
+        NativeArray<Entity> triggerEntities = triggerQuery.ToEntityArray(Allocator.Persistent);
+        NativeArray<TriggerComponent> triggerGroup = triggerQuery.ToComponentDataArray<TriggerComponent>(Allocator.Persistent);
+
+
+        Entities.WithoutBurst().WithAny<EnemyComponent>().ForEach((in Translation enemyTranslation) =>
+        {
+            Debug.Log("tg ln " + triggerGroup.Length);
+
+            for (int i = 0; i < triggerGroup.Length; i++)
+            {
+                TriggerComponent trigger = triggerGroup[i];
+                var triggerTranslation = GetComponent<Translation>(triggerEntities[i]);
+
+                if (trigger.Type == (int)TriggerType.Ammo)
+                {
+
+                    var shooter = trigger.ParentEntity;
+                    //Debug.Log("shooter " + shooter);
+
+                    bool isEnemy = HasComponent<EnemyComponent>(shooter);
+                    if (isEnemy) return;
+
+                    var playerTranslation = GetComponent<Translation>(shooter);//not used
+
+                    float distance = math.distance(triggerTranslation.Value, enemyTranslation.Value);
+                    //Debug.Log("dt " + (int)distance);
+                    if (distance < 5.0)
+                    {
+                        Debug.Log("close");
+                    }
+                }
+
+            }
+
+
+
+        }
+
+        ).Run();
+
+
 
 
 
@@ -89,13 +138,16 @@ public class AmmoSystem : SystemBase
         ).Run();
         ecb.Playback(EntityManager);
         ecb.Dispose();
-
+        triggerGroup.Dispose();
+        triggerEntities.Dispose();
         //return default;
     }
 
 
 
 }
+
+
 
 
 

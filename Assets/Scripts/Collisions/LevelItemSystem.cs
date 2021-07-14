@@ -6,43 +6,45 @@ using Unity.Collections;
 using Unity.Physics;
 using Unity.Rendering;
 
-public class LevelItemSystem : JobComponentSystem
+public class LevelItemSystem : SystemBase
 {
 
 
-    protected override JobHandle OnUpdate(JobHandle inputDeps)
+    protected override void OnUpdate()
     {
-        EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
 
-        int index = -1;
-       
-        Entities.WithoutBurst().WithStructuralChanges().ForEach(
+        var index = new NativeArray<int>(1, Allocator.TempJob);
+
+        EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.TempJob);
+
+        index[0] = -1;
+
+        Entities.ForEach(
             (in Entity e, in ItemComponent levelItem, in TriggerComponent triggerComponent, in CollisionComponent collisionComponent) =>
             {
                 int type_a = collisionComponent.Part_entity;
                 int type_b = collisionComponent.Part_other_entity;
                 Entity collision_entity_a = collisionComponent.Character_entity;
                 Entity collision_entity_b = collisionComponent.Character_other_entity;
-                bool rewind_a = EntityManager.HasComponent(collision_entity_a, typeof(AmmoComponent));
-                bool rewind_b = EntityManager.HasComponent(collision_entity_b, typeof(AmmoComponent));
-                //Debug.Log("ra " + rewind_a + " rb " + rewind_b);
+                bool rewind_a = HasComponent<AmmoComponent>(collision_entity_a);
+                bool rewind_b = HasComponent<AmmoComponent>(collision_entity_b);
                 bool rewinding_a = false;
                 bool rewinding_b = false;
 
                 if (rewind_a == true)
                 {
-                    rewinding_a = EntityManager.GetComponentData<AmmoComponent>(collision_entity_a).rewinding;
+                    rewinding_a = GetComponent<AmmoComponent>(collision_entity_a).rewinding;
                 }
                 if (rewind_b == true)
                 {
-                    rewinding_b = EntityManager.GetComponentData<AmmoComponent>(collision_entity_b).rewinding;
+                    rewinding_b = GetComponent<AmmoComponent>(collision_entity_b).rewinding;
                 }
 
 
                 if ((type_a == (int)TriggerType.Lever || type_b == (int)TriggerType.Lever) && levelItem.activator && (rewinding_a || rewinding_b)) //b is ammo so causes damage to entity
                 {
                     ecb.DestroyEntity(e);
-                    index = 1;//win?
+                    index[0] = 1;//win?
                 }
 
 
@@ -50,20 +52,20 @@ public class LevelItemSystem : JobComponentSystem
 
 
             }
-        ).Run();
+        ).Schedule();
 
 
         Entities.WithoutBurst().ForEach
-(
-    (ref WinnerComponent winnerComponent, in Entity entity) =>
-    {
-        if(index == 1)
+        (
+        (ref WinnerComponent winnerComponent, in Entity entity) =>
         {
-            winnerComponent.endGameReached = true;
-        }
+            if (index[0] == 1)
+            {
+                winnerComponent.endGameReached = true;
+            }
 
-    }
-).Run();
+        }
+        ).Run();
 
 
 
@@ -83,10 +85,34 @@ public class LevelItemSystem : JobComponentSystem
 
         ecb.Playback(EntityManager);
         ecb.Dispose();
+        index.Dispose();
 
-
-        return default;
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
