@@ -30,6 +30,7 @@ public class EnemyMeleeMovementSystem : SystemBase
         {
             if (dead.isDead) return;
             //if (enemyMovementComponent.enabled == false) return;
+            var defensiveRole = GetComponent<DefensiveStrategyComponent>(e).currentRole;
             var EnemyBasicMovementComponent = GetComponent<EnemyMovementComponent>(e);
             var EnemyMeleeMovementComponent = GetComponent<EnemyMeleeMovementComponent>(e);
             var EnemyWeaponMovementComponent = GetComponent<EnemyWeaponMovementComponent>(e);
@@ -159,7 +160,7 @@ public class EnemyMeleeMovementSystem : SystemBase
                     enemyMove.FacePlayer();
 
                 }
-                else if (dist >= chaseRange && role == EnemyRoles.Chase)
+                else if (dist >= chaseRange && (role == EnemyRoles.Chase || defensiveRole == DefensiveRoles.Chase))
                 {
                     animator.SetInteger("Zone", 1);
                     MoveState = MoveStates.Idle;

@@ -5,11 +5,17 @@ using Unity.Entities;
 
 
 
+public struct DefensiveStrategyComponent : IComponentData
+{
+    public bool breakRoute;
+    public DefensiveRoles currentRole;
+}
+
 public struct EnemyBehaviourComponent : IComponentData
 {
     public float speedMultiple;
     public float speed;
-    public bool breakRoute;
+    //public bool breakRoute;
     public bool useDistanceFromStation;
     public float chaseRange;
     public float aggression;
@@ -115,12 +121,21 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
         {
             weaponMovement = true;
         }
+
+
         dstManager.AddComponentData(entity, new EnemyBehaviourComponent
         {
-            breakRoute = breakRoute,
             useDistanceFromStation = useDistanceFromStation,
             chaseRange = GetComponent<EnemyRatings>().Ratings.chaseRange,
             speedMultiple = 1.0f
+
+
+        });
+
+        dstManager.AddComponentData(entity, new DefensiveStrategyComponent()
+        {
+            breakRoute = breakRoute,
+            currentRole = DefensiveRoles.None
 
 
         });

@@ -38,7 +38,8 @@ public enum MoveStates
     Default,
     Idle,
     Patrol,
-    Chase
+    Chase,
+    Defensive
 };
 
 public enum CombatStates
@@ -51,6 +52,15 @@ public enum CombatStates
 };
 
 public enum EnemyRoles
+{
+    None,
+    Chase,
+    Patrol,
+    Evade,
+    Random
+};
+
+public enum DefensiveRoles
 {
     None,
     Chase,

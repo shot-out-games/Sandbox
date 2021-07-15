@@ -32,39 +32,35 @@ public class AmmoSystem : SystemBase
 
         var scoreGroup = GetComponentDataFromEntity<ScoreComponent>(false);
 
-
+        
         //var triggerGroup = GetComponentDataFromEntity<TriggerComponent>(false);
-        EntityQuery triggerQuery = GetEntityQuery(ComponentType.ReadOnly<TriggerComponent>());
+        EntityQuery triggerQuery = GetEntityQuery(ComponentType.ReadOnly<TriggerComponent>(),
+            ComponentType.ReadOnly<AmmoComponent>());
         NativeArray<Entity> triggerEntities = triggerQuery.ToEntityArray(Allocator.Persistent);
         NativeArray<TriggerComponent> triggerGroup = triggerQuery.ToComponentDataArray<TriggerComponent>(Allocator.Persistent);
+        NativeArray<AmmoComponent> ammoGroup = triggerQuery.ToComponentDataArray<AmmoComponent>(Allocator.Persistent);
 
 
-        Entities.WithoutBurst().WithAny<EnemyComponent>().ForEach((in Translation enemyTranslation) =>
+        Entities.WithoutBurst().WithAny<EnemyComponent>().ForEach((ref DefensiveStrategyComponent defensiveStrategy, in Translation enemyTranslation) =>
         {
-            Debug.Log("tg ln " + triggerGroup.Length);
 
-            for (int i = 0; i < triggerGroup.Length; i++)
+            for (int i = 0; i < ammoGroup.Length; i++)
             {
                 TriggerComponent trigger = triggerGroup[i];
                 var triggerTranslation = GetComponent<Translation>(triggerEntities[i]);
+                var shooter = trigger.ParentEntity;
 
-                if (trigger.Type == (int)TriggerType.Ammo)
+                bool isEnemy = HasComponent<EnemyComponent>(shooter);
+                if (isEnemy) return;
+
+                var playerTranslation = GetComponent<Translation>(shooter);//not used
+
+                float distance = math.distance(triggerTranslation.Value, enemyTranslation.Value);
+                //Debug.Log("dt " + (int)distance);
+                if (distance < 5.0 && defensiveStrategy.breakRoute == true)
                 {
 
-                    var shooter = trigger.ParentEntity;
-                    //Debug.Log("shooter " + shooter);
-
-                    bool isEnemy = HasComponent<EnemyComponent>(shooter);
-                    if (isEnemy) return;
-
-                    var playerTranslation = GetComponent<Translation>(shooter);//not used
-
-                    float distance = math.distance(triggerTranslation.Value, enemyTranslation.Value);
-                    //Debug.Log("dt " + (int)distance);
-                    if (distance < 5.0)
-                    {
-                        Debug.Log("close");
-                    }
+                    defensiveStrategy.currentRole = DefensiveRoles.Chase;
                 }
 
             }
@@ -139,6 +135,7 @@ public class AmmoSystem : SystemBase
         ecb.Playback(EntityManager);
         ecb.Dispose();
         triggerGroup.Dispose();
+        ammoGroup.Dispose();
         triggerEntities.Dispose();
         //return default;
     }

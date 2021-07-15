@@ -140,7 +140,7 @@ public class MatchupSystem : SystemBase
                             float ViewDistanceSQ = math.INFINITY;
                             var dot = 1.0;
                             bool View360 = true;
-                            if (HasComponent<MatchupComponent>(enemyEntity))
+                            if (HasComponent<MatchupComponent>(enemyEntity) && GetComponent<DefensiveStrategyComponent>(enemyEntity).currentRole == DefensiveRoles.None)
                             {
                                 AngleRadians = GetComponent<MatchupComponent>(enemyEntity).AngleRadians;
                                 ViewDistanceSQ = GetComponent<MatchupComponent>(enemyEntity).ViewDistanceSQ;
