@@ -58,6 +58,8 @@ namespace Michsky.UI.ModernUIPack
         [HideInInspector] public int siblingIndex = 0;
         [HideInInspector] public TextMeshProUGUI setItemText;
         [HideInInspector] public Image setItemImage;
+        Button triggerButton;
+        EventTrigger triggerEvent;
         Sprite imageHelper;
         string textHelper;
 
@@ -73,7 +75,7 @@ namespace Michsky.UI.ModernUIPack
         {
             public string itemName = "Dropdown Item";
             public Sprite itemIcon;
-            public UnityEvent OnItemSelection;
+            public UnityEvent OnItemSelection = new UnityEvent();
         }
 
         void Start()
@@ -87,6 +89,16 @@ namespace Michsky.UI.ModernUIPack
                     SetupDropdown();
 
                 currentListParent = transform.parent;
+
+                if (enableTrigger == true && triggerObject != null)
+                {
+                    triggerButton = gameObject.GetComponent<Button>();
+                    triggerEvent = triggerObject.AddComponent<EventTrigger>();
+                    EventTrigger.Entry entry = new EventTrigger.Entry();
+                    entry.eventID = EventTriggerType.PointerClick;
+                    entry.callback.AddListener((eventData) => { Animate(); });
+                    triggerEvent.GetComponent<EventTrigger>().triggers.Add(entry);
+                }
             }
 
             catch
@@ -96,7 +108,6 @@ namespace Michsky.UI.ModernUIPack
 
             if (enableScrollbar == true)
                 itemList.padding.right = 25;
-
             else
                 itemList.padding.right = 8;
 
@@ -118,6 +129,7 @@ namespace Michsky.UI.ModernUIPack
                 GameObject.Destroy(child.gameObject);
 
             index = 0;
+
             for (int i = 0; i < dropdownItems.Count; ++i)
             {
                 GameObject go = Instantiate(itemObject, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
@@ -153,9 +165,19 @@ namespace Michsky.UI.ModernUIPack
                     dropdownItems[i].OnItemSelection.Invoke();
             }
 
-            selectedText.text = dropdownItems[selectedItemIndex].itemName;
-            selectedImage.sprite = dropdownItems[selectedItemIndex].itemIcon;
-            currentListParent = transform.parent;
+            try
+            {
+                selectedText.text = dropdownItems[selectedItemIndex].itemName;
+                selectedImage.sprite = dropdownItems[selectedItemIndex].itemIcon;
+                currentListParent = transform.parent;
+            }
+
+            catch
+            {
+                selectedText.text = dropdownTag;
+                currentListParent = transform.parent;
+                Debug.Log("Dropdown - There is no dropdown items in the list.", this);
+            }
         }
 
         public void ChangeDropdownInfo(int itemIndex)
@@ -246,32 +268,34 @@ namespace Michsky.UI.ModernUIPack
                 }
             }
 
-            if (enableTrigger == true && isOn == false)
-                triggerObject.SetActive(false);
-
-            else if (enableTrigger == true && isOn == true)
-                triggerObject.SetActive(true);
-
-            if (outOnPointerExit == true)
-                triggerObject.SetActive(false);
-
             if (setHighPriorty == true)
                 transform.SetAsLastSibling();
+
+            if (enableTrigger == true && isOn == false)
+            {
+                triggerObject.SetActive(false);
+                triggerButton.interactable = true;
+            }
+
+            else if (enableTrigger == true && isOn == true)
+            {
+                triggerObject.SetActive(true);
+                triggerButton.interactable = false;
+            }
+
+            if (enableTrigger == true && outOnPointerExit == true)
+            {
+                triggerObject.SetActive(false);
+                triggerButton.interactable = true;
+            }
         }
 
-        public void OnPointerExit(PointerEventData eventData)
+        public void GetSelectedDropdownName(TextMeshProUGUI tmpText)
         {
-            if (outOnPointerExit == true)
-            {
-                if (isOn == true)
-                {
-                    Animate();
-                    isOn = false;
-                }
-
-                if (isListItem == true)
-                    gameObject.transform.SetParent(currentListParent, true);
-            }
+            if (tmpText != null)
+                tmpText.text = dropdownItems[selectedItemIndex].itemName;
+            else
+                Debug.Log("Dropdown - Selected item name: " + dropdownItems[selectedItemIndex].itemName);
         }
 
         public void UpdateValues()
@@ -294,6 +318,29 @@ namespace Michsky.UI.ModernUIPack
                 selectedImage.gameObject.SetActive(true);
         }
 
+        public void CreateNewItem(string title, Sprite icon)
+        {
+            Item item = new Item();
+            item.itemName = title;
+            item.itemIcon = icon;
+            dropdownItems.Add(item);
+            SetupDropdown();
+        }
+
+        public void CreateNewItemFast(string title, Sprite icon)
+        {
+            Item item = new Item();
+            item.itemName = title;
+            item.itemIcon = icon;
+            dropdownItems.Add(item);
+        }
+
+        public void AddNewItem()
+        {
+            Item item = new Item();
+            dropdownItems.Add(item);
+        }
+
         public void OnPointerClick(PointerEventData eventData)
         {
             if (enableDropdownSounds == true && useClickSound == true)
@@ -306,19 +353,16 @@ namespace Michsky.UI.ModernUIPack
                 soundSource.PlayOneShot(hoverSound);
         }
 
-        public void CreateNewItem(string title, Sprite icon)
+        public void OnPointerExit(PointerEventData eventData)
         {
-            Item item = new Item();
-            item.itemName = title;
-            item.itemIcon = icon;
-            dropdownItems.Add(item);
-            SetupDropdown();
-        }
+            if (outOnPointerExit == true && isOn == true)
+            {
+                Animate();
+                isOn = false;
 
-        public void AddNewItem()
-        {
-            Item item = new Item();
-            dropdownItems.Add(item);
+                if (isListItem == true)
+                    gameObject.transform.SetParent(currentListParent, true);
+            }
         }
     }
 }

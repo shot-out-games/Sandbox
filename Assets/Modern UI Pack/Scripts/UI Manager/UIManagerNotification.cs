@@ -7,59 +7,52 @@ namespace Michsky.UI.ModernUIPack
     [ExecuteInEditMode]
     public class UIManagerNotification : MonoBehaviour
     {
-        [Header("SETTINGS")]
+        [Header("Settings")]
         public UIManager UIManagerAsset;
+        public bool webglMode = false;
 
-        [Header("RESOURCES")]
+        [Header("Resources")]
         public Image background;
         public Image icon;
         public TextMeshProUGUI title;
         public TextMeshProUGUI description;
 
-        bool dynamicUpdateEnabled;
-
-        void OnEnable()
-        {
-            if (UIManagerAsset == null)
-            {
-                try
-                {
-                    UIManagerAsset = Resources.Load<UIManager>("MUIP Manager");
-                }
-
-                catch
-                {
-                    Debug.LogWarning("No UI Manager found. Assign it manually, otherwise you'll get errors about it.", this);
-                }
-            }
-        }
-
         void Awake()
         {
-            if (dynamicUpdateEnabled == false)
+            if (Application.isPlaying && webglMode == true)
+                return;
+
+            try
             {
+                if (UIManagerAsset == null)
+                    UIManagerAsset = Resources.Load<UIManager>("MUIP Manager");
+
                 this.enabled = true;
-                UpdateNotification();
+
+                if (UIManagerAsset.enableDynamicUpdate == false)
+                {
+                    UpdateNotification();
+                    this.enabled = false;
+                }
             }
+
+            catch { Debug.Log("<b>[Modern UI Pack]</b> No UI Manager found, assign it manually.", this); }
         }
 
         void LateUpdate()
         {
-            if (Application.isEditor == true && UIManagerAsset != null)
-            {
-                if (UIManagerAsset.enableDynamicUpdate == true)
-                {
-                    dynamicUpdateEnabled = true;
-                    UpdateNotification();
-                }
+            if (UIManagerAsset == null)
+                return;
 
-                else
-                    dynamicUpdateEnabled = false;
-            }
+            if (UIManagerAsset.enableDynamicUpdate == true)
+                UpdateNotification();
         }
 
         void UpdateNotification()
         {
+            if (Application.isPlaying && webglMode == true)
+                return;
+
             try
             {
                 background.color = UIManagerAsset.notificationBackgroundColor;

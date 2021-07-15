@@ -7,10 +7,11 @@ namespace Michsky.UI.ModernUIPack
     [ExecuteInEditMode]
     public class UIManagerDropdown : MonoBehaviour
     {
-        [Header("SETTINGS")]
+        [Header("Settings")]
         public UIManager UIManagerAsset;
+        public bool webglMode = false;
 
-        [Header("RESOURCES")]
+        [Header("Resources")]
         public Image background;
         public Image contentBackground;
         public Image mainIcon;
@@ -19,63 +20,50 @@ namespace Michsky.UI.ModernUIPack
         public Image itemBackground;
         public Image itemIcon;
         public TextMeshProUGUI itemText;
-
-        bool dynamicUpdateEnabled;
         CustomDropdown dropdownMain;
         DropdownMultiSelect dropdownMulti;
 
-        void OnEnable()
-        {
-            try
-            {
-                dropdownMain = gameObject.GetComponent<CustomDropdown>();
-            }
-
-            catch { }
-
-            if (dropdownMain == null)
-                dropdownMulti = gameObject.GetComponent<DropdownMultiSelect>();
-
-            if (UIManagerAsset == null)
-            {
-                try
-                {
-                    UIManagerAsset = Resources.Load<UIManager>("MUIP Manager");
-                }
-
-                catch
-                {
-                    Debug.LogWarning("No UI Manager found. Assign it manually, otherwise you'll get errors about it.", this);
-                }
-            }
-        }
-
         void Awake()
         {
-            if (dynamicUpdateEnabled == false)
+            if (Application.isPlaying && webglMode == true)
+                return;
+   
+            try
             {
+                if (dropdownMain != null)
+                    dropdownMain = gameObject.GetComponent<CustomDropdown>();
+                else
+                    dropdownMulti = gameObject.GetComponent<DropdownMultiSelect>();
+
+                if (UIManagerAsset == null)
+                    UIManagerAsset = Resources.Load<UIManager>("MUIP Manager");
+
                 this.enabled = true;
-                UpdateDropdown();
+
+                if (UIManagerAsset.enableDynamicUpdate == false)
+                {
+                    UpdateDropdown();
+                    this.enabled = false;
+                }
             }
+
+            catch { Debug.Log("<b>[Modern UI Pack]</b> No UI Manager found, assign it manually.", this); }
         }
 
         void LateUpdate()
         {
-            if (Application.isEditor == true && UIManagerAsset != null)
-            {
-                if (UIManagerAsset.enableDynamicUpdate == true)
-                {
-                    dynamicUpdateEnabled = true;
-                    UpdateDropdown();
-                }
+            if (UIManagerAsset == null)
+                return;
 
-                else
-                    dynamicUpdateEnabled = false;
-            }
+            if (UIManagerAsset.enableDynamicUpdate == true)
+                UpdateDropdown();
         }
 
         void UpdateDropdown()
         {
+            if (Application.isPlaying && webglMode == true)
+                return;
+
             try
             {
                 if (UIManagerAsset.buttonThemeType == UIManager.ButtonThemeType.BASIC)

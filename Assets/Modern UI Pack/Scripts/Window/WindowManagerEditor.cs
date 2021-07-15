@@ -1,86 +1,69 @@
 ﻿using UnityEngine;
-#if UNITY_EDITOR
 using UnityEditor;
 
 namespace Michsky.UI.ModernUIPack
 {
     [CustomEditor(typeof(WindowManager))]
-    [System.Serializable]
     public class WindowManagerEditor : Editor
     {
-        // Variables
         private WindowManager wmTarget;
         private int currentTab;
 
         private void OnEnable()
         {
-            // Set target
             wmTarget = (WindowManager)target;
         }
 
         public override void OnInspectorGUI()
         {
-            // GUI skin variables
             GUISkin customSkin;
+            Color defaultColor = GUI.color;
 
-            // Select GUI skin depending on the editor theme
             if (EditorGUIUtility.isProSkin == true)
-                customSkin = (GUISkin)Resources.Load("Editor\\Custom Skin Dark");
+                customSkin = (GUISkin)Resources.Load("Editor\\MUI Skin Dark");
             else
-                customSkin = (GUISkin)Resources.Load("Editor\\Custom Skin Light");
+                customSkin = (GUISkin)Resources.Load("Editor\\MUI Skin Light");
 
-            GUILayout.Space(-70);
             GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
+            GUI.backgroundColor = defaultColor;
 
-            // Top Header
-            GUILayout.Box(new GUIContent(""), customSkin.FindStyle("Window Top Header"));
+            GUILayout.Box(new GUIContent(""), customSkin.FindStyle("WM Top Header"));
 
-            GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
+            GUILayout.Space(-42);
 
-            // Toolbar content
             GUIContent[] toolbarTabs = new GUIContent[2];
-            toolbarTabs[0] = new GUIContent("Items");
+            toolbarTabs[0] = new GUIContent("Content");
             toolbarTabs[1] = new GUIContent("Settings");
 
             GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            GUILayout.Space(60);
+            GUILayout.Space(17);
 
-            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
+            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Tab Indicator"));
 
-            GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
+            GUILayout.Space(-40);
             GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            GUILayout.Space(50);
+            GUILayout.Space(17);
 
-            // Draw toolbar tabs as a button
-            if (GUILayout.Button(new GUIContent("Items", "Items"), customSkin.FindStyle("Toolbar Items")))
+            if (GUILayout.Button(new GUIContent("Content", "Content"), customSkin.FindStyle("Tab Content")))
                 currentTab = 0;
-
-            if (GUILayout.Button(new GUIContent("Settings", "Settings"), customSkin.FindStyle("Toolbar Settings")))
+            if (GUILayout.Button(new GUIContent("Settings", "Settings"), customSkin.FindStyle("Tab Settings")))
                 currentTab = 1;
 
-            GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
 
-            // Property variables
             var windows = serializedObject.FindProperty("windows");
             var currentWindowIndex = serializedObject.FindProperty("currentWindowIndex");
             var windowFadeIn = serializedObject.FindProperty("windowFadeIn");
             var windowFadeOut = serializedObject.FindProperty("windowFadeOut");
             var buttonFadeIn = serializedObject.FindProperty("buttonFadeIn");
             var buttonFadeOut = serializedObject.FindProperty("buttonFadeOut");
+            var editMode = serializedObject.FindProperty("editMode");
 
-            // Draw content depending on tab index
             switch (currentTab)
             {
                 case 0:
-                    GUILayout.Space(20);
-                    GUILayout.Label("CONTENT", customSkin.FindStyle("Header"));
-                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
                     EditorGUI.indentLevel = 1;
 
@@ -88,18 +71,13 @@ namespace Michsky.UI.ModernUIPack
                     windows.isExpanded = true;
 
                     GUILayout.EndHorizontal();
-                    GUILayout.Space(4);
 
                     if (GUILayout.Button("+  Add a new window", customSkin.button))
                         wmTarget.AddNewItem();
 
-                    GUILayout.Space(4);
                     break;
 
                 case 1:
-                    GUILayout.Space(20);
-                    GUILayout.Label("SETTINGS", customSkin.FindStyle("Header"));
-                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Window In Anim"), customSkin.FindStyle("Text"), GUILayout.Width(120));
@@ -124,6 +102,12 @@ namespace Michsky.UI.ModernUIPack
                     EditorGUILayout.PropertyField(buttonFadeOut, new GUIContent(""));
 
                     GUILayout.EndHorizontal();
+                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                    editMode.boolValue = GUILayout.Toggle(editMode.boolValue, new GUIContent("Edit Mode"), customSkin.FindStyle("Toggle"));
+                    editMode.boolValue = GUILayout.Toggle(editMode.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
+
+                    GUILayout.EndHorizontal();
 
                     if (wmTarget.windows.Count != 0)
                     {
@@ -133,8 +117,20 @@ namespace Michsky.UI.ModernUIPack
                         currentWindowIndex.intValue = EditorGUILayout.IntSlider(currentWindowIndex.intValue, 0, wmTarget.windows.Count - 1);
 
                         GUILayout.Space(2);
-
                         EditorGUILayout.LabelField(new GUIContent(wmTarget.windows[currentWindowIndex.intValue].windowName), customSkin.FindStyle("Text"));
+
+                        if (editMode.boolValue == true)
+                        {
+                            EditorGUILayout.HelpBox("While Edit Mode is enabled, you can change the visibility of window objects by changing the slider value.", MessageType.Info);
+
+                            for (int i = 0; i < wmTarget.windows.Count; i++)
+                            {
+                                if (i == currentWindowIndex.intValue)
+                                    wmTarget.windows[currentWindowIndex.intValue].windowObject.GetComponent<CanvasGroup>().alpha = 1;
+                                else
+                                    wmTarget.windows[i].windowObject.GetComponent<CanvasGroup>().alpha = 0;
+                            }
+                        }
 
                         GUILayout.EndVertical();
                     }
@@ -142,13 +138,10 @@ namespace Michsky.UI.ModernUIPack
                     else
                         EditorGUILayout.HelpBox("Window List is empty. Create a new item to see more options.", MessageType.Info);
 
-                    GUILayout.Space(4);
                     break;
             }
 
-            // Apply the changes
             serializedObject.ApplyModifiedProperties();
         }
     }
 }
-#endif

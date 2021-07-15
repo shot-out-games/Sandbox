@@ -1,80 +1,61 @@
 ﻿using UnityEngine;
-#if UNITY_EDITOR
 using UnityEditor;
 
 namespace Michsky.UI.ModernUIPack
 {
     [CustomEditor(typeof(CustomDropdown))]
-    [System.Serializable]
     public class CustomDropdownEditor : Editor
     {      
-        // Variables
-        private CustomDropdown dropdownTarget;
+        private CustomDropdown dTarget;
         private int currentTab;
 
         private void OnEnable()
         {
-            // Set target
-            dropdownTarget = (CustomDropdown)target;
+            dTarget = (CustomDropdown)target;
         }
 
         public override void OnInspectorGUI()
         {
-            // GUI skin variables
             GUISkin customSkin;
+            Color defaultColor = GUI.color;
 
-            // Select GUI skin depending on the editor theme
             if (EditorGUIUtility.isProSkin == true)
-                customSkin = (GUISkin)Resources.Load("Editor\\Custom Skin Dark");
+                customSkin = (GUISkin)Resources.Load("Editor\\MUI Skin Dark");
             else
-                customSkin = (GUISkin)Resources.Load("Editor\\Custom Skin Light");
+                customSkin = (GUISkin)Resources.Load("Editor\\MUI Skin Light");
 
-            GUILayout.Space(-70);
             GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
+            GUI.backgroundColor = defaultColor;
 
-            // Top Header
             GUILayout.Box(new GUIContent(""), customSkin.FindStyle("Dropdown Top Header"));
 
-            GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
+            GUILayout.Space(-42);
 
-            // Toolbar content
-            GUIContent[] toolbarTabs = new GUIContent[4];
-            toolbarTabs[0] = new GUIContent("Items");
+            GUIContent[] toolbarTabs = new GUIContent[3];
+            toolbarTabs[0] = new GUIContent("Content");
             toolbarTabs[1] = new GUIContent("Resources");
-            toolbarTabs[2] = new GUIContent("Saving");
-            toolbarTabs[3] = new GUIContent("Settings");
+            toolbarTabs[2] = new GUIContent("Settings");
 
             GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            GUILayout.Space(60);
+            GUILayout.Space(17);
 
-            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Toolbar Indicators"));
+            currentTab = GUILayout.Toolbar(currentTab, toolbarTabs, customSkin.FindStyle("Tab Indicator"));
 
-            GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
+            GUILayout.Space(-40);
             GUILayout.BeginHorizontal();
-            GUILayout.FlexibleSpace();
-            GUILayout.Space(50);
+            GUILayout.Space(17);
 
-            // Draw toolbar tabs as a button
-            if (GUILayout.Button(new GUIContent("Items", "Items"), customSkin.FindStyle("Toolbar Items")))
+            if (GUILayout.Button(new GUIContent("Content", "Content"), customSkin.FindStyle("Tab Content")))
                 currentTab = 0;
-
-            if (GUILayout.Button(new GUIContent("Resources", "Resources"), customSkin.FindStyle("Toolbar Resources")))
+            if (GUILayout.Button(new GUIContent("Resources", "Resources"), customSkin.FindStyle("Tab Resources")))
                 currentTab = 1;
-
-            if (GUILayout.Button(new GUIContent("Saving", "Saving"), customSkin.FindStyle("Toolbar Saving")))
+            if (GUILayout.Button(new GUIContent("Settings", "Settings"), customSkin.FindStyle("Tab Settings")))
                 currentTab = 2;
 
-            if (GUILayout.Button(new GUIContent("Settings", "Settings"), customSkin.FindStyle("Toolbar Settings")))
-                currentTab = 3;
-
-            GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
 
-            // Property variables
             var dropdownItems = serializedObject.FindProperty("dropdownItems");
             var dropdownEvent = serializedObject.FindProperty("dropdownEvent");
             var triggerObject = serializedObject.FindProperty("triggerObject");
@@ -102,24 +83,21 @@ namespace Michsky.UI.ModernUIPack
             var clickSound = serializedObject.FindProperty("clickSound");
             var soundSource = serializedObject.FindProperty("soundSource");
 
-            // Draw content depending on tab index
             switch (currentTab)
             {
                 case 0:
-                    GUILayout.Space(20);
-                    GUILayout.Label("ITEMS", customSkin.FindStyle("Header"));
-                    GUILayout.Space(2);
-                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
+                    GUILayout.BeginVertical(EditorStyles.helpBox);
                     EditorGUI.indentLevel = 1;
 
                     EditorGUILayout.PropertyField(dropdownItems, new GUIContent("Dropdown Items"), true); 
                     dropdownItems.isExpanded = true;
-
-                    GUILayout.EndHorizontal();
-                    GUILayout.Space(4);
-
+                  
+                    EditorGUI.indentLevel = 0;
+                
                     if (GUILayout.Button("+  Add a new item", customSkin.button))
-                        dropdownTarget.AddNewItem();
+                        dTarget.AddNewItem();
+
+                    GUILayout.EndVertical();
 
                     if (enableDropdownSounds.boolValue == true)
                     {
@@ -147,19 +125,11 @@ namespace Michsky.UI.ModernUIPack
                         }
                     }
 
-                    GUILayout.Space(18);
-                    GUILayout.Label("DYNAMIC EVENT", customSkin.FindStyle("Header"));
-                    GUILayout.Space(-6);
-
+                    GUILayout.Space(10);
                     EditorGUILayout.PropertyField(dropdownEvent, new GUIContent("Dropdown Event"), true);
-
-                    GUILayout.Space(4);
                     break;
 
                 case 1:
-                    GUILayout.Space(20);
-                    GUILayout.Label("RESOURCES", customSkin.FindStyle("Header"));
-                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     EditorGUILayout.LabelField(new GUIContent("Trigger Object"), customSkin.FindStyle("Text"), GUILayout.Width(120));
@@ -213,40 +183,9 @@ namespace Michsky.UI.ModernUIPack
                         GUILayout.EndHorizontal();
                     }
 
-                    GUILayout.Space(4);
                     break;
 
                 case 2:
-                    GUILayout.Space(20);
-                    GUILayout.Label("SAVING", customSkin.FindStyle("Header"));
-                    GUILayout.Space(2);
-                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                    saveSelected.boolValue = GUILayout.Toggle(saveSelected.boolValue, new GUIContent("Save Selection"), customSkin.FindStyle("Toggle"));
-                    saveSelected.boolValue = GUILayout.Toggle(saveSelected.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
-
-                    GUILayout.EndHorizontal();
-
-                    if (saveSelected.boolValue == true)
-                    {
-                        EditorGUI.indentLevel = 2;
-                        GUILayout.BeginHorizontal();
-
-                        EditorGUILayout.LabelField(new GUIContent("Tag:"), customSkin.FindStyle("Text"), GUILayout.Width(40));
-                        EditorGUILayout.PropertyField(dropdownTag, new GUIContent(""));
-
-                        GUILayout.EndHorizontal();
-                        EditorGUI.indentLevel = 0;
-                        EditorGUILayout.HelpBox("Each dropdown should has its own unique tag.", MessageType.Info);
-                    }
-
-                    GUILayout.Space(4);
-                    break;
-
-                case 3:
-                    GUILayout.Space(20);
-                    GUILayout.Label("SETTINGS", customSkin.FindStyle("Header"));
-                    GUILayout.Space(2);
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                     enableIcon.boolValue = GUILayout.Toggle(enableIcon.boolValue, new GUIContent("Enable Icon"), customSkin.FindStyle("Toggle"));
@@ -254,12 +193,12 @@ namespace Michsky.UI.ModernUIPack
 
                     GUILayout.EndHorizontal();
 
-                    if (dropdownTarget.selectedImage != null)
+                    if (dTarget.selectedImage != null)
                     {
                         if (enableIcon.boolValue == true)
-                            dropdownTarget.selectedImage.enabled = true;
+                            dTarget.selectedImage.enabled = true;
                         else
-                            dropdownTarget.selectedImage.enabled = false;
+                            dTarget.selectedImage.enabled = false;
                     }
 
                     else
@@ -279,7 +218,7 @@ namespace Michsky.UI.ModernUIPack
 
                     GUILayout.EndHorizontal();  
 
-                    if (enableTrigger.boolValue == true && dropdownTarget.triggerObject == null)
+                    if (enableTrigger.boolValue == true && dTarget.triggerObject == null)
                     {
                         GUILayout.BeginHorizontal();
                         EditorGUILayout.HelpBox("'Trigger Object' is not assigned. Go to Resources tab and assign the correct variable.", MessageType.Error);
@@ -293,12 +232,12 @@ namespace Michsky.UI.ModernUIPack
 
                     GUILayout.EndHorizontal();
 
-                    if (dropdownTarget.scrollbar != null)
+                    if (dTarget.scrollbar != null)
                     {
                         if (enableScrollbar.boolValue == true)
-                            dropdownTarget.scrollbar.SetActive(true);
+                            dTarget.scrollbar.SetActive(true);
                         else
-                            dropdownTarget.scrollbar.SetActive(false);
+                            dTarget.scrollbar.SetActive(false);
                     }
 
                     else
@@ -330,7 +269,7 @@ namespace Michsky.UI.ModernUIPack
 
                     GUILayout.EndHorizontal();
              
-                    if (isListItem.boolValue == true && dropdownTarget.listParent == null)
+                    if (isListItem.boolValue == true && dTarget.listParent == null)
                     {
                         GUILayout.BeginHorizontal();
                         EditorGUILayout.HelpBox("'List Parent' is not assigned. Go to Resources tab and assign the correct variable.", MessageType.Error);
@@ -365,16 +304,35 @@ namespace Michsky.UI.ModernUIPack
 
                         GUILayout.EndHorizontal();
 
-                        if (dropdownTarget.soundSource == null)
+                        if (dTarget.soundSource == null)
                         {
                             EditorGUILayout.HelpBox("'Sound Source' is not assigned. Go to Resources tab or click the button to create a new audio source.", MessageType.Info);
 
                             if (GUILayout.Button("+ Create a new one", customSkin.button))
                             {
-                                dropdownTarget.soundSource = dropdownTarget.gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
+                                dTarget.soundSource = dTarget.gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
                                 currentTab = 2;
                             }
                         }
+                    }
+
+                    GUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                    saveSelected.boolValue = GUILayout.Toggle(saveSelected.boolValue, new GUIContent("Save Selection"), customSkin.FindStyle("Toggle"));
+                    saveSelected.boolValue = GUILayout.Toggle(saveSelected.boolValue, new GUIContent(""), customSkin.FindStyle("Toggle Helper"));
+
+                    GUILayout.EndHorizontal();
+
+                    if (saveSelected.boolValue == true)
+                    {
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Space(35);
+
+                        EditorGUILayout.LabelField(new GUIContent("Tag:"), customSkin.FindStyle("Text"), GUILayout.Width(40));
+                        EditorGUILayout.PropertyField(dropdownTag, new GUIContent(""));
+
+                        GUILayout.EndHorizontal();
+                        EditorGUILayout.HelpBox("Each dropdown should has its own unique tag.", MessageType.Info);
                     }
 
                     GUILayout.BeginHorizontal(EditorStyles.helpBox);
@@ -384,17 +342,15 @@ namespace Michsky.UI.ModernUIPack
 
                     GUILayout.EndHorizontal();
 
-                    if (dropdownTarget.dropdownItems.Count != 0)
+                    if (dTarget.dropdownItems.Count != 0)
                     {
                         GUILayout.BeginVertical(EditorStyles.helpBox);
 
                         EditorGUILayout.LabelField(new GUIContent("Selected Item Index:"), customSkin.FindStyle("Text"), GUILayout.Width(120));
-                        selectedItemIndex.intValue = EditorGUILayout.IntSlider(selectedItemIndex.intValue, 0, dropdownTarget.dropdownItems.Count - 1);
+                        selectedItemIndex.intValue = EditorGUILayout.IntSlider(selectedItemIndex.intValue, 0, dTarget.dropdownItems.Count - 1);
 
                         GUILayout.Space(2);
-
-                        EditorGUILayout.LabelField(new GUIContent(dropdownTarget.dropdownItems[selectedItemIndex.intValue].itemName), customSkin.FindStyle("Text"));
-
+                        EditorGUILayout.LabelField(new GUIContent(dTarget.dropdownItems[selectedItemIndex.intValue].itemName), customSkin.FindStyle("Text"));
                         GUILayout.EndVertical();
 
                         if (saveSelected.boolValue == true)
@@ -402,17 +358,12 @@ namespace Michsky.UI.ModernUIPack
                     }
 
                     else
-                    {
-                        EditorGUILayout.HelpBox("There is no item in the dropdown list.", MessageType.Warning);
-                    }
-     
-                    GUILayout.Space(4);
+                        EditorGUILayout.HelpBox("There is no item in the list.", MessageType.Warning);
+
                     break;
             }
 
-            // Apply the changes
             serializedObject.ApplyModifiedProperties();
         }
     }
 }
-#endif

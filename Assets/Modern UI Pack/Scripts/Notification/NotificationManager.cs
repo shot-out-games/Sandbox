@@ -8,7 +8,7 @@ namespace Michsky.UI.ModernUIPack
 {
     public class NotificationManager : MonoBehaviour
     {
-        // CONTENT
+        // Content
         public Sprite icon;
         public string title = "Notification Title";
         [TextArea] public string description = "Notification description";
@@ -24,6 +24,7 @@ namespace Michsky.UI.ModernUIPack
         public float timer = 3f;
         public bool useCustomContent = false;
         public bool useStacking = false;
+        public bool destroyAfterPlaying = false;
         public NotificationStyle notificationStyle;
 
         public enum NotificationStyle
@@ -57,7 +58,7 @@ namespace Michsky.UI.ModernUIPack
             {
                 try
                 {
-                    var stacking = (NotificationStacking)GameObject.FindObjectsOfType(typeof(NotificationStacking))[0];
+                    NotificationStacking stacking = transform.GetComponentInParent<NotificationStacking>();
                     stacking.notifications.Add(this);
                     stacking.enableUpdating = true;
                     gameObject.SetActive(false);
@@ -70,8 +71,13 @@ namespace Michsky.UI.ModernUIPack
         IEnumerator StartTimer()
         {
             yield return new WaitForSeconds(timer);
-            notificationAnimator.Play("Out");
-            StopCoroutine("StartTimer");
+            CloseNotification();
+        }
+
+        IEnumerator DestroyNotification()
+        {
+            yield return new WaitForSeconds(1f);
+            Destroy(gameObject);
         }
 
         public void OpenNotification()
@@ -85,6 +91,9 @@ namespace Michsky.UI.ModernUIPack
         public void CloseNotification()
         {
             notificationAnimator.Play("Out");
+
+            if (destroyAfterPlaying == true)
+                StartCoroutine("DestroyNotification");
         }
 
         public void UpdateUI()

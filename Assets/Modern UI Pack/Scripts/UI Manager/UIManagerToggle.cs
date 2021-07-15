@@ -7,60 +7,53 @@ namespace Michsky.UI.ModernUIPack
     [ExecuteInEditMode]
     public class UIManagerToggle : MonoBehaviour
     {
-        [Header("SETTINGS")]
+        [Header("Settings")]
         public UIManager UIManagerAsset;
+        public bool webglMode = false;
 
-        [Header("RESOURCES")]
+        [Header("Resources")]
         public Image border;
         public Image background;
         public Image check;
         public TextMeshProUGUI onLabel;
         public TextMeshProUGUI offLabel;
 
-        bool dynamicUpdateEnabled;
-
-        void OnEnable()
-        {
-            if (UIManagerAsset == null)
-            {
-                try
-                {
-                    UIManagerAsset = Resources.Load<UIManager>("MUIP Manager");
-                }
-
-                catch
-                {
-                    Debug.LogWarning("No UI Manager found. Assign it manually, otherwise you'll get errors about it.", this);
-                }
-            }
-        }
-
         void Awake()
         {
-            if (dynamicUpdateEnabled == false)
+            if (Application.isPlaying && webglMode == true)
+                return;
+
+            try
             {
+                if (UIManagerAsset == null)
+                    UIManagerAsset = Resources.Load<UIManager>("MUIP Manager");
+
                 this.enabled = true;
-                UpdateToggle();
+
+                if (UIManagerAsset.enableDynamicUpdate == false)
+                {
+                    UpdateToggle();
+                    this.enabled = false;
+                }
             }
+
+            catch { Debug.Log("<b>[Modern UI Pack]</b> No UI Manager found, assign it manually.", this); }
         }
 
         void LateUpdate()
         {
-            if (UIManagerAsset != null)
-            {
-                if (Application.isEditor == true && UIManagerAsset != null)
-                {
-                    dynamicUpdateEnabled = true;
-                    UpdateToggle();
-                }
+            if (UIManagerAsset == null)
+                return;
 
-                else
-                    dynamicUpdateEnabled = false;
-            }
+            if (UIManagerAsset.enableDynamicUpdate == true)
+                UpdateToggle();
         }
 
         void UpdateToggle()
         {
+            if (Application.isPlaying && webglMode == true)
+                return;
+
             try
             {
                 border.color = UIManagerAsset.toggleBorderColor;
