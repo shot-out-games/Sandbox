@@ -9,6 +9,8 @@ public struct DefensiveStrategyComponent : IComponentData
 {
     public bool breakRoute;
     public DefensiveRoles currentRole;
+    public float currentRoleMaxTime;
+    public float currentRoleTimer;
 }
 
 public struct EnemyBehaviourComponent : IComponentData
@@ -97,6 +99,8 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField] bool canFreeze;
     [SerializeField]
     bool breakRoute = true;
+    [SerializeField]
+    float currentRoleMaxTime = 3;
 
     //public float chaseRange;
     //public float combatRangeDistance;
@@ -135,7 +139,9 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
         dstManager.AddComponentData(entity, new DefensiveStrategyComponent()
         {
             breakRoute = breakRoute,
-            currentRole = DefensiveRoles.None
+            currentRole = DefensiveRoles.None,
+            currentRoleMaxTime = currentRoleMaxTime,
+            currentRoleTimer = 0
 
 
         });

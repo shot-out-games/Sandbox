@@ -47,6 +47,15 @@ public class DefensiveStrategySystem : SystemBase
                 if (defensiveStrategyComponent.currentRole == DefensiveRoles.Chase)
                 {
                     //Debug.Log("player entity " + playerE + " chased by enemy entity " + enemyE);
+                    if(defensiveStrategyComponent.currentRoleTimer < defensiveStrategyComponent.currentRoleMaxTime)
+                    {
+                        defensiveStrategyComponent.currentRoleTimer += Time.DeltaTime;
+                    }
+                    else
+                    {
+                        defensiveStrategyComponent.currentRole = DefensiveRoles.None;
+                        defensiveStrategyComponent.currentRoleTimer = 0;
+                    }
                 }
             }
 
