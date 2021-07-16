@@ -11,6 +11,7 @@ public struct DefensiveStrategyComponent : IComponentData
     public DefensiveRoles currentRole;
     public float currentRoleMaxTime;
     public float currentRoleTimer;
+    public Entity closeBulletEntity;
 }
 
 public struct EnemyBehaviourComponent : IComponentData

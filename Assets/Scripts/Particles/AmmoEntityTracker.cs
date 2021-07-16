@@ -14,7 +14,7 @@ public struct AmmoComponent : IComponentData
     public bool DamageCausedPreviously;
     public int framesToSkip;
     public int frameSkipCounter;
-
+    public bool bulletSpotted;
     public bool Charged;
     public bool rewinding;
     public int ammoHits;//count how many hits this ammo connected before ammoTime is zero (entity destroyed by ammo system)

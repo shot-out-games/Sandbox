@@ -47,6 +47,7 @@ public class AmmoSystem : SystemBase
             for (int i = 0; i < ammoGroup.Length; i++)
             {
                 TriggerComponent trigger = triggerGroup[i];
+                var ammoE = triggerEntities[i];
                 var triggerTranslation = GetComponent<Translation>(triggerEntities[i]);
                 var shooter = trigger.ParentEntity;
 
@@ -57,10 +58,11 @@ public class AmmoSystem : SystemBase
 
                 float distance = math.distance(triggerTranslation.Value, enemyTranslation.Value);
                 //Debug.Log("dt " + (int)distance);
-                if (distance < 5.0 && defensiveStrategy.breakRoute == true)
+                if (distance < 5.0 && defensiveStrategy.breakRoute == true && ammoE != defensiveStrategy.closeBulletEntity)
                 {
-
+                    defensiveStrategy.closeBulletEntity = ammoE;
                     defensiveStrategy.currentRole = DefensiveRoles.Chase;
+                    defensiveStrategy.currentRoleTimer = 0;
                 }
 
             }
