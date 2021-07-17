@@ -798,11 +798,12 @@ PlayerSettings:
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
   cloudServicesEnabled:
-    Analytics: 1
+    Analytics: 0
     Build: 0
     Collab: 0
     Game Performance: 0
     Purchasing: 0
+    UDP: 0
     UNet: 1
     Unity Ads: 0
   luminIcon:
@@ -818,11 +819,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 0
-  cloudProjectId: e6caf5f2-96a8-4560-849c-66d50fcef4f8
+  cloudProjectId: 
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Cursed
-  organizationId: shotout-games
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 
