@@ -90,7 +90,8 @@ public class CameraControls : MonoBehaviour
                 freeLookCombat.m_Lens.FieldOfView = _fov * combatZoomFactor;
             }
         }
-        else if (vcam)
+
+        if (vcam)
         {
             fov = math.clamp(fov, minFov, maxFov);
             //Debug.Log("fov " + fov);
