@@ -1520,7 +1520,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "5a5c9c6d6a604353b6d410c93fd352ac",
     "m_Id": 0,
-    "m_DisplayName": "Emission Color",
+    "m_DisplayName": "Rim Color",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",

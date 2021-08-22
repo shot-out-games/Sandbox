@@ -136,7 +136,7 @@ public class PowerItem : MonoBehaviour, IConvertGameObjectToEntity, IDeclareRefe
 
         }
 
-        dstManager.SetSharedComponentData(entity, new RenderMesh(){ mesh = mesh, material =  material} );
+        dstManager.SetSharedComponentData(entity, new RenderMesh() { mesh = mesh, material = material });
 
 
 

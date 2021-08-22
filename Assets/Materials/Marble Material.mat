@@ -21,18 +21,26 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Marble Material
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: af05969d8b1ca6c459e0516494f5fa57,
+    type: 3}
   m_ShaderKeywords: _NORMALMAP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
-  stringTagMap:
-    RenderType: Opaque
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_1573145900e7472896bc86b6a78afe89:
+        m_Texture: {fileID: 2800000, guid: aa59c2a5dbb10164a84315b723fb4341, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_db6a5e7e0fac41e0a98592bd98faeac3:
+        m_Texture: {fileID: 2800000, guid: 7bc16b9f9c528c043b09d96477389b6c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: aa59c2a5dbb10164a84315b723fb4341, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -89,8 +97,9 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    m_Ints: []
     m_Floats:
+    - Vector1_9d8e39b0f04348638f7b2a6447eb090c: 10
+    - Vector1_c3d27e07a7d24a629d05ed7cea8a0f1f: 2
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -119,6 +128,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_efdaa08a30cf4bcab4f0ba1d4b1f8a6f: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 0.9245283, g: 0.4485905, b: 0.058146335, a: 1}
     - _Color: {r: 0.9245283, g: 0.4485904, b: 0.058146313, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
