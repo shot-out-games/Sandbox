@@ -8,9 +8,10 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Frankie Material
-  m_Shader: {fileID: -6465566751694194690, guid: 20cc8b6ab96befb4b8783f4a511b1c6a,
+  m_Shader: {fileID: -6465566751694194690, guid: 25d24a1ca2aabec4296aa0b381bdbbb9,
     type: 3}
-  m_ShaderKeywords: _EMISSION
+  m_ShaderKeywords: SPECULAR_ON _EMISSION _ENERGYCONSERVATION_ON _RAMP_OFF _SSAO_ENABLED
+    _SUNDISK_HIGH_QUALITY _TEXMODE_OFF
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,16 +21,36 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_1dc73811a6394d2b84e908a248a81770:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_40B71D39:
         m_Texture: {fileID: 2800000, guid: 3dd1e535dded6824b8a6f298f8d430ca, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _BaseMap:
+    - Texture2D_6B12501C:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _BumpMap:
+    - Texture2D_727f4bca58c04551a64e94363a1495c3:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_A59DCD0E:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_adaab32b630e410d99e93270a0173db8:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: de8a6cc1e47eabd4b9ae37678cc57e28, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: c3bb1d5298b924d80959c9f822ffe414, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ClearCoatMap:
@@ -52,7 +73,15 @@ Material:
         m_Texture: {fileID: 2800000, guid: 056dc715715aa734fb096a0478ca286b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _GradientMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
+        m_Texture: {fileID: 2800000, guid: de8a6cc1e47eabd4b9ae37678cc57e28, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -65,6 +94,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShadedBaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -85,48 +118,133 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Boolean_893114d7b09b47c88d1867f362abcfb7: 1
+    - Vector1_41f9ff23ce3149698a26c333c82ff943: 1
     - Vector1_7CD0418A: 0
     - Vector1_7CD1FFD5: 1
+    - Vector1_A02E52BC: 512
+    - Vector1_E6329FE7: 0
+    - Vector1_F9C37264: 1
+    - Vector1_a461139cbd7041468f3f10310a3d0a81: 0
+    - Vector1_ef8218440bab45778cbb9f956c323532: 0
+    - _AddLightFallOff: 1
     - _AlphaClip: 0
+    - _AlphaFromMaskMap: 1
+    - _Anisotropic: 0
+    - _Anisotropy: 0
+    - _ApplyFog: 0
+    - _ApplyNormal: 0
+    - _AtmosphereThickness: 1
     - _Blend: 0
+    - _Border: 3
     - _BumpScale: 1
     - _ClearCoat: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
+    - _ColorMask: 15
+    - _ColorizedShadowsAdd: 0
+    - _ColorizedShadowsAddA: 1
+    - _ColorizedShadowsMain: 0
+    - _ColorizedShadowsMainA: 1
+    - _CompensateScale: 0
+    - _Coverage: 0
     - _Cull: 2
+    - _CullOutline: 1
+    - _Culling: 0
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
+    - _DiffuseFallOff: 0.01
+    - _DiffuseStep: 0
     - _DstBlend: 0
+    - _EnableMaskMap: 0
+    - _EnableNormalMap: 0
+    - _EnableRamp: 0
+    - _EnableSpecular: 1
+    - _EnableToonRim: 0
+    - _EnergyConservation: 1
     - _EnvironmentReflections: 1
+    - _Exposure: 1.3
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossinessSource: 0
     - _GlossyReflections: 0
+    - _Help: 0
+    - _LightColorContribution: 1
     - _Metallic: 0
+    - _Occlusion: 1
     - _OcclusionStrength: 1
+    - _Outline: 0.002
+    - _OutlineInScreenSpace: 0
     - _Parallax: 0.005
     - _QueueOffset: 0
+    - _Ramp: 0
+    - _RampSmoothSampling: 0
+    - _ReadMask: 255
+    - _ReceiveSSAO: 1
     - _ReceiveShadows: 1
+    - _Rim: 0
+    - _RimFrequency: 0
+    - _RimMinPower: 1
+    - _RimPerPositionFrequency: 1
+    - _RimPower: 2
+    - _SSAO: 0
     - _SampleGI: 0
+    - _ShadoBiasDirectional: 0
+    - _ShadowBiasAdditional: 0
+    - _ShadowBiasDirectional: 0
+    - _ShadowFallOff: 0.5
+    - _ShadowOffset: 1
     - _Shininess: 0
     - _Smoothness: 0
     - _SmoothnessSource: 0
     - _SmoothnessTextureChannel: 0
     - _SpecSource: 0
+    - _SpecularFallOff: 0.01
     - _SpecularHighlights: 1
+    - _SpecularStep: 0.45
     - _SrcBlend: 1
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilCompare: 6
+    - _StencilFail: 0
+    - _StencilOp: 0
+    - _StencilRef: 0
+    - _StencilZFail: 0
+    - _Steps: 1
+    - _SunDisk: 2
+    - _SunSize: 0.04
+    - _SunSizeConvergence: 5
     - _Surface: 0
+    - _TexMode: 0
+    - _ToonRimAttenuation: 0
+    - _ToonRimFallOff: 1
+    - _ToonRimPower: 0.5
     - _WorkflowMode: 1
+    - _WriteMask: 255
+    - _ZTest: 4
+    - _ZTestOutline: 4
     - _ZWrite: 1
     m_Colors:
     - Color_2a9126cc97f4417697940287382aecef: {r: 1782.888, g: 0, b: 0, a: 1}
     - Color_419BD650: {r: 0.79215693, g: 0.5882353, b: 0.454902, a: 1}
+    - Color_556a7f3ec2574371b6ed8cc72b63d486: {r: 1, g: 1, b: 1, a: 1}
+    - Color_77B4D621: {r: 1, g: 1, b: 1, a: 1}
+    - Color_a7fc3f6cb07a40d29596b05667130bdb: {r: 0, g: 0, b: 0, a: 1}
     - Vector2_c0ff217199dc47688363219f8db71227: {r: 0.1, g: 1, b: 0, a: 0}
-    - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 4, g: 3.717647, b: 0, a: 1}
+    - _GroundColor: {r: 0.36899996, g: 0.34899998, b: 0.34099993, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _RimColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _ShadedBaseColor: {r: 0, g: 0, b: 0, a: 1}
+    - _SkyTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _SpecColor2nd: {r: 0.4, g: 0.4, b: 0.4, a: 1}
+    - _Specular: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 0}
+    - _Tiling: {r: 1, g: 1, b: 0, a: 0}
+    - _ToonRimColor: {r: 1, g: 0.9858491, b: 0.9858491, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &4331533212086887729
 MonoBehaviour:
