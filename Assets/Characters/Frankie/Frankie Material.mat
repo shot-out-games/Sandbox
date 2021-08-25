@@ -8,8 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Frankie Material
-  m_Shader: {fileID: -6465566751694194690, guid: 20cc8b6ab96befb4b8783f4a511b1c6a,
-    type: 3}
+  m_Shader: {fileID: 4800000, guid: 9ce107479d11178d11005b9844295342, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
@@ -20,8 +19,28 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_1dc73811a6394d2b84e908a248a81770:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_40B71D39:
         m_Texture: {fileID: 2800000, guid: 3dd1e535dded6824b8a6f298f8d430ca, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_6B12501C:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_727f4bca58c04551a64e94363a1495c3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_A59DCD0E:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_adaab32b630e410d99e93270a0173db8:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -53,7 +72,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: de8a6cc1e47eabd4b9ae37678cc57e28, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -85,8 +104,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_41f9ff23ce3149698a26c333c82ff943: 1
     - Vector1_7CD0418A: 0
     - Vector1_7CD1FFD5: 1
+    - Vector1_A02E52BC: 128
+    - Vector1_E6329FE7: 0
+    - Vector1_a461139cbd7041468f3f10310a3d0a81: 0
+    - Vector1_ef8218440bab45778cbb9f956c323532: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -105,6 +129,7 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
+    - _Outline: 0.002
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -122,10 +147,13 @@ Material:
     m_Colors:
     - Color_2a9126cc97f4417697940287382aecef: {r: 1782.888, g: 0, b: 0, a: 1}
     - Color_419BD650: {r: 0.79215693, g: 0.5882353, b: 0.454902, a: 1}
+    - Color_556a7f3ec2574371b6ed8cc72b63d486: {r: 1, g: 1, b: 1, a: 1}
+    - Color_a7fc3f6cb07a40d29596b05667130bdb: {r: 0, g: 0, b: 0, a: 1}
     - Vector2_c0ff217199dc47688363219f8db71227: {r: 0.1, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
     - _Color: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 4, g: 3.717647, b: 0, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &4331533212086887729
