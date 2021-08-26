@@ -21,9 +21,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: jacket_mat
-  m_Shader: {fileID: -6465566751694194690, guid: 20cc8b6ab96befb4b8783f4a511b1c6a,
+  m_Shader: {fileID: -6465566751694194690, guid: 87fd395707a305549865cd85ad48a3f1,
     type: 3}
-  m_ShaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -33,6 +33,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_1573145900e7472896bc86b6a78afe89:
+        m_Texture: {fileID: 2800000, guid: aa8e7ee6ec0a68a41927de40c57935e1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_1dc73811a6394d2b84e908a248a81770:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -54,6 +58,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_adaab32b630e410d99e93270a0173db8:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_db6a5e7e0fac41e0a98592bd98faeac3:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -137,9 +145,12 @@ Material:
     - HARD_SHADING: 1
     - Vector1_41f9ff23ce3149698a26c333c82ff943: 1
     - Vector1_962926F1: 1.1
+    - Vector1_9d8e39b0f04348638f7b2a6447eb090c: 0
+    - Vector1_A02E52BC: 96
     - Vector1_E6329FE7: 0
-    - Vector1_F9C37264: 1
+    - Vector1_F9C37264: 48
     - Vector1_a461139cbd7041468f3f10310a3d0a81: 0
+    - Vector1_c3d27e07a7d24a629d05ed7cea8a0f1f: 0
     - Vector1_ef8218440bab45778cbb9f956c323532: 4
     - _AlphaClip: 0
     - _BacklightAmount: 2.5
@@ -164,9 +175,11 @@ Material:
     - _NormalMult: 0
     - _OcclusionMult: 1
     - _OcclusionStrength: 1
+    - _Outline: 0.005
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _SampleGI: 0
     - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -177,13 +190,16 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - Color_0469036dd0044d59bd5c0473e3d27abe: {r: 1, g: 1, b: 1, a: 0}
+    - Color_04e54799d2f0428d94b2151877fcae32: {r: 1, g: 1, b: 1, a: 0}
     - Color_2a9126cc97f4417697940287382aecef: {r: 0, g: 10.3529415, b: 16, a: 0}
     - Color_556a7f3ec2574371b6ed8cc72b63d486: {r: 1, g: 1, b: 1, a: 1}
     - Color_a7fc3f6cb07a40d29596b05667130bdb: {r: 1, g: 1, b: 1, a: 1}
-    - Vector2_c0ff217199dc47688363219f8db71227: {r: 0.1, g: 0, b: 0, a: 0}
+    - Color_efdaa08a30cf4bcab4f0ba1d4b1f8a6f: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_c0ff217199dc47688363219f8db71227: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0.25, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Specular: {r: 0, g: 0, b: 0, a: 0}
     - _TextureTiling: {r: 1, g: 1, b: 1, a: 0}

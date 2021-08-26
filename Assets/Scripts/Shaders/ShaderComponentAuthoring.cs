@@ -17,7 +17,11 @@ public class ShaderComponentAuthoring : MonoBehaviour
 {
     public SkinnedMeshRenderer leftEyeMeshRenderer;
     public SkinnedMeshRenderer rightEyeMeshRenderer;
-
+    float offsetValue = 0;
+    float direction = 1;
+    [SerializeField] float eyeSpeed = .25f;
+    [SerializeField] float offsetMin = -1;
+    [SerializeField] float offsetMax = 1;
     void Start()
     {
         //material = GetComponent<SkinnedMeshRenderer>().material;
@@ -32,14 +36,14 @@ public class ShaderComponentAuthoring : MonoBehaviour
 
     void Update()
     {
-        if (leftEyeMeshRenderer != null)
+        offsetValue += Time.deltaTime * eyeSpeed * direction;
+        if (offsetValue <= offsetMin || offsetValue >= offsetMax)
         {
-            leftEyeMeshRenderer.material.SetVector("_Tiling", new Vector2(4, 4));
+            direction = -direction;
+            offsetValue += Time.deltaTime * eyeSpeed * direction;
         }
-        if (rightEyeMeshRenderer != null)
-        {
-            rightEyeMeshRenderer.material.SetVector("_Tiling", new Vector2(4, 4));
-        }
+        if (leftEyeMeshRenderer != null) leftEyeMeshRenderer.material.SetVector("_Offset", new Vector2(offsetValue, 0));
+        if (rightEyeMeshRenderer != null) rightEyeMeshRenderer.material.SetVector("_Offset", new Vector2(offsetValue, 0));
 
         //material.SetTexture()
         // Animates main texture scale in a funky way!
@@ -54,8 +58,8 @@ public class ShaderComponentAuthoring : MonoBehaviour
 
     //public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     //{
-      //  dstManager.AddComponentData(entity, new ShaderComponent() { active = active });
-//        dstManager.SetSharedComponentData(entity, new RenderMesh() { mesh = mesh, material = material });
-//
-  //  }
+    //  dstManager.AddComponentData(entity, new ShaderComponent() { active = active });
+    //        dstManager.SetSharedComponentData(entity, new RenderMesh() { mesh = mesh, material = material });
+    //
+    //  }
 }

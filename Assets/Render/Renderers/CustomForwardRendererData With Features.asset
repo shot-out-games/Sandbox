@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: Player Front
+  m_Name: Render Player
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   settings:
-    passTag: Player Front
+    passTag: Render Player
     Event: 300
     filterSettings:
       RenderQueueType: 0
@@ -22,16 +22,16 @@ MonoBehaviour:
         serializedVersion: 2
         m_Bits: 2048
       PassNames: []
-    overrideMaterial: {fileID: 2100000, guid: 1dd942a1fb1319643b43f9f141ba026c, type: 2}
+    overrideMaterial: {fileID: 0}
     overrideMaterialPassIndex: 0
     overrideDepthState: 1
-    depthCompareFunction: 8
-    enableWrite: 0
+    depthCompareFunction: 4
+    enableWrite: 1
     stencilSettings:
-      overrideStencilState: 0
-      stencilReference: 0
+      overrideStencilState: 1
+      stencilReference: 1
       stencilCompareFunction: 8
-      passOperation: 0
+      passOperation: 2
       failOperation: 0
       zFailOperation: 0
     cameraSettings:
@@ -49,11 +49,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: Player Back
+  m_Name: Render Player Behind
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   settings:
-    passTag: Player Back
+    passTag: Render Player Behind
     Event: 300
     filterSettings:
       RenderQueueType: 0
@@ -107,27 +107,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: Outline
+  m_Name: Outline Stencil
   m_EditorClassIdentifier: 
   m_Active: 0
   settings:
-    passTag: Outline
+    passTag: Outline Stencil
     Event: 300
     filterSettings:
       RenderQueueType: 0
       LayerMask:
         serializedVersion: 2
-        m_Bits: 4294967295
+        m_Bits: 2048
       PassNames: []
     overrideMaterial: {fileID: 2100000, guid: 664fdff2df874db46b964ef2da921cf7, type: 2}
     overrideMaterialPassIndex: 0
-    overrideDepthState: 0
+    overrideDepthState: 1
     depthCompareFunction: 4
     enableWrite: 1
     stencilSettings:
-      overrideStencilState: 0
-      stencilReference: 0
-      stencilCompareFunction: 8
+      overrideStencilState: 1
+      stencilReference: 1
+      stencilCompareFunction: 6
       passOperation: 0
       failOperation: 0
       zFailOperation: 0
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c59ec77be13762f44bce6155cc493e75, type: 3}
   m_Name: Outline Custom Render Pass
   m_EditorClassIdentifier: 
-  m_Active: 0
+  m_Active: 1
   passSettings:
     passTag: CustomRenderPassFeature
     Event: 300
@@ -221,15 +221,15 @@ MonoBehaviour:
     depthCompareFunction: 4
     enableWrite: 1
     stencilSettings:
-      overrideStencilState: 0
-      stencilReference: 0
-      stencilCompareFunction: 8
+      overrideStencilState: 1
+      stencilReference: 1
+      stencilCompareFunction: 6
       passOperation: 0
       failOperation: 0
       zFailOperation: 0
     cameraSettings:
       overrideCamera: 0
-      restoreCamera: 1
+      restoreCamera: 0
       offset: {x: 0, y: 0, z: 0, w: 0}
       cameraFieldOfView: 60
 --- !u!114 &11400000
@@ -245,17 +245,17 @@ MonoBehaviour:
   m_Name: CustomForwardRendererData With Features
   m_EditorClassIdentifier: 
   m_RendererFeatures:
-  - {fileID: -1263547085371859899}
   - {fileID: 6494151131143665189}
   - {fileID: -3600345448960838546}
   - {fileID: -2962121302713404397}
-  - {fileID: -7554047175637371197}
   - {fileID: 3734084146844373243}
   - {fileID: -8694959616585070069}
   - {fileID: -8882857330417834584}
+  - {fileID: -7554047175637371197}
+  - {fileID: -1263547085371859899}
   - {fileID: -5010867060104972446}
   - {fileID: -8376804129864064278}
-  m_RendererFeatureMap: 451c6ed39efa76ee25f684d90bdc1f5a6eb4febde30009ce137426825e6ee4d6c37697e71da22a97fb90135ebf21d2330b8a14ed4b4c5587a865f84552c0b98462b7bc21f5d275baea626dae069dbf8b
+  m_RendererFeatureMap: 25f684d90bdc1f5a6eb4febde30009ce137426825e6ee4d6fb90135ebf21d2330b8a14ed4b4c5587a865f84552c0b984c37697e71da22a97451c6ed39efa76ee62b7bc21f5d275baea626dae069dbf8b
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   shaders:
@@ -271,7 +271,7 @@ MonoBehaviour:
     materialErrorPS: {fileID: 4800000, guid: 5fd9a8feb75a4b5894c241777f519d4e, type: 3}
   m_OpaqueLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4192063
   m_TransparentLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74d07409089db0248bd22746c15157db, type: 3}
-  m_Name: Outline Toon
+  m_Name: Outline Toon Draw Fullscreen
   m_EditorClassIdentifier: 
   m_Active: 0
   settings:
