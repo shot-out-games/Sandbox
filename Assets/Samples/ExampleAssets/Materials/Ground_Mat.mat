@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ground_Mat
-  m_Shader: {fileID: -6465566751694194690, guid: af05969d8b1ca6c459e0516494f5fa57,
+  m_Shader: {fileID: -6465566751694194690, guid: 87fd395707a305549865cd85ad48a3f1,
     type: 3}
   m_ShaderKeywords: HARD_SHADING_ON _ENVIRONMENTREFLECTIONS_OFF _METALLICSPECGLOSSMAP
     _NORMALMAP _OCCLUSIONMAP
@@ -118,6 +118,7 @@ Material:
     - HARD_SHADING: 1
     - Vector1_962926F1: 1.1
     - Vector1_9d8e39b0f04348638f7b2a6447eb090c: 0
+    - Vector1_F9C37264: 25
     - Vector1_c3d27e07a7d24a629d05ed7cea8a0f1f: 1
     - _AlphaClip: 0
     - _BacklightAmount: 2.3
@@ -153,7 +154,11 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_04e54799d2f0428d94b2151877fcae32: {r: 1, g: 1, b: 1, a: 0}
     - Color_efdaa08a30cf4bcab4f0ba1d4b1f8a6f: {r: 0, g: 0, b: 0, a: 0}
+    - Color_f5363a58c2dc4e4e8e8ecc3ab6d851de: {r: 1, g: 1, b: 1, a: 1}
+    - Vector2_5400dd44f9844606bafd1a0ba3560024: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_8462f3e360d94a7ba35e0cf5d6fd2776: {r: 1, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: shoe_mat
-  m_Shader: {fileID: -6465566751694194690, guid: 20cc8b6ab96befb4b8783f4a511b1c6a,
+  m_Shader: {fileID: -6465566751694194690, guid: 87fd395707a305549865cd85ad48a3f1,
     type: 3}
   m_ShaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP
   m_LightmapFlags: 4
@@ -20,6 +20,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_93c1fdf1440842708b4837451e5575a3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: 23a3997c20087b84a9db2bbd1162f4ad, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -77,6 +81,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_F9C37264: 64
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -106,6 +111,8 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_0469036dd0044d59bd5c0473e3d27abe: {r: 0.011764706, g: 0.45098037, b: 0.5490196,
+        a: 1}
     - Color_2a9126cc97f4417697940287382aecef: {r: 1825.2128, g: 0, b: 0, a: 0}
     - Vector2_c0ff217199dc47688363219f8db71227: {r: 0.1, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}

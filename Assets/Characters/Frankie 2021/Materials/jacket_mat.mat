@@ -193,8 +193,12 @@ Material:
     - Color_04e54799d2f0428d94b2151877fcae32: {r: 1, g: 1, b: 1, a: 0}
     - Color_2a9126cc97f4417697940287382aecef: {r: 0, g: 10.3529415, b: 16, a: 0}
     - Color_556a7f3ec2574371b6ed8cc72b63d486: {r: 1, g: 1, b: 1, a: 1}
+    - Color_64a92cfe5dbd4c13b18d6f8eb9e4a4f5: {r: 1, g: 1, b: 1, a: 1}
     - Color_a7fc3f6cb07a40d29596b05667130bdb: {r: 1, g: 1, b: 1, a: 1}
     - Color_efdaa08a30cf4bcab4f0ba1d4b1f8a6f: {r: 0, g: 0, b: 0, a: 0}
+    - Color_f5363a58c2dc4e4e8e8ecc3ab6d851de: {r: 1, g: 1, b: 1, a: 0}
+    - Vector2_5400dd44f9844606bafd1a0ba3560024: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_8462f3e360d94a7ba35e0cf5d6fd2776: {r: 1, g: 1, b: 0, a: 0}
     - Vector2_c0ff217199dc47688363219f8db71227: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
