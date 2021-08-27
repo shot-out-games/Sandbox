@@ -233,7 +233,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         else
         {
             Vector3 v = Vector3.forward; 
-            Debug.Log("ray " + v);
+            //Debug.Log("ray " + v);
             return v;
         }
         //throw new UnityException("Mouse position ray not intersecting launcher plane");
