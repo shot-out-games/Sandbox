@@ -63,6 +63,7 @@ public class EnemyWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         {
             animator.SetLayerWeight(0, 0);
             animator.SetLayerWeight(1, 1); //1 is weapon layer
+            //Debug.Log("aim");
             animator.SetBool("Aim", true);
         }
         else if (!weaponRaised)

@@ -7,8 +7,8 @@ using Unity.Transforms;
 
 [UpdateInGroup(typeof(LateSimulationSystemGroup))]
 //[UpdateInGroup(typeof(TransformSystemGroup))]
-[UpdateAfter(typeof(EndFrameLocalToParentSystem))]
-[UpdateBefore(typeof(SynchronizeGameObjectTransformsWithTriggerEntities))]
+//[UpdateAfter(typeof(EndFrameLocalToParentSystem))]
+//[UpdateBefore(typeof(SynchronizeGameObjectTransformsWithTriggerEntities))]
 //[UpdateBefore(typeof(EndFrameTRSToLocalToWorldSystem))]
 
 public class FinalIkSystem : SystemBase

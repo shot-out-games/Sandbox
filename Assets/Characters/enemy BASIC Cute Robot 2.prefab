@@ -31953,9 +31953,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   matchupClosest: 1
   leader: 0
-  AngleRadians: 180
+  AngleRadians: 240
   ViewDistanceSQ: 100
-  View360: 0
+  View360: 1
 --- !u!1 &5121489803845827514
 GameObject:
   m_ObjectHideFlags: 0
@@ -33174,7 +33174,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8579106213132358536}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5013856973b27429d937d256dc082f2e, type: 3}
   m_Name: 

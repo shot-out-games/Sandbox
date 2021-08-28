@@ -55,7 +55,7 @@ public class EnemyMeleeMovementSystem : SystemBase
                 float chaseRange = enemyBehaviourComponent.chaseRange;
                 if (weaponMovement)
                 {
-                    aim.weaponRaised = false;
+                    //aim.weaponRaised = false;
                     aim.SetAnimationLayerWeights();
                     aim.weaponRaised = false;
                     gun.IsFiring = 0;

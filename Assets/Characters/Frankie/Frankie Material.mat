@@ -8,7 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Frankie Material
-  m_Shader: {fileID: 4800000, guid: 9ce107479d11178d11005b9844295342, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 30fa68ce467463643a86b839ca0eb195,
+    type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
@@ -19,8 +20,16 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_1573145900e7472896bc86b6a78afe89:
+        m_Texture: {fileID: 2800000, guid: 056dc715715aa734fb096a0478ca286b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - Texture2D_1dc73811a6394d2b84e908a248a81770:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_403fc49c84d0469ea745110701ab5e45:
+        m_Texture: {fileID: 2800000, guid: 056dc715715aa734fb096a0478ca286b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_40B71D39:
@@ -41,6 +50,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     - Texture2D_adaab32b630e410d99e93270a0173db8:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_db6a5e7e0fac41e0a98592bd98faeac3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BASE_COLOR_MAP:
+        m_Texture: {fileID: 2800000, guid: de8a6cc1e47eabd4b9ae37678cc57e28, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -67,8 +84,16 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _EMISSION_COLOR_MAP:
+        m_Texture: {fileID: 2800000, guid: 056dc715715aa734fb096a0478ca286b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 2800000, guid: 056dc715715aa734fb096a0478ca286b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _METALNESS_MAP:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -79,11 +104,31 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NORMAL_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OPACITY_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SPECULAR_COLOR_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SPECULAR_IOR_MAP:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SPECULAR_ROUGHNESS_MAP:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -107,9 +152,12 @@ Material:
     - Vector1_41f9ff23ce3149698a26c333c82ff943: 1
     - Vector1_7CD0418A: 0
     - Vector1_7CD1FFD5: 1
+    - Vector1_9d8e39b0f04348638f7b2a6447eb090c: 1
     - Vector1_A02E52BC: 128
     - Vector1_E6329FE7: 0
+    - Vector1_F9C37264: 1024
     - Vector1_a461139cbd7041468f3f10310a3d0a81: 0
+    - Vector1_c3d27e07a7d24a629d05ed7cea8a0f1f: 2
     - Vector1_ef8218440bab45778cbb9f956c323532: 0
     - _AlphaClip: 0
     - _Blend: 0
@@ -127,12 +175,16 @@ Material:
     - _Glossiness: 0
     - _GlossinessSource: 0
     - _GlossyReflections: 0
+    - _METALNESS: 1
     - _Metallic: 0
+    - _OPACITY: 0.5
     - _OcclusionStrength: 1
     - _Outline: 0.002
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _SPECULAR_IOR: 1.5
+    - _SPECULAR_ROUGHNESS: 1
     - _SampleGI: 0
     - _Shininess: 0
     - _Smoothness: 0
@@ -145,15 +197,24 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_04e54799d2f0428d94b2151877fcae32: {r: 1, g: 1, b: 1, a: 0}
     - Color_2a9126cc97f4417697940287382aecef: {r: 1782.888, g: 0, b: 0, a: 1}
     - Color_419BD650: {r: 0.79215693, g: 0.5882353, b: 0.454902, a: 1}
     - Color_556a7f3ec2574371b6ed8cc72b63d486: {r: 1, g: 1, b: 1, a: 1}
+    - Color_739e06b2c4ff42e6ad944a00618943df: {r: 1, g: 0.93248945, b: 0, a: 1}
     - Color_a7fc3f6cb07a40d29596b05667130bdb: {r: 0, g: 0, b: 0, a: 1}
+    - Color_efdaa08a30cf4bcab4f0ba1d4b1f8a6f: {r: 1.098039, g: 0.972549, b: 0, a: 0}
+    - Color_f5363a58c2dc4e4e8e8ecc3ab6d851de: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_5400dd44f9844606bafd1a0ba3560024: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_8462f3e360d94a7ba35e0cf5d6fd2776: {r: 1, g: 1, b: 0, a: 0}
     - Vector2_c0ff217199dc47688363219f8db71227: {r: 0.1, g: 1, b: 0, a: 0}
+    - _BASE_COLOR: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 0, g: 0, b: 0, a: 1}
     - _Color: {r: 0, g: 0, b: 0, a: 1}
+    - _EMISSION_COLOR: {r: 1, g: 1, b: 0, a: 0}
     - _EmissionColor: {r: 4, g: 3.717647, b: 0, a: 1}
-    - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
+    - _SPECULAR_COLOR: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &4331533212086887729

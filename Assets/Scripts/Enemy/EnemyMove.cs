@@ -57,6 +57,7 @@ public enum EnemyRoles
     None,
     Chase,
     Patrol,
+    Security,//removes all but first waypoint
     Evade,
     Random
 };
@@ -172,6 +173,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         agent = GetComponent<NavMeshAgent>();
         moveSpeed = 3.5f;
+        if (enemyRole == EnemyRoles.Patrol && wayPoints.Count <= 1) enemyRole = EnemyRoles.Chase;//patrol requires 2 min waypoints if not chnage role to chase
 
         RatingsComponent ratings = manager.GetComponentData<RatingsComponent>(entity);
         if (enemyRatings)
@@ -471,7 +473,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             //float velx = 0;
             float velz = forward.normalized.z;
 
-            if (state == MoveStates.Idle || velz == 0)
+            if (state == MoveStates.Idle || state == MoveStates.Defensive)
             {
                 agent.speed = 0;
                 velz = 0;
@@ -483,7 +485,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             }
 
             velz = velz * speedMultiple;
-            Debug.Log("vz " + velz);
+            //Debug.Log("vz " + velz);
             anim.SetFloat("velz", velz);
         }
         else
@@ -506,6 +508,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         }
 
         if (wayPoints.Count <= currentWayPointIndex) return;
+        //if (anim.GetFloat("velz") == 0) agent.speed = 0;
         anim.speed = 1;
 
         bool isCurrentWayPointJump = wayPoints[currentWayPointIndex].action == WayPointAction.Jump;

@@ -7,7 +7,7 @@ using Unity.Transforms;
 
 
 
-[UpdateBefore(typeof(GunAmmoHandlerSystem))]
+//[UpdateBefore(typeof(GunAmmoHandlerSystem))]
 [UpdateInGroup(typeof(TransformSystemGroup))]
 //[UpdateBefore(typeof(FixedStepSimulationSystemGroup))]
 
@@ -23,7 +23,7 @@ public class EnemyWeaponAimSystemLateUpdate : SystemBase
 }
 
 
-[UpdateBefore(typeof(GunAmmoHandlerSystem))]
+//[UpdateBefore(typeof(GunAmmoHandlerSystem))]
 [UpdateInGroup(typeof(TransformSystemGroup))]
 //[UpdateBefore(typeof(FixedStepSimulationSystemGroup))]
 
