@@ -139,7 +139,11 @@ namespace SandBox.Player
                     }
 
 
-                    pv.Linear.y += applyImpulseComponent.NegativeForce;
+                    if(!applyImpulseComponent.BumpLeft && !applyImpulseComponent.BumpRight)
+                        pv.Linear.y += applyImpulseComponent.NegativeForce;
+                    else
+                        pv.Linear.y += applyImpulseComponent.ApproachStairBoost;
+
 
 
 

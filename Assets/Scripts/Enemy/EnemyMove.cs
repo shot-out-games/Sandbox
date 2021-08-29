@@ -256,6 +256,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     public void Patrol()
     {
 
+
         if (wayPoints.Count == 0 || agent.enabled == false)
             return;
 

@@ -23,7 +23,17 @@ public class RaycastSystem : SystemBase
 {
 
 
-
+    private enum CollisionLayer
+    {
+        Player = 1 << 0,
+        Ground = 1 << 1,
+        Enemy = 1 << 2,
+        WeaponItem = 1 << 3,
+        Obstacle = 1 << 4,
+        NPC = 1 << 5,
+        PowerUp = 1 << 6,
+        Stairs = 1 << 7
+    }
 
 
     protected override void OnUpdate()
@@ -53,20 +63,34 @@ public class RaycastSystem : SystemBase
             {
                 Position = start,
                 MaxDistance = distance,
+                //Filter = CollisionFilter.Default
                 Filter = new CollisionFilter()
                 {
-                    BelongsTo = 1,
-                    CollidesWith = 2,
+                    BelongsTo = (uint)CollisionLayer.Player,
+                    CollidesWith = (uint)CollisionLayer.Stairs,
                     GroupIndex = 0
                 }
             };
 
             bool hasPointHit = collisionWorld.CalculateDistance(pointDistanceInput, out DistanceHit pointHit);//bump left / right n/a
 
-            hasPointHit = false;
+            //hasPointHit = false; 
+            if (hasPointHit && applyImpulse.InJump == false)
+            {
+                Entity e = physicsWorldSystem.PhysicsWorld.Bodies[pointHit.RigidBodyIndex].Entity;
+                if (pv.Linear.x < 0)
+                {
+                    applyImpulse.Grounded = false;
+                    applyImpulse.BumpLeft = true;
+                }
+                else if (pv.Linear.x > 0)
+                {
+                    applyImpulse.Grounded = false;
+                    applyImpulse.BumpRight = true;
+                }
 
-
-            if (hasPointHit && applyImpulse.InJump == true)
+            }
+            else if (hasPointHit && applyImpulse.InJump == true)
             {
                 Entity e = physicsWorldSystem.PhysicsWorld.Bodies[pointHit.RigidBodyIndex].Entity;
                 if (applyImpulse.Velocity.x < 0)
@@ -95,10 +119,11 @@ public class RaycastSystem : SystemBase
                 {
                     Start = start,
                     End = end,
+                    //Filter = CollisionFilter.Default
                     Filter = new CollisionFilter()
                     {
-                        BelongsTo = 1,
-                        CollidesWith = 2,
+                        BelongsTo = (uint)CollisionLayer.Player,
+                        CollidesWith = (uint)CollisionLayer.Ground,
                         GroupIndex = 0
                     }
                 };

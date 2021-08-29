@@ -43,7 +43,7 @@ namespace SandBox.Player
 
         public float fallingFramesMax;
         public float negativeForce = -9.81f;
-
+        public float approachStairBoost = 9.81f;
         [SerializeField]
         float rotateSpeed = 9;
         [SerializeField]
@@ -140,7 +140,7 @@ namespace SandBox.Player
             });
 
 
-        dstManager.AddComponentData(entity, new ApplyImpulseComponent { Force = 0, Direction = Vector3.zero, Grounded = false, fallingFramesMaximuim = fallingFramesMax, NegativeForce = negativeForce });
+        dstManager.AddComponentData(entity, new ApplyImpulseComponent { Force = 0, Direction = Vector3.zero, Grounded = false, fallingFramesMaximuim = fallingFramesMax, NegativeForce = negativeForce, ApproachStairBoost = approachStairBoost });
 
 
         }
