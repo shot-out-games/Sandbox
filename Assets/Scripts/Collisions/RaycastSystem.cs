@@ -128,7 +128,7 @@ public class RaycastSystem : SystemBase
                     }
                 };
                 Unity.Physics.RaycastHit hitDown = new Unity.Physics.RaycastHit();
-                Debug.DrawRay(inputDown.Start, direction, Color.red, distance);
+                Debug.DrawRay(inputDown.Start, direction, Color.white, distance);
 
                 bool hasPointHitDown = collisionWorld.CastRay(inputDown, out hitDown);
 
@@ -199,6 +199,108 @@ public class RaycastSystem : SystemBase
 
 
         }).Run();
+
+
+
+
+
+        Entities.WithoutBurst().WithAll<EnemyComponent>().ForEach((Entity entity, ref EnemyMovementComponent enemyMovementComponent,
+        ref Translation translation, ref PhysicsVelocity pv, ref PhysicsCollider collider, in LocalToWorld localToWorld) =>
+        {
+
+            var physicsWorldSystem = World.GetExistingSystem<Unity.Physics.Systems.BuildPhysicsWorld>();
+            var collisionWorld = physicsWorldSystem.PhysicsWorld.CollisionWorld;
+
+
+
+            float startRayY = translation.Value.y;
+
+
+
+
+            float3 start = translation.Value + localToWorld.Forward * 3;//start ray out before pointing down because we are checking the ground a little bit in front
+            //float3 start = translation.Value;//start ray out before pointing down because we are checking the ground a little bit in front
+            //start = start + new float3(0, 0, 3f);
+            float3 direction = new float3(0, -1, 0);//down
+            //float distance = startRayY * 2.0f;
+            float distance = .5f;
+            float3 end = start + direction * distance;
+
+            RaycastInput inputDownOut = new RaycastInput()
+            {
+                Start = start,
+                End = end,
+                Filter = new CollisionFilter()
+                {
+                    BelongsTo = (uint)CollisionLayer.Enemy,
+                    CollidesWith = (uint)CollisionLayer.Stairs,
+                    GroupIndex = 0
+                }
+            };
+
+
+            Unity.Physics.RaycastHit hitDownOut = new Unity.Physics.RaycastHit();
+            Debug.DrawRay(inputDownOut.Start, direction, Color.cyan, distance);
+            bool hasPointHitDownOut = collisionWorld.CastRay(inputDownOut, out hitDownOut);
+            //ray shoots to -negative value of current y  so if it hits half way it is hitting the ground
+
+
+
+            
+
+            start = translation.Value;
+            start = start + new float3(0, 0, 0);
+            direction = new float3(0, -1, 0);
+            //distance = startRayY * 2f;
+            distance = .5f;
+            end = start + direction * distance;
+
+
+            RaycastInput inputDown = new RaycastInput()
+            {
+                Start = start,
+                End = end,
+                Filter = new CollisionFilter()
+                {
+                    BelongsTo = (uint)CollisionLayer.Enemy,
+                    CollidesWith = (uint)CollisionLayer.Stairs,
+                    GroupIndex = 0
+                }
+            };
+
+
+
+            Unity.Physics.RaycastHit hitDown = new Unity.Physics.RaycastHit();
+            Debug.DrawRay(inputDown.Start, direction, Color.white, distance);
+            bool hasPointHitDown = collisionWorld.CastRay(inputDown, out hitDown);
+
+
+            enemyMovementComponent.nearEdge = false;
+            //collisionWorld.
+            if (hasPointHitDown == true && hasPointHitDownOut == false)
+            {
+                enemyMovementComponent.nearEdge = true;
+                Debug.Log("near edge ");
+
+            }
+
+
+
+
+
+
+        }).Run();
+
+
+
+
+
+
+
+
+
+
+
 
 
         bool key = false;

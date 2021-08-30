@@ -114,7 +114,9 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 {
     [HideInInspector]
     public NavMeshAgent agent;
-    private Animator anim;
+    [HideInInspector]
+    public Animator anim;
+
 
     //public float chaseRange;
     //public float combatRangeDistance;
@@ -462,7 +464,11 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             }
 
 
-
+            bool nearEdge = false;
+            if(manager.HasComponent<EnemyMovementComponent>(entity) == true)
+            {
+                nearEdge = manager.GetComponentData<EnemyMovementComponent>(entity).nearEdge;
+            }
 
             MoveStates state = manager.GetComponentData<EnemyStateComponent>(entity).MoveState;
             int pursuitMode = anim.GetInteger("Zone");
@@ -474,7 +480,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             //float velx = 0;
             float velz = forward.normalized.z;
 
-            if (state == MoveStates.Idle || state == MoveStates.Defensive)
+            if (state == MoveStates.Idle || state == MoveStates.Defensive || nearEdge == true)
             {
                 agent.speed = 0;
                 velz = 0;

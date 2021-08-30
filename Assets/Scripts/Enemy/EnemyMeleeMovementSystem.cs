@@ -11,30 +11,32 @@ public class EnemyMeleeMovementSystem : SystemBase
     protected override void OnUpdate()
     {
 
-        Entities.WithoutBurst().WithNone<Pause>().WithAll<EnemyComponent>().WithAll<EnemyMovementComponent>().
+        Entities.WithoutBurst().WithNone<Pause>().WithAll<EnemyComponent>().
             WithAll<EnemyMeleeMovementComponent>().WithAll<EnemyWeaponMovementComponent>().WithStructuralChanges().ForEach
         (
         (
 
-            Animator animator,
+            //Animator animator,
             EnemyMove enemyMove,
             EnemyWeaponAim aim,
             Entity e,
+            ref Rotation rotation, ref Translation trans, ref LocalToWorld ltw,
             ref EnemyStateComponent enemyState,
-            ref GunComponent gun,
-            in EnemyBehaviourComponent enemyBehaviourComponent,
-            in DeadComponent dead
+            ref GunComponent gun
+            //in EnemyBehaviourComponent enemyBehaviourComponent
 
 
         ) =>
         {
-            if (dead.isDead) return;
+            if (HasComponent<DeadComponent>(e) == false) return;
+            if (GetComponent<DeadComponent>(e).isDead) return;
+            Animator animator = enemyMove.anim;
             //if (enemyMovementComponent.enabled == false) return;
             var defensiveRole = GetComponent<DefensiveStrategyComponent>(e).currentRole;
             var EnemyBasicMovementComponent = GetComponent<EnemyMovementComponent>(e);
             var EnemyMeleeMovementComponent = GetComponent<EnemyMeleeMovementComponent>(e);
             var EnemyWeaponMovementComponent = GetComponent<EnemyWeaponMovementComponent>(e);
-
+            var enemyBehaviourComponent = GetComponent<EnemyBehaviourComponent>(e);
 
             bool basicMovement = EnemyBasicMovementComponent.enabled;
             bool meleeMovement = EnemyMeleeMovementComponent.enabled;
@@ -189,7 +191,14 @@ public class EnemyMeleeMovementSystem : SystemBase
 
             }
 
-            //enemyState = new EnemyStateComponent() { MoveState = MoveState };
+            //ltw = new LocalToWorld
+            //{
+            //  Value = float4x4.TRS(enemyMove.transform.position, enemyMove.transform.rotation, Vector3.one)
+            //};
+            rotation.Value = enemyMove.transform.rotation;
+            trans.Value = enemyMove.transform.position;
+            //trans.Value = trans.Value + ltw.Forward;//start ray out before pointing down because we are checking the ground a little bit in front
+            //Debug.Log("ltw fwd " + ltw.Forward);
 
 
         }

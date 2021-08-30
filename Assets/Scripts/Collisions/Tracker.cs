@@ -35,7 +35,8 @@ public enum TriggerType
     Home = 17,
     Melee = 18,
     Obstacle = 19,
-    Contact = 20
+    Contact = 20,
+    Platform = 21
 }
 
 

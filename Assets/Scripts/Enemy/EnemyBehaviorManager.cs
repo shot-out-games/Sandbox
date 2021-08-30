@@ -84,6 +84,8 @@ public struct EnemyMovementComponent : IComponentData
     public float originalSwitchUpTime;
     public float currentSwitchUpTime;
 
+    public bool nearEdge;
+
 
 
 }
