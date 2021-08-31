@@ -117,7 +117,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     [HideInInspector]
     public Animator anim;
 
-
+    //private NavMeshPath path;
     //public float chaseRange;
     //public float combatRangeDistance;
     //public float shootRangeDistance;
@@ -210,6 +210,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
     void Start()
     {
+        //path = new NavMeshPath();
         SetWaypoints(randomWayPoints);
 
     }
@@ -436,7 +437,13 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         if (agent.enabled)
         {
-            //Debug.Log("pos " + target.position);
+
+          
+
+
+
+
+            //Debug.Log("path " + _path);
             Vector3 nextPosition = target.position;
             agent.destination = nextPosition;
             AnimationMovement();
@@ -451,7 +458,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
     public void AnimationMovement()
     {
 
-        if (anim == null) return;
+        if (anim == null || agent.isOnNavMesh == false) return;
 
 
 
@@ -470,6 +477,18 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
                 nearEdge = manager.GetComponentData<EnemyMovementComponent>(entity).nearEdge;
             }
 
+            bool notMoving = false;
+            NavMeshPath path = new NavMeshPath();
+            if (agent.CalculatePath(target.position, path))
+            {
+                if (path.status == NavMeshPathStatus.PathPartial)
+                {
+                    Debug.Log("Partial");
+                    notMoving = true;
+                }
+            }
+
+
             MoveStates state = manager.GetComponentData<EnemyStateComponent>(entity).MoveState;
             int pursuitMode = anim.GetInteger("Zone");
             agent.speed = pursuitMode >= 2 ? moveSpeed : moveSpeed * 2;
@@ -480,7 +499,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             //float velx = 0;
             float velz = forward.normalized.z;
 
-            if (state == MoveStates.Idle || state == MoveStates.Defensive || nearEdge == true)
+            if (state == MoveStates.Idle || state == MoveStates.Defensive || nearEdge == true || notMoving == true)
             {
                 agent.speed = 0;
                 velz = 0;
@@ -492,7 +511,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
             }
 
             velz = velz * speedMultiple;
-            //Debug.Log("vz " + velz);
+            //Debug.Log("next " + math.distance(agent.nextPosition, transform.position));
             anim.SetFloat("velz", velz);
         }
         else
