@@ -119,7 +119,7 @@ public class EnemyMeleeMovementSystem : SystemBase
 
 
                 bool backup = enemyMove.backup;
-                if (stayHome && distFromStation > chaseRange) chaseRange = 0;
+                if (stayHome && distFromStation > chaseRange) chaseRange = distFromStation;
 
 
                 if (strike && dist < chaseRange && meleeMovement)

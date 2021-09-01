@@ -175,7 +175,6 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
         agent = GetComponent<NavMeshAgent>();
         moveSpeed = 3.5f;
-        if (enemyRole == EnemyRoles.Patrol && wayPoints.Count <= 1) enemyRole = EnemyRoles.Chase;//patrol requires 2 min waypoints if not chnage role to chase
 
         RatingsComponent ratings = manager.GetComponentData<RatingsComponent>(entity);
         if (enemyRatings)
@@ -213,12 +212,14 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
         //path = new NavMeshPath();
         SetWaypoints(randomWayPoints);
 
+
     }
 
     public void SetWaypoints(bool _randomWayPoints)
     {
         //waypoint 0 is initial so no matter where located travels there then never used again
         //waypoint 1 is where it goes next then cycles to last waypoint back to waypoint 1
+        if (enemyRole == EnemyRoles.Patrol && wayPoints.Count <= 1) enemyRole = EnemyRoles.Chase;//patrol requires 2 min waypoints if not chnage role to chase
 
 
         for (int i = 0; i < wayPoints.Count; i++)
@@ -479,7 +480,7 @@ public class EnemyMove : MonoBehaviour, IConvertGameObjectToEntity
 
             bool notMoving = false;
             NavMeshPath path = new NavMeshPath();
-            if (agent.CalculatePath(target.position, path))
+            if (target && agent.CalculatePath(target.position, path))
             {
                 if (path.status == NavMeshPathStatus.PathPartial)
                 {

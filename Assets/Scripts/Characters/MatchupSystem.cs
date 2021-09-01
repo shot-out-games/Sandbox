@@ -140,13 +140,16 @@ public class MatchupSystem : SystemBase
                             float ViewDistanceSQ = math.INFINITY;
                             var dot = 1.0;
                             bool View360 = true;
+
                             if (HasComponent<MatchupComponent>(enemyEntity) && GetComponent<DefensiveStrategyComponent>(enemyEntity).currentRole == DefensiveRoles.None)
                             {
                                 AngleRadians = GetComponent<MatchupComponent>(enemyEntity).AngleRadians;
                                 ViewDistanceSQ = GetComponent<MatchupComponent>(enemyEntity).ViewDistanceSQ;
                                 dot = math.dot(forwardVector, unitVecToPlayer);
                                 // Use the dot product to determine if the player is within our vision cone
-                                View360 = GetComponent<MatchupComponent>(enemyEntity).View360;
+                                View360 = GetComponent<MatchupComponent>(enemyEntity).View360 ||
+                                    GetComponent<EnemyStateComponent>(enemyEntity).MoveState == MoveStates.Chase || GetComponent<EnemyStateComponent>(enemyEntity).MoveState == MoveStates.Default;
+
                             }
 
                             //Debug.Log("rads " + math.degrees( math.abs(math.acos(dot))));

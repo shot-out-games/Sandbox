@@ -1,9 +1,9 @@
 ﻿using Unity.Entities;
 //using Unity.Burst;
-using Unity.Collections;
+using Unity.Mathematics;
 using Unity.Jobs;
 using UnityEngine;
-
+using Unity.Physics;
 
 public enum EffectType
 {
@@ -19,24 +19,84 @@ public enum EffectType
 
 public class CharacterEffectsSystem : SystemBase
 {
-    private float timer;
 
+    EndSimulationEntityCommandBufferSystem m_EndSimulationEcbSystem;
+
+    //private float timer;
+
+    protected override void OnCreate()
+    {
+        base.OnCreate();
+        // Find the ECB system once and store it for later usage
+        m_EndSimulationEcbSystem = World
+            .GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+    }
 
     protected override void OnUpdate()
     {
-        timer += Time.DeltaTime;
+        //timer += Time.DeltaTime;
+
+        var ecb = m_EndSimulationEcbSystem.CreateCommandBuffer();
 
 
+        //attempt effect hit pause
+        Entities.WithoutBurst().ForEach(
+            (
+                Entity e,
+                Animator anim,
+                ref ImpulseComponent impulseComponent,
+                ref PhysicsVelocity physicsVelocity,
+                in Impulse impulse
 
+                ) =>
+            {
+                //anim null check later
+                if (anim != null)
+                {
+                    float damage = 0;
+                    if (HasComponent<DamageComponent>(e))
+                    {
+                        damage = GetComponent<DamageComponent>(e).DamageReceived;
+                    }    
+
+                    if (damage > 0)
+                    {
+                        impulseComponent.activate = true;
+                        ecb.AddComponent<Pause>(e);
+                        anim.speed = 0;
+                        physicsVelocity.Linear = math.float3(0, 0, 0);
+                        
+                    }
+                    else if (impulseComponent.activate == true && impulseComponent.timer < impulseComponent.maxTime)
+                    {
+                        impulseComponent.timer += Time.DeltaTime;
+                        Debug.Log("timer " + impulseComponent.timer);
+                        if (impulseComponent.timer >= impulseComponent.maxTime)
+                        {
+                            impulseComponent.timer = 0;
+                            impulseComponent.activate = false;
+                            anim.speed = 1;
+                            ecb.RemoveComponent<Pause>(e);
+                        }
+                    }
+                }
+                //Debug.Log("shake");
+                //impulse.impulseSourceHitReceived.GenerateImpulse();
+
+
+            }
+        ).Run();
 
         Entities.WithoutBurst().ForEach(
             (
                 in DamageComponent damageComponent,
                 in Impulse impulse) =>
             {
-                if (damageComponent.DamageReceived == 0) return;
-                //Debug.Log("shake");
-                impulse.impulseSourceHitReceived.GenerateImpulse();
+                if (damageComponent.DamageReceived > 0)
+                {
+                    //Debug.Log("shake");
+                    impulse.impulseSourceHitReceived.GenerateImpulse();
+                }
 
             }
         ).Run();
@@ -173,7 +233,7 @@ public class CharacterEffectsSystem : SystemBase
             {
                 AudioSource audioSource = slashComponentAuthoring.audioSource;
                 if (!slashComponentAuthoring.audioClip || !slashComponentAuthoring.audioSource) return;
-                if (slashComponent.slashState == (int) SlashStates.Started)
+                if (slashComponent.slashState == (int)SlashStates.Started)
                 {
                     audioSource.clip = slashComponentAuthoring.audioClip;
                     audioSource.PlayOneShot(audioSource.clip);
@@ -195,6 +255,10 @@ public class CharacterEffectsSystem : SystemBase
 
             }
         ).Run();
+
+        m_EndSimulationEcbSystem.AddJobHandleForProducer(this.Dependency);
+
+
 
 
     }
