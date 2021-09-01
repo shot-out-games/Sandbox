@@ -58,7 +58,7 @@ public class AmmoSystem : SystemBase
 
                 float distance = math.distance(triggerTranslation.Value, enemyTranslation.Value);
                 //Debug.Log("dt " + (int)distance);
-                if (distance < 5.0 && defensiveStrategy.breakRoute == true && ammoE != defensiveStrategy.closeBulletEntity)
+                if (distance < defensiveStrategy.breakRouteVisionDistance && defensiveStrategy.breakRoute == true && ammoE != defensiveStrategy.closeBulletEntity)
                 {
                     defensiveStrategy.closeBulletEntity = ammoE;
                     defensiveStrategy.currentRole = DefensiveRoles.Chase;

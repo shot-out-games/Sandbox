@@ -103,6 +103,18 @@ public class EnemyMelee : MonoBehaviour, IConvertGameObjectToEntity, ICombat
             //
         }
 
+        if (moveUsing.moveAudioSource && moveUsing.moveAudioClip && moveUsing.moveAudioSource.isPlaying == false)
+        {
+            moveUsing.moveAudioSource.clip = moveUsing.moveAudioClip;
+            moveUsing.moveAudioSource.Play();
+        }
+        if (moveUsing.moveParticleSystem)
+        {
+            moveUsing.moveParticleSystem.Play(true);
+        }
+
+
+
 
     }
 

@@ -91,6 +91,7 @@ public class PlayerCombat : MonoBehaviour, IConvertGameObjectToEntity, ICombat
             }
             moveUsing.aimTransform = AimTransform;
         }
+
         if (moveUsing.moveAudioSource && moveUsing.moveAudioClip && moveUsing.moveAudioSource.isPlaying == false)
         {
             moveUsing.moveAudioSource.clip = moveUsing.moveAudioClip;

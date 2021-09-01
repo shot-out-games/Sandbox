@@ -8,6 +8,7 @@ using Unity.Entities;
 public struct DefensiveStrategyComponent : IComponentData
 {
     public bool breakRoute;
+    public float breakRouteVisionDistance;
     public DefensiveRoles currentRole;
     public float currentRoleMaxTime;
     public float currentRoleTimer;
@@ -103,6 +104,8 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField]
     bool breakRoute = true;
     [SerializeField]
+    float breakRouteVisionDistance;
+    [SerializeField]
     float currentRoleMaxTime = 3;
 
     //public float chaseRange;
@@ -142,6 +145,7 @@ public class EnemyBehaviorManager : MonoBehaviour, IConvertGameObjectToEntity
         dstManager.AddComponentData(entity, new DefensiveStrategyComponent()
         {
             breakRoute = breakRoute,
+            breakRouteVisionDistance = breakRouteVisionDistance,
             currentRole = DefensiveRoles.None,
             currentRoleMaxTime = currentRoleMaxTime,
             currentRoleTimer = 0

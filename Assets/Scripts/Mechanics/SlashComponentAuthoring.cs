@@ -28,14 +28,20 @@ public class SlashComponentAuthoring : MonoBehaviour, IConvertGameObjectToEntity
 
 {
     public bool slashActive;
+    public AudioSource audioSource;
+    public AudioClip audioClip;
 
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {
+
+        //conversionSystem.AddHybridComponent(audioSource);
+
         dstManager.AddComponentData(entity, new SlashComponent()
         {
             slashActive = slashActive,
-            slashState = (int) SlashStates.None
+            slashState = (int) SlashStates.None,
+
             
         }
 

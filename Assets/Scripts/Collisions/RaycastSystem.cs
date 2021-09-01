@@ -218,7 +218,7 @@ public class RaycastSystem : SystemBase
 
 
 
-            float3 start = translation.Value + localToWorld.Forward * 3;//start ray out before pointing down because we are checking the ground a little bit in front
+            float3 start = translation.Value + localToWorld.Forward * 1;//start ray out before pointing down because we are checking the ground a little bit in front
             //float3 start = translation.Value;//start ray out before pointing down because we are checking the ground a little bit in front
             //start = start + new float3(0, 0, 3f);
             float3 direction = new float3(0, -1, 0);//down

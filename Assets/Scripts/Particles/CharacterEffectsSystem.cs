@@ -113,7 +113,7 @@ public class CharacterEffectsSystem : SystemBase
                             }
 
                         }
-                        else if(effectsComponent.playEffectAllowed == false)
+                        else if (effectsComponent.playEffectAllowed == false)
                         {
                             effects.actorCloseEffectInstance.Stop(true);
 
@@ -163,6 +163,24 @@ public class CharacterEffectsSystem : SystemBase
                 }
             }
         ).Run();
+
+
+        Entities.WithoutBurst().WithNone<Pause>().ForEach(
+            (
+                in Entity e,
+                in SlashComponent slashComponent,
+                in SlashComponentAuthoring slashComponentAuthoring) =>
+            {
+                AudioSource audioSource = slashComponentAuthoring.audioSource;
+                if (!slashComponentAuthoring.audioClip || !slashComponentAuthoring.audioSource) return;
+                if (slashComponent.slashState == (int) SlashStates.Started)
+                {
+                    audioSource.clip = slashComponentAuthoring.audioClip;
+                    audioSource.PlayOneShot(audioSource.clip);
+                }
+            }
+        ).Run();
+
 
 
 
