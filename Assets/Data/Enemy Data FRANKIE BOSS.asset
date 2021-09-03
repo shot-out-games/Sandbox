@@ -20,4 +20,4 @@ MonoBehaviour:
   chaseRange: 18
   aggression: 50
   maxHealth: 150
-  hitPower: 10
+  hitPower: 100

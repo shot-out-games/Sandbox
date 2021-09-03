@@ -1010,7 +1010,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: sword shield kick
-  m_Speed: 1.5
+  m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101973500362162392}
@@ -1069,7 +1069,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: lead_jab
-  m_Speed: 1.5
+  m_Speed: 3
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101565259139747978}
@@ -1187,15 +1187,15 @@ AnimatorStateMachine:
   m_StateMachineTransitions:
   - first: {fileID: 1107207875399562484}
     second: []
-  - first: {fileID: 1107307722106823392}
-    second:
-    - {fileID: 7894211219712173314}
   - first: {fileID: 1107438325616211404}
     second:
     - {fileID: 2909774604700970724}
   - first: {fileID: 1107753936289822652}
     second:
     - {fileID: -7115883707691550307}
+  - first: {fileID: 1107307722106823392}
+    second:
+    - {fileID: 7894211219712173314}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: -3300, y: -3390, z: 0}
   m_EntryPosition: {x: -3940, y: -3810, z: 0}
