@@ -107,6 +107,7 @@ public class HealthSystem : SystemBase
             else if (healthComponent.ShowText3D == ShowText3D.hitDamage && healthComponent.ShowDamage == true)
             {
                 healthUI.ShowText3dValue((int)damage.DamageReceived);
+                Debug.Log("dr " + damage.DamageReceived);
             }
             healthUI.HealthChange();
 

@@ -56,7 +56,7 @@ public class CharacterEffectsSystem : SystemBase
                     float damage = 0;
                     if (HasComponent<DamageComponent>(e))
                     {
-                        damage = GetComponent<DamageComponent>(e).DamageReceived;
+                        damage = GetComponent<DamageComponent>(e).DamageLanded;
                     }    
 
                     if (damage > 0)
@@ -70,7 +70,7 @@ public class CharacterEffectsSystem : SystemBase
                     else if (impulseComponent.activate == true && impulseComponent.timer < impulseComponent.maxTime)
                     {
                         impulseComponent.timer += Time.DeltaTime;
-                        Debug.Log("timer " + impulseComponent.timer);
+                        //Debug.Log("timer " + impulseComponent.timer);
                         if (impulseComponent.timer >= impulseComponent.maxTime)
                         {
                             impulseComponent.timer = 0;

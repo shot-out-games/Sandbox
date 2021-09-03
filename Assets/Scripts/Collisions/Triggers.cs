@@ -265,7 +265,7 @@ public class CollisionSystem : SystemBase
 
                 ecb.AddComponent(triggerComponent_b.ParentEntity, collisionComponent);
             }
-            else if (punchingA ||  meleeA || alwaysDamageA)
+            else if (punchingA ||  meleeA || alwaysDamageA && !ammoA && !ammoB)
             {
                 //Debug.Log("c b " + ch_b + " c a " + ch_a);
                 //Debug.Log("always a " + alwaysDamageA + " always b " + alwaysDamageB + " cha " + ch_a + " chb " + ch_b);
@@ -281,7 +281,7 @@ public class CollisionSystem : SystemBase
                     };
                 ecb.AddComponent(ch_a, collisionComponent);
             }
-            else if (punchingB  || meleeB || alwaysDamageB)
+            else if (punchingB  || meleeB || alwaysDamageB && !ammoA && !ammoB)
             {
                 //Debug.Log("always a " + alwaysDamageA + " always b " + alwaysDamageB + " cha " + ch_a + " chb " + ch_b);
 

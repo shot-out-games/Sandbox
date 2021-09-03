@@ -44,7 +44,7 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
     bool showHealth = true;
     public Entity entity;
     private EntityManager entityManager;
-    [SerializeField] private bool alwaysDamage;
+    [SerializeField] private bool alwaysDamaging;
 
     public TextMeshPro score3dText;
     private TextMeshPro score3dTextInstance;
@@ -174,7 +174,7 @@ public class HealthBar : MonoBehaviour, IConvertGameObjectToEntity
         {
             combineDamage = combineDamage,
             TotalDamageLanded = 0, TotalDamageReceived = 0,
-            AlwaysDamage = alwaysDamage,
+            AlwaysDamage = alwaysDamaging,
             ShowDamageMin = showDamageMin,
             ShowText3D = showText3D
         });

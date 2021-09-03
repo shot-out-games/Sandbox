@@ -370,8 +370,11 @@ public class AttackerSystem : SystemBase
                     }
 
                     //float WeaponPower = 1;
+                    //hw = 1;
                     float damage = hitPower * hw;
 
+                    ecb.AddComponent<DamageComponent>(entityA,
+                        new DamageComponent { DamageLanded = damage, DamageReceived = 0 });
 
 
                     ecb.AddComponent<DamageComponent>(entityB,
@@ -386,7 +389,29 @@ public class AttackerSystem : SystemBase
                     }
 
 
+                    if (HasComponent<ScoreComponent>(entityA) && damage != 0)
+                    {
+
+                        var scoreComponent = GetComponent<ScoreComponent>(entityA);
+                        scoreComponent.pointsScored = true;
+                        scoreComponent.scoredAgainstEntity = entityB;
+                        //add specific score component stuff to melee
+                        SetComponent(entityA, scoreComponent);
+                    }
+
+
+
+
+
+
+
+
+
+
                     trigger_a.collisionChecked = true;
+
+
+
                     ecb.SetComponent<CheckedComponent>(entityA, trigger_a);
                 }
 
@@ -406,26 +431,21 @@ public class AttackerSystem : SystemBase
                 shooter = GetComponent<TriggerComponent>(collision_entity_b)
                     .ParentEntity;
                 //}
-
-
-
                 //Debug.Log("ta " + type_a + " tb " + type_b);
                 //Debug.Log("ea " + collision_entity_a + " eb " + collision_entity_b);
                 Debug.Log("shooter " + shooter);
 
-                if (shooter != Entity.Null)
+                if (shooter != Entity.Null && HasComponent<AmmoComponent>(collision_entity_b))
                 {
                     bool isEnemyShooter = HasComponent<EnemyComponent>(shooter);
                     Entity target = GetComponent<TriggerComponent>(collision_entity_a)
                         .ParentEntity;
                     bool isEnemyTarget = HasComponent<EnemyComponent>(target);
-
-                    //Debug.Log("es " + isEnemyShooter + " et " + isEnemyTarget);
-
-
+                    Debug.Log("sh  " + shooter);
+                    Debug.Log("cea " + collision_entity_a);
+                    Debug.Log("ceb " + collision_entity_b);
                     AmmoComponent ammo =
                         GetComponent<AmmoComponent>(collision_entity_b);
-
                     AmmoDataComponent ammoData =
                         GetComponent<AmmoDataComponent>(collision_entity_b);
 
@@ -462,6 +482,11 @@ public class AttackerSystem : SystemBase
 
                     ammo.DamageCausedPreviously = true;
 
+                    ecb.AddComponent<DamageComponent>(shooter,
+                            new DamageComponent
+                            { DamageLanded = damage, DamageReceived = 0});
+
+
                     ecb.AddComponent<DamageComponent>(collision_entity_a,
                             new DamageComponent
                             { DamageLanded = 0, DamageReceived = damage, StunLanded = damage });
@@ -484,7 +509,7 @@ public class AttackerSystem : SystemBase
                         //for gmtk bonus for charged (blocked)
                         if (ammo.Charged == true && isEnemyShooter == false && isEnemyTarget == true)
                         {
-                            scoreComponent.addBonus = scoreComponent.defaultPointsScored   * 1;
+                            scoreComponent.addBonus = scoreComponent.defaultPointsScored * 1;
                             ammo.Charged = false;
 
                         }

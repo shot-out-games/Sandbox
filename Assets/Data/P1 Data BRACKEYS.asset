@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: P1 Data BRACKEYS
   m_EditorClassIdentifier: 
   speed: 8
-  power: 10
+  power: 100
   maxHealth: 200
   startJumpGravityForce: 32
   addedNegativeForce: -1
