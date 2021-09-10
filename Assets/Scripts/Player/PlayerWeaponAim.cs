@@ -20,7 +20,7 @@ public enum WeaponMotion
     Lowering
 }
 
-public enum CameraType
+public enum CameraTypes
 {
     TopDown,
     TwoD,
@@ -34,7 +34,7 @@ public struct ActorWeaponAimComponent : IComponentData
     public bool autoTarget;
     public bool dualMode;
     public bool cursorTargeting;
-    public CameraType weaponCamera;
+    public CameraTypes weaponCamera;
 
 
 }
@@ -75,7 +75,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField] private bool cursorTargeting = true;
     [Range(0.0f, 100.0f)]
     [SerializeField] private float cameraZ = 50f;
-    public CameraType weaponCamera;
+    public CameraTypes weaponCamera;
     [SerializeField] bool simController = false;
     [SerializeField]
     [Range(1.0f, 100.0f)] private float mouseSensitivity = 5;
@@ -96,8 +96,8 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
 
     Vector3 targetPosition = Vector3.zero;
     Vector3 worldPosition = Vector3.zero;
-
-
+    public Vector3 closetEnemyWeaponTargetPosition;
+    
     void Start()
     {
         if (!ReInput.isReady) return;
@@ -133,7 +133,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
         float xd = math.abs(transform.position.x - crossHair.transform.position.x);
         float yd = math.abs(transform.position.y - crossHair.transform.position.y);
         bool ik = true;
-        if (weaponCamera == CameraType.TwoD)
+        if (weaponCamera == CameraTypes.TwoD)
         {
             if (xd < 1 && yd < 2)
             {
@@ -306,7 +306,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
             mousePosition = player.controllers.Mouse.screenPosition;
         }
 
-        if (weaponCamera == CameraType.TwoD)
+        if (weaponCamera == CameraTypes.TwoD)
         {
             mousePosition.z = cameraZ;
             worldPosition = cam.ScreenToWorldPoint(mousePosition);
@@ -321,7 +321,7 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
             );
 
         }
-        if (weaponCamera == CameraType.ThirdPerson)
+        if (weaponCamera == CameraTypes.ThirdPerson)
         {
             mousePosition.z = cameraZ;
             worldPosition = cam.ScreenToWorldPoint(mousePosition);
@@ -338,14 +338,13 @@ public class PlayerWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
 
 
         }
-        if (weaponCamera == CameraType.TopDown)
+        if (weaponCamera == CameraTypes.TopDown)
         {
             mousePosition.z = cameraZ;
-            //worldPosition = cam.ScreenToWorldPoint(mousePosition);
             worldPosition = GetMousePositionTopDownPlane();
             x = worldPosition.x;
-            //y = worldPosition.y;
-            y = transform.position.y + topDownY;
+            //y = transform.position.y + topDownY;
+            y = closetEnemyWeaponTargetPosition.y + topDownY;
             z = worldPosition.z;
 
 

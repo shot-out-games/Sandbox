@@ -264,6 +264,9 @@ public class MatchupSystem : SystemBase
                     {
                         player.GetComponent<PlayerWeaponAim>().target =
                             closestEnemy.GetComponent<TargetZones>().headZone;
+                        player.GetComponent<PlayerWeaponAim>().closetEnemyWeaponTargetPosition =
+                            closestEnemy.GetComponent<TargetZones>().headZone.position;
+
                     }
                     if (player.GetComponent<PlayerCombat>())
                     {

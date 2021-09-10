@@ -8,7 +8,13 @@ public struct ImpulseComponent : IComponentData
 {
     public float timer;
     public float maxTime;
+    public float animSpeedRatio;
     public bool activate;
+
+    public float timerOnReceived;
+    public float maxTimeOnReceived;
+    public float animSpeedRatioOnReceived;
+    public bool activateOnReceived;
 }
 
 public class Impulse : MonoBehaviour, IConvertGameObjectToEntity
@@ -19,8 +25,11 @@ public class Impulse : MonoBehaviour, IConvertGameObjectToEntity
     private Entity e;
     private EntityManager manager;
     Animator animator;
-    [SerializeField]
-    public float maxTime = 1.5f;
+    public float maxTime = 1.0f;
+    public float animSpeedRatio = .5f;
+
+    public float maxTimeOnReceived = 1.0f;
+    public float animSpeedRatioOnReceived = .5f;
 
 
     void Awake()
@@ -39,7 +48,7 @@ public class Impulse : MonoBehaviour, IConvertGameObjectToEntity
     {
         e = entity;
         manager = dstManager;
-        dstManager.AddComponentData<ImpulseComponent>(e, new ImpulseComponent { maxTime = maxTime });
+        dstManager.AddComponentData<ImpulseComponent>(e, new ImpulseComponent { maxTime = maxTime, animSpeedRatio = animSpeedRatio, maxTimeOnReceived = maxTimeOnReceived, animSpeedRatioOnReceived = animSpeedRatioOnReceived });
 
         //conversionSystem.AddHybridComponent(impulseSource);
 

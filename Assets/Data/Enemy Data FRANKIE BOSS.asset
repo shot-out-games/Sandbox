@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c63336138e98c764c920ab51a8d2074f, type: 3}
   m_Name: Enemy Data FRANKIE BOSS
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 2
   combatStrikeDistanceZoneBegin: 1.5
   combatStrikeDistanceZoneEnd: 3.5
   combatRangeDistance: 14

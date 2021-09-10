@@ -161,7 +161,7 @@ public class GunAmmoHandlerSystem : SystemBase
                         //float3 forward = math.forward(rotation.Value);
 
 
-                        if (actorWeaponAimComponent.weaponCamera == CameraType.TopDown)
+                        if (actorWeaponAimComponent.weaponCamera == CameraTypes.TopDown)
                         {
                             //velocity.Linear = forward * strength;
                             velocity.Linear = forward * strength + playerVelocity.Linear;

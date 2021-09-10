@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using Unity.Jobs;
 using UnityEngine;
 using Unity.Physics;
+using UnityEngine.AI;
 
 public enum EffectType
 {
@@ -57,17 +58,21 @@ public class CharacterEffectsSystem : SystemBase
                     if (HasComponent<DamageComponent>(e))
                     {
                         damage = GetComponent<DamageComponent>(e).DamageLanded;
-                    }    
+                    }
+
+                    bool hasNavMesh = anim.gameObject.GetComponent<NavMeshAgent>();
 
                     if (damage > 0)
                     {
+                        if (HasComponent<PlayerComponent>(e)) impulse.impulseSourceHitLanded.GenerateImpulse();
                         impulseComponent.activate = true;
                         ecb.AddComponent<Pause>(e);
-                        anim.speed = 0;
-                        physicsVelocity.Linear = math.float3(0, 0, 0);
-                        
+                        anim.speed = impulseComponent.animSpeedRatio;
+                        if (hasNavMesh) anim.gameObject.GetComponent<NavMeshAgent>().speed = anim.speed;
+                        physicsVelocity.Linear = physicsVelocity.Linear * math.float3(anim.speed, anim.speed, anim.speed);
+
                     }
-                    else if (impulseComponent.activate == true && impulseComponent.timer < impulseComponent.maxTime)
+                    else if (impulseComponent.activate == true && impulseComponent.timer <= impulseComponent.maxTime)
                     {
                         impulseComponent.timer += Time.DeltaTime;
                         //Debug.Log("timer " + impulseComponent.timer);
@@ -76,6 +81,60 @@ public class CharacterEffectsSystem : SystemBase
                             impulseComponent.timer = 0;
                             impulseComponent.activate = false;
                             anim.speed = 1;
+                            if (hasNavMesh) anim.gameObject.GetComponent<NavMeshAgent>().speed = anim.speed;
+                            ecb.RemoveComponent<Pause>(e);
+                        }
+                    }
+                }
+                //Debug.Log("shake");
+
+
+            }
+        ).Run();
+
+
+
+        //attempt effect hit pause
+        Entities.WithoutBurst().ForEach(
+            (
+                Entity e,
+                Animator anim,
+                ref ImpulseComponent impulseComponent,
+                ref PhysicsVelocity physicsVelocity,
+                in Impulse impulse
+
+                ) =>
+            {
+                //anim null check later
+                if (anim != null)
+                {
+                    float damage = 0;
+                    if (HasComponent<DamageComponent>(e))
+                    {
+                        damage = GetComponent<DamageComponent>(e).DamageReceived;
+                    }
+
+                    bool hasNavMesh = anim.gameObject.GetComponent<NavMeshAgent>();
+
+                    if (damage > 0)
+                    {
+                        impulseComponent.activateOnReceived = true;
+                        ecb.AddComponent<Pause>(e);
+                        anim.speed = impulseComponent.animSpeedRatioOnReceived;
+                        if (hasNavMesh) anim.gameObject.GetComponent<NavMeshAgent>().speed = anim.speed;
+                        physicsVelocity.Linear = physicsVelocity.Linear * math.float3(anim.speed, anim.speed, anim.speed);
+
+                    }
+                    else if (impulseComponent.activateOnReceived == true && impulseComponent.timerOnReceived <= impulseComponent.maxTimeOnReceived)
+                    {
+                        impulseComponent.timerOnReceived += Time.DeltaTime;
+                        //Debug.Log("timer " + impulseComponent.timer);
+                        if (impulseComponent.timerOnReceived >= impulseComponent.maxTimeOnReceived)
+                        {
+                            impulseComponent.timerOnReceived = 0;
+                            impulseComponent.activateOnReceived = false;
+                            anim.speed = 1;
+                            if (hasNavMesh) anim.gameObject.GetComponent<NavMeshAgent>().speed = anim.speed;
                             ecb.RemoveComponent<Pause>(e);
                         }
                     }
@@ -83,20 +142,6 @@ public class CharacterEffectsSystem : SystemBase
                 //Debug.Log("shake");
                 //impulse.impulseSourceHitReceived.GenerateImpulse();
 
-
-            }
-        ).Run();
-
-        Entities.WithoutBurst().ForEach(
-            (
-                in DamageComponent damageComponent,
-                in Impulse impulse) =>
-            {
-                if (damageComponent.DamageReceived > 0)
-                {
-                    //Debug.Log("shake");
-                    impulse.impulseSourceHitReceived.GenerateImpulse();
-                }
 
             }
         ).Run();

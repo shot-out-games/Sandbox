@@ -16,7 +16,7 @@ public class EnemyWeaponAim : MonoBehaviour, IConvertGameObjectToEntity
     public Transform aimTransform;
     public bool weaponRaised = false;
     [Range(0.0f, 1.0f)] [SerializeField] private float aimWeight = 1.0f;
-    public CameraType weaponCamera;
+    public CameraTypes weaponCamera;
 
     Entity entity;
     EntityManager manager;
