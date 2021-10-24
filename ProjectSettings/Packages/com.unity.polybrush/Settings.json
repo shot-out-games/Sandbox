@@ -126,7 +126,7 @@
             {
                 "type": "UnityEditor.Polybrush.PrefabLoadout, Unity.Polybrush.Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "ScatteringEditor.userLoadout",
-                "value": "{\"m_Value\":{\"infos\":[{\"palette\":{\"fileID\":11400000,\"guid\":\"6dd211e8d9b76fa449a72b99a144b44e\",\"type\":2},\"prefab\":{\"fileID\":3466703481568296788,\"guid\":\"6aa97f6bf5ff6c148a6f4b65709038a1\",\"type\":3}}]}}"
+                "value": "{\"m_Value\":{\"infos\":[{\"palette\":{\"fileID\":11400000,\"guid\":\"6dd211e8d9b76fa449a72b99a144b44e\",\"type\":2},\"prefab\":{\"fileID\":7961455663166978299,\"guid\":\"12b227e16b9bd3040ada7898fa067361\",\"type\":3}}]}}"
             }
         ]
     }
