@@ -1,3 +1,36 @@
+1.1.41.1:
+
+    Changes:
+      - Added warning to Rewired Input Manager editor to warn users to set Joystick Auto Assignment Max Joysticks Per Player to 100 if a single-player game because of how many developers ignore this setting are left with games that cannot be controlled if a virtual controller or another controller is connected to the system that takes priority other than the one the user is trying to use.
+
+    Bug Fixes:
+      - Unity 2021.2+, Windows Standalone, Raw Input, Direct Input w/ Native Mouse/Keyboard Handling: Fixed bug in new Raw Input event forwarding that could cause a multiple of the number of events to be forwarded to Unity if the number of events that were received during a frame exceeded 100. This could occur after execution was resumed from a breakpoint in a debugger due to mouse and keyboard input.
+
+1.1.41.0:
+
+    Changes:
+      - Windows Standalone, Raw Input, Direct Input w/ Native Mouse/Keyboard Handling: Raw Input messages are now retrieved using GetRawInputBuffer method due to changes to Unity input in Unity 2021.2+ that breaks Rewired's Raw Input message handling due to their use of GetRawInputBuffer to eliminate massive frame rate drop from high refresh rate mice (4000-8000 Hz). Their change to GetRawInputBuffer, which consumes all the Raw Input events when called, makes it impossible for Rewired to continue to share mouse input events with Unity so both Unity's mouse input and Rewired's native mouse input work simultaneously.
+      - Implemented Raw Input event forwarding to Unity through new Unity API exposed for this purpose in 2021.2.0. Bonus effect of this change is that Rewired can now be used alongside the new Unity Input System on Windows.
+
+    Bug Fixes:
+      - Null reference exception is no longer thrown when certain custom driver functions are called in Start or Awake (ex: DualShock4ControllerExtension.GetGyroscopeValue).
+      - Unity Editor: Adding the Nintendo Switch Input Manager component using button on the Rewired Input Manager inspector now sets the GameObject dirty so the object gets saved correctly.
+      - When first enabling the only Controller Map that binds a particular Action to the negative pole of an axis while currently holding that axis in a negative state with a value beyond the button activation threshold and querying that Action for its negative button down value will no longer return a down state.
+
+1.1.40.0:
+   
+    Changes:
+      - Disabling Visual Studio 2019 jump optimizer for Windows IL2CPP builds is no longer required.
+      - Performance improvements.
+      - UFE2 Integration: Reworked integration script again due to breaking changes in Unity causing EventSystem exceptions to be thrown.
+      - UFE2 Integration: Changed supported version to 2.4.1.
+      
+    API Changes:
+      - Changed return type of Player.ControllerHelper.GetLastActiveController<T> to T instead of Controller.
+    
+    Bug Fixes:
+      - AxisCalibration.SetData no longer overwrites default calibration data.
+
 1.1.39.3:
 
     Changes:
