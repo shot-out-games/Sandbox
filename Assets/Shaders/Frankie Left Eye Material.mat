@@ -120,6 +120,7 @@ Material:
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Smoothness: 0.5
@@ -134,9 +135,11 @@ Material:
     - Color_efdaa08a30cf4bcab4f0ba1d4b1f8a6f: {r: 0, g: 0, b: 0, a: 1}
     - Vector2_14bd71d5e26a4772b17f5573fe73f84d: {r: 1, g: 0, b: 0, a: 0}
     - Vector2_28da58f6deee4835be8939f7312de2c7: {r: 1, g: 1, b: 0, a: 0}
+    - Vector2_53f79c_Tiling: {r: 1, g: 1, b: 0, a: 0}
     - _BaseColor: {r: 0.9339623, g: 0.85906917, b: 0.85906917, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Offset: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
     - _scrollSpeed: {r: 0, g: 0, b: 0, a: 0}
